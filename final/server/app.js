@@ -5,6 +5,7 @@ const bookRouter = require('./appForder/exampleApp/bookapp.js');
 const userRouter = require('./appForder/memberApp/memberapp.js');
 const fesRouter = require('./appForder/festivalApp/festivalapp.js');
 const productRouter = require('./appForder/productApp/productapp.js');
+const paymentRouter = require('./appForder/paymentApp/paymentapp.js');
 app.use(
   express.json({
     limit: '50mb',
@@ -16,8 +17,8 @@ app.listen(3000, () => {
 });
 
 app.use('/board', bookRouter);
-
 app.use('/user', userRouter);
 app.use('/festival', fesRouter);
-
 app.use('/product', productRouter);
+
+app.use('/pay', paymentRouter);
