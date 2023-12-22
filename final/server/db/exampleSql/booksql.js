@@ -10,3 +10,5 @@ module.exports = {
     commentList : 'select * from T_COMMENT_BOARD where BNO = ?'
 
 } 
+
+//ㅁㄴㅇㅁㄴㅇ
