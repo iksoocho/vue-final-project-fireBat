@@ -16,8 +16,6 @@ app.listen(3000, () => {
 });
 
 app.use('/board', bookRouter);
-
 app.use('/user', userRouter);
 app.use('/festival', fesRouter);
-
 app.use('/product', productRouter);
