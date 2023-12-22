@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const bookRouter = require('./appForder/exampleApp/bookapp.js');
 const userRouter = require('./appForder/memberApp/memberapp.js');
+const fesRouter = require('./appForder/festivalApp/festivalapp.js');
 
 app.use(
   express.json({
@@ -17,3 +18,4 @@ app.listen(3000, () => {
 app.use('/board', bookRouter);
 
 app.use('/user', userRouter);
+app.use('/festival', fesRouter);
