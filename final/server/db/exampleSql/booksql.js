@@ -9,4 +9,4 @@ module.exports = {
     boardUpdate : `UPDATE t_board_board SET ? WHERE no = ?`,
     commentList : 'select * from T_COMMENT_BOARD where BNO = ?'
 
-} 
+}
