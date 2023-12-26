@@ -7,6 +7,10 @@ router.get('/', async (req, res) => {
    res.send(list);
 });
 
+router.get('/notice', async (req, res) => {
+   let list = await mysql.query('noticeList');
+   res.send(list);
+});
 
 
 
