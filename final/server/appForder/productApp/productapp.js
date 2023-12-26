@@ -14,8 +14,16 @@ router.get('/:no', async (req,res) => {
 })
 // 등록 insert
 router.post('/', async (req, res) => {
-    
+    let data = req.body.param;
+    let result = await mysql.query('productInsert', data);
+    res.send(result);
 
 })
 
+// 삭제 
+router.delete('/:no', async (req,res) => {
+    let data = req.params.id;
+    let result = await mysql.query('productDelete', data);
+    res.send(result);
+})
 module.exports = router;
