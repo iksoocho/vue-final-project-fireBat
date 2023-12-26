@@ -8,4 +8,8 @@ router.post('/', async (req, res) => {
   res.send(result);
 });
 
+router.get('/', async (req, res) => {
+  let list = await mysql.query('userList');
+  res.send(list);
+});
 module.exports = router;

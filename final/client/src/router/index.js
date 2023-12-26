@@ -4,6 +4,7 @@ import admin from "../router/admin.js";
 
 const routes = [user, admin];
 
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,

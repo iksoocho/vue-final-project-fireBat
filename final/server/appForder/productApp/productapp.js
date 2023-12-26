@@ -14,6 +14,7 @@ router.get('/:no', async (req,res) => {
 })
 // 등록 insert
 router.post('/', async (req, res) => {
+    
 
 })
 
