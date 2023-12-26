@@ -14,7 +14,7 @@
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6">
-                            <div class="main-menu  d-none d-lg-block">
+                            <div class="main-menu d-none d-lg-block mt-3">
                                 <nav>
                                     <ul id="navigation">
                                         <li><a class="active" href="index.html">home</a></li>
@@ -41,7 +41,7 @@
                             <div class="social_wrap d-flex align-items-center justify-content-end">
                               <div class="text-end">
                                 <button type="button" class="btn btn-outline-danger me-2">Login</button>
-                                <button type="button" class="btn btn-warning">Sign-up</button>
+                                <button type="button" class="btn btn-primary">Sign-up</button>
                               </div>
                             </div>
                         </div>
