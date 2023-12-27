@@ -11,7 +11,7 @@ export default {
   
     children: [
       {
-        path: 'userInsert',
+        path: '/userInsert',
         name: 'userInsert',
         component: UserInsert,
       },
