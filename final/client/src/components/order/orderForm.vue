@@ -4,9 +4,9 @@
          <div class="col" >
             <form>
                <div class="form-group row" >
-                  <label for="inputPassword" class="col-sm-2 col-form-label">배송지 선택</label>
+                  <label for="deli_addr" class="col-sm-2 col-form-label">배송지 선택</label>
                   <div class="col-sm-10">
-                     <select class="form-select" id="deli_addr" required>
+                     <select class="form-select" id="deli_addr_select" required>
                         <option value="">기본</option>
                         <option>자취방</option>
                      </select>
@@ -14,40 +14,56 @@
                   </div>
                </div>
                <div class="form-group row">
-                  <label for="inputPassword" class="col-sm-2 col-form-label">받는 사람</label>
+                  <label for="name" class="col-sm-2 col-form-label">받는 사람</label>
                   <div class="col-sm-10">
                      <input type="text" class="form-control" id="name" placeholder="받는사람">
                   </div>
                </div>
                <div class="form-group row">
-                  <label for="state" class="col-sm-2 col-form-label">휴대폰 번호</label>
+                  <label for="phone" class="col-sm-2 col-form-label">휴대폰 번호</label>
                   <div class="col-sm-10">
                      <div class="row">
                         <div class="col">
-                           <select class="form-select" id="phone" required>
+                           <select class="form-select" id="phonePrefix" required>
                               <option value="">010</option>
                               <option>California</option>
                            </select>
                         </div>
                         <div class="col">
-                           <input type="text" class="form-control" id="m_phone">
+                           <input type="text" class="form-control" id="middlePhoneNumber">
                         </div>  
                         <div class="col">
-                           <input type="text" class="form-control" id="l_phone" placeholder="받는사람">
+                           <input type="text" class="form-control" id="lastPhoneNumber">
                         </div>    
                      </div>
-                     <button @click="showApi">주소API 호출</button>
-
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="name" class="col-sm-2 col-form-label">받는 사람</label>
+                  <div class="col-sm-10">
+                     <div class="row">
+                        <div class="col">
+                           <input type="text" class="form-control" id="zip" v-model="zip" readonly>
+                        </div>
+                        <div class="col">
+                           <button type="button" class="btn btn-secondary btn-sm" @click="showApi" style="width:60px; height:10px; font-size:x-small; display: flex; align-items:center;">주소검색</button>
+                        </div>
+                     </div>
+                     <input type="text" class="form-control" id="addr1" v-model="addr1" readonly>
+                     <input type="text" class="form-control" id="addr2" placeholder="상세주소">
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="deliRequire" class="col-sm-2 col-form-label">배송 요청사항</label>
+                  <div class="col-sm-10">
+                     <select class="form-select" id="deliRequire" required>
+                        <option value="1" selected>배송 전 연락바랍니다</option>
+                        <option>부재시 문 앞에 두고 연락주세요</option>
+                     </select>
                   </div>
                </div>
 
-               <h3>결제정보</h3>
-               <button :class="{ active: selectedPaymentMethod === 'kakaopay' }" @click="selectPaymentMethod('kakaopay')" :style="{ backgroundColor: selectedPaymentMethod === 'kakaopay' ? 'yellow' : 'gray' }">카카오페이</button>
-               <button :class="{ active: selectedPaymentMethod === 'toss' }" @click="selectPaymentMethod('toss')" :style="{ backgroundColor: selectedPaymentMethod === 'toss' ? 'blue' : 'gray' }">토스페이</button>
-               <button :class="{ active: selectedPaymentMethod === 'kg' }" @click="selectPaymentMethod('kg')" :style="{ backgroundColor: selectedPaymentMethod === 'kg' ? 'purple' : 'gray' }">신용카드</button>
-               <button @click="openPaymentWindow" :disabled="!selectedPaymentMethod" style="background-color: green;">결제창 열기</button>
-               <p v-if="paymentUrl">결제창 URL: {{ paymentUrl }}</p>
-               <p v-if="errorMessage">에러 메시지: {{ errorMessage }}</p>
+               
             </form>
          </div>
          <div class="col">
@@ -82,6 +98,15 @@
                   <span>결제예정금액</span>
                   <strong>결제예정금액</strong>
                </li>
+               <li class="list-group-item d-flex justify-content-between">
+                  <h3>결제정보</h3>
+                  <button :class="{ active: selectedPaymentMethod === 'kakaopay' }" @click="selectPaymentMethod('kakaopay')" :style="{ backgroundColor: selectedPaymentMethod === 'kakaopay' ? 'yellow' : 'gray' }">카카오페이</button>
+                  <button :class="{ active: selectedPaymentMethod === 'toss' }" @click="selectPaymentMethod('toss')" :style="{ backgroundColor: selectedPaymentMethod === 'toss' ? 'blue' : 'gray' }">토스페이</button>
+                  <button :class="{ active: selectedPaymentMethod === 'kg' }" @click="selectPaymentMethod('kg')" :style="{ backgroundColor: selectedPaymentMethod === 'kg' ? 'purple' : 'gray' }">신용카드</button>
+                  <button @click="openPaymentWindow" :disabled="!selectedPaymentMethod" style="background-color: green;">결제창 열기</button>
+                  <p v-if="paymentUrl">결제창 URL: {{ paymentUrl }}</p>
+                  <p v-if="errorMessage">에러 메시지: {{ errorMessage }}</p>
+                  </li>
             </ul>
          </div>
       </div>
@@ -180,6 +205,7 @@ methods: {
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             this.zip = data.zonecode; //5자리 새우편번호 사용
             this.addr1 = fullRoadAddr;
+            console.log(this.zip, this.addr1);
          }
       }).open()
    }
@@ -187,7 +213,7 @@ methods: {
 };
 </script>
 
-<style>
+<style scoped>
 button {
 background-color: gray;
 color: white;
@@ -203,7 +229,4 @@ button:disabled {
 background-color: lightgray;
 }
 
-.col{
-   box-sizing : border-box;
-}
 </style>
