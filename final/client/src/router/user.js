@@ -14,6 +14,11 @@ export default {
   
     children: [
       {
+        path: '/main',
+        name: 'usermMain',
+        component: userMain,
+      },
+      {
         path: '/userInsert',
         name: 'userInsert',
         component: UserInsert,
