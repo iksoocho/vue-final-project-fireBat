@@ -75,9 +75,6 @@
                 <p class="card-text">{{ fes.f_content }}</p>
                 <p class="card-date">{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</p>
                 <p class="card-reg">{{ fes.f_reg }}</p>
-
-                <a href="/festivalInfo.vue" class="btn btn-primary">축제 상세페이지</a>
-
                 <a href="#" class="btn btn-primary">축제 상세페이지</a>
                 <button class="btn btn-xs btn-info" @click="goToUpdateForm(fes.f_name)">수정</button>
 
