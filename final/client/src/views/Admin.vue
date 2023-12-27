@@ -1,8 +1,17 @@
 <template>
   <div>
     <Header></Header>
-    <AdminSideBar></AdminSideBar>
-    <router-view :key="$route.fullPath"/>
+    <div class="container">
+      <div class="row">
+        <div class="col-2">
+      <AdminSideBar></AdminSideBar>
+        </div>
+
+        <div class="col-8">
+      <router-view />
+        </div>
+      </div>
+    </div>
     <Footer></Footer>
 
   </div>
