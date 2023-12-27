@@ -1,12 +1,14 @@
 <template>
   <div id="container">
     <h2>====회원가입페이지입니다====</h2>
-    <tr>
-      <th>아이디</th>
-    </tr>
-    <tr>
-      <input type="text" v-model="user.user_id" maxlength="15" placeholder="4~15자리 영소문자, 숫자"/>
-    </tr>
+    <form @submit.prevent="submitForm">
+    <div :class="{'error': !isValidUserId}">
+      <!-- 보류. 영문 한글자 이상 입력시 오류메세지 뜨는데, 한글은 두글자 이상이여야지 뜸 -->
+      <label>아이디</label><br>
+      <input type="text" v-model="user.user_id" placeholder="4~15자리 영소문자, 숫자" pattern="[a-z0-9]{4,15}" required/>
+      <p class="error-message" v-if="user.user_id.length === 0 && !isValidUserId">아이디를 입력해주세요.</p>
+      <p class="error-message" v-if="user.user_id.length > 0 && !isValidUserId || user.user_id.length > 15 || /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(user.user_id) || /[!@#$%^&*()+\-=_.]/.test(user.user_id)">4~15자리의 영문 소문자와 숫자만 가능합니다.</p>
+    </div>
     <tr>
       <th>비밀번호</th>
     </tr>
@@ -61,9 +63,9 @@
       <input type="checkbox" name="sns receives" v-model="user.user_receive_sms" />SNS 수신 동의
     </tr>
     <tr>
-      <button v-on:click="signUp">가입완료</button>
+      <button type="submit" v-on:click="signUp()">가입완료</button>
     </tr>
-    
+  </form>
   </div>
 </template>
 <script>
@@ -85,8 +87,21 @@ export default {
         user_gender: null,
       },  
     }
-  }, 
+  },
+  computed: {
+    isValidUserId() {
+      return this.user.user_id.length >= 4;
+    }
+  } ,
   methods: {
+    submitForm() {
+      // 폼 제출 전에 유효성 검사를 수행하여 오류 메시지를 표시할 수 있습니다.
+      if (!this.isValidUserId) {
+        alert('입력값이 유효하지 않습니다. 다시 확인해주세요.');
+        return;
+      }
+    },
+    
     async signUp() {
       let data = {
         param: this.user,
@@ -113,3 +128,10 @@ export default {
   },
 }
 </script>
+<style>
+.error-message {
+  font-size: 12px;
+  color: red;
+  margin: 4px 0 0 0;
+}
+</style>

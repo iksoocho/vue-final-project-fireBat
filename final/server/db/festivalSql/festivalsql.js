@@ -1,7 +1,7 @@
 module.exports = {
     
 
-    // 전체리스트
+    // 전체 리스트 조회
     fesList : `select * from festival`,
 
     // 단건 조회
