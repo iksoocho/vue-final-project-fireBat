@@ -4,7 +4,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="section_title text-center mb_70">
-                        <h3>Popular Destination</h3>
+                        <h3><img width="280" height="47" src="../image/logo/이런축제어때요.png" ></h3>
                         <p>Suffered alteration in some form, by injected humour or good day randomised booth anim 8-bit hella wolf moon beard words.</p>
                     </div>
                 </div>
@@ -16,9 +16,16 @@
                             <img src="img/destination/1.png" alt="">
                         </div>
                         <div class="content">
-                            <p class="d-flex align-items-center">{{fes.f_name}} <a href="travel_destination.html">{{fes.f_firstday}}</a> </p>
+                            <p class="d-flex align-items-center">{{fes.f_name}} <a>{{fes.f_firstday}}</a> </p>
                             
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="more_place_btn text-center">
+                        <a class="boxed-btn4" href="#">More Festival</a>
                     </div>
                 </div>
             </div>
@@ -38,11 +45,13 @@ import axios from 'axios';
         created(){
         this.getFesRandomList(); 
         },
+
     methods : {
         async getFesRandomList(){
             this.fesRandomList = (await axios.get('/api/festival/random')
                                 .catch(err => console.log(err))).data; 
          }
-        }
+
     }
+}
 </script>

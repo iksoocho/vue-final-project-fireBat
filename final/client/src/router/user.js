@@ -14,12 +14,12 @@ export default {
   
     children: [
       {
-        path: 'main',
-        name: 'userMain',
+        path: '/main',
+        name: 'usermMain',
         component: userMain,
       },
       {
-        path: 'userInsert',
+        path: '/userInsert',
         name: 'userInsert',
         component: UserInsert,
       },
