@@ -67,7 +67,7 @@
         
     <div class="container">
         <div class="row">
-        <div v-for="(fes, i) in FestivalList" :key="i" class="col-md-3 mb-4">
+        <div v-for="(fes, i) in festivalList" :key="i" class="col-md-3 mb-4">
             <div class="card">
                 <img src="../../image/logo/로고.png" class="card-img-top" alt="">
             <div class="card-body">
@@ -75,7 +75,12 @@
                 <p class="card-text">{{ fes.f_content }}</p>
                 <p class="card-date">{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</p>
                 <p class="card-reg">{{ fes.f_reg }}</p>
+
                 <a href="/festivalInfo.vue" class="btn btn-primary">축제 상세페이지</a>
+
+                <a href="#" class="btn btn-primary">축제 상세페이지</a>
+                <button class="btn btn-xs btn-info" @click="goToUpdateForm(fes.f_name)">수정</button>
+
             </div>
             </div>
         </div>
@@ -85,14 +90,13 @@
 
 </template>
 
-
 <script>
 import axios from 'axios';
 
 export default {
     data(){
         return {
-            FestivalList : [],
+            festivalList : [],
         }
     },
     created(){
@@ -100,7 +104,7 @@ export default {
     },
     methods : {
         async getFestivalList(){
-            this.FestivalList = (await axios.get('/api/festival')
+            this.festivalList = (await axios.get('/api/festival')
                                 .catch(err => console.log(err))).data; 
         },
         getDateFormat(date){
@@ -112,8 +116,8 @@ export default {
 
 <style>
     .card {
-        width: 220px;
-        height: 400px
+        width: 225px;
+        height: 420px
     }
 </style>
 

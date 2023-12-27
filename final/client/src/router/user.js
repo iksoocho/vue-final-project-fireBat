@@ -3,7 +3,12 @@ import festivalList from "../views/festival/festivalList.vue"
 import payment from "../components/order/orderForm.vue";
 import paySuccess from "../components/order/orderSuccess.vue";
 import UserInsert from '../views/member/userInsert.vue';
+
 import festivalInfo from '../views/festival/FestivalInfo.vue';
+
+import festivalInsert from "../views/festival/festivalInsert.vue";
+import userMain from '../views/Usermain.vue'
+
 
 export default {
     path: "/",
@@ -12,7 +17,12 @@ export default {
   
     children: [
       {
-        path: 'userInsert',
+        path: '/main',
+        name: 'usermMain',
+        component: userMain,
+      },
+      {
+        path: '/userInsert',
         name: 'userInsert',
         component: UserInsert,
       },
@@ -28,13 +38,19 @@ export default {
       },
       {
         path: "/festivalList",
-        name: "FestivalList",
+        name: "festivalList",
         component: festivalList
       },
       {
+
         path: "/festivalInfo",
         name: "FestivalInfo",
         component: festivalInfo
+      },
+      {
+        path: "festivalInsert",
+        name: "festivalInsert",
+        component: festivalInsert
       }
     ],
   }
