@@ -3,6 +3,7 @@ import festivalList from "../views/festival/festivalList.vue"
 import payment from "../components/order/orderForm.vue";
 import paySuccess from "../components/order/orderSuccess.vue";
 import UserInsert from '../views/member/userInsert.vue';
+import festivalInfo from '../views/festival/FestivalInfo.vue';
 
 export default {
     path: "/",
@@ -29,6 +30,11 @@ export default {
         path: "/festivalList",
         name: "FestivalList",
         component: festivalList
+      },
+      {
+        path: "/festivalInfo",
+        name: "FestivalInfo",
+        component: festivalInfo
       }
     ],
   }

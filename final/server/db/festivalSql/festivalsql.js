@@ -1,7 +1,12 @@
 module.exports = {
     
-    fesList : `select * from festival`
-   ,
+    // 전체리스트
+    fesList : `select * from festival`,
+
+    // 상세페이지 개별조회
+    fesInfo : `select f_code, f_category, f_reg, f_name, f_number, f_loc
+    FROM t_board_board
+    WHERE f_code = ?`,
 
     // 등록
     fesInsert : `insert into festival set ?`,
