@@ -1,6 +1,14 @@
 <template>
   
   <header>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-auto d-flex align-items-center">
+                <img width="40" height="40" src="../image/logo/철조망빠따.jpg" style="margin-right: 10px;">
+                <h2 class="logo">불빠따</h2>
+            </div>
+        </div>
+    </div>
     <div class="header-area py-3">
         <div id="sticky-header" class="main-header-area">
             <div class="container-fluid">
@@ -41,7 +49,7 @@
                             <div class="social_wrap d-flex align-items-center justify-content-end">
                               <div class="text-end">
                                 <button type="button" class="btn btn-outline-danger me-2">Login</button>
-                                <button type="button" class="btn btn-primary">Sign-up</button>
+                                <button type="button" class="btn btn-primary" @click="goSign">Sign-up</button>
                               </div>
                             </div>
                         </div>
@@ -57,3 +65,23 @@
     </div>
   </header>
 </template>
+
+<script>
+export default {
+	
+	methods: {
+		goSign() {
+			this.$router.push('/userInsert').catch(() => {});
+		},
+	},
+}
+</script>
+
+
+<style>
+.logo {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+</style>
