@@ -1,11 +1,11 @@
 <template>
    <div class="container">
       <div class="row">
-         <div class="col" >
+         <div class="col-sm-8" >
             <form>
                <div class="form-group row" >
-                  <label for="deli_addr" class="col-sm-2 col-form-label">배송지 선택</label>
-                  <div class="col-sm-10">
+                  <label for="deli_addr" class="col-sm-3 col-form-label">배송지 선택</label>
+                  <div class="col-sm-9">
                      <select class="form-select" id="deli_addr_select" required>
                         <option value="">기본</option>
                         <option>자취방</option>
@@ -14,14 +14,14 @@
                   </div>
                </div>
                <div class="form-group row">
-                  <label for="name" class="col-sm-2 col-form-label">받는 사람</label>
-                  <div class="col-sm-10">
+                  <label for="name" class="col-sm-3 col-form-label">받는 사람</label>
+                  <div class="col-sm-9">
                      <input type="text" class="form-control" id="name" placeholder="받는사람">
                   </div>
                </div>
                <div class="form-group row">
-                  <label for="phone" class="col-sm-2 col-form-label">휴대폰 번호</label>
-                  <div class="col-sm-10">
+                  <label for="phone" class="col-sm-3 col-form-label">휴대폰 번호</label>
+                  <div class="col-sm-9">
                      <div class="row">
                         <div class="col">
                            <select class="form-select" id="phonePrefix" required>
@@ -39,13 +39,13 @@
                   </div>
                </div>
                <div class="form-group row">
-                  <label for="name" class="col-sm-2 col-form-label">받는 사람</label>
-                  <div class="col-sm-10">
+                  <label for="name" class="col-sm-3 col-form-label">받는 사람</label>
+                  <div class="col-sm-9">
                      <div class="row">
                         <div class="col">
                            <input type="text" class="form-control" id="zip" v-model="zip" readonly>
                         </div>
-                        <div class="col">
+                        <div class="col" style="text-align: center;">
                            <button type="button" class="btn btn-secondary btn-sm" @click="showApi" style="width:60px; height:10px; font-size:x-small; display: flex; align-items:center;">주소검색</button>
                         </div>
                      </div>
@@ -54,8 +54,8 @@
                   </div>
                </div>
                <div class="form-group row">
-                  <label for="deliRequire" class="col-sm-2 col-form-label">배송 요청사항</label>
-                  <div class="col-sm-10">
+                  <label for="deliRequire" class="col-sm-3 col-form-label">배송 요청사항</label>
+                  <div class="col-sm-9">
                      <select class="form-select" id="deliRequire" required>
                         <option value="1" selected>배송 전 연락바랍니다</option>
                         <option>부재시 문 앞에 두고 연락주세요</option>
@@ -66,7 +66,7 @@
                
             </form>
          </div>
-         <div class="col">
+         <div class="col-sm-4">
             <ul class="list-group mb-3">
                <li class="list-group-item d-flex justify-content-between lh-sm">
                   <div>
@@ -99,7 +99,7 @@
                   <strong>결제예정금액</strong>
                </li>
                <li class="list-group-item d-flex justify-content-between">
-                  <h3>결제정보</h3>
+                  <span>결제정보</span>
                   <button :class="{ active: selectedPaymentMethod === 'kakaopay' }" @click="selectPaymentMethod('kakaopay')" :style="{ backgroundColor: selectedPaymentMethod === 'kakaopay' ? 'yellow' : 'gray' }">카카오페이</button>
                   <button :class="{ active: selectedPaymentMethod === 'toss' }" @click="selectPaymentMethod('toss')" :style="{ backgroundColor: selectedPaymentMethod === 'toss' ? 'blue' : 'gray' }">토스페이</button>
                   <button :class="{ active: selectedPaymentMethod === 'kg' }" @click="selectPaymentMethod('kg')" :style="{ backgroundColor: selectedPaymentMethod === 'kg' ? 'purple' : 'gray' }">신용카드</button>
