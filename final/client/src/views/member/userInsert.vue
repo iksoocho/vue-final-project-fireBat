@@ -6,7 +6,6 @@
     </tr>
     <tr>
       <input type="text" v-model="user.user_id" maxlength="15" placeholder="4~15자리 영소문자, 숫자"/>
-      <div v-if="!idValid">4~15자리 영소문자, 숫자를 입력해주세요</div>
     </tr>
     <tr>
       <th>비밀번호</th>
@@ -112,8 +111,5 @@ export default {
         }).open();
       }
   },
-  watch: {
-
-  }
 }
 </script>
