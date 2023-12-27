@@ -9,7 +9,7 @@
                             <div class="slider_text text-center">
                                 <h3>Daegu</h3>
                                 <p>Pixel perfect design with awesome contents</p>
-                                <a href="#" class="boxed-btn3">Explore Now</a>
+                               
                             </div>
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                             <div class="slider_text text-center">
                                 <h3>Seoul</h3>
                                 <p>Pixel perfect design with awesome contents</p>
-                                <a href="#" class="boxed-btn3">Explore Now</a>
+                                
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                             <div class="slider_text text-center">
                                 <h3>Busan</h3>
                                 <p>Pixel perfect design with awesome contents</p>
-                                <a href="#" class="boxed-btn3">Explore Now</a>
+                                
                             </div>
                         </div>
                     </div>

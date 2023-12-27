@@ -1,16 +1,22 @@
 <template>
   <div>
     <banner></banner>
-    <where></where>
+    
+    <random></random>
+    <product></product>
+
   </div>
 </template>
 
 <script>
 import banner from '../layouts/MainCarousel.vue'
 import where from '../layouts/MainWhere.vue'
+import random from '../layouts/MainRandomCard.vue'
+import product from '../layouts/MainProductCard.vue'
+
 export default {
     components: {
-        banner,where
+        banner,where,random,product
     }
 }
 </script>
