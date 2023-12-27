@@ -7,7 +7,7 @@
       <label>아이디</label><br>
       <input type="text" v-model="user.user_id" placeholder="4~15자리 영소문자, 숫자" pattern="[a-z0-9]{4,15}" required/>
       <p class="error-message" v-if="user.user_id.length === 0 && !isValidUserId">아이디를 입력해주세요.</p>
-      <p class="error-message" v-if="user.user_id.length > 0 && !isValidUserId || user.user_id.length > 15 || /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(user.user_id) || /[!@#$%^&*()+\-=_.]/.test(user.user_id)">4~15자리의 영문 소문자와 숫자만 가능합니다.</p>
+      <p class="error-message" v-if="user.user_id.length > 0 && !isValidUserId || user.user_id.length > 15 || /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(user.user_id) || /[!@#$%^&*()+\-=_.]/.test(user.user_id) || /[\s+]/.test(user.user_id)">4~15자리의 영문 소문자와 숫자만 가능합니다.</p>
     </div>
     <tr>
       <th>비밀번호</th>
@@ -85,7 +85,8 @@ export default {
         user_receive_email: 0,
         user_receive_sms: 0,
         user_gender: null,
-      },  
+      },
+       
     }
   },
   computed: {
@@ -95,7 +96,7 @@ export default {
   } ,
   methods: {
     submitForm() {
-      // 폼 제출 전에 유효성 검사를 수행하여 오류 메시지를 표시할 수 있습니다.
+       // 폼 제출전 유효성 검사(보류)
       if (!this.isValidUserId) {
         alert('입력값이 유효하지 않습니다. 다시 확인해주세요.');
         return;
