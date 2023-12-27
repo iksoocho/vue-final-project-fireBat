@@ -1,26 +1,50 @@
 <template>
-    <div class="row mt-5">
-    <div class="col-12">
-        <table class="table table-light">
-            <thead class="thead-light">
-                <tr>
-                    <th space="col">축제코드</th>
-                    <th space="col">축제명</th>
-                    <th space="col">축제카테고리</th>
-                    <th space="col">축제지역</th>
-                    <th space="col">축제이름</th>
-                    <th space="col">축제연락처</th>
-                    <th space="col">축제장소</th>
-                    <th space="col">축제시작일</th>
-                    <th space="col">축제종료일</th>
-                    <th space="col">축제설명</th>
-                    <th space="col">축제금액</th>
-                    <th space="col">축제공식페이지</th>
-                    <th space="col">이미지</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
+    <div class="container">
+    <form>
+        <label for="code">축제코드</label>
+        <input type="text" v-model="fesInfo.f_code">
+        <br>
+        <label for="name">축제명</label>
+        <input type="text" v-model="fesInfo.f_name">
+        <br>
+        <label for="cate">카테고리</label>
+        <br>
+            <select name="cate" v-model="fesInfo.f_category">
+                <option value="문화">문화</option>
+                <option value="커플">커플</option>
+                <option value="예술">예술</option>
+                <option value="관광">관광</option>
+                <option value="불빛">불빛</option>
+            </select>
+        <br>
+        <br>
+        <label for="reg">축제지역</label>
+        <input type="text" v-model="fesInfo.f_reg">
+        <br>
+        <label for="number">축제연락처</label>
+        <input type="text" v-model="fesInfo.f_number">
+        <br>
+        <label for="loc">축제장소</label>
+        <input type="text" v-model="fesInfo.f_loc">
+        <br>
+        <label for="fday">축제시작일</label>
+        <input type="date" v-model="fesInfo.f_firstday">
+        <br>
+        <label for="lday">축제종료일</label>
+        <input type="date" v-model="fesInfo.f_lastday">
+        <br>
+        <label for="con">축제내용</label>
+        <textarea cols="40" v-model="fesInfo.f_content"/>
+        <br>
+        <label for="price">축제금액</label>
+        <input type="text" id="count" v-model="fesInfo.f_price">
+        <br>
+        <label for="page">공식홈페이지</label>
+        <input type="url" v-model="fesInfo.f_url">
+        <br>
+        <br>
+        <button v-on:click="insertInfo">등록</button>
+    </form>
 </div>
 </template>
 
@@ -29,20 +53,46 @@ import axios from 'axios';
 
 export default {
     data() {
-        return{
-            festivalInsert : [],
-        }
+    return {
+    fesInfo: {
+        f_code: '',
+        f_category: '',
+        f_reg: '',
+        f_name: '',
+        f_number: '',
+        f_loc: '',
+        f_firstday: '',
+        f_lastday: '',
+        f_content: '',
+        f_price: '',
+        f_url: '',
     },
-    created() {
-        this.getFestivalInsert();
+    fesImgs: {
+        f_img_no: '',
+        f_code: '',
+        f_filename: '',
+        f_db_name: '',
+        f_sequence: '',
+    }
+    };
+},
+methods: {
+    async insertInfo() {
+    let data = {
+        param: this.fesInfo,
+    };
+    let result = await axios(`/api/festival/insert`, {
+        method: 'post',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(data),
+    }).catch((err) => console.log(err));
+
+    console.log(result.data);
     },
-    methods : {
-        async getFestivalInsert() {
-            this.festivalInsert = (await axios.get('/api/festival')
-                                .catch(err => console.log(err))).data;
-        }
-    } 
-}
+},
+    }
 </script>
 
 <style>

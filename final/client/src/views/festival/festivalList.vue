@@ -76,6 +76,7 @@
                 <p class="card-date">{{ getDateFormat(fes.f_firstday) }} - {{ getDateFormat(fes.f_lastday) }}</p>
                 <p class="card-reg">{{ fes.f_reg }}</p>
                 <a href="#" class="btn btn-primary">축제 상세페이지</a>
+                <button class="btn btn-xs btn-info" @click="goToUpdateForm(fes.f_name)">수정</button>
             </div>
             </div>
         </div>
@@ -84,7 +85,6 @@
     </div>
 
 </template>
-
 
 <script>
 import axios from 'axios';

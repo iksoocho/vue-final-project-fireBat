@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
     export default{
         data(){
             return{
@@ -38,7 +40,7 @@
         },
     methods : {
         async getFesRandomList(){
-            this.FestivalList = (await axios.get('/api/festival/random')
+            this.fesRandomList = (await axios.get('/api/festival/random')
                                 .catch(err => console.log(err))).data; 
          }
         }
