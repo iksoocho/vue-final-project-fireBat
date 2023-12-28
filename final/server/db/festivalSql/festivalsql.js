@@ -5,8 +5,7 @@ module.exports = {
     fesList : `select * from festival`,
 
     // 단건 조회
-    fesInfo : `select f_code from festival where f_name = ?`,
-
+    fesInfo : `select * from festival where f_code = ?`,
 
     // 등록
     fesInsert : `insert into festival set ?`,

@@ -43,7 +43,7 @@
         <input type="url" v-model="fesInfo.f_url">
         <br>
         <br>
-        <button v-on:click="updateFestival">수정</button>
+        <button v-on:click="updateInfo">수정</button>
     </form>
 </div>
 </template>
@@ -52,32 +52,53 @@
   import axios from 'axios';
   
   export default {
+
     data() {
-      return {
-        fesInfo: {
-          f_code: '',
-          f_category: '',
-          f_reg: '',
-          f_name: '',
-          f_number: '',
-          f_loc: '',
-          f_firstday: '',
-          f_lastday: '',
-          f_content: '',
-          f_price: '',
-          f_url: '',
-        }
-      };
+    return {
+        f_code : '',   
+        fesInfo : {}
+    }
+  },
+  created() {
+        this.searchNo = this.$route.query.f_code;
+        this.getFesInfo();
     },
     methods: {
-    async updateFestival() {
-      try {
-        const result = await axios.put(`/api/festival/update`, this.fesInfo);
-        console.log('Server Response:', result.data);
-      } catch (error) {
-        console.error('Error updating festival:', error);
-      }
+      async getFesInfo() {
+        let result = await axios.get(`/api/festival/${this.searchNo}`) 
+                                .catch(err => console.log(err));
+        this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
+    },
+    async updateInfo() {
+      let data = {
+                param : {      
+                f_category : this.fesInfo.f_category,
+                f_reg : this.fesInfo.f_reg,
+                f_name : this.fesInfo.f_name,
+                f_number : this.fesInfo.f_number,
+                f_loc : this.fesInfo.f_loc,
+                f_firstday : this.fesInfo.f_firstday,
+                f_lastday : this.fesInfo.f_lastday,
+                f_content : this.fesInfo.f_content,
+                f_price : this.fesInfo.f_price,
+                f_url : this.fesInfo.f_url
+                }
+            };
+      let result = await axios   // 보낼 정보 경로와 데이터
+            .put(`/api/festival/update/${this.fesInfo.f_code}`, data)
+            .catch((err) => console.log(err));
+    },
+    Validation() {
+      if(this.fesInfo.f_code == '') {
+        alert('축제 코드가 입력되지 않았습니다.');
+        return false;
+      } 
+      return true;
     }
-  }
-  };
+    
+    }
+    
+}
+
+  
   </script>
