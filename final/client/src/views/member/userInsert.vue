@@ -1,7 +1,6 @@
 <template>
   
   <div id="container" style="display: flex; justify-content : center;">
-    <h2>회원가입해라</h2>
     <form @submit.prevent="submitForm">
     <div :class="{'error': !isValidUserId}">
       <!-- 보류. 영문 한글자 이상 입력시 오류메세지 뜨는데, 한글은 두글자 이상이여야지 뜸 -->
@@ -25,7 +24,7 @@
         type="password" 
         v-model="user.user_pw"  
         placeholder="8~20자리 영문 대/소문자, 숫자, 특수문자 조합(모두포함)" 
-        pattern="^(?!.*(\w)\1{3})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&\-\_])[a-zA-Z\d!@#$%^&\-\_]{8,20}$"  
+        pattern="/^(?!.*(\w)\1{3})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&\-\_])[a-zA-Z\d!@#$%^&\-\_]{8,20}$/"  
         @focus="showErrorMessagePw" style="width:400px;height:40px;" 
         required/>
       <p class="error-message" v-if="isErrorMessageVisiblePw">비밀번호를 입력해주세요.</p>
@@ -58,30 +57,26 @@
       placeholder="예) 19950208" 
       pattern="^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$" 
       @focus="showErrorMessageBirth" 
-      style="width:400px;height:40px;" 
+      style="width:400px;height:40px;margin-right: 20px;" 
       required/>
+      <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="0" v-model="user.user_gender"/>
+  <label class="btn btn-outline-primary" for="btnradio1">남</label>
+
+  <input type="radio" class="btn-check" name="btnradio" id="btnradio2"  autocomplete="off" value="1" v-model="user.user_gender"/>
+  <label class="btn btn-outline-primary" for="btnradio2">여</label>
     <p class="error-message" v-if="isErrorMessageVisibleBirth">생년월일을 입력해주세요.</p>
     <p class="error-message" v-else-if="user.user_birth.length > 0 && !/^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/.test(user.user_birth)">생년월일을 정확하게 입력해 주세요.</p>
-    
-    
-      <td>
-        <input type="radio" name="gender" value="0" v-model="user.user_gender" />남
-        <input type="radio" name="gender" value="1" v-model="user.user_gender" />여
-      </td>
+      </div>  
+    <div>
+      <label>전화번호[필수]</label><br>
+      <input type="text" v-model="user.user_tel" placeholder="'-'없이 숫자만 입력" style="width:400px;height:40px;" />
+    </div>
+    <div>
+      <label>이메일</label><br>
+      <input type="text" v-model="user.user_email" style="width:400px;height:40px;"/>
     
     </div>
-    <tr>
-      <th>필수 전화번호</th>
-    </tr>
-    <tr>
-      <input type="text" v-model="user.user_tel" />
-    </tr>
-    <tr>
-      <th>이메일</th>
-    </tr>
-    <tr>
-      <input type="text" v-model="user.user_email" />
-    </tr>
+    
     <tr>
       <th>주소[선택]</th>
     </tr>
