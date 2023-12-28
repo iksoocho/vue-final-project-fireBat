@@ -16,14 +16,14 @@
         </thead>
         <tbody>
             <tr :key="i" v-for="(users, i) in adminUserList">
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th>{{users.user_id }}</th>
+              <th>{{users.user_pw }}</th>
+              <th>{{users.user_email }}</th>
+              <th>{{users.user_name }}</th>
+              <th>{{users.user_tel }}</th>
+              <th>{{users.user_address }}</th>
+              <th>{{users.user_birth }}</th>
+              <th>{{ }}</th>
             </tr>
         </tbody>
     </table>
@@ -34,7 +34,20 @@
 import axios from 'axios';
 
 export default {
-
+  // data(){
+  //   return {
+  //     adminUserList: [],
+  //   }
+  // },
+  // created(){
+  //   this.getAdminUserList();
+  // },
+  // methods : {
+  //   async getAdminUserList(){
+  //     this.adminUserList = (await axios.get('/api/product'))
+  //                                       .catch(err => console.log(err)).data;
+  //   }
+  // }
 }
 </script>
 

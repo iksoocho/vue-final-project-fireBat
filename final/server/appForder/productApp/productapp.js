@@ -8,25 +8,33 @@ router.get('/', async(req,res)=>{
     res.send(list);
 });
 
+// 단건
+router.get('/:prod_code', async(req,res) =>{
+    let data = req.params.prod_code;
+    let prodInfo = await mysql.query('productInfo',data);
+    res.send(prodInfo[0]);
+})
+
 
 // 등록 insert
-router.post('/', async (req, res) => {
+router.post('/insert', async (req, res) => {
     let data = req.body.param;
+    console.log(data);
     let result = await mysql.query('productInsert', data);
     res.send(result);
 
 })
 
 // 수정
-router.put('/:no', async (req,res) =>{
-    let data = [req.body.param, res.params.no];
+router.put('/update/:prod_code', async (req,res) =>{
+    let data = [req.body.param, res.params.prod_code];
     let result = await mysql.query('productUpdate', data);
     res.send(result);
 })
 
 // 삭제 
-router.delete('/:no', async (req,res) => {
-    let data = req.params.id;
+router.delete('/delete/:prod_code', async (req,res) => {
+    let data = req.params.prod_code;
     let result = await mysql.query('productDelete', data);
     res.send(result);
 })
