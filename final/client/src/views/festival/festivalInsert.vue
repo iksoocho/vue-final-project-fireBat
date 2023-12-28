@@ -67,13 +67,6 @@ export default {
         f_price: '',
         f_url: '',
     },
-    fesImgs: {
-        f_img_no: '',
-        f_code: '',
-        f_filename: '',
-        f_db_name: '',
-        f_sequence: '',
-    }
     };
 },
 methods: {
@@ -90,6 +83,11 @@ methods: {
     }).catch((err) => console.log(err));
 
     console.log(result.data);
+    if(f_code == ''){
+        alert('등록을 실패했습니다.')
+    } else {
+        alert('축제 등록이 되었습니다.')
+    }
     },
 },
     }
