@@ -6,6 +6,8 @@ import UserInsert from '../views/member/userInsert.vue';
 import festivalUpdate from '../views/festival/festivalUpdate.vue';
 import festivalInsert from "../views/festival/festivalInsert.vue";
 import userMain from '../views/Usermain.vue'
+import festivalInfo from '../views/festival/festivalInfo.vue';
+import festivalCalender from '../views/festival/festivalCalender.vue';
 
 
 export default {
@@ -48,6 +50,16 @@ export default {
         path: "festivalUpdate",
         name: "festivalUpdate",
         component: festivalUpdate
+      },
+      {
+        path: "festivalInfo",
+        name: "festivalInfo",
+        component: festivalInfo
+      },
+      {
+        path: "festivalCalender",
+        name: "festivalCalender",
+        component: festivalCalender
       }
     ],
   }

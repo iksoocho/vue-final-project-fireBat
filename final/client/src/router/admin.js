@@ -3,6 +3,7 @@ import adminForm from '../views/Admin.vue';
 import adminUserList from '../views/admin/adminUserList.vue';
 import productInsert from '../views/admin/productInsert.vue';
 import productList from '../views/admin/productList.vue';
+import productInfo from '../views/admin/productInfo.vue';
 
 export default {
     path: '/adminForm',
@@ -23,6 +24,11 @@ export default {
         path: '/productList',
         name: 'productList',
         component: productList
+      },
+      {
+        path: '/productInfo',
+        name: 'productInfo',
+        component: productInfo
       }
     ],
   }
