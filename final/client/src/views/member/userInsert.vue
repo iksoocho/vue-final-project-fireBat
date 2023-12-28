@@ -6,7 +6,7 @@
     <div :class="{'error': !isValidUserId}">
       <!-- 보류. 영문 한글자 이상 입력시 오류메세지 뜨는데, 한글은 두글자 이상이여야지 뜸 -->
       <label>아이디</label><br>
-<<<<<<< HEAD
+
       <input 
         type="text" 
         v-model="user.user_id" 
@@ -17,11 +17,7 @@
         required />
       <p class="error-message" v-if="isErrorMessageVisibleId">아이디를 입력해주세요.</p>
       <p class="error-message" v-if="user.user_id.length > 0 && !/[a-z0-9]{4,15}/.test(user.user_id)">4~15자리의 영문 소문자와 숫자만 가능합니다.</p>
-=======
-      <input type="text" v-model="user.user_id" placeholder="4~15자리 영소문자, 숫자" pattern="[a-z0-9]{4,15}" required @focus="showErrorMessage" />
-      <p class="error-message" v-if="isErrorMessageVisible">아이디를 입력해주세요.</p>
-      <p class="error-message" v-if="user.user_id.length > 0 && !isValidUserId || user.user_id.length > 15 || /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(user.user_id) || /[!@#$%^&*()+\-=_.]/.test(user.user_id) || /[\s+]/.test(user.user_id)">4~15자리의 영문 소문자와 숫자만 가능합니다.</p>
->>>>>>> 3ebd1dc74cc3666d2a2fb33c8a7c1244d48e9496
+
     </div>
     <div>
       <label>비밀번호</label><br>
@@ -123,13 +119,11 @@ export default {
         user_receive_sms: 0,
         user_gender: null,
       },
-<<<<<<< HEAD
+
       isErrorMessageVisibleId: false,
       isErrorMessageVisiblePw: false,
       isErrorMessageVisibleBirth: false,
-=======
-      isErrorMessageVisible: false
->>>>>>> 3ebd1dc74cc3666d2a2fb33c8a7c1244d48e9496
+
     }
   },
   computed: {
@@ -142,7 +136,6 @@ export default {
   } ,
   watch: {
   'user.user_id'() {
-<<<<<<< HEAD
     this.isErrorMessageVisibleId = false;
   },
   'user.user_pw'() {
@@ -150,9 +143,7 @@ export default {
   },
   'user.user_birth'(){
     this.isErrorMessageVisibleBirth = false;
-=======
-    this.isErrorMessageVisible = false;
->>>>>>> 3ebd1dc74cc3666d2a2fb33c8a7c1244d48e9496
+
   }
 },
   methods: {
@@ -163,7 +154,7 @@ export default {
         return;
       }
     },
-<<<<<<< HEAD
+
     showErrorMessageId() {
     if (this.user.user_id.length === 0) {
       this.isErrorMessageVisibleId = true;
@@ -179,14 +170,6 @@ export default {
         this.isErrorMessageVisibleBirth = true;
       }
     },
-=======
-    showErrorMessage() {
-    if (this.user.user_id.length === 0) {
-      this.isErrorMessageVisible = true;
-    }
-  },
-    
->>>>>>> 3ebd1dc74cc3666d2a2fb33c8a7c1244d48e9496
     async signUp() {
       let data = {
         param: this.user,
