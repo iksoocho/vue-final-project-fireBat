@@ -67,7 +67,7 @@
         
     <div class="container">
         <div class="row">
-        <div v-for="(fes, i) in festivalList" :key="i" class="col-md-3 mb-4">
+        <div v-for="(fes, i) in festivalList" :key="i" class="col-md-3 mb-4" @click="goFesInfo(fes.f_code)">
             <div class="card">
                 <img src="../../image/logo/로고.png" class="card-img-top" alt="">
             <div class="card-body">
@@ -76,7 +76,7 @@
                 <p class="card-date">{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</p>
                 <p class="card-reg">{{ fes.f_reg }}</p>
                 <a href="#" class="btn btn-primary">축제 상세페이지</a>
-                <button class="btn btn-xs btn-info" @click="goToUpdateForm(fes.f_name)">수정</button>
+                <button class="btn btn-xs btn-info" @click="goToUpdate(fes.f_code)">수정</button>
 
             </div>
             </div>
@@ -106,6 +106,12 @@ export default {
         },
         getDateFormat(date){
             return this.$dateFormat(date);   // 날짜 변환
+        },
+        goToUpdate(f_code) {
+            this.$router.push({path : '/festivalUpdate', query:{f_code : f_code}})
+        },
+        goFesInfo(f_code){
+            this.$router.push({path : '/festivalInfo', query:{f_code : f_code}})
         }
     }
 }

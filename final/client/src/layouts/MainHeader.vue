@@ -36,6 +36,7 @@
                                             <ul class="submenu">
                                                     <li><a href="/festivalList">축제</a></li>
                                                     <li><a href="festivalCalendar">축제 달력</a></li>
+
                                             </ul>
                                         </li>
                                         <li><a href="about.html">특산물 상점</a></li>
