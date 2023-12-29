@@ -8,6 +8,7 @@ import festivalInsert from "../views/festival/festivalInsert.vue";
 import userMain from '../views/Usermain.vue'
 import festivalInfo from '../views/festival/festivalInfo.vue';
 import festivalCalender from '../views/festival/festivalCalender.vue';
+import userProductList from '../views/product/userProductList.vue';
 
 
 export default {
@@ -60,6 +61,11 @@ export default {
         path: "festivalCalender",
         name: "festivalCalender",
         component: festivalCalender
+      },
+      {
+        path: '/userProductList',
+        name: 'userProductList',
+        component: userProductList
       }
     ],
   }
