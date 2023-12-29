@@ -15,4 +15,7 @@ module.exports = {
 
     //삭제
     productDelete : `DELETE FROM product WHERE prod_code = ? `,
+
+    // 메인페이지 랜덤 6가지
+    fesRandomList : `select * from product order by rand() limit 6`
 }

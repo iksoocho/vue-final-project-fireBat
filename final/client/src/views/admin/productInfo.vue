@@ -24,20 +24,20 @@
             </tr>
             <tr>
                 <th>지역분류</th>
-                <td></td>
+                <td class="text-center">{{prodInfo.prod_loc}}</td>
             </tr>
             <tr>
                 <th>상품분류</th>
-                <td></td>
+                <td class="text-center">{{prodInfo.prod_cate}}</td>
             </tr>
           
         </table>
     </div>
-    <!-- <div class="row">
+    <div class="row">
             <button class="btn" @click="updateInfo(prodInfo.prod_code)">수정</button>
-            <router-link to="/" class="btn">목록</router-link> 
+            <router-link to="/productList" class="btn">목록</router-link> 
             <button class="btn" @click="deleteInfo(prodInfo.prod_code)">삭제</button>
-        </div> -->
+        </div>
   </div>
 </template>
 
@@ -62,8 +62,10 @@ export default {
             let result = await axios.get(`/api/product/${this.searchProd}`)
                                     .catch(err => console.log(err));
             
-            
             this.prodInfo = result.data;
+        },
+        moveProdUpdate(prod_code){
+            this.$router.push({path: '/prodUpdate', query :{ prod_code : prod_code}})
         }
     }
 }
