@@ -112,7 +112,7 @@ export default {
         },
         goFesInfo(f_code){
             this.$router.push({path : '/festivalInfo', query:{f_code : f_code}})
-        }
+        },
     }
 }
 </script>
