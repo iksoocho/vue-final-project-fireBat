@@ -72,7 +72,7 @@
                   <div>
                   <h6 class="my-0">총 상품금액</h6>
                   </div>
-                  <span class="text-body-secondary">$12</span>
+                  <span class="text-body-secondary">1,050원</span>
                </li>
                <li class="list-group-item d-flex justify-content-between lh-sm">
                   <div>
@@ -81,18 +81,18 @@
                   </div>
                   <span class="text-body-secondary"><input type="number" class="form-control" id="point"></span>
                </li>
-               <li class="list-group-item d-flex justify-content-between lh-sm">
+               <!-- <li class="list-group-item d-flex justify-content-between lh-sm">
                   <div>
                   <h6 class="my-0">총 할인금액</h6>
                   </div>
                   <span class="text-body-secondary">할인금액</span>
-               </li>
+               </li> -->
                <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
                   <div class="text-success">
                      <h6 class="my-0">배송비</h6>
                      <small>얼마이상무료?</small>
                   </div>
-                  <span class="text-success">배송비</span>
+                  <span class="text-success">2,500원</span>
                </li>
                <li class="list-group-item d-flex justify-content-between">
                   <span>결제예정금액</span>
@@ -160,16 +160,16 @@ methods: {
          paymentInfo.pay_method = 'card';
       }
 
-      iamport.request_pay(paymentInfo, (response) => {
+      iamport.request_pay(paymentInfo, (resp) => {
          // 결제 완료 후 처리할 로직 작성
-         console.log(rsp);
-         if (rsp.success) {
+         console.log(resp);
+         if (resp.success) {
             var msg = '결제가 완료되었습니다.';
             alert(msg);
-            location.href = "결제 완료 후 이동할 페이지 url"
+            // location.href = "/paySuccess"
          } else {
             var msg = '결제에 실패하였습니다.';
-            msg += '에러내용 : ' + rsp.error_msg;
+            msg += '에러내용 : ' + resp.error_msg;
             alert(msg);
          }
       });
