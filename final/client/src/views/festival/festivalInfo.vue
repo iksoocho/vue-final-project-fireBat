@@ -51,7 +51,7 @@
         </div>
         <div class="row">
              <button class="btn btn-info" v-on:click="goFesUpdate(fesInfo.f_code)">수정</button>
-            <router-link to="/empList" class="btn btn-success">목록</router-link>
+            <router-link to="/festivalList" class="btn btn-success">목록</router-link>
             <button class="btn btn-warning" @click="fesDelete(fesInfo.f_code)">삭제</button>
         </div>
     </div>
