@@ -9,12 +9,12 @@
         <br>
         <label for="cate">카테고리</label>
         <br>
-            <select name="cate" v-model="fesInfo.f_category" :selected="fesInfo.f_category === value">
-                <option value="문화">문화</option>
-                <option value="커플">커플</option>
-                <option value="예술">예술</option>
-                <option value="관광">관광</option>
-                <option value="불빛">불빛</option>
+            <select name="cate" v-model="fesInfo.f_category">
+                <option value="culture">문화</option>
+                <option value="couple">커플</option>
+                <option value="art">예술</option>
+                <option value="tourism">관광</option>
+                <option value="firework">불빛</option>
             </select>
         <br>
         <br>
@@ -88,16 +88,8 @@
             .put(`/api/festival/update/${this.fesInfo.f_code}`, data)
             .catch((err) => console.log(err));
     },
-    Validation() {
-      if(this.fesInfo.f_code == '') {
-        alert('축제 코드가 입력되지 않았습니다.');
-        return false;
-      } 
-      return true;
     }
-    
-    }
-    
+  
 }
 
   
