@@ -24,11 +24,11 @@
         type="password" 
         v-model="user.user_pw"  
         placeholder="8~20자리 영문 대/소문자, 숫자, 특수문자 조합(모두포함)" 
-        pattern="/^(?!.*(\w)\1{3})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&\-\_])[a-zA-Z\d!@#$%^&\-\_]{8,20}$/"  
+        pattern="^(?!.*(.)\1{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&-_]).{8,20}$"  
         @focus="showErrorMessagePw" style="width:400px;height:40px;" 
         required/>
       <p class="error-message" v-if="isErrorMessageVisiblePw">비밀번호를 입력해주세요.</p>
-      <p class="error-message" v-if="user.user_pw.length > 0 && !/^(?!.*(\w)\1{3})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&\-\_])[a-zA-Z\d!@#$%^&\-\_]{8,20}$/.test(user.user_pw)">8~20자리의 영문 대/소문자, 숫자, 특수문자 조합을 사용해 주세요.</p>
+      <p class="error-message" v-if="user.user_pw.length > 0 && !/^(?!.*(.)\1{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&-_]).{8,20}$/.test(user.user_pw)">8~20자리의 영문 대/소문자, 숫자, 특수문자 조합을 사용해 주세요.</p>
       <p class="error-message" v-if="/[\s+]/.test(user.user_pw)">공백 없이 입력해 주세요.</p>
       <p class="error-message" v-if="(user.user_pw.match(/(\d)\1{3,}|([A-Za-z])\2{3,}/))">동일한 문자(숫자)는 4회 이상 연속 사용할 수 없습니다.</p>
       <!-- <p class="error-message" v-if="user.user_pw.length > 0 && !/[a-zA-Z\d!@#$%^&/-/_]/.test(user.user_pw)">특수문자는 !@#$%^&*()-_만 사용 가능합니다.</p> -->
@@ -59,21 +59,57 @@
       @focus="showErrorMessageBirth" 
       style="width:400px;height:40px;margin-right: 20px;" 
       required/>
-      <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="0" v-model="user.user_gender"/>
-  <label class="btn btn-outline-primary" for="btnradio1">남</label>
 
-  <input type="radio" class="btn-check" name="btnradio" id="btnradio2"  autocomplete="off" value="1" v-model="user.user_gender"/>
-  <label class="btn btn-outline-primary" for="btnradio2">여</label>
-    <p class="error-message" v-if="isErrorMessageVisibleBirth">생년월일을 입력해주세요.</p>
-    <p class="error-message" v-else-if="user.user_birth.length > 0 && !/^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/.test(user.user_birth)">생년월일을 정확하게 입력해 주세요.</p>
+      <input 
+      type="radio" 
+      class="btn-check" 
+      name="btnradio" 
+      id="btnradio1" 
+      autocomplete="off" 
+      value="0" 
+      v-model="user.user_gender"/>
+        <label class="btn btn-outline-primary" for="btnradio1">남</label>
+
+    <input 
+    type="radio" 
+    class="btn-check" 
+    name="btnradio" 
+    id="btnradio2"  
+    autocomplete="off" 
+    value="1" 
+    v-model="user.user_gender"/>
+
+      <label class="btn btn-outline-primary" for="btnradio2">여</label>
+        <p class="error-message" v-if="isErrorMessageVisibleBirth">생년월일을 입력해주세요.</p>
+        <p class="error-message" v-else-if="user.user_birth.length > 0 && !/^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/.test(user.user_birth)">생년월일을 정확하게 입력해 주세요.</p>
       </div>  
+      <!-- 전화번호 -->
     <div>
+      
       <label>전화번호[필수]</label><br>
-      <input type="text" v-model="user.user_tel" placeholder="'-'없이 숫자만 입력" style="width:400px;height:40px;" />
+
+      <input 
+      type="text" 
+      v-model="user.user_tel" 
+      placeholder="'-'없이 숫자만 입력" 
+      pattern="^\d{2,3}-?\d{3,4}-?\d{4}$" 
+      @focus="showisErrorMessageTel"
+      style="width:400px;height:40px;" />
+
+      <p class="error-message" v-if="isErrorMessageVisibleTel">전화번호를 입력해주세요.</p>
+      <p class="error-message" v-else-if="user.user_tel.length > 0 && !/^\d{2,3}-?\d{3,4}-?\d{4}$/.test(user.user_tel)">전화번호를 정확하게 입력해 주세요.</p>
+    
     </div>
+
+    <!-- 이메일 -->
     <div>
+
       <label>이메일</label><br>
-      <input type="text" v-model="user.user_email" style="width:400px;height:40px;"/>
+
+      <input 
+        type="text" 
+        v-model="user.user_email" 
+        style="width:400px;height:40px;"/>
     
     </div>
     
@@ -109,7 +145,6 @@ export default {
         user_birth: '',
         user_tel: '',
         user_email: '',
-        user_address: '',
         user_receive_email: 0,
         user_receive_sms: 0,
         user_gender: null,
@@ -118,7 +153,8 @@ export default {
       isErrorMessageVisibleId: false,
       isErrorMessageVisiblePw: false,
       isErrorMessageVisibleBirth: false,
-
+      isErrorMessageVisibleTel: false,
+      isErrorMessageVisibleEmail: false,
     }
   },
   computed: {
@@ -138,10 +174,18 @@ export default {
   },
   'user.user_birth'(){
     this.isErrorMessageVisibleBirth = false;
-
+  },
+  'user.user_tel'(){
+    this.isErrorMessageVisibleTel = false;
+  },
+  'user.user_email'(){
+    this.isErrorMessageVisibleEmail = false;
   }
+
 },
   methods: {
+    
+    
     submitForm() {
        // 폼 제출전 유효성 검사(보류)
       if (!this.isValidUserId) {
@@ -165,20 +209,29 @@ export default {
         this.isErrorMessageVisibleBirth = true;
       }
     },
-    async signUp() {
-      let data = {
-        param: this.user,
-      };
-      let result = await axios(`/api/user`, {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: JSON.stringify(data),
-      }).catch((err) => console.log(err));
-
-      console.log(result.data);
+    showisErrorMessageTel(){
+      if(this.user.user_tel.length === 0){
+        this.isErrorMessageVisibleTel = true;
+      }
     },
+    showisErrorMessageEmail(){
+      if(this.user.user_email.length === 0) {
+        this.isErrorMessageVisibleEmail = true;
+      }
+    },
+    async signUp() {
+  try {
+    let data = { param: this.user };
+    let result = await axios.post(`/api/user`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(result.data);
+  } catch (error) {
+    console.error(error);
+  }
+},
     postOpen() {
         new daum.Postcode({
           oncomplete: function(data) {
@@ -190,6 +243,7 @@ export default {
       }
   },
 }
+
 </script>
 <style>
 .error-message {
