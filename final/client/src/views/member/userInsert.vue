@@ -96,7 +96,7 @@
       @focus="showisErrorMessageTel"
       style="width:400px;height:40px;" />
 
-      <p class="error-message" v-if="isErrorMessageVisibleTel">전화번호를 입력해주세요.</p>
+      <p class="error-message" v-if="isErrorMessageVisibleTel">전화번호를 입력해 주세요.</p>
       <p class="error-message" v-else-if="user.user_tel.length > 0 && !/^\d{2,3}-?\d{3,4}-?\d{4}$/.test(user.user_tel)">전화번호를 정확하게 입력해 주세요.</p>
     
     </div>
@@ -108,16 +108,40 @@
 
       <input 
         type="text" 
-        v-model="user.user_email" 
+        v-model="user.user_email"
+        placeholder="이메일 주소 입력"
+        @focus="showisErrorMessageEmail"
+        pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$"
         style="width:400px;height:40px;"/>
+
+        <p class="error-message" v-if="isErrorMessageVisibleEmail">이메일을 입력해 주세요.</p>
+        <p class="error-message" v-if="user.user_email.length > 0 && !/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/.test(user.user_email)">이메일을 정확하게 입력해 주세요.</p>
     
     </div>
     
     <tr>
       <th>주소[선택]</th>
     </tr>
-    <button @click="postOpen" >주소검색</button>
+      <!-- 주소 찾기 버튼 -->
+      <button @click="postOpen">주소검색</button>
 
+      <!-- 우편번호 -->
+      <div>
+        <label>우편번호</label><br>
+        <input ref="user_zip" type="text" v-model="user.user_zip" readonly style="width: 400px; height: 40px;">
+      </div>
+
+      <!-- 도로명주소 -->
+      <div>
+        <label>도로명주소</label><br>
+        <input ref="user_addr" type="text" v-model="user.user_addr" readonly style="width: 400px; height: 40px;">
+      </div>
+
+      <!-- 상세주소 -->
+      <div>
+        <label>상세주소</label><br>
+        <input ref="user_detail_addr" type="text" v-model="user.user_detail_addr" style="width: 400px; height: 40px;">
+      </div>
     <tr>
       <th>마케팅 정보 수신 동의[선택]</th>
     </tr>
@@ -148,6 +172,9 @@ export default {
         user_receive_email: 0,
         user_receive_sms: 0,
         user_gender: null,
+        user_addr: '',
+        user_detail_addr: '',
+        user_zip: ''
       },
 
       isErrorMessageVisibleId: false,
@@ -232,14 +259,40 @@ export default {
     console.error(error);
   }
 },
-    postOpen() {
-        new daum.Postcode({
-          oncomplete: function(data) {
-          //확인 시 결과 데이터 Return 확인
-            console.log(data)
-            this.address = data.address
-          }
-        }).open();
+showApi() {
+      new window.daum.Postcode({
+         oncomplete: (data) => {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            let fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+            let extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+               extraRoadAddr += data.bname;
+            }
+            // 건물명이 있고, 공동주택일 경우 추가한다.
+            if(data.buildingName !== '' && data.apartment === 'Y'){
+               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+            // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+            if(extraRoadAddr !== ''){
+               extraRoadAddr = ' (' + extraRoadAddr + ')';
+            }
+            // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+            if(fullRoadAddr !== ''){
+               fullRoadAddr += extraRoadAddr;
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            this.zip = data.zonecode; //5자리 새우편번호 사용
+            this.addr1 = fullRoadAddr;
+            console.log(this.zip, this.addr1);
+         }
+      }).open()
       }
   },
 }
