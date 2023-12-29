@@ -46,7 +46,7 @@
                            <input type="text" class="form-control" id="zip" v-model="zip" readonly>
                         </div>
                         <div class="col" style="text-align: center;">
-                           <button type="button" class="btn btn-secondary btn-sm" @click="showApi" style="width:60px; height:10px; font-size:x-small; display: flex; align-items:center;">주소검색</button>
+                           <button type="button" class="btn btn-secondary btn-sm" @click="showApi" style="width:60px; height:18px; font-size:x-small; display: flex; align-items:center;">주소검색</button>
                         </div>
                      </div>
                      <input type="text" class="form-control" id="addr1" v-model="addr1" readonly>
@@ -99,14 +99,20 @@
                   <strong>결제예정금액</strong>
                </li>
                <li class="list-group-item d-flex justify-content-between">
-                  <span>결제정보</span>
-                  <button :class="{ active: selectedPaymentMethod === 'kakaopay' }" @click="selectPaymentMethod('kakaopay')" :style="{ backgroundColor: selectedPaymentMethod === 'kakaopay' ? 'yellow' : 'gray' }">카카오페이</button>
-                  <button :class="{ active: selectedPaymentMethod === 'toss' }" @click="selectPaymentMethod('toss')" :style="{ backgroundColor: selectedPaymentMethod === 'toss' ? 'blue' : 'gray' }">토스페이</button>
-                  <button :class="{ active: selectedPaymentMethod === 'kg' }" @click="selectPaymentMethod('kg')" :style="{ backgroundColor: selectedPaymentMethod === 'kg' ? 'purple' : 'gray' }">신용카드</button>
-                  <button @click="openPaymentWindow" :disabled="!selectedPaymentMethod" style="background-color: green;">결제창 열기</button>
-                  <p v-if="paymentUrl">결제창 URL: {{ paymentUrl }}</p>
-                  <p v-if="errorMessage">에러 메시지: {{ errorMessage }}</p>
-                  </li>
+                  <span>결제방식</span>
+                  <div class="btn-group-vertical">
+                  <button :class="{ active: selectedPaymentMethod === 'kakaopay' }" @click="selectPaymentMethod('kakaopay')"><img src='../../image/logo/payment_icon_yellow_small.png' alt="카카오페이" width="100px"></button>
+                  <button :class="{ active: selectedPaymentMethod === 'toss' }" @click="selectPaymentMethod('toss')"><img src='../../image/logo/Toss_Logo_Primary.png' alt="토스페이" width="100px" height="47px"></button>
+                  <button :class="{ active: selectedPaymentMethod === 'kg' }" @click="selectPaymentMethod('kg')"><img src='../../image/logo/cheque-guarantee-card-2103506_640.png' alt="신용카드" width="40px" height="40px">신용카드</button>
+                  </div>
+               </li>
+               <li>
+                  <div class="d-grid gap-2 col-6 mx-auto">
+                     <button type="button" class="btn btn-success" @click="openPaymentWindow" :disabled="!selectedPaymentMethod">결제하기</button>
+                     <p v-if="paymentUrl">결제창 URL: {{ paymentUrl }}</p>
+                     <p v-if="errorMessage">에러 메시지: {{ errorMessage }}</p>
+                  </div>
+               </li>
             </ul>
          </div>
       </div>
@@ -138,7 +144,7 @@ methods: {
          pg: '',
          pay_method: '',
          name: '테스트 상품', // 상품 이름 입력
-         merchant_uid: '111112', // 가맹점에서 생성한 고유 주문번호 입력
+         merchant_uid: '111113', // 가맹점에서 생성한 고유 주문번호 입력
          amount: 1000, // 결제 금액 입력
          buyer_name: 'test', // 구매자 이름 입력
          buyer_tel: '010-1111-1111', // 구매자 전화번호 입력
@@ -215,18 +221,16 @@ methods: {
 
 <style scoped>
 button {
-background-color: gray;
-color: white;
-padding: 10px;
-margin-right: 10px;
+border : none;
+
 }
 
 button.active {
-background-color: blue;
+background-color: rgb(185, 185, 241);
 }
 
 button:disabled {
-background-color: lightgray;
+background-color: rgb(174, 114, 230);
 }
 
 </style>
