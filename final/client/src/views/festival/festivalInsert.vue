@@ -82,7 +82,7 @@ methods: {
         data: JSON.stringify(data),
     }).catch((err) => console.log(err));
     
-    if(result.affectedRows > 0){
+    if(result.affectedRows > 0 ){
         alert('등록을 실패했습니다.')
     } else {
         alert('축제 등록이 되었습니다.')
