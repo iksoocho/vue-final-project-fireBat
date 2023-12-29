@@ -2,14 +2,14 @@
     <div class="container">
     <form>
         <label for="code">축제코드</label>
-        <input type="text" v-model="fesInfo.f_code">
+        <input type="text" v-model="fesInfo.f_code" readonly>
         <br>
         <label for="name">축제명</label>
         <input type="text" v-model="fesInfo.f_name">
         <br>
         <label for="cate">카테고리</label>
         <br>
-            <select name="cate" v-model="fesInfo.f_category">
+            <select name="cate" v-model="fesInfo.f_category" :selected="fesInfo.f_category === value">
                 <option value="문화">문화</option>
                 <option value="커플">커플</option>
                 <option value="예술">예술</option>
