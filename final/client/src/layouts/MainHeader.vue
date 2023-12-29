@@ -39,7 +39,7 @@
 
                                             </ul>
                                         </li>
-                                        <li><a href="about.html">특산물 상점</a></li>
+                                        <li><a href="/userProductList">특산물 상점</a></li>
                                         <li><a href="about.html">QnA</a></li>
                                         
                                     </ul>

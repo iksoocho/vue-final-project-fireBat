@@ -1,7 +1,7 @@
 // 강현진 상품 CRUD
 module.exports = {
     // 관리자 상품 리스트
-    productList : `SELECT prod_code, prod_name, prod_price, prod_count, prod_loc, prod_cate,prod_date FROM product`,
+    productList : `SELECT * FROM product`,
 
     productInfo : `SELECT prod_code, prod_name, prod_price, prod_content, prod_count, prod_loc, prod_cate
     FROM product
@@ -17,5 +17,8 @@ module.exports = {
     productDelete : `DELETE FROM product WHERE prod_code = ? `,
 
     // 메인페이지 랜덤 6가지
-    fesRandomList : `select * from product order by rand() limit 6`
+    fesRandomList : `SELECT * FROM product ORDER BY rand() limit 6`,
+
+    // 사용자 상품 리스트 
+    userProductList : `SELECT prod_code, prod_name, prod_price, prod_count, prod_loc, prod_cate,prod_date FROM product`
 }

@@ -8,6 +8,18 @@ router.get('/', async(req,res)=>{
     res.send(list);
 });
 
+// 사용자 상품 리스트
+router.get('/user', async (req,res)=>{
+    let list = await mysql.query('userProductList');
+    res.send(list);
+})
+
+// 사용자 상품 단건
+router.get('/user/:prod_code', async (req,res) =>{
+    let list = await mysql.query('');
+    res.send(list)
+})
+
 // 단건
 router.get('/:prod_code', async(req,res) =>{
     let data = req.params.prod_code;
