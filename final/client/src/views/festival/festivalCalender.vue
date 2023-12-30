@@ -9,7 +9,7 @@
   import { toRaw } from "vue";
   export default {
 
-    name: "festivalCalender",
+
     data() {
       return {
         markerPositions1: [
