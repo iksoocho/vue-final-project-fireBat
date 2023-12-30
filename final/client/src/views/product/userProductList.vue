@@ -35,7 +35,7 @@ export default {
     },
     methods : {
         async getUserProductList(){
-            this.userProductList = (await axios.get(`api/product/user`)
+            this.userProductList = (await axios.get(`/api/product/user`)
                                             .catch(err => console.log(err))).data;
         },
         goProdInfo(prod_code){

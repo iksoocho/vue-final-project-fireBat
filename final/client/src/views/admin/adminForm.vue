@@ -1,5 +1,5 @@
 <template>
-    <a>테스트dldldldl</a>
+    <div>관리자 첫 페이지 테스트</div>
 </template>
 
 <script>

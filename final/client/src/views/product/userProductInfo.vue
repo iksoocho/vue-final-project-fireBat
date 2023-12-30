@@ -14,10 +14,6 @@
             <td>{{userProdInfo.prod_code}}</td>
         </tr>
         <tr>
-            <th>배송비</th>
-            <td>{{}}</td>
-        </tr>
-        <tr>
             <th>지역</th>
             <td>{{userProdInfo.prod_loc}}</td>
         </tr>
@@ -52,7 +48,7 @@ export default {
             let result = await axios.get(`/api/product/user/${this.searchProd}`)
                                     .catch(err => console.log(err));
 
-            console.log(data);
+            console.log(result);
             this.userProdInfo = result.data;
             
         }

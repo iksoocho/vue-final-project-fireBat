@@ -51,7 +51,7 @@ import axios from 'axios';
             this.fesRandomList = (await axios.get('/api/festival/random')
                                 .catch(err => console.log(err))).data; 
          }
-
+         
     }
 }
 </script>
