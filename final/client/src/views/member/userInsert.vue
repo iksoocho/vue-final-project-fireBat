@@ -23,7 +23,7 @@
       <input 
         type="password" 
         v-model="user.user_pw"  
-        placeholder="8~20자리 영문 대/소문자, 숫자, 특수문자 조합(모두포함)" 
+        placeholder="8~20자리 영문 대/소문자, 숫자, 특수문자 조합(모두포함)"
         pattern="^(?!.*(.)\1{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&-_]).{8,20}$"  
         @focus="showErrorMessagePw" style="width:511.94px;height:40px;" 
         required/>

@@ -16,8 +16,9 @@ router.get('/user', async (req,res)=>{
 
 // 사용자 상품 단건
 router.get('/user/:prod_code', async (req,res) =>{
-    let list = await mysql.query('');
-    res.send(list)
+    let data = req.params.prod_code;
+    let userProdInfo = await mysql.query('userProductInfo',data);
+    res.send(userProdInfo[0])
 })
 
 // 단건
@@ -53,7 +54,7 @@ router.delete('/delete/:prod_code', async (req,res) => {
 
 // 메인페이지 랜덤 6가지
 router.get('/random', async (req, res) => {
-    let list = await mysql.query('fesRandomList');
+    let list = await mysql.query('productRandomList');
     res.send(list);
 });
 
