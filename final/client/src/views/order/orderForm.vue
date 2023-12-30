@@ -120,6 +120,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
 name: 'OrderPayment',
 data() {
@@ -130,6 +131,7 @@ data() {
       zip: '',
       addr1: '',
       addr2: '',
+      // payData: {},
    };
 },
 methods: {
@@ -144,11 +146,13 @@ methods: {
          pg: '',
          pay_method: '',
          name: '테스트 상품', // 상품 이름 입력
-         merchant_uid: '111113', // 가맹점에서 생성한 고유 주문번호 입력
+         merchant_uid: '111116', // 가맹점에서 생성한 고유 주문번호 입력
          amount: 1000, // 결제 금액 입력
          buyer_name: 'test', // 구매자 이름 입력
          buyer_tel: '010-1111-1111', // 구매자 전화번호 입력
          buyer_email: 'test@email.com', // 구매자 이메일 입력
+         buyer_postcode: '',
+         buyer_addr: '',
          // 기타 필요한 결제 정보 입력
       };
 
@@ -170,11 +174,15 @@ methods: {
          // 결제 완료 후 처리할 로직 작성
          console.log(resp);
          if (resp.success) {
-            var msg = '결제가 완료되었습니다.';
+            this.payData = resp;
+            let msg = '결제가 완료되었습니다.';
             alert(msg);
+
+            // console.log('paydata');
+            // console.log(payData);
             // location.href = "/paySuccess"
          } else {
-            var msg = '결제에 실패하였습니다.';
+            let msg = '결제에 실패하였습니다.';
             msg += '에러내용 : ' + resp.error_msg;
             alert(msg);
          }
