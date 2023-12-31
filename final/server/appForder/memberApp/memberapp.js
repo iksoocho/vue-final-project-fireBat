@@ -28,11 +28,26 @@ router.delete('/:no', async (req, res) => {
   let result = await mysql.query('userDelete', data);
   res.send(result);
 });
-module.exports = router;
 
 // 회원 아이디 찾기(2023-12-26) 등록된 휴대폰번호
-router.get('/:tel', async (req, res) => {
+router.get('/tel/:tel', async (req, res) => {
   let data = req.params.tel;
   let list = await mysql.query('userIdInfo', data);
   res.send(list);
 });
+
+router.get('/id/:id', async (req, res) => {
+  try {
+    let data = req.params.id;
+    let result = await mysql.query('userCheck', data);
+    let isDuplicated = result[0].count > 0;
+
+    res.send({ isDuplicated });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'Internal Server Error', errorMessage: error.message });
+  }
+});
+
+
+module.exports = router;
