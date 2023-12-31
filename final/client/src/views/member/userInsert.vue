@@ -11,12 +11,15 @@
         v-model="user.user_id" 
         placeholder="4~15자리 영소문자, 숫자" 
         pattern="[a-z0-9]{4,15}" 
-        @focus="showErrorMessageId" 
+        @focus="showErrorMessageId"
+        @input="checkDuplicateIdRealtime" 
         style="width:511.94px;height:40px;" 
         required />
-      <p class="error-message" v-if="isErrorMessageVisibleId">아이디를 입력해주세요.</p>
-      <p class="error-message" v-if="user.user_id.length > 0 && !/[a-z0-9]{4,15}/.test(user.user_id)">4~15자리의 영문 소문자와 숫자만 가능합니다.</p>
-
+        <!-- <button @click="checkDuplicateId" class="btn btn-danger" style="margin-bottom: 5px;margin-left: 10px;">중복 체크</button> -->
+      <p class="error-message" v-if="isErrorMessageVisibleId" style="margin-top: 0px;">아이디를 입력해주세요.</p>
+      <p class="error-message" v-if="user.user_id.length > 0 && !/[a-z0-9]{4,15}/.test(user.user_id)" style="margin-top: 0px;">4~15자리의 영문 소문자와 숫자만 가능합니다.</p>
+      <p class="error-message" v-if="isIdDuplicated" style="margin-top: 0px;">{{ idDuplicatedMessage }}</p>
+      
     </div>
     <div style="margin-bottom: 8px;">
       <label style="color: black;">비밀번호</label><br>
@@ -24,11 +27,11 @@
         type="password" 
         v-model="user.user_pw"  
         placeholder="8~20자리 영문 대/소문자, 숫자, 특수문자 조합(모두포함)"
-        pattern="^(?!.*(.)\1{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&-_]).{8,20}$"  
+        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$"  
         @focus="showErrorMessagePw" style="width:511.94px;height:40px;" 
         required/>
       <p class="error-message" v-if="isErrorMessageVisiblePw">비밀번호를 입력해주세요.</p>
-      <p class="error-message" v-if="user.user_pw.length > 0 && !/^(?!.*(.)\1{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&-_]).{8,20}$/.test(user.user_pw)">8~20자리의 영문 대/소문자, 숫자, 특수문자 조합을 사용해 주세요.</p>
+      <p class="error-message" v-if="user.user_pw.length > 0 && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/.test(user.user_pw)">8~20자리의 영문 대/소문자, 숫자, 특수문자 조합을 사용해 주세요.</p>
       <p class="error-message" v-if="/[\s+]/.test(user.user_pw)">공백 없이 입력해 주세요.</p>
       <p class="error-message" v-if="(user.user_pw.match(/(\d)\1{3,}|([A-Za-z])\2{3,}/))">동일한 문자(숫자)는 4회 이상 연속 사용할 수 없습니다.</p>
       <!-- <p class="error-message" v-if="user.user_pw.length > 0 && !/[a-zA-Z\d!@#$%^&/-/_]/.test(user.user_pw)">특수문자는 !@#$%^&*()-_만 사용 가능합니다.</p> -->
@@ -39,15 +42,21 @@
         type="password" 
         placeholder="확인을 위한 비밀번호 재입력" 
         v-model="user.user_recpw" 
-        style="width:511.94px;height:40px;" />
+        @focus="showErrorMessageRecpw"
+        style="width:511.94px;height:40px;" 
+        required/>
+        <p class="error-message" v-if="isErrorMessageVisibleRecpw">비밀번호를 입력해주세요.</p>
       <p class="error-message" v-if="user.user_recpw !== user.user_pw && user.user_recpw.length > 0">비밀번호가 일치하지 않습니다.</p>
     </div>
     <div style="margin-bottom: 8px;"> 
       <label style="color: black;">이름</label><br>
       <input 
         type="text" 
-        v-model="user.user_name" 
-        style="width:511.94px;height:40px;"/>
+        v-model="user.user_name"
+        @focus="showErrorMessageName" 
+        style="width:511.94px;height:40px;"
+        required/>
+        <p class="error-message" v-if="isErrorMessageVisibleName">이름을 입력해주세요.</p>
     </div>
     <div style="margin-bottom: 8px;">
     <label style="color: black;">생년월일</label><br>
@@ -68,7 +77,8 @@
       autocomplete="off" 
       value="0" 
       v-model="user.user_gender"
-      style="margin-bottom: 8px;"/>
+      style="margin-bottom: 8px;"
+      />
         <label class="btn btn-outline-danger" for="btnradio1" style=" margin-left: 10px; margin-bottom: 5px;">남</label>
 
     <input 
@@ -78,11 +88,13 @@
     id="btnradio2"  
     autocomplete="off" 
     value="1" 
-    v-model="user.user_gender"/>
+    v-model="user.user_gender"
+    />
 
       <label class="btn btn-outline-danger" for="btnradio2" style="margin-left: 3px; margin-bottom: 5px;" >여</label>
         <p class="error-message" v-if="isErrorMessageVisibleBirth">생년월일을 입력해주세요.</p>
-        <p class="error-message" v-else-if="user.user_birth.length > 0 && !/^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/.test(user.user_birth)">생년월일을 정확하게 입력해 주세요.</p>
+        <p class="error-message" v-if="user.user_birth.length > 0 && !/^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/.test(user.user_birth)">생년월일을 정확하게 입력해 주세요.</p>
+        
       </div>  
       <!-- 전화번호 -->
     <div style="margin-bottom: 8px;">
@@ -94,8 +106,9 @@
       v-model="user.user_tel" 
       placeholder="'-'없이 숫자만 입력" 
       pattern="^\d{2,3}-?\d{3,4}-?\d{4}$" 
-      @focus="showisErrorMessageTel"
-      style="width:511.94px;height:40px;" />
+      @focus="showErrorMessageTel"
+      style="width:511.94px;height:40px;" 
+      required/>
 
       <p class="error-message" v-if="isErrorMessageVisibleTel">전화번호를 입력해 주세요.</p>
       <p class="error-message" v-else-if="user.user_tel.length > 0 && !/^\d{2,3}-?\d{3,4}-?\d{4}$/.test(user.user_tel)">전화번호를 정확하게 입력해 주세요.</p>
@@ -111,9 +124,10 @@
         type="text" 
         v-model="user.user_email"
         placeholder="이메일 주소 입력"
-        @focus="showisErrorMessageEmail"
         pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$"
-        style="width:511.94px;height:40px;"/>
+        @focus="showErrorMessageEmail"
+        style="width:511.94px;height:40px;"
+        required/>
 
         <p class="error-message" v-if="isErrorMessageVisibleEmail">이메일을 입력해 주세요.</p>
         <p class="error-message" v-if="user.user_email.length > 0 && !/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/.test(user.user_email)">이메일을 정확하게 입력해 주세요.</p>
@@ -158,7 +172,7 @@
     </tr>
     <tr>
       <div class="d-grid gap-2" style="margin-top: 20px;">
-     <button type="submit" v-on:click="signUp()" class="btn btn-danger" style="margin-bottom: 50px;">가입완료</button>
+     <button type="submit" class="btn btn-danger" style="margin-bottom: 50px;">가입완료</button>
     </div>
     </tr>
   </form>
@@ -169,6 +183,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      errorMessage: '',
       user: {
         user_id: '',
         user_pw: '',
@@ -190,6 +205,10 @@ export default {
       isErrorMessageVisibleBirth: false,
       isErrorMessageVisibleTel: false,
       isErrorMessageVisibleEmail: false,
+      isErrorMessageVisibleName: false,
+      isErrorMessageVisibleRecpw: false,
+      isIdDuplicated: false,
+      idDuplicatedMessage: '',
     }
   },
   computed: {
@@ -202,6 +221,7 @@ export default {
   } ,
   watch: {
   'user.user_id'() {
+    this.checkDuplicateIdRealtime();
     this.isErrorMessageVisibleId = false;
   },
   'user.user_pw'() {
@@ -215,10 +235,44 @@ export default {
   },
   'user.user_email'(){
     this.isErrorMessageVisibleEmail = false;
+  },
+  'user.user_name'(){
+    this.isErrorMessageVisibleName = false;
+  },
+  'user.user_recpw'(){
+    this.isErrorMessageVisibleRecpw = false;
   }
 
 },
   methods: {
+    async checkDuplicateIdRealtime() {
+      if (this.user.user_id.length >= 4) {
+        try {
+          // 서버에 보낼 데이터 설정 (여기서는 user_id를 사용)
+          let data = { id: this.user.user_id };
+
+          // 서버에 GET 요청 보내기
+          let result = await axios.get(`/api/user/id/${data.id}`);
+
+          // 서버에서 받은 결과 확인
+          console.log(result.data);
+
+          // 받은 결과에 따라 중복 여부를 처리
+          const isDuplicated = result.data.isDuplicated;
+          if (isDuplicated) {
+            // 중복 여부와 메시지 설정
+            this.isIdDuplicated = true;
+            this.idDuplicatedMessage = '이미 사용 중인 아이디입니다.';
+          } else {
+            // 중복 여부와 메시지 초기화
+            this.isIdDuplicated = false;
+            this.idDuplicatedMessage = '';
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    },
     showErrorMessageId() {
     if (this.user.user_id.length === 0) {
       this.isErrorMessageVisibleId = true;
@@ -234,37 +288,68 @@ export default {
         this.isErrorMessageVisibleBirth = true;
       }
     },
-    showisErrorMessageTel(){
+    showErrorMessageTel(){
       if(this.user.user_tel.length === 0){
         this.isErrorMessageVisibleTel = true;
       }
     },
-    showisErrorMessageEmail(){
+    showErrorMessageEmail(){
       if(this.user.user_email.length === 0) {
         this.isErrorMessageVisibleEmail = true;
       }
     },
-    async submitForm() {
-       // 폼 제출전 유효성 검사(보류)
-      if (!this.user.user_id) {
-        window.alert('입력값이 유효하지 않습니다. 다시 확인해주세요.');
-        return;
+    showErrorMessageName(){
+      if(this.user.user_name.length === 0) {
+        this.isErrorMessageVisibleName = true;
       }
-      await this.signUp();
+    },
+    showErrorMessageRecpw(){
+      if(this.user.user_recpw.length === 0){
+        this.isErrorMessageVisibleRecpw = true;
+      }
     },
     async signUp() {
-  try {
-    let data = { param: this.user };
-    let result = await axios.post(`/api/user`, data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log(result.data);
-  } catch (error) {
-    console.error(error);
-  }
-},
+    try {
+      let data = { param: this.user };
+      let result = await axios.post(`/api/user`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(result.data);
+
+      // 회원가입 성공 여부에 따라 true 또는 false 반환
+      return result.data.success === true;
+    } catch (error) {
+      console.error(error);
+
+      // 회원가입 실패 시 false 반환
+      return false;
+    }
+  },
+    async submitForm() {
+    // 폼 제출 전 유효성 검사 (보류)
+    if (this.user.user_gender === null) {
+      window.alert('성별을 선택해주세요');
+      return;
+    }
+    if (this.isIdDuplicated === true) {
+      window.alert('이미 사용 중인 아이디입니다.');
+      return;
+    }
+
+    // 회원가입 성공 여부 확인 후, 성공 시 '/signUpComplete' 경로로 이동
+    const isSignUpSuccess = await this.signUp();
+
+    if (isSignUpSuccess) {
+      // 회원가입 성공 시 페이지 이동
+      this.$router.push({path:'/signUpComplete'}); // 이동하고자 하는 경로로 변경
+    } else {
+      // 회원가입 실패 시 처리 (예: 에러 메시지 출력)
+      window.alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+    }
+  },
+    
 postOpen() {
       const self = this;  // 'this'를 다른 변수에 저장
 
