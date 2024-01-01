@@ -27,7 +27,9 @@
                             <br>
 
                             <tr>
-                                <button>공식 홈페이지</button>
+                                <button><a href="https://sslaf.kr/">공식 홈페이지</a><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-subtract" viewBox="0 0 16 16">
+  <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z"/>
+</svg></button>
                             </tr>
                         </div>    
                 </div>
@@ -41,10 +43,12 @@
             </tr>
         </div>
         <hr>
-        <h2>길찾기</h2>
+        <h2>위치</h2>
+        <a href="https://map.kakao.com/link/to/수성빛예술제,35.8285058585979,128.621168696627" target="_blank">길찾기</a>
         <div>
             <div id="map"></div>
         </div>
+     
         <hr>
     </div>
     <!-- 얘들은 나중에 관리자페이지 상품전체리스트 게시판으로 갈 예정 -->
@@ -84,7 +88,7 @@ export default {
         document.head.appendChild(script);
       }
     },
-
+    
     created() {
     this.searchNo = this.$route.query.f_code;   // 페이지요청은 router  페이지가 열릴때는 route
     this.getFesInfo();
@@ -94,6 +98,7 @@ export default {
             let result = await axios.get(`/api/festival/${this.searchNo}`) 
                                 .catch(err => console.log(err));
             this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
+            
         },
         goFesUpdate(f_code){
                 this.$router.push({path : '/festivalUpdate', query:{f_code : f_code}})
@@ -139,7 +144,7 @@ export default {
 
 <style scoped>
 #map {
-  width: 400px;
+  width: 1300px;
   height: 400px;
 }
 
