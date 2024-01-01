@@ -343,7 +343,14 @@ async submitForm() {
 
   if (isSignUpSuccess) {
     // 회원가입 성공 시 페이지 이동
-    this.$router.push({ path: '/signUpComplete' }); // 이동하고자 하는 경로로 변경
+    this.$router.push({ 
+      path: '/signUpComplete',
+      query: {
+        user_id: this.user.user_id,
+        user_name: this.user.user_name,
+        user_email: this.user.user_email,
+      },
+     }); // 이동하고자 하는 경로로 변경
   } else {
     // 회원가입 실패 시 처리 (예: 에러 메시지 출력)
     window.alert('회원가입에 실패했습니다. 다시 시도해주세요.');
