@@ -124,13 +124,13 @@
         type="text" 
         v-model="user.user_email"
         placeholder="이메일 주소 입력"
-        pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$"
+        pattern="^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$"
         @focus="showErrorMessageEmail"
         style="width:511.94px;height:40px;"
         required/>
 
         <p class="error-message" v-if="isErrorMessageVisibleEmail">이메일을 입력해 주세요.</p>
-        <p class="error-message" v-if="user.user_email.length > 0 && !/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/.test(user.user_email)">이메일을 정확하게 입력해 주세요.</p>
+        <p class="error-message" v-if="user.user_email.length > 0 && !/^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/.test(user.user_email)">이메일을 정확하게 입력해 주세요.</p>
     
     </div>
     
@@ -309,46 +309,46 @@ export default {
       }
     },
     async signUp() {
-    try {
-      let data = { param: this.user };
-      let result = await axios.post(`/api/user`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log(result.data);
+  try {
+    let data = { param: this.user };
+    let result = await axios.post(`/api/user`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(result.data);
 
-      // 회원가입 성공 여부에 따라 true 또는 false 반환
-      return result.data.success === true;
-    } catch (error) {
-      console.error(error);
+    // 회원가입 성공 여부에 따라 true 또는 false 반환
+    return result.data.affectedRows === 1;
+  } catch (error) {
+    console.error(error);
 
-      // 회원가입 실패 시 false 반환
-      return false;
-    }
-  },
-    async submitForm() {
-    // 폼 제출 전 유효성 검사 (보류)
-    if (this.user.user_gender === null) {
-      window.alert('성별을 선택해주세요');
-      return;
-    }
-    if (this.isIdDuplicated === true) {
-      window.alert('이미 사용 중인 아이디입니다.');
-      return;
-    }
+    // 회원가입 실패 시 false 반환
+    return 0;
+  }
+},
+async submitForm() {
+  // 폼 제출 전 유효성 검사 (보류)
+  if (this.user.user_gender === null) {
+    window.alert('성별을 선택해주세요');
+    return;
+  }
+  if (this.isIdDuplicated === true) {
+    window.alert('이미 사용 중인 아이디입니다.');
+    return;
+  }
 
-    // 회원가입 성공 여부 확인 후, 성공 시 '/signUpComplete' 경로로 이동
-    const isSignUpSuccess = await this.signUp();
+  // 회원가입 성공 여부 확인 후, 성공 시 '/signUpComplete' 경로로 이동
+  const isSignUpSuccess = await this.signUp();
 
-    if (isSignUpSuccess) {
-      // 회원가입 성공 시 페이지 이동
-      this.$router.push({path:'/signUpComplete'}); // 이동하고자 하는 경로로 변경
-    } else {
-      // 회원가입 실패 시 처리 (예: 에러 메시지 출력)
-      window.alert('회원가입에 실패했습니다. 다시 시도해주세요.');
-    }
-  },
+  if (isSignUpSuccess) {
+    // 회원가입 성공 시 페이지 이동
+    this.$router.push({ path: '/signUpComplete' }); // 이동하고자 하는 경로로 변경
+  } else {
+    // 회원가입 실패 시 처리 (예: 에러 메시지 출력)
+    window.alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+  }
+},
     
 postOpen() {
       const self = this;  // 'this'를 다른 변수에 저장
