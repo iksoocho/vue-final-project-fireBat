@@ -39,13 +39,13 @@
         </div>
       </li>
       <li class="mb-1">
-        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#Delivery-collapse" aria-expanded="true">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#Delivery-collapse" aria-expanded="false">
           배송관리
         </button>
-        <div class="collapse show" id="Delivery-collapse">
+        <div class="collapse" id="Delivery-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">배송정보</a></li>
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">배송목록</a></li>
+            <li class="link-body-emphasis d-inline-flex text-decoration-none rounded"><router-link to="/deliveryInformation" class="nav-link">배송정보</router-link></li>
+            <router-link to="/deliveryList" class="nav-link">상품목록</router-link>
           </ul>
         </div>
       </li>

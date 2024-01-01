@@ -3,6 +3,7 @@ import festivalList from "../views/festival/festivalList.vue"
 import payment from "../views/order/orderForm.vue";
 import paySuccess from "../views/order/orderSuccess.vue";
 import UserInsert from '../views/member/userInsert.vue';
+import SignUpComplete from '../views/member/SignUpComplete.vue'
 import festivalUpdate from '../views/festival/festivalUpdate.vue';
 import festivalInsert from "../views/festival/festivalInsert.vue";
 import userMain from '../views/Usermain.vue'
@@ -26,6 +27,11 @@ export default {
         path: '/userInsert',
         name: 'userInsert',
         component: UserInsert,
+      },
+      {
+        path: '/signUpComplete',
+        name: 'signUpComplete',
+        component: SignUpComplete,
       },
       {
         path: "/payment",
