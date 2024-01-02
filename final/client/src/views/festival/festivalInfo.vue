@@ -44,8 +44,9 @@
       <h2>길찾기</h2>
       <a href="https://map.kakao.com/link/to/수성빛예술제,35.8285058585979,128.621168696627" target="_blank">길찾기</a>
       <div>
-          <div id="map"></div>
-      </div>
+    <!-- 이 곳에 지도가 표시될 영역 -->
+    <div id="map" style="width: 100%; height: 400px;"></div>
+  </div>
       <hr>
  
   </div>
@@ -65,16 +66,9 @@ export default {
       }
   },
   mounted() {
-    if (window.kakao && window.kakao.maps) {
-      this.initMap();
-    } else {
-      const script = document.createElement("script");
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=915cffed372954b7b44804ed422b9cf0";
-      document.head.appendChild(script);
-    }
+    
   },
+
   
 
   created() {
@@ -84,9 +78,16 @@ export default {
   methods : {
     
       async getFesInfo() {
-          let result = await axios.get(`/api/festival/${this.searchNo}`) 
-                            .catch(err => console.log(err));
-          this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
+        //   let result = await axios.get(`/api/festival/${this.searchNo}`) 
+        //                     .catch(err => console.log(err));
+        //   this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
+          try {
+				let response = await axios.get(`/api/festival/${this.searchNo}`);
+				this.fesInfo = response.data;
+				this.initializeMap();
+			} catch (err) {
+				console.log(err);
+			}
           
       },
       goFesUpdate(f_code){
@@ -107,16 +108,38 @@ export default {
           getDateFormat(date){
           return this.$dateFormat(date);   // 날짜 변환
       },
-      //  methods 안에서 카카오 지도 api 부분
-      initMap() {
-      const container = document.getElementById("map");
-      const options = {
-        center: new kakao.maps.LatLng(35.8690295, 128.5932375),
-        level: 5,
-      };
+      initializeMap() {
+			const mapContainer = document.getElementById('map');
+			const mapOption = {
+				center: new kakao.maps.LatLng(33.450701, 126.570667),
+				level: 1,
+			};
+			const map = new kakao.maps.Map(mapContainer, mapOption);
 
-      this.map = new kakao.maps.Map(container, options);
-    },
+			const geocoder = new kakao.maps.services.Geocoder();
+			const address = this.fesInfo.f_loc;
+
+			geocoder.addressSearch(address, (result, status) => {
+				if (status === kakao.maps.services.Status.OK) {
+					const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+					const marker = new kakao.maps.Marker({
+						map: map,
+						position: coords,
+					});
+
+					const infowindow = new kakao.maps.InfoWindow({
+						content: `<div style="width:150px;text-align:center;padding:6px 0;">${this.fesInfo.f_name}</div>`,
+					});
+
+					infowindow.open(map, marker);
+
+					map.setCenter(coords);
+				}
+			});
+		},
+      //  methods 안에서 카카오 지도 api 부분
+      
   },
 
   
