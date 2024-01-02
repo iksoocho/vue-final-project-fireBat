@@ -1,11 +1,12 @@
-const booksql = require('./exampleSql/booksql.js');
+const qnasql = require('./qnaSql/qnaSql.js');
 const commentsql = require('./exampleSql/commentsql.js');
 const membersql = require('./memberSql/membersql.js');
 const fessql = require('./festivalSql/festivalsql.js');
 const productsql = require('./productSql/productsql.js');
 const paymentsql = require('./paymentSql/paymentsql.js');
+
 module.exports = {
-  booksql,
+  qnasql,
   commentsql,
   membersql,
   fessql,
