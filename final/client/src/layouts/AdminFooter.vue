@@ -1,12 +1,17 @@
 <template>
-  <div class="footer_iner text-center">
-<p>2020 © Influence - Designed by <a href="#"> <i class="ti-heart"></i> </a><a href="#"> Dashboard</a></p>
-</div>
+	<footer class="py-4 bg-light mt-auto">
+		<div class="container-fluid px-4">
+			<div class="d-flex align-items-center justify-content-between small">
+				<div class="text-muted">Copyright &copy; 4조 Website 2024</div>
+				<div><a href="#">Privacy Policy</a> &middot; <a href="#">Terms &amp; Conditions</a></div>
+			</div>
+		</div>
+	</footer>
 </template>
 
 <script>
 export default {
-
+  name: 'AdminFooter'
 }
 </script>
 

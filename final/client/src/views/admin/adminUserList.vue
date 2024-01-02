@@ -1,5 +1,5 @@
 <template>
-  <div id="users" style="width: 1080px;">
+  <div id="users">
     <h3>회원정보</h3>
     <table class="table table-hover">
         <thead>
