@@ -26,7 +26,6 @@
                 <td>{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</td>
                 <td>{{ fes.f_price}}</td>
                 <td>{{ fes.f_url}}</td>
-                <td>{{ fes.f_code }}</td>
                 <div class="row">
                     <!-- <button class="btn btn-info" v-on:click="goToUpdate(fes.f_code)">수정</button> -->
                     <button class="btn btn-warning" @click="fesDelete(fes.f_code)">X</button>
