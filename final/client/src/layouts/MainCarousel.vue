@@ -2,6 +2,7 @@
  <!-- slider_area_start -->
  <div class="slider_area">
         <div class="slider_active owl-carousel">
+
             <div class="single_slider  d-flex align-items-center slider_bg_1 overlay">
                 
                 <div class="container">
@@ -10,7 +11,7 @@
                             <div class="slider_text text-center" >
                                 <h3 style="color: black;">Daegu</h3>
                                 <p>Pixel perfect design with awesome contents</p>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -22,8 +23,7 @@
                         <div class="col-xl-12 col-md-12">
                             <div class="slider_text text-center">
                                 <h3>Seoul</h3>
-                                <p>Pixel perfect design with awesome contents</p>
-                                
+                                <p>Pixel perfect design with awesome contents</p>                                
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,6 @@
                             <div class="slider_text text-center">
                                 <h3>Busan</h3>
                                 <p>Pixel perfect design with awesome contents</p>
-                                
                             </div>
                         </div>
                     </div>
@@ -48,7 +47,6 @@
     <!-- slider_area_end -->
    
 </template>
-
 <script>
  export default {
     name: 'Carousel',
@@ -86,3 +84,4 @@
   background-image: url(../image/banner/banner3.png);
 }
 </style>
+>>>>>>> 6f6867725ffc256b3d59b06472969e778f115eba

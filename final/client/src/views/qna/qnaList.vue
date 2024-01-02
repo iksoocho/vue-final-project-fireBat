@@ -1,5 +1,5 @@
 <template>
-  
+  <div>
 <section class="notice">
   <div class="page-title">
         <div class="container">
@@ -49,16 +49,17 @@
 
                 </tbody>
             </table>
-        </div>
-        <div class="col-auto me-auto"></div>
-        <div class="col-auto">
-            <button class="btn btn-outline-dark" @click="goListPage">글쓰기</button>
-        </div>
-        <br>
-        <Paginate :list="qnaList" v-bind="{ITEM_PER_PAGE,PAGE_PER_SECTION,curPage}" @change-page="onChangePage" />
-    </div>
+        <button type="button" class="btn btn-outline-danger float-right mt-3" @click="goQnaInsert">글쓰기</button>
 
+        </div>
+        
+        
+  </div>
+  
 </section>
+
+<Paginate class="justify-content-center" :list="qnaList" v-bind="{ITEM_PER_PAGE,PAGE_PER_SECTION,curPage}" @change-page="onChangePage" />
+</div>    
 </template>
 
 <script>
@@ -104,12 +105,15 @@ export default {
         },
         onChangePage(data) {
             this.curPage = data;
+        },
+        goQnaInsert(){
+          this.$router.push('/qnaInsert')
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
     table {
   border-collapse: collapse;
   border-spacing: 0;

@@ -10,13 +10,14 @@
                     <th>전화번호</th>
                     <th>축제일정</th>
                     <th>금액</th>
-                    <th>해당홈페이지</th>
+                    <th>홈페이지</th>
                     <!-- <th></th> -->
                     <th>상세주소</th>
                 </tr>
             </thead>
             <tbody>
-            <tr :key="i" v-for="(fes, i) in festivalList" @click="goFesUpdate(fes.f_code)">
+            <tr :key="i" v-for="(fes, i) in festivalList" @click="goToUpdate(fes.f_code)">
+                <td>{{ fes.f_code }}</td>
                 <td>{{ fes.f_cate }}</td>
                 <td>{{ fes.f_reg }}</td>
                 <td>{{ fes.f_name}}</td>
@@ -27,7 +28,7 @@
                 <td>{{ fes.f_url}}</td>
                 <td>{{ fes.f_code }}</td>
                 <div class="row">
-                    <button class="btn btn-info" v-on:click="goToUpdate(fes.f_code)">수정</button>
+                    <!-- <button class="btn btn-info" v-on:click="goToUpdate(fes.f_code)">수정</button> -->
                     <button class="btn btn-warning" @click="fesDelete(fes.f_code)">X</button>
                 </div>
             </tr>
@@ -65,9 +66,6 @@ export default {
         goFesInfoList(f_code){
             this.$router.push({path : '/festivalInfoList', query:{f_code : f_code}})
         },
-        goFesUpdate(f_code){
-            this.$router.push({path : '/festivalUpdate', query:{f_code : f_code}})
-        },
         async fesDelete(f_code){
             let result = await axios.delete(`/api/festival/delete/${f_code}`)
                                     .catch(err=>console.log(err));
@@ -80,9 +78,7 @@ export default {
                 this.$router.push({name : 'festivalList'});
             }
         },
-        getDateFormat(date){
-          return this.$dateFormat(date);   // 날짜 변환
-    },
+
     }
 }
 </script>
