@@ -4,7 +4,7 @@
         <label for="code">축제코드</label>
         <input type="text" v-model="fesInfo.f_code" readonly>
         <br>
-        <label for="name">축제명</label>
+        <label for="name">축제이름</label>
         <input type="text" v-model="fesInfo.f_name">
         <br>
         <label for="cate">카테고리</label>
@@ -21,7 +21,7 @@
         <label for="reg">축제지역</label>
         <input type="text" v-model="fesInfo.f_reg">
         <br>
-        <label for="number">축제연락처</label>
+        <label for="number">전화번호</label>
         <input type="text" v-model="fesInfo.f_number">
         <br>
         <label for="loc">축제장소</label>
@@ -39,7 +39,7 @@
         <label for="price">축제금액</label>
         <input type="text" id="count" v-model="fesInfo.f_price">
         <br>
-        <label for="page">공식홈페이지</label>
+        <label for="page">홈페이지</label>
         <input type="url" v-model="fesInfo.f_url">
         <br>
         <br>
@@ -48,49 +48,56 @@
 </div>
 </template>
   
-  <script>
-  import axios from 'axios';
-  
-  export default {
+<script>
+import axios from 'axios';
 
-    data() {
-    return {
-        f_code : '',   
-        fesInfo : {}
-    }
+export default {
+
+  data() {
+  return {
+      f_code : '',   
+      fesInfo : {}
+  }
+},
+created() {
+      this.searchNo = this.$route.query.f_code;
+      this.getFesInfo();
   },
-  created() {
-        this.searchNo = this.$route.query.f_code;
-        this.getFesInfo();
-    },
-    methods: {
-      async getFesInfo() {
-        let result = await axios.get(`/api/festival/${this.searchNo}`) 
-                                .catch(err => console.log(err));
-        this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
-    },
-    async updateInfo() {
-      let data = {
-                param : {      
-                f_category : this.fesInfo.f_category,
-                f_reg : this.fesInfo.f_reg,
-                f_name : this.fesInfo.f_name,
-                f_number : this.fesInfo.f_number,
-                f_loc : this.fesInfo.f_loc,
-                f_firstday : this.fesInfo.f_firstday,
-                f_lastday : this.fesInfo.f_lastday,
-                f_content : this.fesInfo.f_content,
-                f_price : this.fesInfo.f_price,
-                f_url : this.fesInfo.f_url
-                }
-            };
-      let result = await axios   // 보낼 정보 경로와 데이터
-            .put(`/api/festival/update/${this.fesInfo.f_code}`, data)
-            .catch((err) => console.log(err));
-    },
-    }
-  
+  methods: {
+    async getFesInfo() {
+      let result = await axios.get(`/api/festival/${this.searchNo}`) 
+                              .catch(err => console.log(err));
+      this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
+  },
+  async updateInfo() {
+    let data = {
+              param : {      
+              f_category : this.fesInfo.f_category,
+              f_reg : this.fesInfo.f_reg,
+              f_name : this.fesInfo.f_name,
+              f_number : this.fesInfo.f_number,
+              f_loc : this.fesInfo.f_loc,
+              f_firstday : getDateFormat(this.fesInfo.f_firstday),
+              f_lastday : getDateFormat(this.fesInfo.f_lastday),
+              f_content : this.fesInfo.f_content,
+              f_price : this.fesInfo.f_price,
+              f_url : this.fesInfo.f_url
+              }
+          };
+    let result = await axios   // 보낼 정보 경로와 데이터
+          .put(`/api/festival/update/${this.fesInfo.f_code}`, data)
+          .catch((err) => console.log(err));
+
+          if(result.data.changedRows > 0){
+                alert('수정완료');
+            }
+  },
+  getDateFormat(date){
+          return this.$dateFormat(date);   // 날짜 변환
+      },
+  }
+
 }
 
-  
-  </script>
+
+</script>

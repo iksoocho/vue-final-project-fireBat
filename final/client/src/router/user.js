@@ -11,6 +11,8 @@ import festivalInfo from '../views/festival/festivalInfo.vue';
 import festivalCalender from '../views/festival/festivalCalender.vue';
 import userProductList from '../views/product/userProductList.vue';
 import userProductInfo from '../views/product/userProductInfo.vue';
+import festivalInfoList from '../views/festival/festivalInfoList.vue';
+
 
 export default {
     path: "/",
@@ -77,6 +79,11 @@ export default {
         path: '/userProductInfo',
         name: 'userProductInfo',
         component: userProductInfo
+      },
+      {
+        path: '/festivalInfoList',
+        name: 'festivalInfoList',
+        component: festivalInfoList
       },
     ],
   }

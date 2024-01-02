@@ -59,10 +59,10 @@
               data-bs-parent="#sidenavAccordion"
             >
               <nav class="sb-sidenav-menu-nested nav">
-               <router-link class="nav-link" to="/">
+               <router-link class="nav-link" to="/festivalInsert">
                       축제등록
                     </router-link>
-               <router-link class="nav-link" to="/">
+               <router-link class="nav-link" to="/festivalInfoList">
                       축제목록
                     </router-link>
               </nav>
