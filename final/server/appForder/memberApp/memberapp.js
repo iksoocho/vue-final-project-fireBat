@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('../../db.js');
 
+// 로그인
+router.post('/login', async (req, res) => {
+  let { user_id, user_pw } = req.body.param;
+  let result = await mysql.query('userLogin', [user_id, user_pw]);
+  res.send(result);
+});
+
 // 회원정보등록(2023-12-26)
 router.post('/', async (req, res) => {
   let data = req.body.param;
