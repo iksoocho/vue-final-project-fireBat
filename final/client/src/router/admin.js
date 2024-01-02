@@ -1,5 +1,5 @@
 import adminForm from '../views/Admin.vue';
-//import adminForm from '../views/admin/adminForm.vue';
+import adminMain from '../views/admin/adminMain.vue';
 import adminUserList from '../views/admin/adminUserList.vue';
 import productInsert from '../views/admin/productInsert.vue';
 import productList from '../views/admin/productList.vue';
@@ -13,6 +13,11 @@ export default {
     name: 'adminForm',
     component: adminForm,
     children: [
+      {
+        path: '/adminMain',
+        name: 'adminMain',
+        component : adminMain
+      },
       {
         path: '/adminUserList',
         name: 'adminUserList',

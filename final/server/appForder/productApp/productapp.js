@@ -41,7 +41,7 @@ router.post('/insert', async (req, res) => {
 
 // 상품수정
 router.put('/update/:prod_code', async (req,res) =>{
-    let data = [req.body.param.prod_code, req.params.prod_code];
+    let data = [req.body.param, req.params.prod_code];
     let result = await mysql.query('productUpdate', data);
     res.send(result);
 })
@@ -59,5 +59,11 @@ router.get('/random', async (req, res) => {
     console.log("여기",list);
     res.send(list);
 });
+
+// 검색
+router.get('/serach', async (req,res) =>{
+    let list = await mysql.query('productSearch');
+    res.send(list);
+})
 
 module.exports = router;

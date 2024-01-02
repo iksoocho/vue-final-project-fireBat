@@ -1,8 +1,8 @@
 <template>
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 		<!-- Navbar Brand-->
-		<a class="navbar-brand ps-3" @click="$router.push('/adminForm')"
-			><img style="width: 50px" v-bind:src="require('@/assets/img/logo/로고.png')"
+		<a class="navbar-brand ps-3" @click="$router.push('/adminMain')"
+			><img style="width: 100px" v-bind:src="require('@/assets/img/logo/메인로고2.png')"
 		/></a>
 		<!-- Navbar Search-->
 		<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">

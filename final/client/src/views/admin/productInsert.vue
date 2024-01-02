@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+      <h3>상품등록</h3>
     <form>
         <br>
         <label for="name">상품이름</label>
@@ -99,6 +100,14 @@ export default {
         }).catch((err) => console.log(err));
         
         console.log(result.data);
+
+        
+        if(result.data.prod_code > 0){
+          alert(`정상적으로 등록되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`)
+        } else {
+          alert(`정상적으로 등록 되었습니다.${result.data.prod_code}`)
+          // this.$router.push({path : '/productList', query: { prod_code : this.product.prod_code}})
+        }
         
       }
     }
