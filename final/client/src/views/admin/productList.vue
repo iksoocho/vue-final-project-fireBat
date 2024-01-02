@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
 
 
  <div id="app">
@@ -95,7 +95,7 @@
       </a>
     </li>
   </ul>
-    </div>
+</div>
 
 
 
@@ -298,5 +298,8 @@ export default {
   .page-text:hover {
     color: #000;
   }
-  
+  .container{
+  padding : 30px;
+
+}
 </style>
