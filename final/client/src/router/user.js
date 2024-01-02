@@ -2,7 +2,7 @@ import main from "../views/Main.vue";
 import festivalList from "../views/festival/festivalList.vue"
 import payment from "../views/order/orderForm.vue";
 import paySuccess from "../views/order/orderSuccess.vue";
-
+import Login from "../views/member/Login.vue";
 
 import UserInsert from '../views/member/userInsert.vue';
 import SignUpComplete from '../views/member/SignUpComplete.vue'
