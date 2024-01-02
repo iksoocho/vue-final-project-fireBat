@@ -47,7 +47,9 @@
         container.style.height = `${size}px`;
         toRaw(this.map).relayout();
       },
+      
     },
+    
   }
 
   </script>
