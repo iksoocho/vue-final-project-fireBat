@@ -27,7 +27,7 @@
                           <br>
                           
                           <tr>
-                            <button type="button" class="btn btn-link" @click="GoHomePage" v-bind:href="homePageUrl">공식 홈페이지</button>
+                            <a :href="fesInfo.f_url">공식홈페이지</a>
                           </tr>
                       </div>    
               </div>
@@ -47,13 +47,10 @@
           <div id="map"></div>
       </div>
       <hr>
+ 
   </div>
   <!-- 얘들은 나중에 관리자페이지 상품전체리스트 게시판으로 갈 예정 -->
-      <!-- <div class="row">
-           <button class="btn btn-info" v-on:click="goFesUpdate(fesInfo.f_code)">수정</button>
-          <router-link to="/festivalList" class="btn btn-success">목록</router-link>
-          <button class="btn btn-warning" @click="fesDelete(fesInfo.f_code)">삭제</button>
-      </div> -->
+
 </template>
 <script>
 import axios from 'axios';
@@ -65,8 +62,6 @@ export default {
           fesInfo: {
 
           },
-          homePageUrl: "https://www.naver.com",
-        
       }
   },
   mounted() {
@@ -90,7 +85,7 @@ export default {
     
       async getFesInfo() {
           let result = await axios.get(`/api/festival/${this.searchNo}`) 
-                              .catch(err => console.log(err));
+                            .catch(err => console.log(err));
           this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
           
       },
@@ -99,7 +94,7 @@ export default {
   },
   async fesDelete(f_code){
               let result = await axios.delete(`/api/festival/delete/${f_code}`)
-                                      .catch(err=>console.log(err));
+                                    .catch(err=>console.log(err));
               console.log(result.data);
               let count = result.data.affectedRows;   
               if(count == 0){
@@ -122,10 +117,6 @@ export default {
 
       this.map = new kakao.maps.Map(container, options);
     },
-    GoHomePage() {
-      window.location.href = this.homePageUrl;
-    },
-    
   },
 
   

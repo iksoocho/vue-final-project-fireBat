@@ -55,7 +55,7 @@ export default {
     created(){
         this.searchProd = this.$route.query.prod_code;
         this.getProdInfo();
-        console.log(this.getProdInfo);
+        
     },
     methods : {
         async getProdInfo(){

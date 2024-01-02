@@ -24,7 +24,7 @@ router.post('/insert', async (req, res) => {
 });
 // 축제 수정
 router.put('/update/:f_code', async (req,res) =>{
-    let data = [req.body.param.f_code, req.params.f_code];
+    let data = [req.body.param, req.params.f_code];
     let result = await mysql.query('fesUpdate', data);
     res.send(result);
 });

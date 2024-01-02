@@ -113,6 +113,21 @@ export default {
         goFesInfo(f_code){
             this.$router.push({path : '/festivalInfo', query:{f_code : f_code}})
         },
+        goFesInfoList(f_code){
+            this.$router.push({path : '/festivalInfoList', query:{f_code : f_code}})
+        },
+        async fesDelete(f_code){
+            let result = await axios.delete(`/api/festival/delete/${f_code}`)
+                                    .catch(err=>console.log(err));
+            console.log(result.data);
+            let count = result.data.affectedRows;   
+            if(count == 0){
+                alert('정상적으로 삭제되지 않았습니다.')
+            }else{
+                alert('정상적으로 삭제 되었습니다.')
+                this.$router.push({name : 'festivalList'});
+            }
+        },
     }
 }
 </script>
