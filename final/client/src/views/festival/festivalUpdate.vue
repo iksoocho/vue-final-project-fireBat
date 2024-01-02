@@ -77,8 +77,8 @@ created() {
               f_name : this.fesInfo.f_name,
               f_number : this.fesInfo.f_number,
               f_loc : this.fesInfo.f_loc,
-              f_firstday : getDateFormat(this.fesInfo.f_firstday),
-              f_lastday : getDateFormat(this.fesInfo.f_lastday),
+              f_firstday : this.getDateFormat(this.fesInfo.f_firstday),
+              f_lastday : this.getDateFormat(this.fesInfo.f_lastday),
               f_content : this.fesInfo.f_content,
               f_price : this.fesInfo.f_price,
               f_url : this.fesInfo.f_url
