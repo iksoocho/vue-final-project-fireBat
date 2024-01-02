@@ -1,6 +1,6 @@
 <template>
-<div id="deliveryInfo" style="width: 1080px;">
-    <h3>주문</h3>
+<div id="deliveryInfo">
+    <h3>주문정보</h3>
     <table class="table table-hover">
         <thead>
             <tr>

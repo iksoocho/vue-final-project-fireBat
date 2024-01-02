@@ -1,67 +1,180 @@
 <template>
-  <div class="flex-shrink-0 p-3" style="width: 200px;">
-    <a href="/adminForm" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-      <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-5 fw-semibold">Festival</span>
-    </a>
-    <ul class="list-unstyled ps-0">
-      <li class="mb-1">
-        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-          고객관리
-        </button>
-        <div class="collapse show" id="home-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li class="link-body-emphasis d-inline-flex text-decoration-none rounded"><router-link to="/adminUserList" class="nav-link">회원정보</router-link></li>
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">QnA관리</a></li>
-          </ul>
+   <div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+      <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+          <div class="nav">
+            <div class="sb-sidenav-menu-heading">Festival</div>
+            <router-link to="/admin/home">
+              <a
+              class="nav-link collapsed"
+              href="#"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseLayouts"
+              aria-expanded="false"
+              aria-controls="collapseLayouts"
+            >
+              <div class="sb-nav-link-icon"></div>
+              회원관리
+              <div class="sb-sidenav-collapse-arrow">
+                <i class="fas fa-angle-down"></i>
+              </div>
+            </a>
+            <div
+              class="collapse"
+              id="collapseLayouts"
+              aria-labelledby="headingOne"
+              data-bs-parent="#sidenavAccordion"
+            >
+              <nav class="sb-sidenav-menu-nested nav">
+                 <router-link class="nav-link" to="/adminUserList">
+                      회원관리
+                    </router-link>
+                <router-link class="nav-link" to="/">
+                      QnA관리
+                    </router-link>
+              </nav>
+            </div>
+              
+            </router-link>
+            <div class="sb-sidenav-menu-heading">Interface</div>
+            <a
+              class="nav-link collapsed"
+              href="#"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseLayouts"
+              aria-expanded="false"
+              aria-controls="collapseLayouts"
+            >
+              <div class="sb-nav-link-icon"></div>
+              축제관리
+              <div class="sb-sidenav-collapse-arrow">
+                <i class="fas fa-angle-down"></i>
+              </div>
+            </a>
+            <div
+              class="collapse"
+              id="collapseLayouts"
+              aria-labelledby="headingOne"
+              data-bs-parent="#sidenavAccordion"
+            >
+              <nav class="sb-sidenav-menu-nested nav">
+               <router-link class="nav-link" to="/festivalInsert">
+                      축제등록
+                    </router-link>
+               <router-link class="nav-link" to="/festivalInfoList">
+                      축제목록
+                    </router-link>
+              </nav>
+            </div>
+            <a
+              class="nav-link collapsed"
+              href="#"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseLayouts"
+              aria-expanded="false"
+              aria-controls="collapseLayouts"
+            >
+              <div class="sb-nav-link-icon"></div>
+              상품관리
+              <div class="sb-sidenav-collapse-arrow">
+                <i class="fas fa-angle-down"></i>
+              </div>
+            </a>
+            <div
+              class="collapse"
+              id="collapseLayouts"
+              aria-labelledby="headingOne"
+              data-bs-parent="#sidenavAccordion"
+            >
+              <nav class="sb-sidenav-menu-nested nav">
+                 <router-link class="nav-link" to="/productInsert">
+                      상품등록
+                    </router-link>
+                <router-link class="nav-link" to="/productList">
+                      상품목록
+                    </router-link>
+              </nav>
+            </div>
+            
+            
+            
+            <a
+              class="nav-link collapsed"
+              href="#"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseLayouts"
+              aria-expanded="false"
+              aria-controls="collapseLayouts"
+            >
+              <div class="sb-nav-link-icon"></div>
+              재고관리
+              <div class="sb-sidenav-collapse-arrow">
+                <i class="fas fa-angle-down"></i>
+              </div>
+            </a>
+            <div
+              class="collapse"
+              id="collapseLayouts"
+              aria-labelledby="headingOne"
+              data-bs-parent="#sidenavAccordion"
+            >
+              <nav class="sb-sidenav-menu-nested nav">
+               <router-link class="nav-link" to="/">
+                      재고목록
+                    </router-link>
+              </nav>
+            </div>
+            <a
+              class="nav-link collapsed"
+              href="#"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseLayouts"
+              aria-expanded="false"
+              aria-controls="collapseLayouts"
+            >
+              <div class="sb-nav-link-icon"></div>
+              배송관리
+              <div class="sb-sidenav-collapse-arrow">
+                <i class="fas fa-angle-down"></i>
+              </div>
+            </a>
+            <div
+              class="collapse"
+              id="collapseLayouts"
+              aria-labelledby="headingOne"
+              data-bs-parent="#sidenavAccordion"
+            >
+              <nav class="sb-sidenav-menu-nested nav">
+               <router-link class="nav-link" to="/deliveryInformation">
+                      배송정보
+                    </router-link>
+               <router-link class="nav-link" to="/deliveryList">
+                      주문정보
+                    </router-link>
+              </nav>
+            </div>
+            <!-- <router-link to="/admin/table">
+              <a class="nav-link" href="#">
+                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                Tables
+              </a>
+            </router-link> -->
+          </div>
         </div>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-          축제관리
-        </button>
-        <div class="collapse" id="dashboard-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">축제등록</a></li>
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">축제목록</a></li>
-          </ul>
-        </div>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-          상품관리
-        </button>
-        <div class="collapse" id="orders-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li class="link-body-emphasis d-inline-flex text-decoration-none rounded"><router-link to="/productInsert" class="nav-link">상품등록</router-link></li>
-            <router-link to="/productList" class="nav-link">상품목록</router-link>
-          </ul>
-        </div>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#Delivery-collapse" aria-expanded="false">
-          배송관리
-        </button>
-        <div class="collapse" id="Delivery-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li class="link-body-emphasis d-inline-flex text-decoration-none rounded"><router-link to="/deliveryInformation" class="nav-link">배송정보</router-link></li>
-            <router-link to="/deliveryList" class="nav-link">상품목록</router-link>
-          </ul>
-        </div>
-      </li>
-      <li class="border-top my-3"></li>
-      <li class="mb-1">
-        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-          재고관리
-        </button>
-        <div class="collapse" id="account-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">재고목록</a></li>
-          </ul>
-        </div>
-      </li>
-    </ul>
+        <!-- <div class="sb-sidenav-footer">
+					<div class="small">Logged in as:</div>
+					관리자
+				</div> -->
+      </nav>
+    </div>
+    <div id="layoutSidenav_content">
+      <main>
+        <router-view />
+      </main>
+    </div>
   </div>
+
 </template>
 
 <script>

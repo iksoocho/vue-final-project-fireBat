@@ -34,7 +34,7 @@
         </table>
     </div>
     <div class="row">
-            <button class="btn" @click="updateInfo(prodInfo.prod_code)">수정</button>
+            <button class="btn" v-on:click="moveProdUpdate(prodInfo.prod_code)">수정</button>
             <router-link to="/productList" class="btn">목록</router-link> 
             <button class="btn" @click="deleteInfo(prodInfo.prod_code)">삭제</button>
         </div>
@@ -55,7 +55,7 @@ export default {
     created(){
         this.searchProd = this.$route.query.prod_code;
         this.getProdInfo();
-        console.log(this.getProdInfo);
+        
     },
     methods : {
         async getProdInfo(){
@@ -65,7 +65,7 @@ export default {
             this.prodInfo = result.data;
         },
         moveProdUpdate(prod_code){
-            this.$router.push({path: '/prodUpdate', query :{ prod_code : prod_code}})
+            this.$router.push({path: '/productUpdate', query :{ prod_code : prod_code}})
         }
     }
 }

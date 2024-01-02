@@ -1,30 +1,22 @@
 <template>
   <div>
-    <Header></Header>
-    <div class="container">
-      <div class="row">
-        <div class="col-2">
+    <AdminHeader></AdminHeader>
+    
       <AdminSideBar></AdminSideBar>
-        </div>
 
-        <div class="col-8">
-      <router-view />
-        </div>
-      </div>
-    </div>
     <AdminFooter></AdminFooter>
 
   </div>
 </template>
 
 <script>
-import Header from '../layouts/MainHeader.vue'
+import AdminHeader from '../layouts/AdminHeader.vue';
 import AdminSideBar from '../layouts/AdminSidebar.vue';
 import AdminFooter from '../layouts/AdminFooter.vue';
 
 export default {
     components : {
-        AdminSideBar,AdminFooter,Header
+        AdminSideBar,AdminFooter,AdminHeader
     }
 }
 </script>

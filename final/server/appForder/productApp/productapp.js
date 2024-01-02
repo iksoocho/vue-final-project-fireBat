@@ -2,11 +2,6 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('../../db.js');
 
-// 관리자 상품 리스트
-router.get('/', async(req,res)=>{
-    let list = await mysql.query('productList');
-    res.send(list);
-});
 
 // 사용자 상품 리스트
 router.get('/user', async (req,res)=>{
@@ -20,6 +15,12 @@ router.get('/user/:prod_code', async (req,res) =>{
     let userProdInfo = await mysql.query('userProductInfo',data);
     res.send(userProdInfo[0])
 })
+
+// 관리자 상품 리스트
+router.get('/', async(req,res)=>{
+    let list = await mysql.query('productList');
+    res.send(list);
+});
 
 // 단건
 router.get('/:prod_code', async(req,res) =>{
@@ -40,7 +41,7 @@ router.post('/insert', async (req, res) => {
 
 // 상품수정
 router.put('/update/:prod_code', async (req,res) =>{
-    let data = [req.body.param, res.params.prod_code];
+    let data = [req.body.param, req.params.prod_code];
     let result = await mysql.query('productUpdate', data);
     res.send(result);
 })
@@ -58,5 +59,11 @@ router.get('/random', async (req, res) => {
     console.log("여기",list);
     res.send(list);
 });
+
+// 검색
+router.get('/serach', async (req,res) =>{
+    let list = await mysql.query('productSearch');
+    res.send(list);
+})
 
 module.exports = router;
