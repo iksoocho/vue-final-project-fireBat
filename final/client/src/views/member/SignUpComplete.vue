@@ -11,8 +11,8 @@
         <b>>이메일 : {{ user.user_email }}</b>
       </div>
       <div class="container-four">
-        <button class="btn btn-danger" type="button">로그인</button>
-        <button class="btn btn-danger" type="button" style="margin-left: 20px;">메인화면</button>
+        <button class="btn btn-danger" @click="goLogin" type="button">로그인</button>
+        <button class="btn btn-danger" type="button" @click="goMain" style="margin-left: 20px;">메인화면</button>
       </div>
     </div>
   </div>
@@ -28,6 +28,16 @@ export default {
       },
     };
   },
+  methods: {
+    // 2024-01-02 메인화면 버튼 클릭시 메인화면 상단 슬라이드 사진 안나옴.
+		goMain() {
+			this.$router.push('/main').catch(() => {});
+		},
+    goLogin() {
+      this.$router.push('/login').catch(() => {});
+    }
+	},
+    
 };
 </script>
 <style scoped>

@@ -48,12 +48,19 @@
                         </div>
                         <div class="col-xl-4 col-lg-4 d-none d-lg-block">
                             <div class="social_wrap d-flex align-items-center justify-content-end">
-                              <div class="text-end">
-                                <button type="button" class="btn btn-outline-danger me-2">Login</button>
-                                <button type="button" class="btn btn-danger" @click="goSign">Sign-up</button>
-                              </div>
+                                <div class="text-end">
+                                    <template v-if="isLoggedIn">
+                                        <p>{{ userName }}님 안녕하세요!</p>
+                                        <button type="button" class="btn btn-outline-danger me-2" @click="logout">Logout</button>
+                                    </template>
+                                    <template v-else>
+                                        <button type="button" class="btn btn-outline-danger me-2" @click="goLogin">Login</button>
+                                        <button type="button" class="btn btn-danger" @click="goSign">Sign-up</button>
+                                    </template>
+                                </div>
                             </div>
                         </div>
+
                        
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>
@@ -69,12 +76,31 @@
 
 <script>
 export default {
-	
+	computed: {
+    isLoggedIn() {
+        console.log('isLoggedIn 게터 호출됨', this.$store.getters.isLoggedIn);
+        return this.$store.getters.isLoggedIn;
+      
+    },
+    userName() {
+        console.log('userName 게터 호출됨', this.$store.getters.userName);
+      return this.$store.getters.userName;
+    },
+  },
 	methods: {
 		goSign() {
 			this.$router.push('/userInsert').catch(() => {});
 		},
+        goLogin() {
+            this.$router.push('/login').catch(() => {});
+    },
+    logout() {
+      this.$store.dispatch('logoutUser');
+      alert('로그아웃되었습니다.');
+    },
 	},
+    
+    
 }
 </script>
 
