@@ -133,9 +133,6 @@ export default {
 </script>
 
 <style>
-    .card {
-        width: 225px;
-        height: 420px
-    }
+
 </style>
 
