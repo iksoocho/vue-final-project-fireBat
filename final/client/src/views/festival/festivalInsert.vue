@@ -1,14 +1,14 @@
 <template>
     <div class="container">
+        <h2>축제등록</h2>
     <form>
         <label for="code">축제코드</label>
         <input type="text" v-model="fesInfo.f_code">
         <br>
-        <label for="name">축제명</label>
+        <label for="name">축제이름</label>
         <input type="text" v-model="fesInfo.f_name">
         <br>
         <label for="cate">카테고리</label>
-        <br>
             <select name="cate" v-model="fesInfo.f_category">
                 <option value="문화">문화</option>
                 <option value="커플">커플</option>
@@ -21,7 +21,7 @@
         <label for="reg">축제지역</label>
         <input type="text" v-model="fesInfo.f_reg">
         <br>
-        <label for="number">축제연락처</label>
+        <label for="number">공식번호</label>
         <input type="text" v-model="fesInfo.f_number">
         <br>
         <label for="loc">축제장소</label>
@@ -39,7 +39,7 @@
         <label for="price">축제금액</label>
         <input type="text" id="count" v-model="fesInfo.f_price">
         <br>
-        <label for="page">공식홈페이지</label>
+        <label for="page">홈페이지</label>
         <input type="url" v-model="fesInfo.f_url">
         <br>
         <br>
