@@ -50,8 +50,11 @@
                             <div class="social_wrap d-flex align-items-center justify-content-end">
                                 <div class="text-end">
                                     <template v-if="isLoggedIn">
-                                        <p>{{ userName }}님 안녕하세요!</p>
-                                        <button type="button" class="btn btn-outline-danger me-2" @click="logout">Logout</button>
+                                        <!-- 추후 userName 클릭시 마이페이지 이동 구현(2024-01-02) -->
+                                        <div class="d-flex align-items-center">
+                                            <p class="me-2" style="margin-bottom: 10px; margin-top: 10px; padding-right: 20px; padding-top: 8px;">{{ userName }}님!</p>
+                                            <button type="button" class="btn btn-outline-danger me-2" @click="logout">Logout</button>
+                                        </div>
                                     </template>
                                     <template v-else>
                                         <button type="button" class="btn btn-outline-danger me-2" @click="goLogin">Login</button>
