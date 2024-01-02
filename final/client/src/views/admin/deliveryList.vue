@@ -1,5 +1,5 @@
 <template>
-<div id="deliveryInfo" style="width: 1080px;">
+<div id="deliveryInfo">
     <h3>주문</h3>
     <table class="table table-hover">
         <thead>

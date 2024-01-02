@@ -1,5 +1,5 @@
 <template>
-  <div class="container w-70" style="display:inline-block;">
+  <div>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -48,8 +48,8 @@ export default {
       this.productList = (await axios.get('/api/product')
                                       .catch(err => console.log(err))).data;
     }, 
-    moveProductInfo(prodNo){
-        this.$router.push({ path: '/productInfo', query : { prod_code : prodNo}})
+    moveProductInfo(prod_code){
+        this.$router.push({ path: '/productInfo', query : { prod_code : prod_code}})
     },
     // async deleteProduct(prodNo){
       
