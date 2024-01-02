@@ -21,7 +21,8 @@
     "vue-router": "^4.0.3",
     "vue-sweetalert2": "^5.0.5",
     "vue3-datepicker": "^0.4.0",
-    "vuejs-overlay": "^0.0.28"
+    "vuejs-overlay": "^0.0.28",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
