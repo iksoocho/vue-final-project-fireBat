@@ -17,7 +17,8 @@ module.exports = {
     fesDelete : `delete from festival where f_code = ?`,
     
     // 메인페이지 랜덤 6가지
-    fesRandomList : `select * from festival order by rand() limit 6`
+    fesRandomList : `select * from festival order by rand() limit 6`,
 
-    
+    // 달력 일별 조회
+    fesCalList : `select *from festival where ? between f_firstday and f_lastday;`
 }
