@@ -11,18 +11,16 @@
                     <th>축제일정</th>
                     <th>금액</th>
                     <th>홈페이지</th>
-                    <!-- <th></th> -->
                     <th>상세주소</th>
                 </tr>
             </thead>
             <tbody>
             <tr :key="i" v-for="(fes, i) in festivalList" @click="goToUpdate(fes.f_code)">
                 <td>{{ fes.f_code }}</td>
-                <td>{{ fes.f_cate }}</td>
+                <td>{{ fes.f_category }}</td>
                 <td>{{ fes.f_reg }}</td>
                 <td>{{ fes.f_name}}</td>
                 <td>{{ fes.f_number}}</td>
-                <td>{{ fes.f_loc}}</td>
                 <td>{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</td>
                 <td>{{ fes.f_price}}</td>
                 <td>{{ fes.f_url}}</td>
