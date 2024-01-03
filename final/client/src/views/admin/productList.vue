@@ -118,7 +118,7 @@ export default {
   
 }
 </script>
-<style>
+<style scoped>
   .review-toolbar {
         display: flex;
         justify-content: space-between;

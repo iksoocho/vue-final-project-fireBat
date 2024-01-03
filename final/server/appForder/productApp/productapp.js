@@ -1,6 +1,48 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('../../db.js');
+const multer = require("multer");
+const path = require("path");
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "img/uploads/");
+    } ,
+    filename: function (req, file, cb){
+      cb(null, new Date().valueOf() + path.basename(file.originalname));
+    }
+  });
+  
+  const upload = multer({storage : storage});
+// 이미지 사용
+router.use("/public", express.static("img/"));
+// 이미지 등록
+router.post("/photo", upload.single("file"), (req,res) =>{
+    let file = req.file;
+    console.log(file);
+    res.status(200).json({message: "등록성공", filename: file.filename});
+});
+
+app.post('/node/photos', upload.array('file'), (req, res) => {
+	let filenames = req.files.map((file) => file.filename);
+	res.json({ filenames });
+});
+
+// 이미지 post 라우팅 처리
+router.post("/ptupload", async (req,rep) =>{
+    let result = await mysql.query("ptinsert", req.body.param);
+    rep.send(result);
+})
+
+router.get("/ptlist", async (req,rep) =>{
+    let result = await mysql.query("ptlist");
+    rep.send(result);
+})
+
+router.get("/ptlist/:no", async(req,rep)=>{
+    let result = await mysql.query("ptinfo", req.params.no);
+    rep.send(result[0]);
+})
 
 // 사용자 상품 리스트
 router.get('/user', async (req,res)=>{

@@ -9,7 +9,7 @@
                 <th>상품가격</th>
                 <th>현재재고</th>
                 <th>남은재고</th>
-                <th></th>    
+                <th>상품상태</th>    
                 <th id="state"><label for="state"></label>
                     <select name="state" >
                         <option value="1">판매가능</option>
@@ -20,6 +20,7 @@
         </thead>
         <tbody>
             <tr>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -46,7 +47,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.container{
+    padding : 30px;
+}
 #state{
     text-align: center;
 }

@@ -50,7 +50,12 @@
         <input type="number" v-model="product.prod_count">
         <br>
         <label for="prodstate">상품상태</label>
-        <input type="text" id="count" v-model="product.prod_state">
+        <select name="state" v-model="product.prod_state">
+          <option value="1">주문가능</option>
+          <option value="2">품절</option>
+
+        </select>
+        
         <br>
         <button v-on:click="insertInfo">등록</button>
     </form>
@@ -77,12 +82,12 @@ export default {
         },
         
 
-        // productImage : {
-        //   prod_code : "",
-        //   prod_filename : "",
-        //   prod_db_name : "",
-        //   prod_sequence : "",
-        // }
+        productImage : {
+          prod_code : "",
+          prod_filename : "",
+          prod_db_name : "",
+          prod_sequence : "",
+        }
       }
     },
     methods : {
@@ -121,6 +126,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.container{
+  padding : 40px;
+}
 </style>
