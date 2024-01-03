@@ -43,23 +43,22 @@
         <input type="url" v-model="fesInfo.f_url">
         <br>
         <br>
-        <input type="file" ref="fileInput" @change="handleFileChange" />
-        <br>
-        <button @click="uploadFile">Upload File</button>
-        <br>
         <button v-on:click="insertInfo">등록</button>
     </form>
 </div>
 </template>
 
+
+
+
 <script>
 import axios from 'axios';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 export default {
-    data() {
-    return {
-    fesInfo: {
+      data(){
+      return{
+        fesInfo: {
         f_code: '',
         f_category: '',
         f_reg: '',
@@ -71,39 +70,37 @@ export default {
         f_content: '',
         f_price: '',
         f_url: '',
-        f_imges: '',
-    },
-    };
-},
-methods: {
 
-    async insertInfo() {
+    },
+      }
+    },
+    methods : {
+        async insertInfo() {
         if (!this.fesInfo.f_code || !this.fesInfo.f_category || !this.fesInfo.f_reg || !this.fesInfo.f_name || !this.fesInfo.f_number || !this.fesInfo.f_loc
         || !this.fesInfo.f_firstday || !this.fesInfo.f_lastday || !this.fesInfo.f_content || !this.fesInfo.f_price || !this.fesInfo.f_url) {
-         Swal.fire({
+            Swal.fire({
             icon: 'warning',
             title: '등록실패!',
             text: '값 입력해',
             confirmButtonText: '확인',
          })
-        return;
         }
-    let data = {
-        param: this.fesInfo,
-    };
-    let result = await axios(`/api/festival/insert`, data ,  {
-        method: 'post',
-        headers: {
-        'Content-Type': 'application/json',
-        },
-        data: JSON.stringify(data),
-    }).catch((err) => console.log(err));
-    },
-},
+
+
+           
+        let data = {
+          param : this.fesInfo,
+        };
+        let result = await axios.post(`/api/festival/insert`, data)
+                                .catch(err => console.log(err))
+        
+        console.log(result.data)
+      },
+      
     }
+}
 </script>
 
 <style>
-
 
 </style>

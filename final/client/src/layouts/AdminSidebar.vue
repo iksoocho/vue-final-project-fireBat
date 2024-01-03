@@ -183,7 +183,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 body {
   min-height: 100vh;
   min-height: -webkit-fill-available;
