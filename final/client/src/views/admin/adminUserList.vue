@@ -16,14 +16,14 @@
         </thead>
         <tbody>
             <tr :key="i" v-for="(users, i) in adminUserList">
-              <th>{{users.user_id }}</th>
-              <th>{{users.user_pw }}</th>
-              <th>{{users.user_email }}</th>
-              <th>{{users.user_name }}</th>
-              <th>{{users.user_tel }}</th>
-              <th>{{users.user_addr }}</th>
-              <th>{{$dateFormat(users.user_birth, 'yy-MM-dd') }}</th>
-              <th>{{users.prod_sell_count }}</th>
+              <th class="id">{{users.user_id }}</th>
+              <th class="pw">{{users.user_pw }}</th>
+              <th class="email">{{users.user_email }}</th>
+              <th class="name">{{users.user_name }}</th>
+              <th class="tel">{{users.user_tel }}</th>
+              <th class="addr">{{users.user_addr }}</th>
+              <th class="date">{{$dateFormat(users.user_birth, 'yy-MM-dd') }}</th>
+              <th class="count">{{users.prod_sell_count }}</th>
             </tr>
         </tbody>
     </table>
@@ -55,5 +55,8 @@ export default {
 .container{
   padding : 30px;
   
+}
+.count{
+  text-align: center;
 }
 </style>
