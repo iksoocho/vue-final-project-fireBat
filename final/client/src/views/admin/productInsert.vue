@@ -46,9 +46,6 @@
         <label for="content">상품내용</label>
         <textarea type="content" v-model="product.prod_content" />
         <br>
-        <label for="prodDate">상품등록일</label>
-        <input type="date" v-model="product.prod_date">
-        <br>
         <label for="prodcount">상품재고</label>
         <input type="number" v-model="product.prod_count">
         <br>
@@ -64,6 +61,7 @@
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
       data(){
@@ -72,7 +70,6 @@ export default {
           prod_name : '',
           prod_price : '',
           prod_content : '',
-          prod_date : '',
           prod_count : '',
           prod_loc : '',
           prod_cate : '',
@@ -90,26 +87,36 @@ export default {
     },
     methods : {
       async insertInfo(){
+        if(!this.product.prod_name || !this.product.prod_price || !this.product.prod_content ||
+           !this.product.prod_count || !this.product.prod_loc || !this.product.prod_cate ||
+           !this.product.prod_state){
+            Swal.fire({
+              icon: 'warning',
+              title: '등록실패',
+              text: '값 입력'
+            })
+            return;
+           }
+
+           
         let data = {
           param : this.product,
         };
-        let result = await axios.post(`/api/product/insert`, data , {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).catch((err) => console.log(err));
+        let result = await axios.post(`/api/product/insert`, data)
+                                .catch(err => console.log(err))
         
         console.log(result.data);
 
         
-        if(result.data.prod_code > 0){
-          alert(`정상적으로 등록되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`)
+        if(result.data.prodCode > 0){
+          Swal.fire(`정상적으로 등록되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`)
         } else {
-          alert(`정상적으로 등록 되었습니다.${result.data.prod_code}`)
-          // this.$router.push({path : '/productList', query: { prod_code : this.product.prod_code}})
+          Swal.fire(`정상적으로 등록 되었습니다.${result.data.prodCode}`)
+          this.$router.push({path : '/productList', query: { prod_code : this.product.prod_code}})
         }
         
-      }
+      },
+      
     }
 }
 </script>

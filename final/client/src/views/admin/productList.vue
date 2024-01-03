@@ -2,15 +2,11 @@
 <div class="container">
 
 
- <!-- <div id="app">
-    <input type="text" v-model="keyword" placeholder="검색어를 입력하세요">
+ <div id="app">
+    <input type="text" v-model="word" @keyup.enter="prodSearch" placeholder="상품 이름을 검색하세요">
     <button @click="search">검색</button>
-    <ul>
-      <li v-for="prod in searchResults" :key="prod.code">
-        {{ prod.name }}
-      </li>
-    </ul>
-  </div> -->
+    
+  </div>
 
 
 
@@ -31,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-          <tr :key="i" v-for="(prod, i) in productList" @click="moveProductInfo(prod.prod_code)">
+          <tr v-for="(prod, idx) in productList.slice(pageStartIdx, pageStartIdx + ITEM_PER_PAGE)" :key="idx" @click="moveProductInfo(prod.prod_code)">
             <td>{{ prod.prod_code }}</td>
             <td>{{ prod.prod_name }}</td>
             <td>{{ prod.prod_price }}</td>
@@ -44,9 +40,11 @@
               <button type="button" calss="btn btn-info me-1" @click="deleteProduct(prod.prod_code)">삭제</button>
             </td>
           </tr>
+          
         </tbody>
+        
     </table>
-
+<Paginate class="justify-content-center" :list="productList" :ITEM_PER_PAGE="ITEM_PER_PAGE" :PAGE_PER_SECTION="PAGE_PER_SECTION" :curPage="curPage" @change-page="onChangePage" />
 
  
 
@@ -58,22 +56,41 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Paginate from '../../components/Pagination.vue';
 
 
 export default {
+   components:{
+        Paginate
+    },
   data(){
     return {
       productList: [],
+      word:'',
+      ITEM_PER_PAGE: 10,
+      PAGE_PER_SECTION: 5,
+      curPage : 1
     };
   },
   created(){
     this.getProductList();
   },
+  computed : {
+        pageStartIdx() {
+            return (this.curPage - 1) * this.ITEM_PER_PAGE;
+        }
+    },
   methods : {
     async getProductList(){
       this.productList = (await axios.get('/api/product')
                                       .catch(err => console.log(err))).data;
-    }, 
+    },
+    
+    async prodSearch(){
+      this.productList = (await axios.get(`/api/product/search/${this.word}`)).data
+      console.log(this.productList)
+    },
+    
     moveProductInfo(prod_code){
         this.$router.push({ path: '/productInfo', query : { prod_code : prod_code}})
     },
@@ -93,9 +110,12 @@ export default {
             this.$router.push({name: 'productList' })            
         }
      },
-     
+     onChangePage(data) {
+            this.curPage = data;
+        }
 
-  }
+  },
+  
 }
 </script>
 <style>

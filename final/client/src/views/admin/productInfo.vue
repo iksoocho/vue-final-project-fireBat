@@ -36,7 +36,6 @@
     <div class="row">
             <button class="btn" v-on:click="moveProdUpdate(prodInfo.prod_code)">수정</button>
             <router-link to="/productList" class="btn">목록</router-link> 
-            <button class="btn" @click="deleteInfo(prodInfo.prod_code)">삭제</button>
         </div>
   </div>
 </template>

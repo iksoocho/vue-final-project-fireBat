@@ -11,7 +11,7 @@
                 <p class="card-text">{{prod.prod_price}}원</p>
                 <p calss="card-text">{{prod.prod_state}}</p>
                 <a href="#" class="btn btn-primary">축제 상세페이지</a>
-                <!-- <button class="btn btn-xs btn-info" @click="goToUpdate(fes.f_code)">수정</button> -->
+                
 
             </div>
             </div>

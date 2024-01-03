@@ -66,31 +66,31 @@ router.get('/random', async (req, res) => {
 });
 
 // 검색
-// router.get('/search', async (req,res) =>{
-//     let data = req.params.search;
-//     let result = await mysql.query('productSearch' , data);
-//     res.send(result)
+router.get('/search/:prod_name', async (req,res) =>{
+    let data = req.params.prod_name;
+    let result = await mysql.query('productSearch' , data);
+    res.send(result)
     
-//     // try{
-//     //     const productService = new ProductService();
-//     //     result = await productService.sellerDeliverySearchUserName(search);
-//     //     res.send(result)
-//     // }
-//     // catch(e){
-//     //     console.log(e);
-//     // }
-// })
+    // try{
+    //     const productService = new ProductService();
+    //     result = await productService.sellerDeliverySearchUserName(search);
+    //     res.send(result)
+    // }
+    // catch(e){
+    //     console.log(e);
+    // }
+})
 
 
-router.get('/search', (req, res) => {
-    const keyword = req.query.keyword; // 검색어를 쿼리 파라미터로 받음
+// router.get('/search', (req, res) => {
+//     const keyword = req.query.keyword; // 검색어를 쿼리 파라미터로 받음
   
-    // 검색 결과 필터링
-    const searchResults = products.filter(product =>
-      product.name.toLowerCase().includes(keyword.toLowerCase())
-    );
+//     // 검색 결과 필터링
+//     const searchResults = products.filter(product =>
+//       product.name.toLowerCase().includes(keyword.toLowerCase())
+//     );
   
-    res.json(searchResults);
-  });
+//     res.json(searchResults);
+//   });
 
 module.exports = router;

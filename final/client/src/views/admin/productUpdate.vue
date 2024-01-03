@@ -78,6 +78,7 @@
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
     data(){
@@ -125,9 +126,9 @@ export default {
 
            console.log(result);
             if(result.data.changedRows == 0){
-                alert(`수정되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`);
+                Swal.fire(`수정되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`);
             } else {
-                alert(`정상적으로 수정되었습니다.`);
+                Swal.fire(`정상적으로 수정되었습니다.`);
                 this.$router.push({ path: '/productList', query: {prod_code: this.prodInfo.prod_code} })
             }
             

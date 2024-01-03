@@ -11,11 +11,8 @@
         </div>
         <div class="table-header">판매상품 순위 내역</div>
         <div class="my-1 mx-3 d-flex flex-row-reverse">
-            <select>
-                <option value='sell'>판매 수량</option>
-                <option value='prodsell'>상품 매출</option>
-                <option value='prodname'>상품 이름</option>
-            </select>
+           
+        </div>
         
       <table>
             <thead>
@@ -37,14 +34,9 @@
                     <td>{{product.product_stock}}</td>
                    
                 </tr>
-
-
             </tbody>
         </table>
-
-
     </div>
-     </div>
 </template>
 
 <script>
@@ -67,15 +59,15 @@ export default {
     methods: {
         async getProductList(obj){
 
-            // let result = '';
-            // const prodNo = 1;
+            let result = '';
+            const prodNo = 1;
             
-            // try {
-            //     result = await axios.get(`/api/product`);
-            // } catch (e){
-            //     console.log(e);
-            // }
-            // this.ProductList = result.data;
+            try {
+                result = await axios.get(`/api/product`);
+            } catch (e){
+                console.log(e);
+            }
+            this.ProductList = result.data;
             
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
@@ -129,7 +121,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
    .table-header {
         background-color: #ffa5a5;
         color: rgb(255, 255, 255);
