@@ -13,6 +13,7 @@ import userProductInfo from '../views/product/userProductInfo.vue';
 import qnaList from '../views/qna/qnaList.vue'
 import qnaInsert from '../views/qna/qnaInsert.vue'
 import MyPage from '../views/member/MyPage.vue'; // 마이페이지 홈
+import qnaInfo from '../views/qna/qnaInfo.vue'
 
 
 
@@ -94,6 +95,11 @@ export default {
         path: '/qnaInsert',
         name: 'qnaInsert',
         component: qnaInsert
+      },
+      {
+        path: '/qnaInfo',
+        name: 'qnaInfo',
+        component: qnaInfo
       },
     ],
   }

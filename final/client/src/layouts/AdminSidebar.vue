@@ -5,7 +5,7 @@
         <div class="sb-sidenav-menu">
           <div class="nav">
             <div class="sb-sidenav-menu-heading">Festival</div>
-            <router-link to="/admin/home">
+            <router-link to="">
               <a
               class="nav-link collapsed"
               href="#"
@@ -120,7 +120,7 @@
               data-bs-parent="#sidenavAccordion"
             >
               <nav class="sb-sidenav-menu-nested nav">
-               <router-link class="nav-link" to="/">
+               <router-link class="nav-link" to="/productInventory">
                       재고목록
                     </router-link>
               </nav>

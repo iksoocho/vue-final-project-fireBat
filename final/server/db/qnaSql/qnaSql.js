@@ -8,5 +8,6 @@ module.exports = {
     qnaInfo:`select * from qna where qna_no = ?`,
     qnaInsert:`insert into qna set ?`,
     qnaUpdate:`update qna set ? where qna_no = ?`,
-    qnaDelete:`delete from qna where qna_no = ?`
+    qnaDelete:`delete from qna where qna_no = ?`,
+    userNoForInsert : `select user_no from user where user_id =?`
 }
