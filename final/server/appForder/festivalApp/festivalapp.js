@@ -20,6 +20,12 @@ router.get('/:f_code', async(req,res)=>{
     let data = req.params.f_code;
     let list = await mysql.query('fesInfo', data);
     res.send(list[0]); //mysql에서 select는 무조건 배열로 넘오 오기 때문에 단건 조회일 경우 list[0]로 해줘야됨
+});
+
+// 달력 일별 조회
+router.get('/', async (req, res) => {
+    let list = await mysql.query('fesCalList');
+    res.send(list);
 })
 
 // 축제 등록
@@ -40,5 +46,7 @@ router.delete('/delete/:f_code', async (req,res) =>{
     let result = await mysql.query('fesDelete', data);
     res.send(result);
 });
+
+
 
 module.exports = router;
