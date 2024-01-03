@@ -42,7 +42,8 @@
         </div>
         <hr>
         <h2>길찾기</h2>
-        <a href="https://map.kakao.com/link/to/수성빛예술제,35.8285058585979,128.621168696627" target="_blank">길찾기</a>
+        <a :href="kakaoMapLink" target="_blank">길찾기</a>
+        <a :href="kakaoloadMapLink" target="_blank">길찾기</a>
         <div>
       <!-- 이 곳에 지도가 표시될 영역 -->
       <div id="map" style="width: 100%; height: 400px;"></div>
@@ -61,22 +62,36 @@
         return {
             searchNo : '',
             fesInfo: {
-  
+                f_loc: '35.8285058585979,128.621168696627',
             },
+            roadview: null,
+      roadviewClient: null,
         }
     },
-    mounted() {
-      
-    },
-  
+    computed: {
     
-  
+    // 길찾기 
+    kakaoMapLink() {
+    const f_loc = this.fesInfo.f_loc;
+    const encodedFloc = encodeURIComponent(f_loc);
+    const kakaoLink = `https://map.kakao.com/link/search/${encodedFloc}`;
+    console.log(kakaoLink); // 생성된 카카오 링크 출력
+    return kakaoLink; // 생성된 카카오 링크 반환
+    },
+
+
+
+  },
+  mounted() {
+ 
+  },
+
     created() {
     this.searchNo = this.$route.query.f_code;   // 페이지요청은 router  페이지가 열릴때는 route
     this.getFesInfo();
    },
     methods : {
-      
+       
         async getFesInfo() {
           //   let result = await axios.get(`/api/festival/${this.searchNo}`) 
           //                     .catch(err => console.log(err));
@@ -143,13 +158,12 @@
               }
            });
         },
-        //  methods 안에서 카카오 지도 api 부분
-        
-    },
+
+ 
+  },
+    }
   
-    
-  }
-  
+
   </script>
   
   <style scoped>
