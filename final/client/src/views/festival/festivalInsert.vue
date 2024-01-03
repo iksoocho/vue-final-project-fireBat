@@ -50,6 +50,7 @@
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 export default {
     data() {
@@ -71,6 +72,15 @@ export default {
 },
 methods: {
     async insertInfo() {
+        if (!this.fesInfo.f_code || !this.fesInfo.f_category || !this.fesInfo.f_reg || !this.fesInfo.f_name || !this.fesInfo.f_number || !this.fesInfo.f_loc
+        || !this.fesInfo.f_firstday || !this.fesInfo.f_lastday || !this.fesInfo.f_content || !this.fesInfo.f_price || !this.fesInfo.f_url) {
+         Swal.fire({
+            icon: 'warning',
+            title: '등록실패!',
+            text: '값 입력해',
+         })
+        return;
+        }
     let data = {
         param: this.fesInfo,
     };
@@ -93,5 +103,6 @@ methods: {
 </script>
 
 <style>
+
 
 </style>

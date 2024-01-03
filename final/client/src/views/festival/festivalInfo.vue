@@ -43,7 +43,7 @@
         <hr>
         <h2>길찾기</h2>
         <a :href="kakaoMapLink" target="_blank">길찾기</a>
-        <a :href="a" target="_blank">로드뷰</a>
+        <a :href="kakaoloadMapLink" target="_blank">길찾기</a>
         <div>
       <!-- 이 곳에 지도가 표시될 영역 -->
       <div id="map" style="width: 100%; height: 400px;"></div>
@@ -64,32 +64,34 @@
             fesInfo: {
                 f_loc: '35.8285058585979,128.621168696627',
             },
+            roadview: null,
+      roadviewClient: null,
         }
     },
     computed: {
+    
+    // 길찾기 
     kakaoMapLink() {
-    //   const destinationCoordinates = '35.8285058585979,128.621168696627';
-    //   return `https://map.kakao.com/link/to/${encodeURIComponent(this.fesInfo.f_loc)},${destinationCoordinates}`
     const f_loc = this.fesInfo.f_loc;
     const encodedFloc = encodeURIComponent(f_loc);
-
-const kakaoLink = `https://map.kakao.com/link/search/${encodedFloc}`;
-
+    const kakaoLink = `https://map.kakao.com/link/search/${encodedFloc}`;
     console.log(kakaoLink); // 생성된 카카오 링크 출력
-
     return kakaoLink; // 생성된 카카오 링크 반환
-
     },
+
+
+
   },
-    mounted() {
-
-    },
+  mounted() {
+ 
+  },
 
     created() {
     this.searchNo = this.$route.query.f_code;   // 페이지요청은 router  페이지가 열릴때는 route
     this.getFesInfo();
    },
     methods : {
+       
         async getFesInfo() {
           //   let result = await axios.get(`/api/festival/${this.searchNo}`) 
           //                     .catch(err => console.log(err));
@@ -156,6 +158,7 @@ const kakaoLink = `https://map.kakao.com/link/search/${encodedFloc}`;
               }
            });
         },
+
  
   },
     }
