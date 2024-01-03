@@ -38,23 +38,23 @@
                 <th>지역분류</th>
                 <td class="text-center">
                       <select name="cateloc" v-model="prodInfo.prod_loc">
-                        <option value="seoul">서울</option>
-                        <option value="Incheon">인천</option>
-                        <option value="Daejeon">대전</option>
-                        <option value="Daegu">대구</option>
-                        <option value="Gwangju">광주</option>
-                        <option value="Busan">부산</option>
-                        <option value="Ulsan">울산</option>
-                        <option value="Sejong">세종</option>
-                        <option value="Gyeonggido ">경기</option>
-                        <option value="Gangwondo ">강원</option>
-                        <option value="Chungcheongbuk-do">충북</option>
-                        <option value="Chungcheongnam-do">충남</option>
-                        <option value="Gyeongbuk">경북</option>
-                        <option value="Gyeongsangnam-do">경남</option>
-                        <option value="Jeollabuk-do">전북</option>
-                        <option value="Jeollanam-do">전남</option>
-                        <option value="Jeju Island">제주</option>
+                        <option value="서울">서울</option>
+                        <option value="인천">인천</option>
+                        <option value="대전">대전</option>
+                        <option value="대구">대구</option>
+                        <option value="광주">광주</option>
+                        <option value="부산">부산</option>
+                        <option value="울산">울산</option>
+                        <option value="세종">세종</option>
+                        <option value="경기 ">경기</option>
+                        <option value="강원 ">강원</option>
+                        <option value="충북">충북</option>
+                        <option value="충남">충남</option>
+                        <option value="경북">경북</option>
+                        <option value="경남">경남</option>
+                        <option value="전북">전북</option>
+                        <option value="전남">전남</option>
+                        <option value="제주">제주</option>
             </select>
                 </td>
             </tr>
@@ -62,10 +62,10 @@
                 <th>상품분류</th>
                 <td class="text-center">
                   <select name="cate" v-model="prodInfo.prod_cate">
-                     <option value="Fruit">과일</option>
-                     <option value="vegetable">채소</option>
-                     <option value="grain">곡물</option>
-                     <option value="mainstream">주류</option>
+                     <option value="과일">과일</option>
+                     <option value="채소">채소</option>
+                     <option value="곡물">곡물</option>
+                     <option value="주류">주류</option>
                   </select>
                 </td>
             </tr>

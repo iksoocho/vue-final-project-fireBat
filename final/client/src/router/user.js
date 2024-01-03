@@ -13,6 +13,7 @@ import userProductList from '../views/product/userProductList.vue';
 import userProductInfo from '../views/product/userProductInfo.vue';
 import qnaList from '../views/qna/qnaList.vue'
 import qnaInsert from '../views/qna/qnaInsert.vue'
+import qnaInfo from '../views/qna/qnaInfo.vue'
 
 
 
@@ -89,6 +90,11 @@ export default {
         path: '/qnaInsert',
         name: 'qnaInsert',
         component: qnaInsert
+      },
+      {
+        path: '/qnaInfo',
+        name: 'qnaInfo',
+        component: qnaInfo
       },
     ],
   }
