@@ -48,7 +48,7 @@ import axios from 'axios';
 
     methods : {
         async getFesRandomList(){
-            this.fesRandomList = (await axios.get('/api/festival/random')
+            this.fesRandomList = (await axios.get(`/api/festival/random`)
                                 .catch(err => console.log(err))).data; 
          }
          

@@ -56,7 +56,7 @@
   </template>
   <script>
   import axios from 'axios';
-  
+  import Swal from 'sweetalert2'
   export default {
     data() {       
         return {
@@ -114,9 +114,9 @@
                 console.log(result.data);
                 let count = result.data.affectedRows;   
                 if(count == 0){
-                    alert('정상적으로 삭제되지 않았습니다.')
+                    Swal.fire('정상적으로 삭제되지 않았습니다.')
                 }else{
-                    alert('정상적으로 삭제 되었습니다.')
+                    Swal.fire('정상적으로 삭제 되었습니다.')
                     this.$router.push({name : 'festivalList'});
                 }
             },

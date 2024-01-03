@@ -1,13 +1,15 @@
 <template>
   <div class="container">
+    <form @submit.prevent>
     <div class="container-one">
       <h3 style="padding-top: 20px; text-align: left; padding-left: 50px; color: #dc3545;">Login</h3>
       <input type="text" placeholder="ID" v-model="user_id" required style="margin-top: 10px;"><br>
       <input type="password" placeholder="PASSWORD" v-model="user_pw" required style="margin-top: 15px;"><br>
       <div class="d-grid gap-2" style="margin-top: 20px; width: 300px; margin-left: 50px;">
-       <button type="submit" class="btn btn-danger" @click="loginSubmit" style="height: 40px;">로그인</button>
+        <button type="submit" class="btn btn-danger"  @click="login" style="height: 40px;">로그인</button>
       </div>
     </div>
+    </form>
     <div class="container-two">
       <small><b>비밀번호 찾기</b></small>
       <small class="side">|</small>
@@ -16,12 +18,16 @@
       <small><b><a href="/userInsert">회원 가입</a></b></small>
     </div>
     <div class="hr-sect">간편로그인</div>
+      <KakaoLogin/>
   </div>
 </template>
 <script>
 import axios from 'axios';
-
+import KakaoLogin from '@/components/KakaoLogin.vue';
 export default {
+  components: {
+    KakaoLogin
+  },
   data() {
     return {
       user_id: '',
@@ -29,7 +35,8 @@ export default {
     };
   },
   methods: {
-    async loginSubmit() {
+
+    async login() {
       try {
         let data = { param: { user_id: this.user_id, user_pw: this.user_pw } };
         let result = await axios.post(`/api/user/login`, data, {

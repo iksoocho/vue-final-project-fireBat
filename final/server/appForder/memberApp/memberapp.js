@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
 });
 
 // 회원정보수정(2023-12-26)
-router.put('/:no', async (req, res) => {
+router.put('/myPage/:no', async (req, res) => {
   let datas = [req.body.param, req.params.no];
   let result = await mysql.query('userUpdate', datas);
   res.send(result);

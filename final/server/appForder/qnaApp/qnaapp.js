@@ -15,6 +15,13 @@ router.get('/:qna_no', async (req, res) => {
     res.send(list[0]);
 });
 
+//insert할때 회원 번호를 회원 아이디로 불러오기
+router.get('/userNo/:user_id', async (req, res) => {
+    let data = req.params.user_id;
+    let list = await mysql.query('userNoForInsert', data);
+    res.send(list[0]);
+});
+
 //등록
 router.post('/', async (req, res) => {
     let data = req.body.param;

@@ -10,6 +10,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^40.2.0",
     "@ckeditor/ckeditor5-vue": "^5.1.0",
+    "@vuepic/vue-datepicker": "^7.4.0",
     "axios": "^1.6.2",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
