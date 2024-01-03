@@ -120,7 +120,7 @@
               data-bs-parent="#sidenavAccordion"
             >
               <nav class="sb-sidenav-menu-nested nav">
-               <router-link class="nav-link" to="/">
+               <router-link class="nav-link" to="/productInventory">
                       재고목록
                     </router-link>
               </nav>

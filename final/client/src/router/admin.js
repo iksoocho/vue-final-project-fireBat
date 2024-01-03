@@ -10,6 +10,7 @@ import deliveryList from '../views/admin/deliveryList.vue';
 import festivalInfoList from '../views/festival/festivalInfoList.vue';
 import festivalInsert from '../views/festival/festivalInsert.vue';
 import festivalUpdate from '../views/festival/festivalUpdate.vue';
+import productInventory from '../views/admin/productInventory.vue';
 
 
 export default {
@@ -71,6 +72,11 @@ export default {
         path: "/festivalUpdate",
         name: "festivalUpdate",
         component: festivalUpdate
+      },
+      {
+        path: "/productInventory",
+        name: "productInventory",
+        component: productInventory
       },
     ],
   }
