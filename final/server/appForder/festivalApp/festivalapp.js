@@ -9,6 +9,12 @@ router.get('/', async (req, res) => {
     res.send(list);
 });
 
+// 메인페이지 랜덤 6가지
+router.get('/random', async (req, res) => {
+    let list = await mysql.query('fesRandomList');
+    res.send(list);
+});
+
 // 단건 조회
 router.get('/:f_code', async(req,res)=>{
     let data = req.params.f_code;
@@ -34,9 +40,5 @@ router.delete('/delete/:f_code', async (req,res) =>{
     let result = await mysql.query('fesDelete', data);
     res.send(result);
 });
-// 메인페이지 랜덤 6가지
-router.get('/random', async (req, res) => {
-    let list = await mysql.query('fesRandomList');
-    res.send(list);
-});
+
 module.exports = router;

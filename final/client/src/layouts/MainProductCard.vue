@@ -12,14 +12,14 @@
                 </div>
             </div>
             <div class="row">
-                 <div class="col-lg-4 col-md-6">
+                 <div v-for="(pro, i) in prodRandomList" :key="i" class="col-lg-4 col-md-6">
                     <div class="single_place">
                             <div class="thumb">
                             <img src="img/place/1.png" alt="">
-                            <a href="#" class="prise">$500</a>
+                            <a href="#" class="prise">₩{{pro.prod_price}}</a>
                     </div>
                          <div class="place_info">
-                            <a href="destination_details.html"><h3>California</h3></a>
+                            <a href="destination_details.html"><h3>{{pro.prod_name}}</h3></a>
                             <p>United State of America</p>
                             <div class="rating_days d-flex justify-content-between">
                                 <span class="d-flex justify-content-center align-items-center">

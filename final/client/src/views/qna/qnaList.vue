@@ -36,12 +36,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(qna,idx) in qnaList" :key="idx">
+                <tr v-for="(qna, idx) in qnaList.slice(pageStartIdx, pageStartIdx + ITEM_PER_PAGE)" :key="idx">
                     <td>{{ qna.qna_no }}</td>
                     <td>{{ qnaCategory(qna.qna_category) }}</td>
                     <th>
-                      <a href="#!">{{ qna.qna_title}}</a>
-                      <p>테스트</p>
+                      <a href="#!" @click="goQnaInfo(qna.qna_no)">{{ qna.qna_title}}</a>
+                      
                     </th>
                     <td>{{ qna.user_id }}</td>
                     <td>{{getDateFormat(qna.qna_date)}}</td>
@@ -81,7 +81,7 @@ export default {
     created(){
         this.getQnaList();
     },
-    comoputed : {
+    computed : {
         pageStartIdx() {
             return (this.curPage - 1) * this.ITEM_PER_PAGE;
         }
@@ -108,6 +108,9 @@ export default {
         },
         goQnaInsert(){
           this.$router.push('/qnaInsert')
+        },
+        goQnaInfo(qna_no){
+            this.$router.push({path : '/qnaInfo', query:{qna_no : qna_no}})
         }
     }
 }
