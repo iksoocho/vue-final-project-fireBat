@@ -31,7 +31,12 @@ module.exports = {
 
     // 관리자(사용자회원 리스트)
     adminUserList : `SELECT user_id, user_pw, user_email, user_name, user_tel, user_addr, user_birth , prod_sell_count
-    FROM user u JOIN product p`,
+    FROM user u LEFT OUTER JOIN product p ON (u.user_id = p.prod_sell_count)`,
+
+    //이미지 테스트
+    ptinsert: `INSERT INTO prod_imgs SET ? `,
+    ptlist: `SELECT * FROM prod_imgs`,
+    ptinfo: `SELECT * FROM prod_imgs where prod_img_no = ?`,
 
     
 }

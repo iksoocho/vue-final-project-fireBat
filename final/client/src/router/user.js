@@ -12,8 +12,14 @@ import userProductList from '../views/product/userProductList.vue';
 import userProductInfo from '../views/product/userProductInfo.vue';
 import qnaList from '../views/qna/qnaList.vue'
 import qnaInsert from '../views/qna/qnaInsert.vue'
+import qnaInfo from '../views/qna/qnaInfo.vue';
+import qnaUpdate from '../views/qna/qnaUpdate.vue';
+import noticeList from '../views/notice/noticeList.vue';
+import noticeInfo from '../views/notice/noticeInfo.vue';
+import noticeInsert from '../views/notice/noticeInsert.vue';
+import noticeUpdate from '../views/notice/noticeUpdate.vue';
 import MyPage from '../views/member/MyPage.vue'; // 마이페이지 홈
-import qnaInfo from '../views/qna/qnaInfo.vue'
+
 
 
 
@@ -100,6 +106,31 @@ export default {
         path: '/qnaInfo',
         name: 'qnaInfo',
         component: qnaInfo
+      },
+      {
+        path: '/qnaUpdate',
+        name: 'qnaUpdate',
+        component: qnaUpdate
+      },
+      {
+        path: '/noticeList',
+        name: 'noticeList',
+        component:  noticeList
+      },
+      {
+        path: '/noticeInfo',
+        name: 'noticeInfo',
+        component: noticeInfo
+      },
+      {
+        path: '/noticeInsert',
+        name: 'noticeInsert',
+        component: noticeInsert
+      },
+      {
+        path: '/noticeUpdate',
+        name: 'noticeUpdate',
+        component: noticeUpdate
       },
     ],
   }
