@@ -3,6 +3,7 @@
     <AdminHeader></AdminHeader>
     
       <AdminSideBar></AdminSideBar>
+      <router-view></router-view>
 
     <AdminFooter></AdminFooter>
 

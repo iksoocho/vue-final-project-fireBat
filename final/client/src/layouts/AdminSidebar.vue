@@ -5,7 +5,7 @@
         <div class="sb-sidenav-menu">
           <div class="nav">
             <div class="sb-sidenav-menu-heading">Festival</div>
-            <router-link to="/admin/home">
+            <router-link to="">
               <a
               class="nav-link collapsed"
               href="#"
