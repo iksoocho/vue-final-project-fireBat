@@ -11,7 +11,7 @@
                     <th>축제일정</th>
                     <th>금액</th>
                     <th>홈페이지</th>
-                    <th>상세주소</th>
+                    <th>삭제</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@
 
 <script>
 import axios from 'axios';
-
+import Swal from 'sweetalert2'
 export default {
     data(){
         return {
@@ -69,13 +69,20 @@ export default {
             console.log(result.data);
             let count = result.data.affectedRows;   
             if(count == 0){
-                alert('정상적으로 삭제되지 않았습니다.')
+                Swal.fire({
+                    icon: 'warning',
+                    title: '삭제실패!',
+                    confirmButtonText: '확인',
+                })
             }else{
-                alert('정상적으로 삭제 되었습니다.')
+                Swal.fire({
+                    icon: 'warning',
+                    title: '삭제성공!!',
+                    confirmButtonText: '확인',
+                })
                 this.$router.push({name : 'festivalList'});
             }
         },
-
     }
 }
 </script>

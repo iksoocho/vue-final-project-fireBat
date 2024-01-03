@@ -43,6 +43,10 @@
         <input type="url" v-model="fesInfo.f_url">
         <br>
         <br>
+        <input type="file" ref="fileInput" @change="handleFileChange" />
+        <br>
+        <button @click="uploadFile">Upload File</button>
+        <br>
         <button v-on:click="insertInfo">등록</button>
     </form>
 </div>
@@ -67,10 +71,12 @@ export default {
         f_content: '',
         f_price: '',
         f_url: '',
+        f_imges: '',
     },
     };
 },
 methods: {
+
     async insertInfo() {
         if (!this.fesInfo.f_code || !this.fesInfo.f_category || !this.fesInfo.f_reg || !this.fesInfo.f_name || !this.fesInfo.f_number || !this.fesInfo.f_loc
         || !this.fesInfo.f_firstday || !this.fesInfo.f_lastday || !this.fesInfo.f_content || !this.fesInfo.f_price || !this.fesInfo.f_url) {
@@ -78,25 +84,20 @@ methods: {
             icon: 'warning',
             title: '등록실패!',
             text: '값 입력해',
+            confirmButtonText: '확인',
          })
         return;
         }
     let data = {
         param: this.fesInfo,
     };
-    let result = await axios(`/api/festival/insert`, {
+    let result = await axios(`/api/festival/insert`, data ,  {
         method: 'post',
         headers: {
         'Content-Type': 'application/json',
         },
         data: JSON.stringify(data),
     }).catch((err) => console.log(err));
-    
-    if(result.affectedRows > 0 ){
-        alert('등록을 실패했습니다.')
-    } else {
-        alert('축제 등록이 되었습니다.')
-    }
     },
 },
     }

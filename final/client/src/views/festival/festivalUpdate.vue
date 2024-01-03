@@ -50,6 +50,7 @@
   
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 export default {
 
@@ -89,7 +90,10 @@ created() {
           .catch((err) => console.log(err));
 
           if(result.data.changedRows > 0){
-                alert('수정완료');
+            Swal.fire({
+                    icon: 'warning',
+                    title: '수정성공!!',
+                })
             }
   },
   getDateFormat(date){
