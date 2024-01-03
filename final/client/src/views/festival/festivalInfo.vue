@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-  
         <div class="row">
             <div class="container text-center">
                 <div class="row">
@@ -10,24 +9,24 @@
                                 <th>📅 {{ getDateFormat(fesInfo.f_firstday) }} ~ {{ getDateFormat(fesInfo.f_lastday) }}</th>
                             </tr>
                             <br>
-  
+
                             <tr>
                                 <th>📢 {{ fesInfo.f_loc }}</th>
                             </tr>
                             <br>
-  
+
                             <tr>
                                 <th>🎫 {{ fesInfo.f_price }}</th>
                             </tr>
                             <br>
-  
+
                             <tr>
                                 <th>📞 {{ fesInfo.f_number }}</th>
                             </tr>
                             <br>
                             
                             <tr>
-                              <a :href="fesInfo.f_url">공식홈페이지</a>
+                                <a :href="fesInfo.f_url">공식홈페이지</a>
                             </tr>
                         </div>    
                 </div>
@@ -42,52 +41,49 @@
         </div>
         <hr>
         <h2>길찾기</h2>
-        <a href="https://map.kakao.com/link/to/수성빛예술제,35.8285058585979,128.621168696627" target="_blank">길찾기</a>
+            <a href="https://map.kakao.com/link/to/수성빛예술제,35.8285058585979,128.621168696627" target="_blank">길찾기</a>
         <div>
-      <!-- 이 곳에 지도가 표시될 영역 -->
-      <div id="map" style="width: 100%; height: 400px;"></div>
-    </div>
+            <div id="map" style="width: 100%; height: 400px;"></div>
+        </div>
         <hr>
-   
+
     </div>
-    <!-- 얘들은 나중에 관리자페이지 상품전체리스트 게시판으로 갈 예정 -->
-  
-  </template>
-  <script>
-  import axios from 'axios';
-  
-  export default {
+</template>
+<script>
+import axios from 'axios';
+
+export default {
     data() {       
         return {
             searchNo : '',
             fesInfo: {
-  
+
             },
         }
     },
     mounted() {
-      
+
     },
-  
+
     
-  
+
     created() {
     this.searchNo = this.$route.query.f_code;   // 페이지요청은 router  페이지가 열릴때는 route
     this.getFesInfo();
-   },
+},
     methods : {
-      
+
         async getFesInfo() {
           //   let result = await axios.get(`/api/festival/${this.searchNo}`) 
           //                     .catch(err => console.log(err));
           //   this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
             try {
-              let response = await axios.get(`/api/festival/${this.searchNo}`);
-              this.fesInfo = response.data;
-              this.initializeMap();
-           } catch (err) {
-              console.log(err);
-           }
+                let response = await axios.get(`/api/festival/${this.searchNo}`);
+                this.fesInfo = response.data;
+                this.initializeMap();
+                } catch (err) {
+                    console.log(err);
+                }
             
         },
         goFesUpdate(f_code){
@@ -112,7 +108,7 @@
            const mapContainer = document.getElementById('map');
            const mapOption = {
               center: new kakao.maps.LatLng(33.450701, 126.570667),
-              level: 1,
+              level: 5,
            };
            const map = new kakao.maps.Map(mapContainer, mapOption);
   
@@ -138,8 +134,6 @@
               }
            });
         },
-        //  methods 안에서 카카오 지도 api 부분
-        
     },
   
     
