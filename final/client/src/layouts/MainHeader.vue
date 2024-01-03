@@ -30,7 +30,7 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a class="active" href="/main">home</a></li>
-                                        <li><a href="about.html">공지사항</a></li>
+                                        <li><a href="/noticeList">공지사항</a></li>
                                         
                                         <li><a href="#">축제<i class="ti-angle-down"></i></a>
                                             <ul class="submenu">

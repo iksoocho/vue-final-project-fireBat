@@ -6,6 +6,7 @@ const userRouter = require('./appForder/memberApp/memberapp.js');
 const fesRouter = require('./appForder/festivalApp/festivalapp.js');
 const productRouter = require('./appForder/productApp/productapp.js');
 const paymentRouter = require('./appForder/paymentApp/paymentapp.js');
+const noticeRouter = require('./appForder/noticeApp/noticeapp.js')
 
 app.use(
   express.json({
@@ -21,5 +22,5 @@ app.use('/qna', qnaRouter);
 app.use('/user', userRouter);
 app.use('/festival', fesRouter);
 app.use('/product', productRouter);
-
+app.use('/notice', noticeRouter)
 app.use('/pay', paymentRouter);
