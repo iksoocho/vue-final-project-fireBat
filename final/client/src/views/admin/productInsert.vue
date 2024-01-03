@@ -57,6 +57,11 @@
         </select>
         
         <br>
+        <div>
+          <input type="file" ref="fileInput" @change="handleFileChange" />
+        </div>
+        <button @click="uploadFile">Upload File</button>
+        <br>
         <button v-on:click="insertInfo">등록</button>
     </form>
 </div>
@@ -121,7 +126,29 @@ export default {
         }
         
       },
-      
+      handleFileChange(event){
+        this.selectedFile = event.target.file[0];
+      },
+      async uploadFile(){
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+
+        try{
+          const response = await axios.post('/node/photo', formData);
+          thos.img = response.data.filename;
+
+        } catch (error){
+          console.log(error)
+        } finally {
+            let data = {
+              param: {
+
+              }
+            }
+            let result = await axios.post('/node/prodcut', data);
+            console.log(result)
+        }
+      }
     }
 }
 </script>
