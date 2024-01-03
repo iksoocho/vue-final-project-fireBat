@@ -104,30 +104,35 @@ export default {
             getDateFormat(date){
             return this.$dateFormat(date);   // 날짜 변환
         },
+        
+        // 카카오맵 API 지도
         initializeMap() {
+            // ID가 'map'인 HTML 요소를 검색하여 변수에 할당 mapContainer.
            const mapContainer = document.getElementById('map');
+           // 위도 경도 기본 초기값
            const mapOption = {
               center: new kakao.maps.LatLng(33.450701, 126.570667),
               level: 5,
            };
+           // 지정된 컨테이너랑 옵션 사용해서 새로운 카카오맵 API지도 객체 생성
            const map = new kakao.maps.Map(mapContainer, mapOption);
-  
+           // 축제 장소의 주소를 위도 경도가 아닌 좌표로 변환하려고 지오코더 객체 만듬
            const geocoder = new kakao.maps.services.Geocoder();
            const address = this.fesInfo.f_loc;
-  
+           // 지오코더 이용해서 주소검색
            geocoder.addressSearch(address, (result, status) => {
               if (status === kakao.maps.services.Status.OK) {
-                 const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-  
+                 const coords = new kakao.maps.LatLng(result[0].y, result[0].x);  // 지오코딩 조건문 값을 위도 경도 좌표 출력
+                // 지정된 좌표에 마커 표시
                  const marker = new kakao.maps.Marker({
                     map: map,
                     position: coords,
                  });
-  
+                 // 좌표에 데이터(축제이름) 받아와서 마커에 표시
                  const infowindow = new kakao.maps.InfoWindow({
                     content: `<div style="width:150px;text-align:center;padding:6px 0;">${this.fesInfo.f_name}</div>`,
                  });
-  
+                 // 지도의 마커 위치에 정보창을 열고 지도 중심을 축제 장소 좌표로 설정합니다
                  infowindow.open(map, marker);
   
                  map.setCenter(coords);

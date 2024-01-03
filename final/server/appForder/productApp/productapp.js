@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('../../db.js');
 
-
 // 사용자 상품 리스트
 router.get('/user', async (req,res)=>{
     let list = await mysql.query('userProductList');
@@ -14,6 +13,12 @@ router.get('/user/:prod_code', async (req,res) =>{
     let data = req.params.prod_code;
     let userProdInfo = await mysql.query('userProductInfo',data);
     res.send(userProdInfo[0])
+})
+
+// 관리자 (사용자회원 리스트)
+router.get('/adminUser', async (req,res)=>{
+    let list = await mysql.query('adminUserList')
+    res.send(list);
 })
 
 // 관리자 상품 리스트

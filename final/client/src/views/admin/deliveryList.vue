@@ -1,5 +1,5 @@
 <template>
-<div id="deliveryInfo">
+<div id="deliveryInfo" class="container">
     <h3>주문정보</h3>
     <table class="table table-hover">
         <thead>
@@ -37,5 +37,8 @@ export default {
 </script>
 
 <style>
-
+.container{
+  padding : 30px;
+  
+}
 </style>

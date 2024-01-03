@@ -1,5 +1,5 @@
 <template>
- <div id="delivery">
+ <div id="delivery" class="container">
     <h3>배송정보</h3>
     <table class="table table-hover">
         <thead>
@@ -15,9 +15,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-              <th>{{}}</th>
-              <th>{{}}</th>
+            <tr :key="i" v-for="(del, i) in deliveryInformationList">
+              <th>{{del.order_no}}</th>
+              <th>{{del.user_name}}</th>
               <th>{{}}</th>
               <th>{{}}</th>
               <th>{{}}</th>
@@ -37,5 +37,8 @@ export default {
 </script>
 
 <style>
-
+.container{
+  padding : 30px;
+  
+}
 </style>

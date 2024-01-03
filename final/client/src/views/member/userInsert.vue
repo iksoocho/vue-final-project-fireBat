@@ -2,6 +2,7 @@
   
   <div id="container" style="display: flex; justify-content : center;">
     <form @submit.prevent="submitForm">
+      <h3 style="text-align: center; margin-bottom: 20px; color: #dc3545;">Sign-up</h3>
     <div :class="{'error': !isValidUserId}" style="margin-bottom: 8px;">
       <!-- 보류. 영문 한글자 이상 입력시 오류메세지 뜨는데, 한글은 두글자 이상이여야지 뜸 -->
       <label style="color: black;">아이디</label><br>
