@@ -6,8 +6,8 @@
     <input type="text" v-model="keyword" placeholder="검색어를 입력하세요">
     <button @click="search">검색</button>
     <ul>
-      <li v-for="product in searchResults" :key="product.id">
-        {{ product.name }}
+      <li v-for="prod in searchResults" :key="prod.code">
+        {{ prod.name }}
       </li>
     </ul>
   </div>

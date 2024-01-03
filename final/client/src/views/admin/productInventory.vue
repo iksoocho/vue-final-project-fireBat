@@ -1,16 +1,15 @@
 <template>
-  <div>
-    <h2>재고관리 페이지</h2>
+  <div class="container">
+    <h3>재고관리 페이지</h3>
     <table class="table table-hover">
         <thead>
             <tr>
                 <th>상품코드</th>
                 <th>상품명</th>
+                <th>상품가격</th>
                 <th>현재재고</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th>남은재고</th>
+                <th>재고상태</th>
             </tr>
         </thead>
         <tbody>
@@ -21,11 +20,11 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
             </tr>
         </tbody>
     </table>
   </div>
+  
 </template>
 
 <script>

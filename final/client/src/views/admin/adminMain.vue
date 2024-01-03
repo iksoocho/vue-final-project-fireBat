@@ -1,7 +1,21 @@
 <template>
      <div id="container" class="flex-container">
         
+        
+        
 
+        <div class="table-header mt-2">통계 차트</div>
+        <div class="chart-container">
+            <div id="piechart" class="chart w-50"></div>
+            <div id="chart_div" class="chart w-50"></div>
+        </div>
+        <div class="table-header">판매상품 순위 내역</div>
+        <div class="my-1 mx-3 d-flex flex-row-reverse">
+            <select>
+                <option value='sell'>판매 수량</option>
+                <option value='prodsell'>상품 매출</option>
+                <option value='prodname'>상품 이름</option>
+            </select>
         
       <table>
             <thead>
@@ -30,7 +44,7 @@
 
 
     </div>
-
+     </div>
 </template>
 
 <script>
@@ -53,15 +67,15 @@ export default {
     methods: {
         async getProductList(obj){
 
-            let result = '';
-            const prodNo = 1;
+            // let result = '';
+            // const prodNo = 1;
             
-            try {
-                result = await axios.get(`/api/product`);
-            } catch (e){
-                console.log(e);
-            }
-            this.ProductList = result.data;
+            // try {
+            //     result = await axios.get(`/api/product`);
+            // } catch (e){
+            //     console.log(e);
+            // }
+            // this.ProductList = result.data;
             
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
@@ -78,12 +92,36 @@ export default {
         ]);
 
         var options = {
-          title: 'My Daily Activities'
+          title: '방문자 성 비율'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
         chart.draw(data, options);
+
+      
+      
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2020',  1000,      400],
+          ['2021',  1170,      460],
+          ['2022',  660,       1120],
+          ['2023',  1030,      540]
+        ]);
+
+        var options = {
+          title: '상품 판매량',
+          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
       }
     }
   }
