@@ -63,9 +63,13 @@ export default {
             
             this.prodInfo = result.data;
         },
-        moveProdUpdate(prod_code){
+        async moveProdUpdate(prod_code){
+            let response =await axios.delete(`/api/product/deleteImg/${prod_code}`)
+                                .catch(err=>console.log(err));
+
             this.$router.push({path: '/productUpdate', query :{ prod_code : prod_code}})
-        }
+        },
+        
     }
 }
 </script>

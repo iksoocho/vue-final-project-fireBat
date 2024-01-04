@@ -91,8 +91,8 @@ export default {
       console.log(this.productList)
     },
     
-    moveProductInfo(prod_code){
-        this.$router.push({ path: '/productInfo', query : { prod_code : prod_code}})
+    moveProductInfo(prod_code){  
+      this.$router.push({ path: '/productInfo', query : { prod_code : prod_code}})
     },
 
     async deleteProduct(prod_code){

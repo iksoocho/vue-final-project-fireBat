@@ -21,8 +21,8 @@ router.post('/login', async (req, res, next) => {
 // 로그아웃
 router.post('/logout', (req, res, next) => {
   req.session.destroy();
-  res.redirect('/login');
-})
+  res.send({ success: true });
+});
 
 // 회원정보등록(2023-12-26)
 router.post('/', async (req, res) => {
@@ -34,9 +34,9 @@ router.post('/', async (req, res) => {
 // 회원정보수정(2023-12-26)
 router.put('/myPage', async (req, res) => {
   try {
-    let userId = req.session.id;
+    let userId = req.session.user_id;
     // 클라이언트 측에서 올바른 필드 이름을 사용하도록 확인
-    let datas = [req.body.user_name, req.body.user_zip, req.body.user_addr, req.body.user_detail_addr, req.params.no];
+    let datas = [req.body.user_name, req.body.user_zip, req.body.user_addr, req.body.user_detail_addr, userId];
 
     // MySQL 쿼리 실행 (mysql.query 함수 사용)
     let result = await mysql.query('userUpdate', datas);
@@ -95,4 +95,9 @@ router.get('/email/:email', async (req, res) => {
   }
 });
 
+router.get('/myPage', async (req, res) => {
+  let userId = req.session.user_id;
+  let result = await mysql.query('userInfo', [userId]);
+  res.send(result);
+});
 module.exports = router;

@@ -6,5 +6,6 @@ module.exports = {
   userUpdate: `UPDATE user SET user_name = ?, user_zip = ?, user_addr = ?, user_detail_addr = ? WHERE user_id = ?`, // 회원정보수정
   userCheck: `SELECT COUNT(*) AS count FROM user WHERE user_id = ?`, // 아이디 중복 체크
   userEmailCheck: `SELECT COUNT(*) AS count FROM user WHERE user_email = ?`, // 이메일 중복 체크
-  userLogin: `SELECT * FROM user WHERE user_id = ? AND user_pw = ?` // 로그인
+  userLogin: `SELECT * FROM user WHERE user_id = ? AND user_pw = ?`, // 로그인
+  userInfo: `SELECT * FROM user WHERE user_id = ?`
 };

@@ -65,6 +65,9 @@
                <router-link class="nav-link" to="/festivalInfoList">
                       축제목록
                     </router-link>
+               <router-link class="nav-link" to="/festivalList">
+                      축제리스트
+                    </router-link>                
               </nav>
             </div>
             <a

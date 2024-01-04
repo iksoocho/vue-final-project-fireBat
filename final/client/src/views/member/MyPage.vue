@@ -19,11 +19,11 @@
 
       <div>
         <label>생년월일</label><br>
-        <input type="text" :value="getFormattedBirth" readonly/>
+        <input type="text" :value="formattedBirth" readonly/>
       </div>
       
       <!-- AddressSearch 컴포넌트를 포함합니다 -->
-      <AddressSearch :user="user" @address-updated="handleAddressUpdated" />
+      <AddressSearch :user="user"/>
 
       <!-- 다른 필요한 정보를 포함합니다 -->
 
@@ -34,7 +34,7 @@
 
 <script>
 import axios from 'axios';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import AddressSearch from '../../components/AddressSearch.vue';
 
 export default {
@@ -47,7 +47,7 @@ export default {
         user_id: '',
         user_name: '',
         user_gender: 0, // default 값 설정
-        user_birth: new Date(),
+        user_birth: null,
         user_zip: '',
         user_addr: '',
         user_detail_addr: '',
@@ -58,17 +58,34 @@ export default {
     getGenderLabel() {
       return this.user.user_gender === 0 ? '남' : '여';
     },
-    getFormattedBirth() {
-      return format(this.user.user_birth, 'yyyy년 MM월 dd일');
+    formattedBirth() {
+      if (this.user.user_birth) {
+        // MySQL의 Date 타입을 JavaScript Date 객체로 변환
+        const parsedDate = parseISO(this.user.user_birth);
+        return format(parsedDate, 'yyyy-MM-dd');
+      } else {
+        return '';
+      }
     },
   },
   methods: {
     async loadUserData() {
       try {
         // 서버에서 사용자 정보를 불러오는 API 호출
-        const response = await axios.get(`/api/user/myPage/`);
+        const response = await axios.get(`/api/user/myPage`);
         // 불러온 사용자 정보를 컴포넌트 데이터에 저장
         this.user = response.data;
+
+        if (this.user.user_birth) {
+          // MySQL의 Date 타입을 JavaScript Date 객체로 변환
+          this.user.user_birth = parseISO(this.user.user_birth);
+
+          if (isNaN(this.user.user_birth)) {
+            console.error('서버에서 받은 날짜 값이 유효하지 않습니다.');
+          } else {
+            console.log('유효한 날짜 값 확인:', this.user.user_birth);
+          }
+        }
       } catch (error) {
         console.error('사용자 정보를 불러오는 데 실패했습니다.', error);
       }
@@ -76,28 +93,30 @@ export default {
     async submitForm() {
       try {
         let data = {
-          user_id: this.user.user_id,
           user_name: this.user.user_name,
-          user_gender: this.user.user_gender,
-          user_birth: this.user.user_birth,
           user_zip: this.user.user_zip,
           user_addr: this.user.user_addr,
           user_detail_addr: this.user.user_detail_addr,
           // 다른 필요한 정보를 추가합니다
         };
 
-        let result = await axios.put(`/api/user/myPage/${this.user.user_id}`, data);
+        // 회원정보 수정 API 호출
+        let result = await axios.put(`/api/user/myPage`, data);
 
-        console.log(result.data);
-
-        if (result.data.affectedRows === 1) {
-          window.alert('회원 정보가 수정되었습니다.');
+        if (result.data.success) {
+          // 수정 성공 시 처리
+          console.log('회원 정보 수정이 완료되었습니다.');
+          // 수정 후 마이 페이지로 이동
+          this.$router.push('/myPage');
         } else {
-          window.alert('회원 정보 수정에 실패했습니다. 다시 시도해주세요.');
+          // 오류 시 처리
+          console.error(result.data.error);
+          // 사용자에게 오류 메시지 표시
+          // 예: this.errorMessage = result.data.error;
         }
       } catch (error) {
         console.error(error);
-        window.alert('회원 정보 수정에 실패했습니다. 다시 시도해주세요.');
+        // 오류 처리
       }
     },
     handleAddressUpdated(updatedAddress) {
@@ -109,8 +128,7 @@ export default {
   },
   created() {
     // 사용자 정보를 서버에서 가져오는 로직을 created 훅에서 실행
-    this.user.user_id = '사용자 아이디';
     this.loadUserData();
-  },
-};
+  }
+}
 </script>

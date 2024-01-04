@@ -138,6 +138,8 @@ router.delete('/deleteImg/:prod_code', async (req,res) => {
     res.send(result);
 })
 
+
+
 // 검색
 router.get('/search/:prod_name', async (req,res) =>{
     let data = req.params.prod_name;
