@@ -1,21 +1,21 @@
 <template>
   <div id="show">
     <div class="page-title">
-        <h3 class="text-center">QnA</h3>
+        <h3 class="text-center">공지사항</h3>
     </div>
 	
 		<table id="writetable" >
 			
-				<tr><td class="title"><p>작성자</p></td><td><span>{{ this.$store.getters.userName }}</span></td></tr>
-				<tr><td class="title"><p>카테고리</p></td><td>{{ qnaCategory(qnaInfo.qna_category) }}</td></tr>
-				<tr><td class="title"><p>제목</p></td><td>{{ qnaInfo.qna_title }}</td></tr>
+				
+				
+				<tr><td class="title"><p>제목</p></td><td>{{ noticeInfo.notice_title }}</td></tr>
 				<tr><td class="title"><p>첨부</p></td><td><input type="file" id="avatar" name="file"></td></tr>
-				<tr><td colspan="2" id="textarea"><textarea id="textarea2" cols="130" rows="15" name="content" v-model="qnaInfo.qna_content" readonly></textarea></td></tr>
+				<tr><td colspan="2" id="textarea"><textarea id="textarea2" cols="130" rows="15" name="content" v-model="noticeInfo.notice_content" readonly></textarea></td></tr>
 				
 		</table>
 		<div style="text-align: center;">
-					<button type="button" class="btn btn-outline-danger me-2 mt-2" @click="goUpdate(qnaInfo.qna_no)">수정</button>
-					<button type="reset" class="btn btn-danger mt-2" @click="deleteInfo(qnaInfo.qna_no)">삭제</button>
+					<button type="button" class="btn btn-outline-danger me-2 mt-2" @click="goUpdate(noticeInfo.notice_no)">수정</button>
+					<button type="reset" class="btn btn-danger mt-2" @click="deleteInfo(noticeInfo.notice_no)">삭제</button>
 				</div>
 		
 		
@@ -29,34 +29,26 @@ export default {
     data() {       
         return {
             searchNo : '',
-            qnaInfo: {
+            noticeInfo: {
   
             },
         }
     },
     created() {
-    this.searchNo = this.$route.query.qna_no;   
-    this.getQnaInfo();
+    this.searchNo = this.$route.query.notice_no;   
+    this.getNoticeInfo();
    },
    methods:{
-    async getQnaInfo(){
-        let result = await axios.get(`/api/qna/${this.searchNo}`).catch(err=>console.log(err))
-        this.qnaInfo = result.data
+    async getNoticeInfo(){
+        let result = await axios.get(`/api/notice/${this.searchNo}`).catch(err=>console.log(err))
+        this.noticeInfo = result.data
     },
-    qnaCategory(data){
-            if(data == 1){
-                return  '배송문의'
-            }else if(data == 2){
-                return  '축제문의'
-            }else if(data == 3){
-                return  '기타문의'
-            }
-    },
-		goUpdate(qna_no){
-			this.$router.push({path : '/qnaUpdate', query:{qna_no : qna_no}})
+   
+		goUpdate(notice_no){
+			this.$router.push({path : '/noticeUpdate', query:{notice_no : notice_no}})
 		},
-		async deleteInfo(qna_no){
-            let result = await axios.delete(`/api/qna/${qna_no}`)
+		async deleteInfo(notice_no){
+            let result = await axios.delete(`/api/notice/${notice_no}`)
                                     .catch(err=>console.log(err));
             
             let count = result.data.affectedRows;   
@@ -72,7 +64,7 @@ export default {
                     title: '삭제성공!!',
                     confirmButtonText: '확인',
                 })
-                this.$router.push({name : 'qnaList'});
+                this.$router.push({name : 'noticeList'});
             }
         },
    }
