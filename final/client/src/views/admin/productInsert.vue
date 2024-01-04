@@ -56,7 +56,7 @@
         
         <br>
         <div>
-          <input type="file" ref="fileInput" @change="handleFileChange" />
+          <input type="file" ref="fileInput" @change="handleFileChange" multiple/>
         </div>
         <button @click="uploadFile()" type="button">Upload File</button>
         <br>
@@ -81,7 +81,7 @@ export default {
           prod_loc : '',
           prod_cate : '',
           prod_state: '',
-          img : null
+          img : ''
         },
       }
     },
@@ -133,7 +133,7 @@ export default {
 					      confirmButtonText: 'OK',
               })
             }
-
+      
             
       }
 

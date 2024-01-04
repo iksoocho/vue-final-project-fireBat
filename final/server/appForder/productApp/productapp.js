@@ -145,7 +145,7 @@ router.post('/rsphotos', uploadRs.array('files'), async (req, res) => {
 		let rsInfo = req.body.rsobj;
 		rsInfo = JSON.parse(rsInfo);
 
-		if (req.files && req.files.length >= 2) {
+		if (req.files && req.files.length >= 1) {
 			rsInfo.prod_img = req.files[0].filename;
 		
 		} else {
