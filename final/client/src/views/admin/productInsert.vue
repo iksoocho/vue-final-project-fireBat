@@ -50,14 +50,16 @@
         <input type="number" v-model="product.prod_count">
         <br>
         <label for="prodstate">상품상태</label>
-        <select name="state" v-model="product.prod_state">
-          <option value="1">주문가능</option>
-          <option value="2">품절</option>
-
-        </select>
+        
+          <input type="radio" v-model="product.prod_state" name="prodstate" value="1">주문가능
+          <input type="radio" v-model="product.prod_state" name="prodstate" value="2">품절
         
         <br>
-        <button v-on:click="insertInfo">등록</button>
+        <div>
+          <input type="file" ref="fileInput" @change="handleFileChange" multiple/>
+        </div>
+        <button @click="uploadFile()" type="button">Upload File</button>
+        <br>
     </form>
 </div>
 </template>
@@ -78,49 +80,66 @@ export default {
           prod_count : '',
           prod_loc : '',
           prod_cate : '',
-          prod_state: ''
+          prod_state: '',
+          img : ''
         },
-        
-
-        productImage : {
-          prod_code : "",
-          prod_filename : "",
-          prod_db_name : "",
-          prod_sequence : "",
-        }
       }
     },
     methods : {
-      async insertInfo(){
-        if(!this.product.prod_name || !this.product.prod_price || !this.product.prod_content ||
-           !this.product.prod_count || !this.product.prod_loc || !this.product.prod_cate ||
-           !this.product.prod_state){
-            Swal.fire({
-              icon: 'warning',
-              title: '등록실패',
-              text: '값 입력'
-            })
-            return;
-           }
-
-           
-        let data = {
-          param : this.product,
-        };
-        let result = await axios.post(`/api/product/insert`, data)
-                                .catch(err => console.log(err))
-        
-        console.log(result.data);
-
-        
-        if(result.data.prodCode > 0){
-          Swal.fire(`정상적으로 등록되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`)
-        } else {
-          Swal.fire(`정상적으로 등록 되었습니다.${result.data.prodCode}`)
-          this.$router.push({path : '/productList', query: { prod_code : this.product.prod_code}})
-        }
-        
+      handleFileChange(event){
+          this.product.img = event.target.files[0];
       },
+      
+
+      async uploadFile(){
+            const formData = new FormData();
+            if(this.product.img){
+              formData.append(`files`, this.product.img);
+            }
+
+            let obj1 = {
+               prod_name : this.product.prod_name,
+               prod_price : this.product.prod_price,
+               prod_content : this.product.prod_content,
+               prod_count : this.product.prod_count,
+               prod_loc : this.product.prod_loc,
+               prod_cate : this.product.prod_cate,
+               prod_state: this.product.prod_state,
+               prod_img : this.product.img,
+            };
+            const rsobj = JSON.stringify(obj1);
+            formData.append(`rsobj`, rsobj);
+
+            for(let key of formData.keys()){
+              console.log(key, ':', formData.get(key));
+            }
+
+            try{
+              let result = await axios.post(`/api/product/rsphotos`, formData);
+              console.log(result);
+              if(result.status === 200 && result.data.success){
+                  Swal.fire({
+                    title:'등록 성공',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                  });
+              }
+            } catch(error){
+              console.error(error);
+              Swal.fire({
+                title: '등록 실패',
+				      	text: 'An error occurred during registration.',
+					      icon: 'error',
+					      confirmButtonText: 'OK',
+              })
+            }
+      
+            
+      }
+
+     
+
+
       
     }
 }

@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+        <h2>축제수정</h2>
+        <br>
     <form>
         <label for="code">축제코드</label>
         <input type="text" v-model="fesInfo.f_code" readonly>
@@ -56,7 +58,7 @@ export default {
 
   data() {
   return {
-      f_code : '',   
+      f_code : '',  
       fesInfo : {}
   }
 },
@@ -89,12 +91,13 @@ created() {
           .put(`/api/festival/update/${this.fesInfo.f_code}`, data)
           .catch((err) => console.log(err));
 
-          if(result.data.changedRows > 0){
-            Swal.fire({
-                    icon: 'warning',
-                    title: '수정성공!!',
-                })
+          console.log(result);
+            if(result.data.changedRows == 0){
+                Swal.fire(`수정되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`);
+            } else {
+                Swal.fire(`정상적으로 수정되었습니다.`);     
             }
+            this.$router.push({ path: '/festivalList', query: {f_code: this.fesInfo.f_code} })
   },
   getDateFormat(date){
           return this.$dateFormat(date);   // 날짜 변환

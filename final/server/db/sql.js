@@ -4,6 +4,7 @@ const membersql = require('./memberSql/membersql.js');
 const fessql = require('./festivalSql/festivalsql.js');
 const productsql = require('./productSql/productsql.js');
 const paymentsql = require('./paymentSql/paymentsql.js');
+const noticesql = require('./noticeSql/noticeSql.js')
 
 module.exports = {
   qnasql,
@@ -11,5 +12,6 @@ module.exports = {
   membersql,
   fessql,
   productsql,
-  paymentsql
+  paymentsql,
+  noticesql
 };

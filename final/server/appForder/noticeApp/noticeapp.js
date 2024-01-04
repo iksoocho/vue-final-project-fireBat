@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('../../db.js');
 
-//qna 전체 조회
+//전체 조회
 router.get('/', async (req, res) => {
     let list = await mysql.query('noticeList');
     res.send(list);
@@ -16,12 +16,7 @@ router.get('/:notice_no', async (req, res) => {
 });
 
 
-//등록
-router.post('/', async (req, res) => {
-    let data = req.body.param;
-    let result = await mysql.query('noticeInsert', data);
-    res.send(result);
-});
+
 
 //수정
 router.put('/:notice_no', async(req,res)=>{
@@ -34,6 +29,13 @@ router.put('/:notice_no', async(req,res)=>{
 router.delete('/:notice_no', async(req,res)=>{
     let data = req.params.notice_no;
     let result = await mysql.query('noticeDelete', data);
+    res.send(result);
+});
+
+//등록
+router.post('/', async (req, res) => {
+    let data = req.body.param;
+    let result = await mysql.query('noticeInsert', data);
     res.send(result);
 });
 
