@@ -1,48 +1,62 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('../../db.js');
-// const multer = require("multer");
-// const path = require("path");
+const multer = require('multer');
+const path = require('path');
 
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//       cb(null, "img/uploads/");
-//     } ,
-//     filename: function (req, file, cb){
-//       cb(null, new Date().valueOf() + path.basename(file.originalname));
-//     }
-//   });
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "img/uploads/");
+    } ,
+    filename: function (req, file, cb){
+      cb(null, new Date().valueOf() + path.basename(file.originalname));
+    }
+  });
   
-//   const upload = multer({storage : storage});
-// // 이미지 사용
-// router.use("/public", express.static("img/"));
-// // 이미지 등록
-// router.post("/photo", upload.single("file"), (req,res) =>{
-//     let file = req.file;
-//     console.log(file);
-//     res.status(200).json({message: "등록성공", filename: file.filename});
-// });
+const storage_rs = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, 'img/restaurant/');
+	},
+	filename: function (req, file, cb) {
+		cb(null, new Date().valueOf() + path.basename(file.originalname));
+	},
+});
+
+  const upload = multer({ storage: storage });
+  
+  const uploadRs = multer({ storage: storage_rs });
+  // 이미지 사용
+  router.use("/public", express.static("img/"));
+  // 이미지 등록
+  router.post("/photo", upload.single("file"), (req,res) =>{
+    let file = req.file;
+    console.log(file);
+    res.status(200).json({message: "등록성공", filename: file.filename});
+  });
+
+
 
 // app.post('/node/photos', upload.array('file'), (req, res) => {
 // 	let filenames = req.files.map((file) => file.filename);
 // 	res.json({ filenames });
 // });
 
-// // 이미지 post 라우팅 처리
-// router.post("/ptupload", async (req,rep) =>{
-//     let result = await mysql.query("ptinsert", req.body.param);
-//     rep.send(result);
-// })
+// 이미지 post 라우팅 처리
+router.post("/ptupload", async (req,rep) =>{
+    let result = await mysql.query("ptinsert", req.body.param);
+    rep.send(result);
+})
 
-// router.get("/ptlist", async (req,rep) =>{
-//     let result = await mysql.query("ptlist");
-//     rep.send(result);
-// })
+router.get("/ptlist", async (req,rep) =>{
+    let result = await mysql.query("ptlist");
+    rep.send(result);
+})
 
-// router.get("/ptlist/:no", async(req,rep)=>{
-//     let result = await mysql.query("ptinfo", req.params.no);
-//     rep.send(result[0]);
-// })
+router.get("/ptlist/:no", async(req,rep)=>{
+    let result = await mysql.query("ptinfo", req.params.no);
+    rep.send(result[0]);
+})
 
 // 사용자 상품 리스트
 router.get('/user', async (req,res)=>{
@@ -85,13 +99,13 @@ router.get('/:prod_code', async(req,res) =>{
 
 
 // 상품등록 insert
-router.post('/insert', async (req, res) => {
-    let data = req.body.param;
-    console.log(data);
-    let result = await mysql.query('productInsert', data);
-    res.send(result);
+// router.post('/insert', async (req, res) => {
+//     let data = req.body.param;
+//     console.log(data);
+//     let result = await mysql.query('productInsert', data);
+//     res.send(result);
 
-})
+// })
 
 // 상품수정
 router.put('/update/:prod_code', async (req,res) =>{
@@ -126,15 +140,33 @@ router.get('/search/:prod_name', async (req,res) =>{
 })
 
 
-// router.get('/search', (req, res) => {
-//     const keyword = req.query.keyword; // 검색어를 쿼리 파라미터로 받음
-  
-//     // 검색 결과 필터링
-//     const searchResults = products.filter(product =>
-//       product.name.toLowerCase().includes(keyword.toLowerCase())
-//     );
-  
-//     res.json(searchResults);
-//   });
+router.post('/rsphotos', uploadRs.array('files'), async (req, res) => {
+	try {
+		let rsInfo = req.body.rsobj;
+		rsInfo = JSON.parse(rsInfo);
 
+		if (req.files && req.files.length >= 2) {
+			rsInfo.prod_img = req.files[0].filename;
+		
+		} else {
+			rsInfo.prod_img = null;
+		}
+		// console.log(rsInfo);
+		
+
+		let result = await mysql.query('rsInsert', rsInfo);
+
+		console.log(result);
+        if(result.affectedRows == 1){
+            
+            res.status(200).json({success : true});
+        } else {
+            res.status(500).json({success : false});
+        }
+		
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ success: false });
+	}
+});
 module.exports = router;
