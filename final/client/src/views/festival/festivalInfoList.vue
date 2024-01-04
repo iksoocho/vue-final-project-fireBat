@@ -109,4 +109,3 @@ export default {
     text-align: center;
 }
 </style>
-
