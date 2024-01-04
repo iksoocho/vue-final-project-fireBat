@@ -49,9 +49,10 @@ export default {
         if (result.data.length > 0 && result.data[0].user_id) {
           // 세션에 사용자 정보 저장
           sessionStorage.setItem('user', JSON.stringify(result.data[0].user_id));
-
+          
           console.log('로그인 성공:', result.data[0]);
           this.$router.push({ path: '/main' });
+          window.location.reload();
         } else {
           window.alert('로그인 실패다 ');
         }
@@ -60,16 +61,21 @@ export default {
       }
     },
   },
-  beforeRouteUpdate(to, from, next) {
-    // 동일한 경로에서 컴포넌트가 재사용될 때 세션 초기화
-    sessionStorage.removeItem('user');
-    next();
+  beforeRouteEnter(to, from, next) {
+    // 라우트에 진입하기 전에 로그인 상태 확인
+    if (sessionStorage.getItem('user') !== null) {
+      next('/main');
+    } else {
+      next();
+    }
   },
-  computed: {
-    isLoggedIn() {
-      // 세션에서 사용자 정보 확인
-      return sessionStorage.getItem('user') !== null;
-    },
+  beforeRouteUpdate(to, from, next) {
+    // 라우트 업데이트 전에 로그인 상태 확인
+    if (sessionStorage.getItem('user') !== null) {
+      next('/main');
+    } else {
+      next();
+    }
   },
 };
 </script>

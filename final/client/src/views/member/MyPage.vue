@@ -67,7 +67,7 @@ export default {
     async loadUserData() {
       try {
         // 서버에서 사용자 정보를 불러오는 API 호출
-        const response = await axios.get(`/api/user/myPage`);
+        const response = await axios.get(`/api/user/myPage/`);
         // 불러온 사용자 정보를 컴포넌트 데이터에 저장
         this.user = response.data;
       } catch (error) {

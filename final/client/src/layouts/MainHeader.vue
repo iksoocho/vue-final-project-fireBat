@@ -98,10 +98,17 @@ export default {
     goLogin() {
       this.$router.push('/login').catch(() => {});
     },
-    logout() {
-      sessionStorage.removeItem('user');
-      alert('로그아웃되었습니다.');
-    },
+    async logout() {
+    // 로그아웃 시 세션 지우기
+    sessionStorage.removeItem('user');
+    // this.$router.push('/login');   
+    window.location.reload();
+
+
+
+    // 선택적으로 로그인 페이지 또는 다른 적절한 페이지로 이동
+    // this.$router.push({ path: '/login' });
+  },
   },
 };
 </script>
