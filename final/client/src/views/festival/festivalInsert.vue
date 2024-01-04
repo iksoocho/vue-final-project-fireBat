@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <h2>축제등록</h2>
+        <br>
     <form>
         <label for="code">축제코드</label>
         <input type="text" v-model="fesInfo.f_code">
@@ -86,14 +87,11 @@ export default {
          })
         }
 
-
-           
         let data = {
           param : this.fesInfo,
         };
         let result = await axios.post(`/api/festival/insert`, data)
                                 .catch(err => console.log(err))
-        
         console.log(result.data)
       },
       

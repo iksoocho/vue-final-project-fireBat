@@ -1,5 +1,7 @@
 <template>
     <div>
+        <h2 id="flist">축제목록</h2>
+        <br>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -31,6 +33,14 @@
             </tr>
             </tbody>
         </table>
+        <div id="fapp">
+    <input type="text" v-model="word" @keyup.enter="fesSearch" placeholder="축제 이름을 검색하세요">
+    <button @click="search">검색</button>
+    <br>
+    <br>
+    <button><a href="festivalList">리스트로</a></button>
+  </div>
+        
     </div>
 </template>
 
@@ -50,6 +60,10 @@ export default {
         async getFestivalList(){
             this.festivalList = (await axios.get('/api/festival')
                                 .catch(err => console.log(err))).data; 
+        },
+        async fesSearch(){
+        this.festivalList = (await axios.get(`/api/festival/search/${this.word}`)).data
+        console.log(this.festivalList)
         },
         getDateFormat(date){
             return this.$dateFormat(date);   // 날짜 변환
@@ -80,10 +94,19 @@ export default {
                     title: '삭제성공!!',
                     confirmButtonText: '확인',
                 })
-                this.$router.push({name : 'festivalList'});
+                this.$router.push({name : 'festivalInfoList'});
             }
         },
     }
 }
 </script>
+
+<style>
+#flist{
+    text-align: center;
+}
+#fapp{
+    text-align: center;
+}
+</style>
 

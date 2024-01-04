@@ -15,21 +15,22 @@
             </tr>
           </thead>
           <tbody @click="selectedDate">
-            <tr v-for="(row, index) in currentCalendarMatrix" :key="index">
-              <td v-for="(day, index2) in row" :key="index2" style="padding:20px;">
-                <span v-if="isToday(currentYear, currentMonth, day)" class="rounded">
-                  {{day}}
-                </span>
-                <span v-else @click="selectedDate(day)">
-                  {{day}}
-                </span>
-              </td>
-            </tr>
-          </tbody>
+             <tr v-for="(row, index) in currentCalendarMatrix" :key="index">
+               <td v-for="(day, index2) in row" :key="index2" style="padding:20px;">
+                 <span v-if="isToday(currentYear, currentMonth, day)" class="rounded">
+                   {{day}}
+                 </span>
+                 <span v-else>
+                  <!-- 일자 -->
+                   {{day}}
+                 </span>
+               </td>
+             </tr>
+           </tbody>
       </table> 
       <div class="container">
         <div class="row">
-        <div v-for="(fes, i) in festivalList" :key="i" class="col-md-3 mb-4" @click="goFesInfo(fes.f_code)">
+        <div v-for="(fes, i) in fesCalList" :key="i" class="col-md-3 mb-4" @click="goFesInfo(fes.f_code)">
             <div class="card">
                 <img src="../../image/logo/로고.png" class="card-img-top" alt="">
             <div class="card-body">
@@ -37,15 +38,12 @@
                 <!-- <p class="card-text">{{ fes.f_content }}</p> -->
                 <p class="card-date">{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</p>
                 <p class="card-reg">{{ fes.f_reg }}</p>
-                <a href="#" class="btn btn-primary">축제 상세페이지</a>
-                <button class="btn btn-xs btn-info" @click="goToUpdate(fes.f_code)">수정</button>
             </div>
             </div>
         </div>
         </div>
     </div>   
   </div>
-  
 </template>
 
 <script>
@@ -65,23 +63,32 @@ export default {
       endOfDay: null,
       memoDatas: [],
       festivalList: [],
-      
+      fesCalList:[],
     }
   },
   created(){
-        this.getFestivalList();
+        //this.getFestivalList();
+        this.getFesCalList();
     },
   mounted(){
       this.init();
   },
   methods: {
-        async getFestivalList(){
-            this.festivalList = (await axios.get('/api/festival')
+        // getfestlvalCalenderList(f_firstday){
+        //     this.$router.push({path : '/festivalCalender', query:{f_firstday : f_firstday}})
+        // },
+        async getFesCalList(date){        
+            this.fesCalList = (await axios.get(`/api/festival/calender/${date}`)
                                 .catch(err => console.log(err))).data; 
         },
+        // async getFestivalList(){
+        //     this.festivalList = (await axios.get('/api/festival')
+        //                         .catch(err => console.log(err))).data; 
+        // },
         getDateFormat(date){
             return this.$dateFormat(date);   // 날짜 변환
         },
+
       init:function(){
         this.currentMonthStartWeekIndex = this.getStartWeek(this.currentYear, this.currentMonth);
         this.endOfDay = this.getEndOfDay(this.currentYear, this.currentMonth);
@@ -186,40 +193,11 @@ export default {
         let date = new Date();
         return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate(); 
       },
-      async selectedDate(day) {
-
-      // 클릭한 일자에 해당하는 축제 정보를 가져오기
-      const clickedDate = new Date(this.currentYear, this.currentMonth - 1, day);
-      const selectedDateFestivals = this.festivalList.filter(fes => {
-        const fesDate = new Date(fes.f_firstday, fes.f_lastday);
-        return fesDate.toDateString() === clickedDate.toDateString();
-      });
-
-      this.hideNonSelectedFestivals(selectedDateFestivals);
-      // 가져온 축제 정보를 사용할 수 있음
-      console.log(selectedDateFestivals);
-
-      // 이후 로직에 따라 모달창을 표시하는 등의 동작 수행
-    },
-    hideNonSelectedFestivals(selectedDateFestivals) {
-    // 숨김 여부 초기화
-    this.festivalList.forEach(fes => {
-      this.$set(fes, 'hidden', true);
-    });
-    selectedDateFestivals.forEach(selectedFes => {
-      const index = this.festivalList.findIndex(fes => fes.f_code === selectedFes.f_code);
-      if (index !== -1) {
-        this.$set(this.festivalList, index, { ...selectedFes, hidden: false });
+      selectedDate(event){
+        let date = `${this.currentYear}-${this.currentMonth}-${Number(event.target.textContent)}`;
+        this.getFesCalList(date);
       }
-    });
   },
-   
-  },
-
-      // selectedDate(event){
-      //   let date = event.target.textContent;
-      //   console.log(this.currentYear, this.currentMonth, date);
-      // }
   }
 
 </script>
@@ -234,3 +212,4 @@ export default {
       color:#ffffff;
     }
 </style>
+
