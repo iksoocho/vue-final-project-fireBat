@@ -32,8 +32,9 @@ router.post('/', async (req, res) => {
 });
 
 // 회원정보수정(2023-12-26)
-router.put('/myPage/:no', async (req, res) => {
+router.put('/myPage', async (req, res) => {
   try {
+    let userId = req.session.id;
     // 클라이언트 측에서 올바른 필드 이름을 사용하도록 확인
     let datas = [req.body.user_name, req.body.user_zip, req.body.user_addr, req.body.user_detail_addr, req.params.no];
 
