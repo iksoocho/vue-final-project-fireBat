@@ -114,16 +114,6 @@ export default {
                                     .catch(err => console.log(err));
 
 
-            // let result = await axios(`/api/product/update/${this.prodInfo.prod_code}` ,{
-            //     methods : 'put',
-            //     headers : {
-            //         'Content-Type' : 'application/json'
-            //     },
-            //     data : JSON.stringify(data)
-            // })
-            // .catch(err => console.log(err))
-
-
            console.log(result);
             if(result.data.changedRows == 0){
                 Swal.fire(`수정되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`);

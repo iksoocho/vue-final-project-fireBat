@@ -36,6 +36,16 @@ const storage_rs = multer.diskStorage({
   });
 
 
+  router.post('/prodPhoto', upload.array('files'), async (req, res) => {
+	let bno = req.body.bno;
+	let filenames = req.files.map((file) => file.filename);
+	console.log(filenames);
+	for (let filename of filenames) {
+		let result = await mysql.query('prodImgInsert', [bno, filename]);
+	}
+	res.json({ filenames });
+});
+
 
 // app.post('/node/photos', upload.array('file'), (req, res) => {
 // 	let filenames = req.files.map((file) => file.filename);
@@ -99,13 +109,13 @@ router.get('/:prod_code', async(req,res) =>{
 
 
 // 상품등록 insert
-// router.post('/insert', async (req, res) => {
-//     let data = req.body.param;
-//     console.log(data);
-//     let result = await mysql.query('productInsert', data);
-//     res.send(result);
+router.post('/insert', async (req, res) => {
+    let data = req.body.param;
+    console.log(data);
+    let result = await mysql.query('productInsert', data);
+    res.send(result);
 
-// })
+})
 
 // 상품수정
 router.put('/update/:prod_code', async (req,res) =>{
@@ -121,7 +131,12 @@ router.delete('/delete/:prod_code', async (req,res) => {
     res.send(result);
 })
 
-
+//상품 이미지 삭제
+router.delete('/deleteImg/:prod_code', async (req,res) => {
+    let data = req.params.prod_code;
+    let result = await mysql.query('prodImgDelete', data);
+    res.send(result);
+})
 
 // 검색
 router.get('/search/:prod_name', async (req,res) =>{
@@ -140,33 +155,5 @@ router.get('/search/:prod_name', async (req,res) =>{
 })
 
 
-router.post('/rsphotos', uploadRs.array('files'), async (req, res) => {
-	try {
-		let rsInfo = req.body.rsobj;
-		rsInfo = JSON.parse(rsInfo);
 
-		if (req.files && req.files.length >= 1) {
-			rsInfo.prod_img = req.files[0].filename;
-		
-		} else {
-			rsInfo.prod_img = null;
-		}
-		// console.log(rsInfo);
-		
-
-		let result = await mysql.query('rsInsert', rsInfo);
-
-		console.log(result);
-        if(result.affectedRows == 1){
-            
-            res.status(200).json({success : true});
-        } else {
-            res.status(500).json({success : false});
-        }
-		
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ success: false });
-	}
-});
 module.exports = router;

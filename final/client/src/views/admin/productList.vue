@@ -96,14 +96,18 @@ export default {
     },
 
     async deleteProduct(prod_code){
-      
+      let response =await axios.delete(`/api/product/deleteImg/${prod_code}`)
+                                .catch(err=>console.log(err));
+      let count2 = response.data.affectedRows;
+
+
       let result = await axios.delete(`/api/product/delete/${prod_code}`)
                               .catch(err => console.log(err));
       
       console.log(result.data);
       let count = result.data.affectedRows;
 
-      if(count == 0){
+      if((count+count2) == 0){
             Swal.fire('정상적으로 삭제 되지 않았습니다.')
         } else{
             Swal.fire('정상적으로 삭제 되었습니다.')
