@@ -82,6 +82,8 @@ export default {
                                     .catch(err=>console.log(err));
             console.log(result.data);
             let count = result.data.affectedRows;   
+
+            
             if(count == 0){
                 Swal.fire({
                     icon: 'warning',
