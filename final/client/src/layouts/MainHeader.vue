@@ -49,19 +49,19 @@
                         <div class="col-xl-4 col-lg-4 d-none d-lg-block">
                             <div class="social_wrap d-flex align-items-center justify-content-end">
                                 <div class="text-end">
-                                    <template v-if="isLoggedIn">
+                                    <div v-if="isLoggedIn">
                                         <!-- 추후 userName 클릭시 마이페이지 이동 구현(2024-01-02) -->
                                         <div class="d-flex align-items-center">
                                             <p class="me-2" style="margin-bottom: 10px; margin-top: 10px; padding-right: 20px; padding-top: 8px;">
-                                                <b><a href="/myPage" style="color: inherit; text-decoration: none;" >{{ userName }}</a></b>님!</p>
+                                                <b><a href="/myPage" style="color: inherit; text-decoration: none;" >{{ userId }}</a></b>님!</p>
     
                                             <button type="button" class="btn btn-outline-danger me-2" @click="logout">Logout</button>
                                         </div>
-                                    </template>
-                                    <template v-else>
+                                    </div>
+                                    <div v-else>
                                         <button type="button" class="btn btn-outline-danger me-2" @click="goLogin">Login</button>
                                         <button type="button" class="btn btn-danger" @click="goSign">Sign-up</button>
-                                    </template>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -81,33 +81,38 @@
 
 <script>
 export default {
-	computed: {
+  computed: {
     isLoggedIn() {
-        console.log('isLoggedIn 게터 호출됨', this.$store.getters.isLoggedIn);
-        return this.$store.getters.isLoggedIn;
-      
+      return sessionStorage.getItem('user') !== null;
     },
-    userName() {
-        console.log('userName 게터 호출됨', this.$store.getters.userName);
-      return this.$store.getters.userName;
+    userId() {
+      const userData = JSON.parse(sessionStorage.getItem('user'));
+      console.log('userData:', userData); // 확인용 로그 추가
+      return userData ? userData : null;
     },
   },
-	methods: {
-		goSign() {
-			this.$router.push('/userInsert').catch(() => {});
-		},
-        goLogin() {
-            this.$router.push('/login').catch(() => {});
+  methods: {
+    goSign() {
+      this.$router.push('/userInsert').catch(() => {});
+    },
+    goLogin() {
+      this.$router.push('/login').catch(() => {});
     },
     logout() {
-      this.$store.dispatch('logoutUser');
+      sessionStorage.removeItem('user');
       alert('로그아웃되었습니다.');
     },
-	},
-    
-    
-}
+  },
+};
 </script>
+
+<style>
+.logo {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+</style>
 
 
 <style>
