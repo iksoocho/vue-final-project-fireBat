@@ -33,6 +33,7 @@
 </template>
 
 <script>
+
 import axios from 'axios';
 import { format } from 'date-fns';
 import AddressSearch from '../../components/AddressSearch.vue';
@@ -88,16 +89,19 @@ export default {
 
         let result = await axios.put(`/api/user/myPage/${this.user.user_id}`, data);
 
-        console.log(result.data);
-
-        if (result.data.affectedRows === 1) {
-          window.alert('회원 정보가 수정되었습니다.');
+        if (response.data.success) {
+          // Vuex 스토어에서 사용자 정보 업데이트
+          this.$store.commit('SET_USER', response.data.user);
+          // 마이 페이지로 이동하거나 성공 메시지 표시
+          this.$router.push('/myPage');
         } else {
-          window.alert('회원 정보 수정에 실패했습니다. 다시 시도해주세요.');
+          // 오류 시나리오 처리
+          console.error(response.data.error);
+          // 사용자에게 오류 메시지 표시
         }
       } catch (error) {
         console.error(error);
-        window.alert('회원 정보 수정에 실패했습니다. 다시 시도해주세요.');
+        // 오류 처리
       }
     },
     handleAddressUpdated(updatedAddress) {
