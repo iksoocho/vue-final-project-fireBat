@@ -38,5 +38,7 @@ module.exports = {
     ptlist: `SELECT * FROM prod_imgs`,
     ptinfo: `SELECT * FROM prod_imgs where prod_img_no = ?`,
 
+    rsInsert : `insert into product set ?`,
+
     
 }
