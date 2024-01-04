@@ -58,7 +58,7 @@
         <div>
           <input type="file" ref="fileInput" @change="handleFileChange" multiple/>
         </div>
-        <button @click="uploadFile()" type="button">Upload File</button>
+        <button @click="saveInfo" type="button">Upload File</button>
         <br>
     </form>
 </div>
@@ -81,61 +81,73 @@ export default {
           prod_loc : '',
           prod_cate : '',
           prod_state: '',
-          img : ''
+          
         },
+        bno:'',
+        images:[]
       }
     },
     methods : {
-      handleFileChange(event){
-          this.product.img = event.target.files[0];
-      },
-      
+      handleFileChange(event) {
+            this.images = Array.from(event.target.files);
+        },
+      getInfo(comCode) {
+            let method = '';
+            let url = '';
+            let data = null;
 
-      async uploadFile(){
-            const formData = new FormData();
-            if(this.product.img){
-              formData.append(`files`, this.product.img);
-            }
-
-            let obj1 = {
-               prod_name : this.product.prod_name,
-               prod_price : this.product.prod_price,
-               prod_content : this.product.prod_content,
-               prod_count : this.product.prod_count,
-               prod_loc : this.product.prod_loc,
-               prod_cate : this.product.prod_cate,
-               prod_state: this.product.prod_state,
-               prod_img : this.product.img,
+        
+            method = 'post';
+            url = `/api/product/insert`;
+            let info = this.product;
+            console.log(info);
+            // info.from_date = this.comInfo.write_date;
+            data = {
+                param : this.product
             };
-            const rsobj = JSON.stringify(obj1);
-            formData.append(`rsobj`, rsobj);
-
-            for(let key of formData.keys()){
-              console.log(key, ':', formData.get(key));
-            }
-
-            try{
-              let result = await axios.post(`/api/product/rsphotos`, formData);
-              console.log(result);
-              if(result.status === 200 && result.data.success){
-                  Swal.fire({
-                    title:'등록 성공',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                  });
-              }
-            } catch(error){
-              console.error(error);
-              Swal.fire({
-                title: '등록 실패',
-				      	text: 'An error occurred during registration.',
-					      icon: 'error',
-					      confirmButtonText: 'OK',
-              })
-            }
-      
+            this.$router.push({path : '/productList'});
             
-      }
+            return {
+                method,
+                data,
+                url
+            }
+        },
+        async saveInfo() {
+            let formData = new FormData();
+            this.images.forEach((file) => {
+				formData.append(`files`, file);
+			});
+            try {
+                let info = this.getInfo();
+                let result = await axios(info);
+                if(result.data.affectedRows > 0) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "정상 처리",
+                        text: "정상적으로 처리되었습니다.",
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "처리 실패",
+                        text: "정상적으로 처리되지 않았습니다.",
+                    });
+                }
+                this.bno = result.data.insertId;
+				formData.append('bno', this.bno);
+            } catch(err) {
+                console.error(err);
+            } finally {
+                let res = await axios.post(`/api/product/prodPhoto`, formData);
+                let uploadedImages = res.data.filenames;
+				console.log(uploadedImages);
+
+				this.images = uploadedImages;
+            }
+        },
+
+      
 
      
 

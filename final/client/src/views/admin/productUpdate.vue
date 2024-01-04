@@ -69,7 +69,10 @@
                   </select>
                 </td>
             </tr>
-          <button v-on:click="updateInfo">수정</button>
+            <div>
+          <input type="file" ref="fileInput" @change="handleFileChange" multiple/>
+        </div>
+          <button v-on:click="saveInfo(prodInfo.prod_code)">수정</button>
         </table>
     </div>
    
@@ -83,8 +86,10 @@ import Swal from 'sweetalert2';
 export default {
     data(){
         return{
-            prod_code : '',
-            prodInfo : {}
+            searchProd : '',
+            prodInfo : {},
+            bno:'',
+            images:[]
         }
     },
     created(){
@@ -95,13 +100,46 @@ export default {
         async getProdInfo(){
             let result = await axios.get(`/api/product/${this.searchProd}`)
                                     .catch(err => console.log(err));
+            console.log(result.data);
             this.prodInfo = result.data;
             
         },
-        async updateInfo(){
-            let data = {
+        // async updateInfo(){
+        //     let data = {
+        //         param : {
+        //             prod_code : this.prodInfo.prod_code,
+        //             prod_name : this.prodInfo.prod_name,
+        //             prod_price : this.prodInfo.prod_price,
+        //             prod_content : this.prodInfo.prod_content,
+        //             prod_count : this.prodInfo.prod_count,
+        //             prod_loc : this.prodInfo.prod_loc,
+        //             prod_cate : this.prodInfo.prod_cate
+        //         }
+        //     };
+        //     let result = await axios.put(`/api/product/update/${this.prodInfo.prod_code}`, data)
+        //                             .catch(err => console.log(err));
+
+        //    console.log(result);
+        //     if(result.data.changedRows == 0){
+        //         Swal.fire(`수정되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`);
+        //     } else {
+        //         Swal.fire(`정상적으로 수정되었습니다.`);
+        //         this.$router.push({ path: '/productList', query: {prod_code: this.prodInfo.prod_code} })
+        //     }
+            
+        // },
+        handleFileChange(event) {
+            this.images = Array.from(event.target.files);
+        },
+        getInfo(prod_code) {
+            let method = '';
+            let url = '';
+            let data = null;
+        
+            method = 'put';
+            url = `/api/product/update/${prod_code}`;
+            data = {
                 param : {
-                    prod_code : this.prodInfo.prod_code,
                     prod_name : this.prodInfo.prod_name,
                     prod_price : this.prodInfo.prod_price,
                     prod_content : this.prodInfo.prod_content,
@@ -110,28 +148,46 @@ export default {
                     prod_cate : this.prodInfo.prod_cate
                 }
             };
-            let result = await axios.put(`/api/product/update/${this.prodInfo.prod_code}`, data)
-                                    .catch(err => console.log(err));
-
-
-            // let result = await axios(`/api/product/update/${this.prodInfo.prod_code}` ,{
-            //     methods : 'put',
-            //     headers : {
-            //         'Content-Type' : 'application/json'
-            //     },
-            //     data : JSON.stringify(data)
-            // })
-            // .catch(err => console.log(err))
-
-
-           console.log(result);
-            if(result.data.changedRows == 0){
-                Swal.fire(`수정되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`);
-            } else {
-                Swal.fire(`정상적으로 수정되었습니다.`);
-                this.$router.push({ path: '/productList', query: {prod_code: this.prodInfo.prod_code} })
-            }
+            this.$router.push({path : '/productList'});
             
+            return {
+                method,
+                data,
+                url
+            }
+        },
+        async saveInfo(prod_code) {
+            let formData = new FormData();
+            this.images.forEach((file) => {
+				formData.append(`files`, file);
+			});
+            try {
+                let info = this.getInfo(prod_code);
+                let result = await axios(info);
+                if(result.data.affectedRows > 0) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "정상 처리",
+                        text: "정상적으로 처리되었습니다.",
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "처리 실패",
+                        text: "정상적으로 처리되지 않았습니다.",
+                    });
+                }
+                this.bno = result.data.insertId;
+				formData.append('bno', prod_code);
+            } catch(err) {
+                console.error(err);
+            } finally {
+                let res = await axios.post(`/api/product/prodPhoto`, formData);
+                let uploadedImages = res.data.filenames;
+				console.log(uploadedImages);
+
+				this.images = uploadedImages;
+            }
         },
     }
 }
