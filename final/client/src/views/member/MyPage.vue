@@ -1,68 +1,47 @@
 <template>
   <div>
-    <h3>회원 정보 수정</h3>
-    <form @submit.prevent="submitForm">
-      <div>
-        <label>아이디</label><br>
-        <input type="text" v-model="user.user_id" readonly />
-      </div>
-
-      <div>
-        <label>새로운 비밀번호</label><br>
-        <input type="password" v-model="user.user_pw" />
-      </div>
-
-      <div>
-        <label>기존 비밀번호 확인</label><br>
-        <input type="password" v-model="user.user_recpw" />
-      </div>
-
-      <!-- 기타 필드들도 유사하게 추가 -->
-
-      <button type="submit">정보 수정</button>
+    <h2>내 정보 수정</h2>
+    <form @submit.prevent="updateUserInfo">
+      <label>이름: <input v-model="userData.user_name" /></label>
+      <label>이메일: <input v-model="userData.user_email" /></label>
+      <!-- 다른 필드들도 필요에 따라 추가 -->
+      <button type="submit">변경 사항 저장</button>
     </form>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
-  computed: {
-    user() {
-      return this.$store.state.user;
-    },
+  data() {
+    return {
+      userData: {
+        user_name: '',
+        user_email: '',
+        // 다른 필드들도 필요에 따라 추가
+      },
+    };
   },
   methods: {
-    async submitForm() {
+    async updateUserInfo() {
       try {
-        if (this.user.user_pw !== this.user.user_recpw) {
-          window.alert('새로운 비밀번호와 기존 비밀번호 확인이 일치하지 않습니다.');
-          return;
-        }
-
-        let data = {
-          user_id: this.user.user_id,
-          user_pw: this.user.user_pw,
-          // 기타 필요한 정보들도 추가
-        };
-
-        let result = await axios.put(`/api/user/update/${this.user.user_id}`, data, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+        console.log(this.userData);
+        let response = await this.$axios.put(`/api/user/myPage/${this.user.user_id}`, {
+          param: this.userData,
         });
 
-        console.log(result.data);
-
-        if (result.data.affectedRows === 1) {
-          window.alert('회원 정보가 수정되었습니다.');
+        if (response.data.success) {
+          // Vuex 스토어에서 사용자 정보 업데이트
+          this.$store.commit('SET_USER', response.data.user);
+          // 마이 페이지로 이동하거나 성공 메시지 표시
+          this.$router.push('/myPage');
         } else {
-          window.alert('회원 정보 수정에 실패했습니다. 다시 시도해주세요.');
+          // 오류 시나리오 처리
+          console.error(response.data.error);
+          // 사용자에게 오류 메시지 표시
         }
       } catch (error) {
         console.error(error);
-        window.alert('회원 정보 수정에 실패했습니다. 다시 시도해주세요.');
+        // 오류 처리
       }
     },
   },
