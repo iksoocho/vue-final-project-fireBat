@@ -7,7 +7,7 @@ const path = require('path');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "../../img/uploads/");
+      cb(null, "img/uploads/");
     } ,
     filename: function (req, file, cb){
       cb(null, new Date().valueOf() + path.basename(file.originalname));
@@ -16,17 +16,18 @@ const storage = multer.diskStorage({
   
 const storage_rs = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, '../../img/restaurant/');
+		cb(null, 'img/restaurant/');
 	},
 	filename: function (req, file, cb) {
 		cb(null, new Date().valueOf() + path.basename(file.originalname));
 	},
 });
 
-  const upload = multer({storage : storage});
+  const upload = multer({ storage: storage });
+  
   const uploadRs = multer({ storage: storage_rs });
   // 이미지 사용
-  router.use("/public", express.static("../../img/"));
+  router.use("/public", express.static("img/"));
   // 이미지 등록
   router.post("/photo", upload.single("file"), (req,res) =>{
     let file = req.file;
@@ -157,6 +158,7 @@ router.post('/rsphotos', uploadRs.array('files'), async (req, res) => {
 
 		console.log(result);
         if(result.affectedRows == 1){
+            
             res.status(200).json({success : true});
         } else {
             res.status(500).json({success : false});
