@@ -96,8 +96,13 @@ router.get('/email/:email', async (req, res) => {
 });
 
 router.get('/myPage', async (req, res) => {
+  console.log('API 요청이 들어왔습니다.');
+  console.log(req.session); 
   let userId = req.session.user_id;
+  console.log(userId)
   let result = await mysql.query('userInfo', [userId]);
+  
   res.send(result);
+  
 });
 module.exports = router;

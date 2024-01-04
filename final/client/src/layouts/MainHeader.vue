@@ -101,8 +101,8 @@ export default {
     async logout() {
     // 로그아웃 시 세션 지우기
     sessionStorage.removeItem('user');
-    // this.$router.push('/login');   
     window.location.reload();
+    this.$router.push('/login');    
 
 
 
