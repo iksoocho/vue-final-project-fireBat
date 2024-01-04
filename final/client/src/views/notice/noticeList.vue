@@ -39,7 +39,7 @@
                 <tr v-for="(notice, idx) in noticeList.slice(pageStartIdx, pageStartIdx + ITEM_PER_PAGE)" :key="idx">
                     <td>{{ notice.notice_no }}</td>
                     <th>
-                      <a href="#!" @click="goQnaInfo(notice.notice_no)">{{ notice.noitce_title}}</a>
+                      <a href="#!" @click="goNoticeInfo(notice.notice_no)">{{ notice.notice_title}}</a>
                     </th>
                     <td>{{getDateFormat(notice.notice_date)}}</td>
                 </tr>
@@ -85,7 +85,7 @@ export default {
     },
     methods:{
         async getNoticeList(){
-            this.qnaList = (await axios.get('/api/notice').catch(err=>console.log(err))).data
+            this.noticeList = (await axios.get('/api/notice').catch(err=>console.log(err))).data
         },
         getDateFormat(date){
             return this.$dateFormat(date);   // 날짜 변환

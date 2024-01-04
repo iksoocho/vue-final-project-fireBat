@@ -1,4 +1,4 @@
-module.exports={
+module.exports = {
   noticeList : `select * from notice order by notice_no desc`,
   noticeInfo : `select * from notice where notice_no = ?`,
   noticeInsert : `insert into notice set ?`,
