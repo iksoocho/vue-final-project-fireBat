@@ -36,7 +36,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(notice, idx) in noticeList.slice(pageStartIdx, pageStartIdx + ITEM_PER_PAGE)" :key="idx">
+                <tr v-for="(notice, idx) in noticeList.sort((a, b) => b.notice_no - a.notice_no).slice(pageStartIdx, pageStartIdx + ITEM_PER_PAGE)" :key="idx">
                     <td>{{ notice.notice_no }}</td>
                     <th>
                       <a href="#!" @click="goNoticeInfo(notice.notice_no)">{{ notice.notice_title}}</a>

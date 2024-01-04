@@ -1,21 +1,16 @@
 <template>
    <div id="show">
     <div class="page-title">
-        <h3 class="text-center">QnA</h3>
+        <h3 class="text-center">공지사항</h3>
     </div>
 	
 		<table id="writetable" >
 			
-				<tr><td class="title"><p>작성자</p></td><td><span>{{ this.$store.getters.userName }}</span></td></tr>
-				<tr><td class="title"><p>카테고리</p></td><td><select id="select" name="category" v-model="qnaInfo.qna_category">
-							<option value="1">배송 문의</option>
-							<option value="2">축제 문의</option>
-							<option value="3">기타 문의</option>
-						</select></td></tr>
-				<tr><td class="title"><p>제목</p></td><td><input v-model="qnaInfo.qna_title" type="text" id="title" name="title" required 
+				
+				<tr><td class="title"><p>제목</p></td><td><input v-model="noticeInfo.notice_title" type="text" id="title" name="title" required 
 					></td></tr>
 				<tr><td class="title"><p>첨부</p></td><td><input type="file" id="avatar" name="file"></td></tr>
-				<tr><td colspan="2" id="textarea"><textarea id="textarea2" cols="130" rows="15" name="content" v-model="qnaInfo.qna_content"></textarea></td></tr>
+				<tr><td colspan="2" id="textarea"><textarea id="textarea2" cols="130" rows="15" name="content" v-model="noticeInfo.notice_content"></textarea></td></tr>
 				
 		</table>
 		<div style="text-align: center;">
@@ -29,44 +24,36 @@
 
 <script>
 import axios from 'axios'
-
+import Swal from 'sweetalert2'
 
 export default {
   data(){
     return {
-      qnaInfo:{},
+      noticeInfo:{},
       searchNo:''
     }
   },
   created(){
-    this.searchNo = this.$route.query.qna_no;
-    this.getQnaInfo();
+    this.searchNo = this.$route.query.notice_no;
+    this.getNoticeInfo();
   },
   methods:{
-    async getQnaInfo(){
-      let result = await axios.get(`/api/qna/${this.searchNo}`).catch(err => console.log(err))
-      this.qnaInfo = result.data;
+    async getNoticeInfo(){
+      let result = await axios.get(`/api/notice/${this.searchNo}`).catch(err => console.log(err))
+      this.noticeInfo = result.data;
     },
-    qnaCategory(data){
-            if(data == 1){
-                return  '배송문의'
-            }else if(data == 2){
-                return  '축제문의'
-            }else if(data == 3){
-                return  '기타문의'
-            }
-    },
+    
     async updateInfo(){
             // if(!this.validation()) return;
 
             let data = {
                 param : {
-                    qna_category : this.qnaInfo.qna_category,
-                    qna_title : this.qnaInfo.qna_title,
-                    qna_content : this.qnaInfo.qna_content
+                    
+                    notice_title : this.noticeInfo.notice_title,
+                    notice_content : this.noticeInfo.notice_content
                     }                    //"param" : 형태로 보내야됨
             };
-            let result = await axios(`/api/qna/${this.qnaInfo.qna_no}`,  {              //경로 잘 확인!!!!
+            let result = await axios(`/api/notice/${this.noticeInfo.notice_no}`,  {              //경로 잘 확인!!!!
                 method : 'put',
                 headers : {
                     'Content-Type' : 'application/json'
@@ -78,10 +65,10 @@ export default {
             
 
             if(result.data.changedRows == 0){
-                alert(`수정 되지 않았습니다. `)
+                Swal.fire(`수정 되지 않았습니다. `)
             }else{
-                alert(`정상적으로 수정 되었습니다.`)
-                this.$router.push({ name : 'qnaList'});
+                Swal.fire(`정상적으로 수정 되었습니다.`)
+                this.$router.push({ name : 'noticeList'});
 
             }
         },
@@ -91,5 +78,59 @@ export default {
 </script>
 
 <style scoped>
-
+*{
+		font-family: 'Gowun Dodum'; 
+	}
+	#show{
+		
+		height: 850px;
+		margin-bottom: 80px;
+        width: 900px;
+        margin: 0 auto;
+		
+	}
+	#writetable{
+	width: 900px;
+	border: 1px;
+	border: 1px solid;
+	
+	}
+	.title{
+	background-color: #dc3545;
+	opacity: 0.89;
+    
+	
+	}
+	#textarea{
+		margin-top: 10px;
+        
+	}
+	p{
+		text-align: center;
+		margin: 15px;
+		color: #ffffff;
+		font-weight: bolder;
+	}
+	#select{
+		margin:10px;
+	}
+	#title{
+		margin:10px;
+		width : 700px
+	}
+	#avatar{
+		margin:10px;
+	}
+	span{
+		margin-left: 10px;
+	}
+    .page-title {
+  margin-bottom: 60px;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Adjust margin as needed */
+}
 </style>

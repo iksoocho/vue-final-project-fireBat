@@ -17,6 +17,7 @@ router.get('/:notice_no', async (req, res) => {
 
 
 
+
 //수정
 router.put('/:notice_no', async(req,res)=>{
     let datas = [req.body.param, req.params.notice_no];
