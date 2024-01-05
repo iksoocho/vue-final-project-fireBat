@@ -4,10 +4,11 @@
         <div class="row">
             <div class="container text-center">
                 <div class="row">
-                    <div class="col-sm-8">상품이미지 들어갈 곳</div>  
+                    <div class="col-sm-8" v-if="prodImgs.length > 0 "><img :src="`http://localhost:3000/product/public/uploads/${prodImgs[0].prod_filename}`" class="card-img-top" alt="" ></div> 
                         <div class="col-sm-4">
                             <tr>
-                                <th>상품이름: {{userProdInfo.prod_name}}</th>
+                                <!-- <th>상품이름: {{userProdInfo.prod_name}} {{  prodImgs[0] }}</th> -->
+                                <th v-if="prodImgs.length > 0 && prodImgs[0].prod_filename">{{ prodImgs[0].prod_filename }}</th>
                             </tr>
                             <br>
   
@@ -34,6 +35,13 @@
                         
                         </div>    
                 </div>
+                <div v-for="(img, idx) in prodImgs" :key="idx">
+                    <div class="col-sm-8" v-if="idx !== 0 && img.prod_filename">
+                        <img :src="`http://localhost:3000/product/public/uploads/${img.prod_filename}`" class="card-img-top" alt="">
+                        <h3>{{ idx }}번 사진 입니다</h3>
+                    </div>
+                </div>
+                
             </div>
         </div>
         <br>
@@ -56,23 +64,36 @@ export default {
     data(){
         return{
             searchProd : '',
-            userProdInfo: {}
+            userProdInfo: {},
+            prodImgs: []
         }
     },
     created(){
         this.searchProd = this.$route.query.prod_code;
         this.getUserProdInfo();
+        this.getProdImg()
     },
     methods : {
         async getUserProdInfo(){
             let result = await axios.get(`/api/product/user/${this.searchProd}`)
                                     .catch(err => console.log(err));
 
-            console.log(result);
+            
             this.userProdInfo = result.data;
             
-        }
+        },
+        async getProdImg(){
+            console.log(this.searchProd);
+
+            let result = await axios.get(`/api/product/selectAllImg/${this.searchProd}`)
+                                    .catch(err => console.log(err));
+
+            
+            this.prodImgs = result.data;
+            console.log(this.prodImgs);
+            console.log(this.prodImgs[0].prod_filename);
     }
+}
 }
 </script>
 
