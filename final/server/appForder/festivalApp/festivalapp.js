@@ -1,13 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('../../db.js');
+const multer = require('multer');
+const path = require('path');
 
 
 // 축제 전체리스트
-router.get('/', async (req, res) => {
+// router.get('/', async (req, res) => {
+//     let list = await mysql.query('fesList');
+//     res.send(list);
+// });
+
+// 축제 리스트 - 테스트
+router.get('/', async (req,res)=>{
     let list = await mysql.query('fesList');
+    console.log('--------------------------------------------------')
+      // 각 제품에 대한 이미지 데이터 가져오기
+     for (const fes of list) {
+        
+         console.log('fes.f_code :',fes.f_code)
+         let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
+         console.log('fes.prodImg :',fesImg)
+         fes.fesImg = fesImg.f_filename;
+     }
+     console.log('--------------------------------------------------')
     res.send(list);
-});
+})
 
 // 메인페이지 랜덤 6가지
 router.get('/random', async (req, res) => {
@@ -55,5 +73,75 @@ router.get('/search/:f_name', async (req,res) =>{
     let result = await mysql.query('fesSearch' , data);
     res.send(result)
 });
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "img/uploads/");
+    } ,
+    filename: function (req, file, cb){
+      cb(null, new Date().valueOf() + path.basename(file.originalname));
+    }
+  });
+  
+const storage_rs = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, 'img/restaurant/');
+	},
+	filename: function (req, file, cb) {
+		cb(null, new Date().valueOf() + path.basename(file.originalname));
+	},
+});
+
+  const upload = multer({ storage: storage });
+  
+  const uploadRs = multer({ storage: storage_rs });
+  // 이미지 사용
+  router.use("/public", express.static("img/"));
+  // 이미지 등록
+  router.post("/photo", upload.single("file"), (req,res) =>{
+    let file = req.file;
+    console.log(file);
+    res.status(200).json({message: "등록성공", filename: file.filename});
+  });
+
+
+  //축제 이미지 등록
+  router.post('/fesPhoto', upload.array('files'), async (req, res) => {
+	let bno = req.body.bno;
+	let filenames = req.files.map((file) => file.filename);
+	console.log(filenames);
+	for (let filename of filenames) {
+		let result = await mysql.query('fesImgInsert', [bno, filename]);
+	}
+	res.json({ filenames });
+});
+
+
+//축제 이미지 삭제
+router.delete('/deleteImg/:f_code', async (req,res) => {
+    let data = req.params.f_code;
+    let result = await mysql.query('fesImgDelete', data);
+    res.send(result);
+})
+
+//축제 대표 이미지  조회
+router.get('/selectImg/:f_code', async(req,res)=>{
+    let data = req.params.f_code;
+    let fesImg = await mysql.query('fesImgSelect',data);
+    res.send(fesImg[0]);
+})
+
+//축제  이미지  조회
+router.get('/selectAllImg/:f_code', async(req,res)=>{
+    let data = req.params.f_code;
+    let fesImg = await mysql.query('fesImgSelect',data);
+    res.send(fesImg);
+})
 
 module.exports = router;

@@ -3,7 +3,7 @@
       <div class="row">
         <div v-for="(prod, i) in userProductList" :key="i" class="col-md-3 mb-4" @click="goProdInfo(prod.prod_code)">
           <div class="card">
-            <img :src="getProdImgUrl(prod.prod_code)" class="card-img-top" alt="" style="height: 200px;">
+            <img :src="`/api/product/public/uploads/${prod.prodImg}`" class="card-img-top" alt="이미지가 존재하지 않습니다." style="height: 200px;">
             <div class="card-body">
               <h5 class="card-title">{{ prod.prod_name }} </h5>
               <p class="card-text">{{ prod.prod_price }}원</p>
@@ -36,13 +36,13 @@
           this.userProductList = productList;
   
           // 각 제품에 대한 이미지 데이터 가져오기
-          for (const prod of productList) {
-            const response = await axios.get(`/api/product/selectImg/${prod.prod_code}`);
-            const prodImages = response.data;
+          // for (const prod of productList) {
+          //   const response = await axios.get(`/api/product/selectImg/${prod.prod_code}`);
+          //   const prodImages = response.data;
   
-            // Vue.set 대신, JavaScript의 동적 속성 추가 방식으로 데이터 업데이트
-            this.prodImgs[prod.prod_code] = prodImages;
-          }
+          //   // Vue.set 대신, JavaScript의 동적 속성 추가 방식으로 데이터 업데이트
+          //   this.prodImgs[prod.prod_code] = prodImages;
+          // }
         } catch (error) {
           console.error(error);
         }
@@ -51,7 +51,7 @@
         const prodImages = this.prodImgs[prod_code];
         
         if (prodImages) {
-          return `http://localhost:3000/product/public/uploads/${prodImages.prod_filename}`;
+          return `/api/product/public/uploads/${prodImages.prod_filename}`;
         }
         return ''; // 이미지가 없을 때 빈 문자열 반환
       },

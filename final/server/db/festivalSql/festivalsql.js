@@ -26,6 +26,11 @@ module.exports = {
     fesSearch : `select * from festival where f_name like concat(concat('%',?),'%')`,
 
     // 축제목록 검색 조회
-    fesSearch : `select * from festival where f_name like concat(concat('%',?),'%') `
+    fesSearch : `select * from festival where f_name like concat(concat('%',?),'%') `,
 
+    fesImgInsert: `insert into f_imgs set f_code = ?, f_filename = ?`,
+
+    fesImgDelete : `delete from f_imgs where f_code = ?`,
+
+    fesImgSelect : `select * from f_imgs where f_code = ?`, 
 }

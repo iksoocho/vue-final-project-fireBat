@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div class="container">
       <table class="table">
          <tr>
             <th>상품정보</th>
@@ -21,3 +21,29 @@
       </table>
    </div>
 </template>
+
+<script>
+import axios from 'axios';
+export default {
+   data() {
+      return {
+            userId: '',
+            cartList: {}
+      };
+   },
+   
+   created() {
+      this.userId = '';
+      this.getCartList();
+   },
+   methods: {
+      async getCartList() {
+         let result = 
+            await axios.get(`/api/cart/${this.userId}`)
+                     .catch(err => console.log(err));
+         this.cartList = result.data;           
+      },
+      
+   }
+}
+</script>

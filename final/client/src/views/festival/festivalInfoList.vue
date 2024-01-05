@@ -16,31 +16,33 @@
                     <th>삭제</th>
                 </tr>
             </thead>
+
             <tbody>
-            <tr :key="i" v-for="(fes, i) in festivalList" @click="goToUpdate(fes.f_code)">
-                <td>{{ fes.f_code }}</td>
-                <td>{{ fes.f_category }}</td>
-                <td>{{ fes.f_reg }}</td>
-                <td>{{ fes.f_name}}</td>
-                <td>{{ fes.f_number}}</td>
-                <td>{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</td>
-                <td>{{ fes.f_price}}</td>
-                <td>{{ fes.f_url}}</td>
+                <tr :key="i" v-for="(fes, i) in festivalList" @click="goToUpdate(fes.f_code)">
+                    <td>{{ fes.f_code }}</td>
+                    <td>{{ fes.f_category }}</td>
+                    <td>{{ fes.f_reg }}</td>
+                    <td>{{ fes.f_name}}</td>
+                    <td>{{ fes.f_number}}</td>
+                    <td>{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</td>
+                    <td>{{ fes.f_price}}</td>
+                    <td>{{ fes.f_url}}</td>
                 <div class="row">
                     <!-- <button class="btn btn-info" v-on:click="goToUpdate(fes.f_code)">수정</button> -->
                     <button class="btn btn-warning" @click="fesDelete(fes.f_code)">X</button>
                 </div>
-            </tr>
+                </tr>
             </tbody>
+
         </table>
         <div id="fapp">
-    <input type="text" v-model="word" @keyup.enter="fesSearch" placeholder="축제 이름을 검색하세요">
-    <button @click="search">검색</button>
-    <br>
-    <br>
-    <button><a href="festivalList">리스트로</a></button>
-  </div>
-        
+            <!-- Search input and button -->
+            <input type="text" v-model="word" @input="onSearchInput" @keyup.enter="fesSearch" placeholder="축제 이름을 검색하세요">
+            <button @click="search">검색</button>
+            <br>
+            <br>
+            <button><a href="festivalList">리스트로</a></button>
+        </div>    
     </div>
 </template>
 
@@ -51,6 +53,7 @@ export default {
     data(){
         return {
             festivalList : [],
+            word: '',
         }
     },
     created(){
@@ -61,14 +64,32 @@ export default {
             this.festivalList = (await axios.get('/api/festival')
                                 .catch(err => console.log(err))).data; 
         },
-        async fesSearch(){
-        this.festivalList = (await axios.get(`/api/festival/search/${this.word}`)).data
-        console.log(this.festivalList)
+        async getFestivalList() {
+            this.festivalList = (await axios.get('/api/festival').catch((err) => console.log(err))).data;
+        },
+        async fesSearch() {
+            if (this.word.trim() === '') {
+                // If the search text is empty, reset the festivalList to the original list
+                this.getFestivalList();
+            } else {
+                // Otherwise, perform the search
+                this.festivalList = (await axios.get(`/api/festival/search/${this.word.trim()}`)).data;
+            }
+            console.log(this.festivalList);
+        },
+        onSearchInput() {
+            // Reset the festivalList when the search input is cleared
+            if (this.word.trim() === '') {
+                this.getFestivalList();
+            }
         },
         getDateFormat(date){
             return this.$dateFormat(date);   // 날짜 변환
         },
-        goToUpdate(f_code) {
+        async goToUpdate(f_code) {
+            let response = await axios.delete(`/api/festival/deleteImg/${f_code}`)
+                                .catch(err=>console.log(err));
+                                
             this.$router.push({path : '/festivalUpdate', query:{f_code : f_code}})
         },
         goFesInfo(f_code){
@@ -78,13 +99,18 @@ export default {
             this.$router.push({path : '/festivalInfoList', query:{f_code : f_code}})
         },
         async fesDelete(f_code){
+            let response =await axios.delete(`/api/festival/deleteImg/${f_code}`)
+                                .catch(err=>console.log(err));
+            let count2 = response.data.affectedRows;
+
+
             let result = await axios.delete(`/api/festival/delete/${f_code}`)
                                     .catch(err=>console.log(err));
             console.log(result.data);
             let count = result.data.affectedRows;   
 
             
-            if(count == 0){
+            if((count+count2) == 0){
                 Swal.fire({
                     icon: 'warning',
                     title: '삭제실패!',

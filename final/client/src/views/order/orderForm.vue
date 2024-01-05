@@ -16,7 +16,7 @@
                <div class="form-group row">
                   <label for="name" class="col-sm-3 col-form-label">받는 사람</label>
                   <div class="col-sm-9">
-                     <input type="text" class="form-control" id="name" placeholder="받는사람">
+                     <input type="text" class="form-control" id="name" placeholder="받는사람" v-model="user.user_name">
                   </div>
                </div>
                <div class="form-group row">
@@ -24,33 +24,33 @@
                   <div class="col-sm-9">
                      <div class="row">
                         <div class="col">
-                           <select class="form-select" id="phonePrefix" required>
-                              <option value="">010</option>
-                              <option>California</option>
+                           <select class="form-select" id="phonePrefix" required v-model="f_tel">
+                              <option value="010">010</option>
+                              <option value="011">011</option>
                            </select>
                         </div>
                         <div class="col">
-                           <input type="text" class="form-control" id="middlePhoneNumber">
+                           <input type="text" class="form-control" id="middlePhoneNumber" v-model="m_tel">
                         </div>  
                         <div class="col">
-                           <input type="text" class="form-control" id="lastPhoneNumber">
+                           <input type="text" class="form-control" id="lastPhoneNumber" v-model="l_tel">
                         </div>    
                      </div>
                   </div>
                </div>
                <div class="form-group row">
-                  <label for="name" class="col-sm-3 col-form-label">받는 사람</label>
+                  <label for="name" class="col-sm-3 col-form-label">배송지 주소</label>
                   <div class="col-sm-9">
                      <div class="row">
                         <div class="col">
-                           <input type="text" class="form-control" id="zip" v-model="zip" readonly>
+                           <input type="text" class="form-control" id="zip" v-model="user.user_zip" readonly>
                         </div>
                         <div class="col" style="text-align: center;">
                            <button type="button" class="btn btn-secondary btn-sm" @click="showApi" style="width:60px; height:18px; font-size:x-small; display: flex; align-items:center;">주소검색</button>
                         </div>
                      </div>
-                     <input type="text" class="form-control" id="addr1" v-model="addr1" readonly>
-                     <input type="text" class="form-control" id="addr2" placeholder="상세주소">
+                     <input type="text" class="form-control" id="addr1" v-model="user.user_addr" readonly>
+                     <input type="text" class="form-control" id="addr2" placeholder="상세주소" v-model="user.user_detail_addr">
                   </div>
                </div>
                <div class="form-group row">
@@ -136,12 +136,37 @@ data() {
          user_no : '',
          MER_UID : '',
          
-      }
+      },
+      user: {
+         user_name: '',
+         user_zip: '',
+         user_addr: '',
+         user_detail_addr: '',
+         user_tel:'',
+      },
+      f_tel : '',
+      m_tel : '',
+      l_tel : '',
    };
 },
 methods: {
    selectPaymentMethod(paymentMethod) {
       this.selectedPaymentMethod = paymentMethod;
+   },
+   async loadUserData() {
+      try {
+         // 서버에서 사용자 정보를 불러오는 API 호출
+         console.log('사용자 정보를 불러오는 중...');
+         const response = await axios.get(`/api/user/myPage`);
+         // 불러온 사용자 정보를 컴포넌트 데이터에 저장
+         console.log('서버 응답완료:', response.data);
+         this.user = response.data;
+         this.f_tel = response.data.user_tel.substr(0,3);
+         this.m_tel = response.data.user_tel.substr(3,4);
+         this.l_tel = response.data.user_tel.substr(7,4);
+         } catch (error) {
+         console.error('사용자 정보를 불러오는 데 실패했습니다.', error);
+      }
    },
    openPaymentWindow() {
       const iamport = window.IMP;
@@ -232,6 +257,10 @@ methods: {
          }
       }).open()
    }
+},
+created() {
+   // 사용자 정보를 서버에서 가져오는 로직을 created 훅에서 실행
+   this.loadUserData();
 }
 };
 </script>
