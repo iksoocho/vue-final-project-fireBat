@@ -131,7 +131,12 @@ data() {
       zip: '',
       addr1: '',
       addr2: '',
-      // payData: {},
+      payData: [],
+      payInfo: {
+         user_no : '',
+         MER_UID : '',
+         
+      }
    };
 },
 methods: {
@@ -146,7 +151,7 @@ methods: {
          pg: '',
          pay_method: '',
          name: '테스트 상품', // 상품 이름 입력
-         merchant_uid: '111116', // 가맹점에서 생성한 고유 주문번호 입력
+         merchant_uid: '111120', // 가맹점에서 생성한 고유 주문번호 입력
          amount: 1000, // 결제 금액 입력
          buyer_name: 'test', // 구매자 이름 입력
          buyer_tel: '010-1111-1111', // 구매자 전화번호 입력
@@ -174,12 +179,13 @@ methods: {
          // 결제 완료 후 처리할 로직 작성
          console.log(resp);
          if (resp.success) {
-            this.payData = resp;
+            payData = resp;
             let msg = '결제가 완료되었습니다.';
             alert(msg);
 
             // console.log('paydata');
-            // console.log(payData);
+            console.log(payData);
+
             // location.href = "/paySuccess"
          } else {
             let msg = '결제에 실패하였습니다.';
@@ -187,6 +193,9 @@ methods: {
             alert(msg);
          }
       });
+   },
+   paymentInfoInsert() {
+      
    },
    showApi() {
       new window.daum.Postcode({
