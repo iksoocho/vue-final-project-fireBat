@@ -86,7 +86,10 @@ export default {
         getDateFormat(date){
             return this.$dateFormat(date);   // 날짜 변환
         },
-        goToUpdate(f_code) {
+        async goToUpdate(f_code) {
+            let response = await axios.delete(`/api/festival/deleteImg/${f_code}`)
+                                .catch(err=>console.log(err));
+                                
             this.$router.push({path : '/festivalUpdate', query:{f_code : f_code}})
         },
         goFesInfo(f_code){
@@ -96,13 +99,18 @@ export default {
             this.$router.push({path : '/festivalInfoList', query:{f_code : f_code}})
         },
         async fesDelete(f_code){
+            let response =await axios.delete(`/api/festival/deleteImg/${f_code}`)
+                                .catch(err=>console.log(err));
+            let count2 = response.data.affectedRows;
+
+
             let result = await axios.delete(`/api/festival/delete/${f_code}`)
                                     .catch(err=>console.log(err));
             console.log(result.data);
             let count = result.data.affectedRows;   
 
             
-            if(count == 0){
+            if((count+count2) == 0){
                 Swal.fire({
                     icon: 'warning',
                     title: '삭제실패!',

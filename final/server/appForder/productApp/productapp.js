@@ -69,8 +69,22 @@ router.get("/ptlist/:no", async(req,rep)=>{
 })
 
 // 사용자 상품 리스트
+// router.get('/user', async (req,res)=>{
+//     let list = await mysql.query('userProductList');
+//     res.send(list);
+// })
+
+// 사용자 상품 리스트 - 테스트
 router.get('/user', async (req,res)=>{
     let list = await mysql.query('userProductList');
+
+      // 각 제품에 대한 이미지 데이터 가져오기
+    for (const prod of list) {
+        console.log('prod.f_code :',prod.prod_code)
+        let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
+        console.log('prod.prodImg :',prodImg)
+        prod.prodImg = prodImg.prod_filename;
+    }
     res.send(list);
 })
 

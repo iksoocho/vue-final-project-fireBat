@@ -53,8 +53,10 @@
         <input type="url" v-model="fesInfo.f_url">
         <br>
         <br>
-
-        <button v-on:click.prevent="insertInfo">등록</button>
+        <div>
+          <input type="file" ref="fileInput" @change="handleFileChange" multiple/>
+        </div>
+        <button v-on:click="saveInfo">등록</button>
     </form>
     </div>
 </template>
@@ -82,25 +84,51 @@ export default {
         f_price: '',
         f_url: '',
 
-    },
+         },
+        bno:'',
+        images:[]
         }
     },
     methods : {
-        async insertInfo(){
-            if(!this.validation()) return;       //아예 아래 전체를 감싸도 됨
-            let data = {
-                param : this.fesInfo                 //"param" : 형태로 보내야됨
-        };
-            let result = await axios.post("/api/festival/insert", data)
-                            .catch(err => console.log(err));   
+        handleFileChange(event) {
+            this.images = Array.from(event.target.files);
+        },
+        async saveInfo() {
+            if(!this.validation()) return; 
 
-        if(result.data.message == ''){
-            Swal.fire(`정상적으로 등록 되었습니다.`)
-            this.$router.push({ path: '/festivalInfoList' });
-        }else{
-            Swal.fire(`등록 실패.`)
-        }
-    },
+            let formData = new FormData();
+            this.images.forEach((file) => {
+				formData.append(`files`, file);
+			});
+            try {
+                let info = this.getInfo();
+                let result = await axios(info);
+                if(result.data.affectedRows > 0) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "정상 처리",
+                        text: "정상적으로 처리되었습니다.",
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "처리 실패",
+                        text: "정상적으로 처리되지 않았습니다.",
+                    });
+                }
+                this.bno = this.fesInfo.f_code;
+                console.log('bno :', this.bno)
+				formData.append('bno', this.bno);
+            } catch(err) {
+                console.error(err);
+            } finally {
+                let res = await axios.post(`/api/festival/fesPhoto`, formData);
+                let uploadedImages = res.data.filenames;
+				console.log(uploadedImages);
+
+				this.images = uploadedImages;
+            }
+        },
         validation(){
             if (!this.fesInfo.f_code || !this.fesInfo.f_category || !this.fesInfo.f_reg || !this.fesInfo.f_name || !this.fesInfo.f_number || !this.fesInfo.f_loc
             || !this.fesInfo.f_firstday || !this.fesInfo.f_lastday || !this.fesInfo.f_content || !this.fesInfo.f_price || !this.fesInfo.f_url) {
@@ -113,6 +141,28 @@ export default {
                 return false;
             }
                 return true;
+        },
+        getInfo(comCode) {
+            let method = '';
+            let url = '';
+            let data = null;
+
+        
+            method = 'post';
+            url = `/api/festival/insert`;
+            let info = this.fesInfo;
+            console.log(info);
+            // info.from_date = this.comInfo.write_date;
+            data = {
+                param : this.fesInfo
+            };
+            this.$router.push({path : '/festivalInfoList'});
+            
+            return {
+                method,
+                data,
+                url
+            }
         }
     },
 }
