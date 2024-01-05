@@ -38,10 +38,13 @@ module.exports = {
     ptlist: `SELECT * FROM prod_imgs`,
     ptinfo: `SELECT * FROM prod_imgs where prod_img_no = ?`,
 
-    rsInsert: `insert into product set ?`,
 
+    rsInsert : `insert into product set ?`,
+    
     prodImgInsert: `insert into prod_imgs set prod_code = ?, prod_filename = ?`,
 
-    prodImgDelete: `delete from prod_imgs where prod_code = ?`
+    prodImgDelete : `delete from prod_imgs where prod_code = ?`,
 
+    prodImgSelect : `select * from prod_imgs where prod_code = ?`,
+    
 }

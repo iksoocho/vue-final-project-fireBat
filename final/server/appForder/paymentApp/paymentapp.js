@@ -12,6 +12,10 @@ router.get('/notice', async (req, res) => {
    res.send(list);
 });
 
-
+router.post('/pay', async (req, res) => {
+   let data = req.body.param;
+   let result = await mysql.query('orderInsert', data);
+   res.send(result);
+});
 
 module.exports = router;
