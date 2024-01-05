@@ -22,5 +22,5 @@ module.exports = {
     // 달력 일별 조회
     fesCalList : `select * from festival where ? between f_firstday and f_lastday;`,
 
-    fesSearch : `select * from festival where f_name like concat(concat('%',?),'%') `
+    fesSearch : `select * from festival where f_name like concat(concat('%',?),'%')`
 }
