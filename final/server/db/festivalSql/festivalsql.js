@@ -27,5 +27,4 @@ module.exports = {
 
     // 축제목록 검색 조회
     fesSearch : `select * from festival where f_name like concat(concat('%',?),'%') `
-
 }

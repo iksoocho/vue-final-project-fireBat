@@ -45,7 +45,10 @@
         <input type="url" v-model="fesInfo.f_url">
         <br>
         <br>
-        <button v-on:click="updateInfo">수정</button>
+        <button type="button" class="btn btn-outline-primary" v-on:click="updateInfo">수정완료</button>
+        <!-- <button class="btn btn-primary" v-on:click="updateInfo">수정완료</button> -->
+        <button type="button" class="btn btn-outline-primary"><a href="festivalInfoList" style="text-decoration: none;">목록으로</a></button>
+
     </form>
 </div>
 </template>
@@ -69,7 +72,7 @@ created() {
   methods: {
     async getFesInfo() {
       let result = await axios.get(`/api/festival/${this.searchNo}`) 
-                              .catch(err => console.log(err));
+                            .catch(err => console.log(err));
       this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
   },
   async updateInfo() {
@@ -92,12 +95,28 @@ created() {
           .catch((err) => console.log(err));
 
           console.log(result);
-            if(result.data.changedRows == 0){
-                Swal.fire(`수정되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`);
+            // if(result.data.changedRows == 0) {
+            //     Swal.fire(`수정되지 않았습니다.\n메세지를 확인해주세요.\n${result.data.message}`);
+            // } else {
+            //     Swal.fire(`정상적으로 수정되었습니다.`);     
+            // }
+            if(result.data.changedRows == 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '수정 실패!!',
+                    text: '축제수정을 실패했습니다.',
+                    confirmButtonText: '확인',
+                });
             } else {
-                Swal.fire(`정상적으로 수정되었습니다.`);     
+                Swal.fire({
+                icon: 'success',
+                title: '수정 성공!',
+                text: '축제가 성공적으로 수정 되었습니다.',
+                confirmButtonText: '확인',
+                });
             }
-            this.$router.push({ path: '/festivalList', query: {f_code: this.fesInfo.f_code} })
+
+            this.$router.push({ path: '/festivalInfoList', query: {f_code: this.fesInfo.f_code} })
   },
   getDateFormat(date){
           return this.$dateFormat(date);   // 날짜 변환
@@ -105,6 +124,4 @@ created() {
   }
 
 }
-
-
 </script>
