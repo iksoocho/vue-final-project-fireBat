@@ -5,43 +5,46 @@
         {{currentYear}}년 {{currentMonth}}월
         <a href="#" v-on:click="onClickNext(currentMonth)">▶</a>
       </h2>
+
       <table class="table">
-          <thead>
-            <tr>
-              <td v-for="(weekName, index) in weekNames" v-bind:key="index">
-                 <!-- 요일 -->
+        <thead>
+          <tr>
+            <td v-for="(weekName, index) in weekNames" v-bind:key="index">
+                <!-- 요일 -->
                 {{weekName}}
-              </td>
-            </tr>
-          </thead>
-          <tbody @click="selectedDate">
-             <tr v-for="(row, index) in currentCalendarMatrix" :key="index">
-               <td v-for="(day, index2) in row" :key="index2" style="padding:20px;">
-                 <span v-if="isToday(currentYear, currentMonth, day)" class="rounded">
-                   {{day}}
-                 </span>
-                 <span v-else>
+            </td>
+          </tr>
+        </thead>
+
+        <tbody @click="selectedDate">
+          <tr v-for="(row, index) in currentCalendarMatrix" :key="index">
+            <td v-for="(day, index2) in row" :key="index2" style="padding:20px;">
+              <span v-if="isToday(currentYear, currentMonth, day)" class="rounded">
+                  {{day}}
+              </span>
+              <span v-else>
                   <!-- 일자 -->
-                   {{day}}
-                 </span>
-               </td>
-             </tr>
-           </tbody>
-      </table> 
-      <div class="container">
-        <div class="row">
-        <div v-for="(fes, i) in fesCalList" :key="i" class="col-md-3 mb-4" @click="goFesInfo(fes.f_code)">
-            <div class="card">
-                <img src="../../image/logo/로고.png" class="card-img-top" alt="">
-            <div class="card-body">
-                <h5 class="card-title">{{ fes.f_name }} </h5>
-                <p class="card-date">{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</p>
-                <p class="card-reg">{{ fes.f_reg }}</p>
+                  {{day}}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+
+        </table>
+          <div class="container">
+            <div class="row">
+              <div v-for="(fes, i) in fesCalList" :key="i" class="col-md-3 mb-4" @click="goFesInfo(fes.f_code)">
+                <div class="card">
+                  <img src="../../image/logo/로고.png" class="card-img-top" alt="">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ fes.f_name }} </h5>
+                      <p class="card-date">{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</p>
+                      <p class="card-reg">{{ fes.f_reg }}</p>
+                    </div>
+                </div>
+              </div>
             </div>
-            </div>
-        </div>
-        </div>
-    </div>   
+          </div>   
   </div>
 </template>
 
@@ -66,16 +69,13 @@ export default {
     }
   },
   created(){
-        //this.getFestivalList();
+        // this.getFestivalList();
         this.getFesCalList();
     },
   mounted(){
       this.init();
   },
   methods: {
-        // getfestlvalCalenderList(f_firstday){
-        //     this.$router.push({path : '/festivalCalender', query:{f_firstday : f_firstday}})
-        // },
         async getFesCalList(date){        
             this.fesCalList = (await axios.get(`/api/festival/calender/${date}`)
                                 .catch(err => console.log(err))).data; 
@@ -198,7 +198,18 @@ export default {
       selectedDate(event){
         let date = `${this.currentYear}-${this.currentMonth}-${Number(event.target.textContent)}`;
         this.getFesCalList(date);
+      },
+      handleDateClick(event) {
+      const clickedDate = event.target.textContent;
+
+      if (clickedDate && !isNaN(clickedDate)) {
+        const date = `${this.currentYear}-${this.currentMonth}-${Number(clickedDate)}`;
+        this.getFesCalList(date);
+
+        // Emit a custom event, you can use this in the parent component
+        this.$emit('date-clicked', date);
       }
+    },
   },
   }
 

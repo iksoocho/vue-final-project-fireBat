@@ -1,38 +1,65 @@
 <template>
-     <div id="container" class="flex-container">
-        
-        
-        
-
+    <div id="container" class="flex-container">
         <div class="table-header mt-2">통계 차트</div>
         <div class="chart-container">
             <div id="piechart" class="chart w-50"></div>
             <div id="chart_div" class="chart w-50"></div>
         </div>
         <div class="table-header">판매상품 순위 내역</div>
-        <div class="my-1 mx-3 d-flex flex-row-reverse">
-           
+        <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
+
+
+
+
+        <div class="row">
+        <div class="container">
+        <table class="table">
+            <div>
+                <div class="col-6">
+                    <h2>QnA 게시판</h2>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </div>
+            </div>
+        </table>
+        <div class="col-6">
+            <h2>판매/문의</h2>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
         </div>
-        
-      <table>
+        </div>
+</div>
+
+
+
+
+
+
+        <table>
             <thead>
                 <tr>
-                    <th>테스트</th>
-                    <th>테스트</th>
-                    <th>테스트</th>
-                    <th>테스트</th>
-                    <th>테스트</th>
-                    
+                    <th>상품번호</th>
+                    <th>상품이름</th>
+                    <th>상품가격</th>
+                    <th>상품지역</th>
+                    <th>상품분류</th>
                 </tr>
             </thead>
             <tbody>
-                <tr :key="i" v-for="(product, i) in ProductList">
-                    <td>{{i+1}}</td>
-                    <td>{{product.product_no}}</td>
-                    <td>{{product.product_name}}</td>
-                    <td>{{product.product_price}}</td>
-                    <td>{{product.product_stock}}</td>
-                   
+                <tr :key="i" v-for="(prod, i) in productList">
+                    <td>{{ prod.prod_code }}</td>
+                    <td>{{ prod.prod_name }}</td>
+                    <td>{{ prod.prod_price }}</td>
+                    <td>{{ prod.prod_loc }}</td>
+                    <td>{{ prod.prod_cate }}</td>
                 </tr>
             </tbody>
         </table>
@@ -40,89 +67,102 @@
 </template>
 
 <script>
-import axios from 'axios';
+    import axios from "axios";
 
-export default {
-    data(){
-        return{
-            productList:[]
-        };
-    },
-    created(){
-        const snedObject = {
-            period : 2,
-            minPrice : 0,
-            maxPrice : 0
-        }
-        this.getProductList(snedObject);
-    },
-    methods: {
-        async getProductList(obj){
+    export default {
+        data() {
+            return {
+                productList: [],
+            };
+        },
+        created() {
+            const snedObject = {
+                period: 2,
+                minPrice: 0,
+                maxPrice: 0,
+            };
+            this.getProductList(snedObject);
+        },
+        methods: {
+            async getProductList(obj) {
+                console.log(obj);
+                let result = '';
+                const prodNo = 1;
 
-            let result = '';
-            const prodNo = 1;
-            
-            try {
-                result = await axios.get(`/api/product`);
-            } catch (e){
-                console.log(e);
-            }
-            this.ProductList = result.data;
-            
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+                try {
+                    result = await axios.get(`/api/product/chart/${prodNo}/${obj.period}/${obj.minPrice}/${obj.maxPrice}`);
+                    console.log(result);
+                } catch (e) {
+                    console.log(e);
+                }
+                this.productList = result.data;
 
-      function drawChart() {
+                google.charts.load("current", {
+                    packages: ["corechart"],
+                });
+                google.charts.setOnLoadCallback(drawChart);
 
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
+                const myThis = this;
 
-        var options = {
-          title: '방문자 성 비율'
-        };
+                function drawChart() {
+                    let table = [];
+                    table.push(["상품", "판매량"]);
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    for (let i = 0; i < myThis.productList.length; ++i) {
+                        let row = [];
+                        
+                        row.push(myThis.productList[i].prod_name);
+                        row.push(myThis.productList[i].prod_sell_count);
 
-        chart.draw(data, options);
+                        table.push(row);
+                    }
+                    var data = google.visualization.arrayToDataTable(table);
+                    var options = {
+                        title: "상품 판매량",
+                        pieHole: 0.4,
+                    };
 
-      
-      
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+                    var chart = new google.visualization.PieChart(
+                        document.getElementById("piechart")
+                    );
+                    chart.draw(data, options);
+                }
+                google.charts.load("current", {
+                    packages: ["corechart"],
+                });
+                google.charts.setOnLoadCallback(drawChart1);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2020',  1000,      400],
-          ['2021',  1170,      460],
-          ['2022',  660,       1120],
-          ['2023',  1030,      540]
-        ]);
+                function drawChart1() {
+                    let table = [];
+                    table.push(["상품", "판매액"]);
+                    console.log("test" + myThis.productList);
 
-        var options = {
-          title: '상품 판매량',
-          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-          vAxis: {minValue: 0}
-        };
+                    for (let i = 0; i < myThis.productList.length; ++i) {
+                        let row = [];
+                        row.push(myThis.productList[i].prod_name);
+                        row.push(myThis.productList[i].prod_price);
 
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-      }
-    }
-  }
-    
-}
+                        table.push(row);
+                    }
+
+                    var data = google.visualization.arrayToDataTable(table);
+
+                    var options = {
+                        title: "상품 판매량액",
+                        colors: ['#5b83b5', '']
+                       
+                    };
+
+                    var chart = new google.visualization.AreaChart(document.getElementById("chart_div"));
+                    chart.draw(data, options);
+                }
+            },
+        },
+    };
 </script>
 
 <style scoped>
-   .table-header {
+    .table-header {
         background-color: #ffa5a5;
         color: rgb(255, 255, 255);
         padding: 10px;
@@ -131,10 +171,9 @@ export default {
         margin-left: 5px;
         font-weight: bold;
         font-size: 18px;
-        text-shadow: -1px 0px rgb(0, 0, 0), 0px 1px rgb(0, 0, 0), 1px 0px rgb(0, 0, 0), 0px -1px rgb(0, 0, 0);
-
+        text-shadow: -1px 0px rgb(0, 0, 0), 0px 1px rgb(0, 0, 0), 1px 0px rgb(0, 0, 0),
+            0px -1px rgb(0, 0, 0);
     }
-
 
     table {
         border-collapse: collapse;
@@ -155,10 +194,7 @@ export default {
     th {
         border: 2px solid #000000;
         background-color: #f2f2f2;
-
     }
-
-
 
     .flex-container {
         display: flex;
