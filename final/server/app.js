@@ -1,5 +1,7 @@
 require('dotenv').config({ path: './db/mysql.env' });
 const express = require('express');
+const session = require('express-session');
+const cors = require('cors');
 const app = express();
 const qnaRouter = require('./appForder/qnaApp/qnaapp.js');
 const userRouter = require('./appForder/memberApp/memberapp.js');
@@ -10,12 +12,23 @@ const paymentRouter = require('./appForder/paymentApp/paymentapp.js');
 
 
 
-
 app.use(
   express.json({
     limit: '50mb',
   })
 );
+app.use(session({
+  secret: 'secret key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    secure: true,
+    maxAge: 3600000
+  }
+}))
+
+app.use(cors());
 
 app.listen(3000, () => {
   console.log('server start');

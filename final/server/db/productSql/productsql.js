@@ -40,5 +40,8 @@ module.exports = {
 
     rsInsert : `insert into product set ?`,
 
+    prodImgInsert: `insert into prod_imgs set prod_code = ?, prod_filename = ?`,
+
+    prodImgDelete : `delete from prod_imgs where prod_code = ?`
     
 }

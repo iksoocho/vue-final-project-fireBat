@@ -35,7 +35,6 @@
                 <img src="../../image/logo/로고.png" class="card-img-top" alt="">
             <div class="card-body">
                 <h5 class="card-title">{{ fes.f_name }} </h5>
-                <!-- <p class="card-text">{{ fes.f_content }}</p> -->
                 <p class="card-date">{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</p>
                 <p class="card-reg">{{ fes.f_reg }}</p>
             </div>
@@ -211,5 +210,10 @@ export default {
       padding:10px;
       color:#ffffff;
     }
+
 </style>
+
+
+
+
 

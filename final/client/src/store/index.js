@@ -7,9 +7,10 @@ const store = createStore({
   },
   mutations: {
     SET_USER(state, user) {
-      state.user = user;
+      
+      state.user = { ...state.user, ...user }; // 기존 상태를 유지하면서 새로운 사용자 데이터 추가
       state.isLoggedIn = true;
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(state.user));
     },
     CLEAR_USER(state) {
       state.user = null;
