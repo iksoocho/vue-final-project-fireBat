@@ -21,7 +21,8 @@ router.get('/', async (req,res)=>{
          console.log('fes.f_code :',fes.f_code)
          let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
          console.log('fes.prodImg :',fesImg)
-         fes.fesImg = fesImg.f_filename;
+        //  fes.fesImg = fesImg.f_filename;
+         fes.fesImg = fesImg ? fesImg.f_filename : '';
      }
      console.log('--------------------------------------------------')
     res.send(list);
