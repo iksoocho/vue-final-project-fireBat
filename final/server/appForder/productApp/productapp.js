@@ -138,6 +138,19 @@ router.delete('/deleteImg/:prod_code', async (req,res) => {
     res.send(result);
 })
 
+//상품 대표 이미지  조회
+router.get('/selectImg/:prod_code', async(req,res)=>{
+    let data = req.params.prod_code;
+    let prodImg = await mysql.query('prodImgSelect',data);
+    res.send(prodImg[0]);
+})
+
+//상품  이미지  조회
+router.get('/selectAllImg/:prod_code', async(req,res)=>{
+    let data = req.params.prod_code;
+    let prodImg = await mysql.query('prodImgSelect',data);
+    res.send(prodImg);
+})
 
 
 // 검색

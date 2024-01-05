@@ -42,6 +42,8 @@ module.exports = {
 
     prodImgInsert: `insert into prod_imgs set prod_code = ?, prod_filename = ?`,
 
-    prodImgDelete : `delete from prod_imgs where prod_code = ?`
+    prodImgDelete : `delete from prod_imgs where prod_code = ?`,
+
+    prodImgSelect : `select * from prod_imgs where prod_code = ?`,
     
 }
