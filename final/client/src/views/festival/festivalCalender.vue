@@ -84,6 +84,9 @@ export default {
         //     this.festivalList = (await axios.get('/api/festival')
         //                         .catch(err => console.log(err))).data; 
         // },
+        goFesInfo(f_code){
+            this.$router.push({path : '/festivalInfo', query:{f_code : f_code}})
+        },
         getDateFormat(date){
             return this.$dateFormat(date);   // 날짜 변환
         },
