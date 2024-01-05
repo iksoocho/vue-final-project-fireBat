@@ -8,6 +8,41 @@
         <div class="table-header">판매상품 순위 내역</div>
         <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
 
+
+
+
+        <div class="row">
+        <div class="container">
+        <table class="table">
+            <div>
+                <div class="col-6">
+                    <h2>QnA 게시판</h2>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </div>
+            </div>
+        </table>
+        <div class="col-6">
+            <h2>판매/문의</h2>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </div>
+        </div>
+</div>
+
+
+
+
+
+
         <table>
             <thead>
                 <tr>
