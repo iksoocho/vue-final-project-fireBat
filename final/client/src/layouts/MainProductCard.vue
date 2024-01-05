@@ -15,7 +15,7 @@
                  <div v-for="(pro, i) in prodRandomList" :key="i" class="col-lg-4 col-md-6">
                     <div class="single_place">
                             <div class="thumb">
-                            <img src="img/place/1.png" alt="">
+                            <img :src="getProdImgUrl(pro.prod_code)" alt="" style="height: 250px; ">
                             <a href="#" class="prise">₩{{pro.prod_price}}</a>
                     </div>
                          <div class="place_info">
@@ -57,7 +57,8 @@ import axios from 'axios';
 export default {
     data(){
         return{
-            prodRandomList: []
+            prodRandomList: [],
+            prodImgs: {}
         }
     },
     created(){
@@ -70,7 +71,32 @@ export default {
 
             console.log(this.prodRandomList);
             
+        },
+        async getProdRandomList() {
+        try {
+          const productList = (await axios.get(`/api/product/random`)).data;
+          this.prodRandomList = productList;
+  
+          // 각 제품에 대한 이미지 데이터 가져오기
+          for (const prod of productList) {
+            const response = await axios.get(`/api/product/selectImg/${prod.prod_code}`);
+            const prodImages = response.data;
+  
+            // Vue.set 대신, JavaScript의 동적 속성 추가 방식으로 데이터 업데이트
+            this.prodImgs[prod.prod_code] = prodImages;
+          }
+        } catch (error) {
+          console.error(error);
         }
+      },
+      getProdImgUrl(prod_code) {
+        const prodImages = this.prodImgs[prod_code];
+        
+        if (prodImages) {
+          return `http://localhost:3000/product/public/uploads/${prodImages.prod_filename}`;
+        }
+        return ''; // 이미지가 없을 때 빈 문자열 반환
+      },
     }
 }
 </script>
