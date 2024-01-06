@@ -2,7 +2,7 @@
   <div class="container">
     <h2>축제등록</h2>
     <br />
-    <form>
+    <form @submit.prevent="saveInfo">
       <label for="name">축제코드</label>
       <input type="text" v-model="fesInfo.f_code" />
       <br />
@@ -20,35 +20,27 @@
       </select>
       <br />
       <br />
-
       <label for="reg">축제지역</label>
       <input type="text" v-model="fesInfo.f_reg" />
       <br />
-
       <label for="number">공식번호</label>
       <input type="text" v-model="fesInfo.f_number" />
       <br />
-
       <label for="loc">축제장소</label>
       <input type="text" v-model="fesInfo.f_loc" />
       <br />
-
       <label for="fday">축제시작일</label>
       <input type="date" v-model="fesInfo.f_firstday" />
       <br />
-
       <label for="lday">축제종료일</label>
       <input type="date" v-model="fesInfo.f_lastday" />
       <br />
-
       <label for="con">축제내용</label>
       <textarea cols="40" v-model="fesInfo.f_content"></textarea>
       <br />
-
       <label for="price">축제금액</label>
       <input type="text" id="count" v-model="fesInfo.f_price" />
       <br />
-
       <label for="page">홈페이지</label>
       <input type="url" v-model="fesInfo.f_url" />
       <br />
@@ -61,15 +53,13 @@
           multiple
         />
       </div>
-      <button v-on:click="saveInfo(this.fesInfo.f_code)">등록</button>
+      <button v-on:click="saveInfo">등록</button>
     </form>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 import Swal from "sweetalert2";
-
 export default {
   data() {
     return {
@@ -88,27 +78,15 @@ export default {
       },
       bno: "",
       images: [],
-      chechId: "",
     };
   },
-  created() {},
   methods: {
     handleFileChange(event) {
       this.images = Array.from(event.target.files);
     },
-    async saveInfo(f_code) {
-      console.log("f_code : ", f_code);
-      let num = await axios
-        .get(`/api/festival/fesCheckCode/${f_code}`)
-        .then((response) => response.data)
-        .catch((err) => {
-          console.log(err);
-          return null; // 또는 다른 적절한 기본값 설정
-        });
-      console.log("num : ", num);
-      console.log("num.count : ", num.count);
-
-      if (!this.validation(num.count)) return;
+    async saveInfo() {
+      if (!this.validation()) return;
+      console.log("돌아가지나");
 
       let formData = new FormData();
       this.images.forEach((file) => {
@@ -139,12 +117,11 @@ export default {
         let res = await axios.post(`/api/festival/fesPhoto`, formData);
         let uploadedImages = res.data.filenames;
         console.log(uploadedImages);
-
         this.images = uploadedImages;
       }
     },
 
-    async validation(ncount) {
+    validation() {
       if (
         !this.fesInfo.f_code ||
         !this.fesInfo.f_category ||
@@ -166,25 +143,12 @@ export default {
         });
         return false;
       }
-
-      if (ncount == 1) {
-        Swal.fire({
-          icon: "warning",
-          title: "등록실패!",
-          text: "중복된 아이디 입니다..",
-          confirmButtonText: "확인",
-        });
-        return false;
-      }
-
       return true;
     },
-
-    getInfo(comCode) {
+    getInfo() {
       let method = "";
       let url = "";
       let data = null;
-
       method = "post";
       url = `/api/festival/insert`;
       let info = this.fesInfo;
@@ -194,27 +158,13 @@ export default {
         param: this.fesInfo,
       };
       this.$router.push({ path: "/festivalInfoList" });
-
       return {
         method,
         data,
         url,
       };
     },
-    async getCheck(f_code) {
-      //   let result = await axios.get(`/api/festival/${this.searchNo}`)
-      //                     .catch(err => console.log(err));
-      //   this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
-
-      let num = await axios
-        .get(`/api/fesCheckCode/${f_code}`)
-        .catch((err) => console.log(err)).data;
-      // this.chechId = response.data;
-
-      return num;
-    },
   },
 };
 </script>
-
 <style></style>
