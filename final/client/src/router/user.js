@@ -1,5 +1,6 @@
 import main from "../views/Main.vue";
 import festivalList from "../views/festival/festivalList.vue"
+import Cart from "../views/order/cartForm.vue"
 import payment from "../views/order/orderForm.vue";
 import paySuccess from "../views/order/orderSuccess.vue";
 import Login from "../views/member/Login.vue";
@@ -56,6 +57,11 @@ export default {
         path: '/myPage',
         name: 'myPage',
         component: MyPage,
+      },
+      {
+        path: '/cart',
+        name: 'cart',
+        component: Cart,
       },
       {
         path: "/payment",

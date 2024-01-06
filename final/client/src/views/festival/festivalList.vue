@@ -69,14 +69,14 @@
         <div class="row">
         <div v-for="(fes, i) in festivalList" :key="i" class="col-md-3 mb-4" @click="goFesInfo(fes.f_code)">
             <div class="card">
-                <img src="../../image/logo/로고.png" class="card-img-top" alt="">
+                <img :src="`/api/festival/public/uploads/${fes.fesImg}`" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ fes.f_name }} </h5>
                 <!-- <p class="card-text">{{ fes.f_content }}</p> -->
                 <p class="card-date">{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</p>
                 <p class="card-reg">{{ fes.f_reg }}</p>
-                <a href="#" class="btn btn-primary">축제 상세페이지</a>
-                <button class="btn btn-xs btn-info" @click="goToUpdate(fes.f_code)">수정</button>
+                <!-- <a href="#" class="btn btn-primary">축제 상세페이지</a>
+                <button class="btn btn-xs btn-info" @click="goToUpdate(fes.f_code)">수정</button> -->
 
             </div>
             </div>
@@ -94,16 +94,34 @@ export default {
     data(){
         return {
             festivalList : [],
+            fesImgs: {}
         }
     },
     created(){
         this.getFestivalList(); 
     },
     methods : {
-        async getFestivalList(){
-            this.festivalList = (await axios.get('/api/festival')
-                                .catch(err => console.log(err))).data; 
-        },
+        // async getFestivalList(){
+        //     this.festivalList = (await axios.get('/api/festival/list')
+        //                         .catch(err => console.log(err))).data; 
+        // },
+        async getFestivalList() {
+        try {
+          const festivalList = (await axios.get(`/api/festival`)).data;
+          this.festivalList = festivalList;
+  
+          // 각 제품에 대한 이미지 데이터 가져오기
+          // for (const prod of productList) {
+          //   const response = await axios.get(`/api/product/selectImg/${prod.prod_code}`);
+          //   const prodImages = response.data;
+  
+          //   // Vue.set 대신, JavaScript의 동적 속성 추가 방식으로 데이터 업데이트
+          //   this.prodImgs[prod.prod_code] = prodImages;
+          // }
+        } catch (error) {
+          console.error(error);
+        }
+      },
         getDateFormat(date){
             return this.$dateFormat(date);   // 날짜 변환
         },
@@ -128,6 +146,14 @@ export default {
                 this.$router.push({name : 'festivalList'});
             }
         },
+        getFesImgUrl(f_code) {
+        const fesImages = this.fesImgs[f_code];
+        
+        if (prodImages) {
+          return `/api/product/festival/uploads/${fesImages.f_filename}`;
+        }
+        return ''; // 이미지가 없을 때 빈 문자열 반환
+      },
     }
 }
 </script>

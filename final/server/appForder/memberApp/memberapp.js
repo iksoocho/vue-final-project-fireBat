@@ -6,15 +6,15 @@ const mysql = require('../../db.js');
 router.post('/login', async (req, res, next) => {
   const { user_id, user_pw } = req.body.param;
   let result = await mysql.query('userLogin', [user_id, user_pw]);
-  if(result != null){
+  if(result.length > 0){
     req.session.user_id = user_id;
     req.session.is_logined = true;
   }
   req.session.save(err => {
     if(err) throw err;
     // res.redirect('/');
+    console.log(req.session); 
     res.send(result);
-    console.log(req.session)
   }  
 )});
 
@@ -36,7 +36,15 @@ router.put('/myPage', async (req, res) => {
   try {
     let userId = req.session.user_id;
     // 클라이언트 측에서 올바른 필드 이름을 사용하도록 확인
-    let datas = [req.body.user_name, req.body.user_zip, req.body.user_addr, req.body.user_detail_addr, userId];
+    let datas = [
+      req.body.user_name,
+      req.body.user_zip, 
+      req.body.user_addr, 
+      req.body.user_detail_addr, 
+      req.body.user_birth,
+      req.body.user_email,
+      req.body.user_tel, 
+      userId];
 
     // MySQL 쿼리 실행 (mysql.query 함수 사용)
     let result = await mysql.query('userUpdate', datas);
@@ -96,8 +104,13 @@ router.get('/email/:email', async (req, res) => {
 });
 
 router.get('/myPage', async (req, res) => {
+  console.log('API 요청이 들어왔습니다.');
+  console.log(req.session); 
   let userId = req.session.user_id;
-  let result = await mysql.query('userInfo', [userId]);
+  console.log(userId)
+  let result = (await mysql.query('userInfo', userId))[0];
+  
   res.send(result);
+  
 });
 module.exports = router;

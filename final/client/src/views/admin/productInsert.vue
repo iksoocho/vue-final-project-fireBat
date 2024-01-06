@@ -146,7 +146,7 @@ export default {
 				this.images = uploadedImages;
             }
         },
-
+       
       
 
      
