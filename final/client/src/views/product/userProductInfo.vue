@@ -41,7 +41,9 @@
         <br />
 
         <div class="prod-onetime-order">
-          <button class="prod-cart-btn">장바구니</button>
+          <button class="prod-cart-btn" @click="cartInsert">
+            장바구니추가
+          </button>
         </div>
 
         <br />
@@ -128,12 +130,14 @@ export default {
       searchProd: "",
       userProdInfo: {},
       prodImgs: [],
+      userNo: "",
     };
   },
   created() {
     this.searchProd = this.$route.query.prod_code;
     this.getUserProdInfo();
     this.getProdImg();
+    this.getUserNo();
   },
   methods: {
     async getUserProdInfo() {
@@ -151,6 +155,33 @@ export default {
         .catch((err) => console.log(err));
 
       this.prodImgs = result.data;
+    },
+    async getUserNo() {
+      this.userNo = (
+        await axios
+          .get(`/api/qna/userNo/${this.userId}`)
+          .catch((err) => console.log(err))
+      ).data.user_no;
+      console.log("user_no :", this.userNo);
+    },
+    async cartInsert() {
+      let obj = {
+        param: {
+          prod_code: this.searchProd,
+          user_no: this.userNo,
+          prod_order_count: 1,
+        },
+      };
+      await axios.post(`/api/pay/cart`, obj).catch((err) => console.log(err));
+      console.log(obj);
+      alert("장바구니에 등록되었습니다.");
+    },
+  },
+  computed: {
+    userId() {
+      const userData = JSON.parse(sessionStorage.getItem("user"));
+      console.log("userData:", userData); // 확인용 로그 추가
+      return userData ? userData : null;
     },
   },
 };

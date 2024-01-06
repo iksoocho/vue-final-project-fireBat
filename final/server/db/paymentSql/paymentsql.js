@@ -10,4 +10,5 @@ module.exports = {
                from cart c join product p on c.prod_code = p.prod_code
                where user_no=(select user_no from user where user_id= ?)`,
    cartUpdate : `update cart set prod_order_count = ? where cart_no = ?`,
+   cartInsert : `insert into cart set ?`
 }
