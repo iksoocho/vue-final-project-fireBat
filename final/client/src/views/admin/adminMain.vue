@@ -55,7 +55,9 @@ export default {
       const prodNo = 1;
 
       try {
-        result = await axios.get(`/api/product/chart/${prodNo}/${obj.period}/${obj.minPrice}/${obj.maxPrice}`);
+        result = await axios.get(
+          `/api/product/chart/${prodNo}/${obj.period}/${obj.minPrice}/${obj.maxPrice}`
+        );
         console.log(result);
       } catch (e) {
         console.log(e);

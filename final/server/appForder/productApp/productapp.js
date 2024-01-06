@@ -122,7 +122,7 @@ router.get('/chart/:prodNo/:period/:minPrice/:maxPrice', async (req, res) => {
         console.log(minPrice);
         console.log(typeof minPrice);
 
-    let list = await mysql.query('productList');
+    let list = await mysql.query('adminChart');
     res.send(list);
 });
 
@@ -178,6 +178,11 @@ router.get('/selectAllImg/:prod_code', async(req,res)=>{
     res.send(prodImg);
 })
 
+// 관리자 상품 재고 관리
+router.get('/prodInven/Inventory', async(req,res) =>{
+    let prodInvent = await mysql.query('adminProdInven')
+    res.send(prodInvent);
+})
 
 // 검색
 router.get('/search/:prod_name', async (req,res) =>{
