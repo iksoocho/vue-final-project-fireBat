@@ -83,7 +83,7 @@ router.get('/user', async (req,res)=>{
         console.log('prod.f_code :',prod.prod_code)
         let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
         console.log('prod.prodImg :',prodImg)
-        prod.prodImg = prodImg.prod_filename;
+        prod.prodImg = prodImg ? prodImg.prod_filename : '';
     }
     res.send(list);
 })
