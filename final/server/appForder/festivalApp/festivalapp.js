@@ -55,6 +55,20 @@ router.post('/insert', async (req, res) => {
     let result = await mysql.query('fesInsert', data);
     res.send(result);
 });
+
+// 축제 코드 중복 체크
+router.post('/:f_code', async (req, res) => {
+  try {
+    let data = req.params.f_code;
+    let result = await mysql.query('fesCheckCode', data);
+    let isDuplicate = result.length > 0; // 결과가 있으면 중복, 없으면 중복 아님
+    res.send({ isDuplicate });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // 축제 수정
 router.put('/update/:f_code', async (req,res) =>{
     let data = [req.body.param, req.params.f_code];
@@ -74,6 +88,7 @@ router.get('/search/:f_name', async (req,res) =>{
     let result = await mysql.query('fesSearch' , data);
     res.send(result)
 });
+
 
 
 

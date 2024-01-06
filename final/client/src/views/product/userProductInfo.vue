@@ -88,7 +88,7 @@
           <button id="box1" type="button">상세상품</button>
           <button id="box2" type="button">상품평</button>
           <button id="box3" type="button">상품문의</button>
-          <button id="box3" type="button">배송안내</button>
+          <button id="box4" type="button">배송안내</button>
         </tr>
       </table>
     </div>
