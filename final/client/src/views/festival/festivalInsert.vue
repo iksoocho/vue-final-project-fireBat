@@ -61,7 +61,7 @@
           multiple
         />
       </div>
-      <button v-on:click="saveInfo">등록</button>
+      <button v-on:click="saveInfo(this.fesInfo.f_code)">등록</button>
     </form>
   </div>
 </template>
@@ -88,27 +88,27 @@ export default {
       },
       bno: "",
       images: [],
+      chechId: "",
     };
   },
+  created() {},
   methods: {
     handleFileChange(event) {
       this.images = Array.from(event.target.files);
     },
-    async saveInfo() {
-      if (!this.validation()) return;
-
-      // 중복 체크를 위한 API 호출
-      let isDuplicate = await this.checkDuplicate();
-
-      if (isDuplicate) {
-        Swal.fire({
-          icon: "warning",
-          title: "등록 실패",
-          text: "이미 존재하는 축제 코드입니다.",
-          confirmButtonText: "확인",
+    async saveInfo(f_code) {
+      console.log("f_code : ", f_code);
+      let num = await axios
+        .get(`/api/festival/fesCheckCode/${f_code}`)
+        .then((response) => response.data)
+        .catch((err) => {
+          console.log(err);
+          return null; // 또는 다른 적절한 기본값 설정
         });
-        return;
-      }
+      console.log("num : ", num);
+      console.log("num.count : ", num.count);
+
+      if (!this.validation(num.count)) return;
 
       let formData = new FormData();
       this.images.forEach((file) => {
@@ -143,19 +143,8 @@ export default {
         this.images = uploadedImages;
       }
     },
-    async checkDuplicate() {
-      try {
-        let result = await axios.post(`/api/festival/checkDuplicate`, {
-          f_code: this.fesInfo.f_code,
-        });
 
-        return result.data.isDuplicate;
-      } catch (err) {
-        console.error(err);
-        return false;
-      }
-    },
-    validation() {
+    async validation(ncount) {
       if (
         !this.fesInfo.f_code ||
         !this.fesInfo.f_category ||
@@ -177,8 +166,20 @@ export default {
         });
         return false;
       }
+
+      if (ncount == 1) {
+        Swal.fire({
+          icon: "warning",
+          title: "등록실패!",
+          text: "중복된 아이디 입니다..",
+          confirmButtonText: "확인",
+        });
+        return false;
+      }
+
       return true;
     },
+
     getInfo(comCode) {
       let method = "";
       let url = "";
@@ -199,6 +200,18 @@ export default {
         data,
         url,
       };
+    },
+    async getCheck(f_code) {
+      //   let result = await axios.get(`/api/festival/${this.searchNo}`)
+      //                     .catch(err => console.log(err));
+      //   this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
+
+      let num = await axios
+        .get(`/api/fesCheckCode/${f_code}`)
+        .catch((err) => console.log(err)).data;
+      // this.chechId = response.data;
+
+      return num;
     },
   },
 };
