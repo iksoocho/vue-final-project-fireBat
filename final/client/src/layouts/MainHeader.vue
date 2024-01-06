@@ -73,7 +73,7 @@
                             ></b
                           >님!
                         </p>
-
+                        <a href="/cart">장바구니</a>
                         <button
                           type="button"
                           class="btn btn-outline-danger me-2"
