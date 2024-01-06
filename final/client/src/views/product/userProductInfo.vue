@@ -52,6 +52,7 @@
       </div>
       <br />
       <br />
+
       <div>
         <tr>
           <h4 id="content">
@@ -76,7 +77,7 @@
             alt=""
             style="width: 300px; height: 250px"
           />
-          <h3 class="" style="text-align: center">{{ idx }}번 사진 입니다</h3>
+          <h3 class="" style="text-align: center"></h3>
         </div>
       </template>
     </div>
@@ -84,13 +85,20 @@
 
     <div class="container">
       <table class="table table-hover">
-        <tr>
-          <button id="box1" type="button">상세상품</button>
-          <button id="box2" type="button">상품평</button>
-          <button id="box3" type="button">상품문의</button>
-          <button id="box4" type="button">배송안내</button>
+        <tr class="">
+          <th data-link="#section1">상세상품</th>
+          <th data-link="#section2">상품평</th>
+          <th data-link="#section3">상품문의</th>
+          <th data-link="#section4">배송안내</th>
         </tr>
       </table>
+    </div>
+
+    <div class="container">
+      <div id="section1" class="content"></div>
+      <div id="section2" class="content"></div>
+      <div id="section3" class="content"></div>
+      <div id="section4" class="content"></div>
     </div>
 
     <div calss="row">
@@ -105,7 +113,7 @@
             :src="`http://localhost:3000/product/public/uploads/${img.prod_filename}`"
             class="card-img-top"
             alt=""
-            style="width: 50%; text-align: center"
+            style="display: block; margin: 0 auto; width: 50%;r"
           />
           <a class="" style="text-align: center">{{ idx }}번 사진 입니다</a>
         </div>
@@ -128,6 +136,9 @@ export default {
       searchProd: "",
       userProdInfo: {},
       prodImgs: [],
+      isScrollDown: false,
+      scrollTop: 0,
+      target: null,
     };
   },
   created() {
@@ -190,5 +201,17 @@ export default {
   font-weight: bold;
   font-size: 16px;
   border: 1px solid #346aff;
+}
+.menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 0;
+  background-color: aqua;
+  padding-left: 0;
 }
 </style>
