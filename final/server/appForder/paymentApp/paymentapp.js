@@ -7,7 +7,7 @@ router.get('/api/', async (req, res) => {
    res.send(list);
 });
 
-router.get('/api/notice', async (req, res) => {
+router.get('/notice', async (req, res) => {
    let list = await mysql.query('noticeList');
    res.send(list);
 });
@@ -18,10 +18,10 @@ router.get('/api/notice', async (req, res) => {
 //    res.send(result);
 // });
 
-// router.get('/api/cart/:userId', async (req, res) => {
-//    let data = req.params.userId;
-//    let list = await mysql.query('cartList', data);
-//    res.send(list);
-// });
+router.get('/cart/:userId', async (req, res) => {
+   let data = req.params.userId;
+   let list = await mysql.query('cartList', data);
+   res.send(list);
+});
 
 module.exports = router;
