@@ -1,9 +1,6 @@
 <template>
   <div class="container">
-<<<<<<< HEAD
     <router-link to="/adminForm">편하게 관리자페이지</router-link>
-=======
->>>>>>> 5248a24 ([조익수])
     <div class="row">
       <div class="col-8 col-sm-6" v-if="prodImgs.length > 0">
         <img
@@ -12,7 +9,6 @@
           alt=""
         />
       </div>
-<<<<<<< HEAD
       <div class="col-4">
         <br />
         <tr>
@@ -21,11 +17,6 @@
           </h3>
         </tr>
         <br />
-=======
-
-      <div class="col-4">
-        <br />
->>>>>>> 5248a24 ([조익수])
 
         <tr>
           <h3>
@@ -45,7 +36,6 @@
         <br />
 
         <tr>
-<<<<<<< HEAD
           <th>상품남은 수량: {{ userProdInfo.prod_count }}</th>
         </tr>
         <br />
@@ -71,12 +61,6 @@
       </div>
 
       <h3>함께하면 좋은 축제들</h3>
-=======
-          <th>상태: {{ userProdInfo.prod_state }}</th>
-        </tr>
-        <br />
-      </div>
->>>>>>> 5248a24 ([조익수])
     </div>
     <div calss="row align-items-end" style="display: flex">
       <template v-for="(img, idx) in prodImgs">
@@ -90,20 +74,44 @@
             :src="`http://localhost:3000/product/public/uploads/${img.prod_filename}`"
             class="card-img-top"
             alt=""
-
             style="width: 300px; height: 250px"
-
           />
           <h3 class="" style="text-align: center">{{ idx }}번 사진 입니다</h3>
         </div>
       </template>
+    </div>
+    <hr />
 
+    <div class="container">
+      <table class="table table-hover">
+        <tr>
+          <button id="box1" type="button">상세상품</button>
+          <button id="box2" type="button">상품평</button>
+          <button id="box3" type="button">상품문의</button>
+          <button id="box4" type="button">배송안내</button>
+        </tr>
+      </table>
     </div>
 
-    <tr>
-      <th>{{ userProdInfo.prod_content }}</th>
-    </tr>
-
+    <div calss="row">
+      <template v-for="(img, idx) in prodImgs">
+        <div
+          v-if="idx < 5 && img.prod_filename"
+          :key="idx"
+          class="row-4 row-sm-3"
+          style="margin: 10px"
+        >
+          <img
+            :src="`http://localhost:3000/product/public/uploads/${img.prod_filename}`"
+            class="card-img-top"
+            alt=""
+            style="width: 50%; text-align: center"
+          />
+          <a class="" style="text-align: center">{{ idx }}번 사진 입니다</a>
+        </div>
+      </template>
+    </div>
+    <br />
   </div>
 </template>
 
@@ -143,17 +151,13 @@ export default {
         .catch((err) => console.log(err));
 
       this.prodImgs = result.data;
-<<<<<<< HEAD
       console.log(this.prodImgs);
       console.log(this.prodImgs[0].prod_filename);
-=======
->>>>>>> 5248a24 ([조익수])
     },
   },
 };
 </script>
 
-<<<<<<< HEAD
 <style scoped>
 #content {
   color: olivedrab;
@@ -190,6 +194,3 @@ export default {
   border: 1px solid #346aff;
 }
 </style>
-=======
-<style scoped></style>
->>>>>>> 5248a24 ([조익수])
