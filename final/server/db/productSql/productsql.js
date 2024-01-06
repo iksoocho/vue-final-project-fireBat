@@ -29,10 +29,16 @@ module.exports = {
     // 상품검색 기능
     productSearch: `SELECT * FROM product WHERE prod_name LIKE CONCAT(CONCAT('%',?),'%') `,
 
-    // 관리자(사용자회원 리스트)
-    adminUserList: `SELECT user_id, user_pw, user_email, user_name, user_tel, user_addr, user_birth , prod_sell_count
-    FROM user u LEFT OUTER JOIN product p ON (u.user_id = p.prod_sell_count)`,
+    // 관리자(사용자회원 리스트) 판매량 까지
+    adminUserList: `SELECT user_id, user_pw, user_email, user_name, user_tel, user_addr, user_birth,
+                    (SELECT COUNT(*) FROM product WHERE product.prod_sell_count = user.user_id) as sellcount from user order by user_id `,
 
+    // 관리자 재고 관리
+    adminProdInven : `SELECT prod_code, prod_name, prod_price, prod_state,prod_count, prod_count - prod_sell_count AS count
+                        FROM product
+                        ORDER BY prod_code `,
+    // 관리자 페이지 차트
+    adminChart : `SELECT * FROM product ORDER BY prod_sell_count DESC LIMIT 6 `,
     //이미지 테스트
     ptinsert: `INSERT INTO prod_imgs SET ? `,
     ptlist: `SELECT * FROM prod_imgs`,
