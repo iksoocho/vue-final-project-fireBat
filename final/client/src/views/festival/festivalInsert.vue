@@ -96,19 +96,10 @@ export default {
     handleFileChange(event) {
       this.images = Array.from(event.target.files);
     },
-    async saveInfo(f_code) {
-      console.log("f_code : ", f_code);
-      let num = await axios
-        .get(`/api/festival/fesCheckCode/${f_code}`)
-        .then((response) => response.data)
-        .catch((err) => {
-          console.log(err);
-          return null; // 또는 다른 적절한 기본값 설정
-        });
-      console.log("num : ", num);
-      console.log("num.count : ", num.count);
+    async saveInfo() {
+      if (!this.validation()) return;
 
-      if (!this.validation(num.count)) return;
+      console.log("돌아가 시발롬아");
 
       let formData = new FormData();
       this.images.forEach((file) => {
@@ -144,7 +135,8 @@ export default {
       }
     },
 
-    async validation(ncount) {
+    async validation() {
+      console.log("!this.fesInfo.f_code :", !this.fesInfo.f_code);
       if (
         !this.fesInfo.f_code ||
         !this.fesInfo.f_category ||
@@ -167,15 +159,15 @@ export default {
         return false;
       }
 
-      if (ncount == 1) {
-        Swal.fire({
-          icon: "warning",
-          title: "등록실패!",
-          text: "중복된 아이디 입니다..",
-          confirmButtonText: "확인",
-        });
-        return false;
-      }
+      // if (ncount == 1) {
+      //   Swal.fire({
+      //     icon: "warning",
+      //     title: "등록실패!",
+      //     text: "중복된 아이디 입니다..",
+      //     confirmButtonText: "확인",
+      //   });
+      //   return false;
+      // }
 
       return true;
     },
@@ -202,16 +194,17 @@ export default {
       };
     },
     async getCheck(f_code) {
-      //   let result = await axios.get(`/api/festival/${this.searchNo}`)
-      //                     .catch(err => console.log(err));
-      //   this.fesInfo = result.data;    // .data 데이터가 보내준 값을 받음
-
+      console.log("f_code : ", f_code);
       let num = await axios
-        .get(`/api/fesCheckCode/${f_code}`)
-        .catch((err) => console.log(err)).data;
-      // this.chechId = response.data;
-
-      return num;
+        .get(`/api/festival/fesCheckCode/${f_code}`)
+        .then((response) => response.data)
+        .catch((err) => {
+          console.log(err);
+          return null; // 또는 다른 적절한 기본값 설정
+        });
+      console.log("num : ", num);
+      console.log("num.count : ", num.count);
+      this.chechId = num.count;
     },
   },
 };
