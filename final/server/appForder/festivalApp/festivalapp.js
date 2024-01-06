@@ -55,6 +55,7 @@ router.post('/insert', async (req, res) => {
     let result = await mysql.query('fesInsert', data);
     res.send(result);
 });
+
 // 축제 수정
 router.put('/update/:f_code', async (req,res) =>{
     let data = [req.body.param, req.params.f_code];
@@ -74,6 +75,7 @@ router.get('/search/:f_name', async (req,res) =>{
     let result = await mysql.query('fesSearch' , data);
     res.send(result)
 });
+
 
 
 
@@ -143,6 +145,27 @@ router.get('/selectAllImg/:f_code', async(req,res)=>{
     let data = req.params.f_code;
     let fesImg = await mysql.query('fesImgSelect',data);
     res.send(fesImg);
-})
+});
 
+// 축제 코드 중복 체크
+// router.get('/fesCheckCode/:f_code', async (req, res) => {
+//   try {
+//     let data = req.params.f_code;
+//     let result = await mysql.query('fesCheckCode', data);
+//     let isDuplicate = result[0].count > 0; // 결과가 있으면 중복, 없으면 중복 아님
+
+//     res.send({ isDuplicate });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send({ error: 'Internal Server Error' });
+//   }
+// });
+
+
+//조익수 테스트
+router.get('/fesCheckCode/:f_code', async (req, res) => {
+  let data = req.params.f_code;
+  let list = await mysql.query('fesCheckCode', data);
+  res.send(list[0]); //mysql에서 select는 무조건 배열로 넘오 오기 때문에 단건 조회일 경우 list[0]로 해줘야됨
+});
 module.exports = router;

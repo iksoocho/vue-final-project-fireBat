@@ -7,7 +7,7 @@ router.get('/api/', async (req, res) => {
    res.send(list);
 });
 
-router.get('/api/notice', async (req, res) => {
+router.get('/notice', async (req, res) => {
    let list = await mysql.query('noticeList');
    res.send(list);
 });
@@ -18,10 +18,16 @@ router.get('/api/notice', async (req, res) => {
 //    res.send(result);
 // });
 
-// router.get('/api/cart/:userId', async (req, res) => {
-//    let data = req.params.userId;
-//    let list = await mysql.query('cartList', data);
-//    res.send(list);
-// });
+router.get('/cart/:userId', async (req, res) => {
+   let data = req.params.userId;
+   let list = await mysql.query('cartList', data);
+   res.send(list);
+});
+
+router.put("/cart/:poc/:cno", async (req, res) => { // 장바구니 수량 변경
+   let data = [req.params.poc, req.params.cno];
+   let list = await mysql.query("cartUpdate", data);
+   res.send(list);
+ });
 
 module.exports = router;
