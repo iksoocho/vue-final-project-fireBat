@@ -32,5 +32,6 @@ module.exports = {
 
     fesImgDelete : `delete from f_imgs where f_code = ?`,
 
-    fesImgSelect : `select * from f_imgs where f_code = ?`, 
+    fesImgSelect : `select * from f_imgs where f_code = ?`,
+    
 }
