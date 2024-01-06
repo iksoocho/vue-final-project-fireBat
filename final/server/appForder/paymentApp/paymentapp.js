@@ -30,4 +30,10 @@ router.put("/cart/:poc/:cno", async (req, res) => { // 장바구니 수량 변�
    res.send(list);
  });
 
+router.post("/cart", async (req, res) => { // 장바구니 추가
+   let data = req.body.param;
+   let result = await mysql.query("cartInsert", data);
+   res.send(result);
+ });
+
 module.exports = router;
