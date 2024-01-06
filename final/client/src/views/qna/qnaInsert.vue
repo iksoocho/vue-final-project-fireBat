@@ -245,4 +245,8 @@ span {
   align-items: center;
   margin-top: 20px; /* Adjust margin as needed */
 }
+
+tr {
+  border: 1px solid;
+}
 </style>

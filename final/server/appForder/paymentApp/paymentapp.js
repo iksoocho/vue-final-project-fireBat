@@ -24,4 +24,16 @@ router.get('/cart/:userId', async (req, res) => {
    res.send(list);
 });
 
+router.put("/cart/:poc/:cno", async (req, res) => { // 장바구니 수량 변경
+   let data = [req.params.poc, req.params.cno];
+   let list = await mysql.query("cartUpdate", data);
+   res.send(list);
+ });
+
+router.post("/cart", async (req, res) => { // 장바구니 추가
+   let data = req.body.param;
+   let result = await mysql.query("cartInsert", data);
+   res.send(result);
+ });
+
 module.exports = router;
