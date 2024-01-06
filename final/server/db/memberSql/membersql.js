@@ -9,5 +9,9 @@ module.exports = {
   userCheck: `SELECT COUNT(*) AS count FROM user WHERE user_id = ?`, // 아이디 중복 체크
   userEmailCheck: `SELECT COUNT(*) AS count FROM user WHERE user_email = ?`, // 이메일 중복 체크
   userLogin: `SELECT * FROM user WHERE user_id = ? AND user_pw = ?`, // 로그인
-  userInfo: `SELECT * FROM user WHERE user_id = ?`
+  userInfo: `SELECT * FROM user WHERE user_id = ?`,
+  changePassword: `UPDATE user SET user_pw = ?, user_recpw = ? WHERE user_id = ? AND user_pw = ?`,
+  passwordCheck: `SELECT user_pw FROM user WHERE user_id = ? AND user_pw = ?`,
+  passwordUpdate: `UPDATE user SET user_pw = ? WHERE user_id = ?`,
+
 };

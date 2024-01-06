@@ -18,6 +18,8 @@ router.post('/login', async (req, res, next) => {
   }  
 )});
 
+
+
 // 로그아웃
 router.post('/logout', (req, res, next) => {
   req.session.destroy();
@@ -113,4 +115,47 @@ router.get('/myPage', async (req, res) => {
   res.send(result);
   
 });
+
+router.put('/changePassword', async (req, res) => {
+  try {
+    const userId = req.session.user_id;
+    // const currentPassword = req.body.currentPassword;
+    const newPassword = req.body.newPassword;
+    const confirmPassword = req.body.confirmPassword;
+
+    // 현재 비밀번호 확인
+    // const isCurrentPasswordValid = await checkCurrentPassword(userId, currentPassword);
+
+    // if (!isCurrentPasswordValid) {
+    //   // 현재 비밀번호가 일치하지 않을 때의 처리
+    //   return res.status(400).send({ error: 'Current password is incorrect' });
+    // }
+
+    // 새로운 비밀번호와 확인 비밀번호가 일치하는지 확인
+    if (newPassword !== confirmPassword) {
+      return res.status(400).send({ error: 'New password and confirmation do not match' });
+    }
+
+    // 비밀번호 변경 로직
+    await updateUserPassword(userId, newPassword);
+
+    // 변경 완료 응답
+    res.send({ success: true });
+  } catch (error) {
+    console.error('Error changing password:', error);
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+});
+
+// async function checkCurrentPassword(userId, currentPassword) {
+//   // 데이터베이스에서 현재 비밀번호를 가져와서 확인하는 로직
+//   // (실제로는 암호화된 비밀번호를 비교하는 등의 보안 로직이 들어갈 수 있습니다.)
+//   const result = await mysql.query('passwordCheck', [userId, currentPassword]);
+//   return result.length > 0;
+// }
+
+async function updateUserPassword(userId, newPassword) {
+  // 데이터베이스의 user_pw 컬럼을 새로운 비밀번호로 업데이트하는 로직
+  await mysql.query('passwordUpdate', [newPassword, userId]);
+}
 module.exports = router;
