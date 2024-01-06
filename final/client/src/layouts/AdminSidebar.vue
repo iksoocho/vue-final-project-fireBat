@@ -1,5 +1,5 @@
 <template>
-   <div id="layoutSidenav">
+  <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
       <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
@@ -7,35 +7,34 @@
             <div class="sb-sidenav-menu-heading">Festival</div>
             <router-link to="">
               <a
-              class="nav-link collapsed"
-              href="#"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseLayouts"
-              aria-expanded="false"
-              aria-controls="collapseLayouts"
-            >
-              <div class="sb-nav-link-icon"></div>
-              회원관리
-              <div class="sb-sidenav-collapse-arrow">
-                <i class="fas fa-angle-down"></i>
+                class="nav-link collapsed"
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseLayouts"
+                aria-expanded="false"
+                aria-controls="collapseLayouts"
+              >
+                <div class="sb-nav-link-icon"></div>
+                회원관리
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div
+                class="collapse"
+                id="collapseLayouts"
+                aria-labelledby="headingOne"
+                data-bs-parent="#sidenavAccordion"
+              >
+                <nav class="sb-sidenav-menu-nested nav">
+                  <router-link class="nav-link" to="/adminUserList">
+                    회원관리
+                  </router-link>
+                  <router-link class="nav-link" to="/qnaList">
+                    QnA
+                  </router-link>
+                </nav>
               </div>
-            </a>
-            <div
-              class="collapse"
-              id="collapseLayouts"
-              aria-labelledby="headingOne"
-              data-bs-parent="#sidenavAccordion"
-            >
-              <nav class="sb-sidenav-menu-nested nav">
-                 <router-link class="nav-link" to="/adminUserList">
-                      회원관리
-                    </router-link>
-                <router-link class="nav-link" to="/">
-                      QnA관리
-                    </router-link>
-              </nav>
-            </div>
-              
             </router-link>
             <div class="sb-sidenav-menu-heading">Interface</div>
             <a
@@ -59,15 +58,15 @@
               data-bs-parent="#sidenavAccordion"
             >
               <nav class="sb-sidenav-menu-nested nav">
-               <router-link class="nav-link" to="/festivalInsert">
-                      축제등록
-                    </router-link>
-               <router-link class="nav-link" to="/festivalInfoList">
-                      축제목록
-                    </router-link>
-               <router-link class="nav-link" to="/festivalList">
-                      축제리스트
-                    </router-link>                
+                <router-link class="nav-link" to="/festivalInsert">
+                  축제등록
+                </router-link>
+                <router-link class="nav-link" to="/festivalInfoList">
+                  축제목록
+                </router-link>
+                <router-link class="nav-link" to="/festivalList">
+                  축제리스트
+                </router-link>
               </nav>
             </div>
             <a
@@ -91,17 +90,18 @@
               data-bs-parent="#sidenavAccordion"
             >
               <nav class="sb-sidenav-menu-nested nav">
-                 <router-link class="nav-link" to="/productInsert">
-                      상품등록
-                    </router-link>
+                <router-link class="nav-link" to="/productInsert">
+                  상품등록
+                </router-link>
                 <router-link class="nav-link" to="/productList">
-                      상품목록
-                    </router-link>
+                  상품목록
+                </router-link>
+                <router-link class="nav-link" to="/userProductList">
+                  상품리스트
+                </router-link>
               </nav>
             </div>
-            
-            
-            
+
             <a
               class="nav-link collapsed"
               href="#"
@@ -123,9 +123,9 @@
               data-bs-parent="#sidenavAccordion"
             >
               <nav class="sb-sidenav-menu-nested nav">
-               <router-link class="nav-link" to="/productInventory">
-                      재고목록
-                    </router-link>
+                <router-link class="nav-link" to="/productInventory">
+                  재고목록
+                </router-link>
               </nav>
             </div>
             <a
@@ -149,12 +149,12 @@
               data-bs-parent="#sidenavAccordion"
             >
               <nav class="sb-sidenav-menu-nested nav">
-               <router-link class="nav-link" to="/deliveryInformation">
-                      배송정보
-                    </router-link>
-               <router-link class="nav-link" to="/deliveryList">
-                      주문정보
-                    </router-link>
+                <router-link class="nav-link" to="/deliveryInformation">
+                  배송정보
+                </router-link>
+                <router-link class="nav-link" to="/deliveryList">
+                  주문정보
+                </router-link>
               </nav>
             </div>
             <!-- <router-link to="/admin/table">
@@ -177,13 +177,12 @@
       </main>
     </div>
   </div>
-
 </template>
 
 <script>
 export default {
-    name : 'AdminSideBar'
-}
+  name: "AdminSideBar",
+};
 </script>
 
 <style scoped>
@@ -204,17 +203,19 @@ main {
   overflow-y: hidden;
 }
 
-.dropdown-toggle { outline: 0; }
+.dropdown-toggle {
+  outline: 0;
+}
 
 .btn-toggle {
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
   font-weight: 600;
   color: var(--bs-emphasis-color);
   background-color: transparent;
 }
 .btn-toggle:hover,
 .btn-toggle:focus {
-  color: rgba(var(--bs-emphasis-color-rgb), .85);
+  color: rgba(var(--bs-emphasis-color-rgb), 0.85);
   background-color: var(--bs-tertiary-bg);
 }
 
@@ -222,8 +223,8 @@ main {
   width: 1.25em;
   line-height: 0;
   content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
-  transition: transform .35s ease;
-  transform-origin: .5em 50%;
+  transition: transform 0.35s ease;
+  transform-origin: 0.5em 50%;
 }
 
 [data-bs-theme="dark"] .btn-toggle::before {
@@ -231,15 +232,15 @@ main {
 }
 
 .btn-toggle[aria-expanded="true"] {
-  color: rgba(var(--bs-emphasis-color-rgb), .85);
+  color: rgba(var(--bs-emphasis-color-rgb), 0.85);
 }
 .btn-toggle[aria-expanded="true"]::before {
   transform: rotate(90deg);
 }
 
 .btn-toggle-nav a {
-  padding: .1875rem .5rem;
-  margin-top: .125rem;
+  padding: 0.1875rem 0.5rem;
+  margin-top: 0.125rem;
   margin-left: 1.25rem;
 }
 .btn-toggle-nav a:hover,
