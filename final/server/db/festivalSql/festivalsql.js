@@ -33,5 +33,7 @@ module.exports = {
     fesImgDelete : `delete from f_imgs where f_code = ?`,
 
     fesImgSelect : `select * from f_imgs where f_code = ?`,
+
+    fesCheckCode : `select count(*) as count from festival where f_code = ?`,
     
 }

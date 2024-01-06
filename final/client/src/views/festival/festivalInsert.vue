@@ -97,6 +97,19 @@ export default {
     async saveInfo() {
       if (!this.validation()) return;
 
+      // 중복 체크를 위한 API 호출
+      let isDuplicate = await this.checkDuplicate();
+
+      if (isDuplicate) {
+        Swal.fire({
+          icon: "warning",
+          title: "등록 실패",
+          text: "이미 존재하는 축제 코드입니다.",
+          confirmButtonText: "확인",
+        });
+        return;
+      }
+
       let formData = new FormData();
       this.images.forEach((file) => {
         formData.append(`files`, file);
@@ -128,6 +141,18 @@ export default {
         console.log(uploadedImages);
 
         this.images = uploadedImages;
+      }
+    },
+    async checkDuplicate() {
+      try {
+        let result = await axios.post(`/api/festival/checkDuplicate`, {
+          f_code: this.fesInfo.f_code,
+        });
+
+        return result.data.isDuplicate;
+      } catch (err) {
+        console.error(err);
+        return false;
       }
     },
     validation() {
