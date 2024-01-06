@@ -9,5 +9,11 @@ module.exports = {
     qnaInsert:`insert into qna set ?`,
     qnaUpdate:`update qna set ? where qna_no = ?`,
     qnaDelete:`delete from qna where qna_no = ?`,
-    userNoForInsert : `select user_no from user where user_id =?`
+    userNoForInsert : `select user_no from user where user_id =?`,
+
+    qnaImgInsert: `insert into qna_imgs set qna_no = ?, qna_filename = ?`,
+
+    qnaImgDelete : `delete from qna_imgs where qna_no = ?`,
+
+    qnaImgSelect : `select * from qna_imgs where qna_no = ?`,
 }
