@@ -151,8 +151,6 @@ export default {
         .catch((err) => console.log(err));
 
       this.prodImgs = result.data;
-      console.log(this.prodImgs);
-      console.log(this.prodImgs[0].prod_filename);
     },
   },
 };

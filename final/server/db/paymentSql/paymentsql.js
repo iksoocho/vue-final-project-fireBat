@@ -6,7 +6,8 @@ module.exports = {
                GROUP BY p.NO`,
    noticeList : `select * from notice`,
    orderInsert : `insert into prod_order set ?`,
-   cartList : `select c.* , p.prod_name, p.prod_price
+   cartList : `select c.* , p.prod_name, p.prod_price, p.prod_count
                from cart c join product p on c.prod_code = p.prod_code
                where user_no=(select user_no from user where user_id= ?)`,
+   cartUpdate : `update cart set prod_order_count = ? where cart_no = ?`,
 }
