@@ -3,7 +3,13 @@
     <div class="row">
       <div class="container text-center">
         <div class="row">
-          <div class="col-sm-8">상품이미지 들어갈 곳</div>
+          <div class="col-8 col-sm-6" v-if="fesImgs.length > 0">
+            <img
+              :src="`http://localhost:3000/festival/public/uploads/${fesImgs[0].f_filename}`"
+              class="card-img-top"
+              alt="이미지가 없습니다."
+            />
+          </div>
           <div class="col-sm-4">
             <tr>
               <th>
@@ -31,6 +37,16 @@
             <tr>
               <a :href="fesInfo.f_url">공식홈페이지</a>
             </tr>
+          </div>
+          <div calss="row align-items-end" style="display: flex">
+            <template v-for="(img, idx) in fesImgs">
+              <img
+                :src="`http://localhost:3000/festival/public/uploads/${img.f_filename}`"
+                class="card-img-top"
+                alt=""
+                style="width: 300px; height: 250px"
+              />
+            </template>
           </div>
         </div>
       </div>
@@ -65,6 +81,7 @@ export default {
       fesInfo: {},
       roadview: null,
       roadviewClient: null,
+      fesImgs: [],
     };
   },
   computed: {
@@ -82,6 +99,7 @@ export default {
   created() {
     this.searchNo = this.$route.query.f_code; // 페이지요청은 router  페이지가 열릴때는 route
     this.getFesInfo();
+    this.getFesImg();
   },
   methods: {
     async getFesInfo() {
@@ -143,6 +161,15 @@ export default {
           map.setCenter(coords);
         }
       });
+    },
+    async getFesImg() {
+      console.log(this.searchNo);
+
+      let result = await axios
+        .get(`/api/festival/selectAllImg/${this.searchNo}`)
+        .catch((err) => console.log(err));
+
+      this.fesImgs = result.data;
     },
   },
 };
