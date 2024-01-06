@@ -172,6 +172,7 @@ export default {
 .title {
   background-color: #dc3545;
   opacity: 0.89;
+  width: 200px;
 }
 #textarea {
   margin-top: 10px;
@@ -203,5 +204,8 @@ span {
   justify-content: center;
   align-items: center;
   margin-top: 20px; /* Adjust margin as needed */
+}
+tr {
+  border: 1px solid;
 }
 </style>
