@@ -20,7 +20,7 @@ module.exports = {
     userProductList: `SELECT prod_code, prod_name, prod_price, prod_count, prod_loc, prod_cate,prod_date FROM product`,
 
     // 사용자 상품 상세
-    userProductInfo: `SELECT prod_name, prod_price, prod_code , prod_loc, prod_cate, prod_state, prod_content
+    userProductInfo: `SELECT prod_name, prod_price, prod_code , prod_loc, prod_cate, prod_state, prod_content, prod_count
                             FROM product WHERE prod_code = ? `,
 
     // 메인페이지 랜덤 6가지

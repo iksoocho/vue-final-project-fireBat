@@ -8,7 +8,7 @@
               <h5 class="card-title">{{ prod.prod_name }} </h5>
               <p class="card-text">{{ prod.prod_price }}원</p>
               <p class="card-text">{{ prod.prod_state }}</p>
-              <a href="#" class="btn btn-primary">축제 상세페이지</a>
+              <a href="#" class="btn btn-primary">상품 상세페이지</a>
             </div>
           </div>
         </div>
