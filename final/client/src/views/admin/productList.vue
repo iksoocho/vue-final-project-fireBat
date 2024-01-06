@@ -24,6 +24,7 @@
                 <th>상품분류</th>
                 <th>등록날짜</th>
                 <th></th>
+                <th>삭제</th>
             </tr>
         </thead>
         <tbody>

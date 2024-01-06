@@ -69,8 +69,22 @@ router.get("/ptlist/:no", async(req,rep)=>{
 })
 
 // 사용자 상품 리스트
+// router.get('/user', async (req,res)=>{
+//     let list = await mysql.query('userProductList');
+//     res.send(list);
+// })
+
+// 사용자 상품 리스트 - 테스트
 router.get('/user', async (req,res)=>{
     let list = await mysql.query('userProductList');
+
+      // 각 제품에 대한 이미지 데이터 가져오기
+    for (const prod of list) {
+        console.log('prod.f_code :',prod.prod_code)
+        let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
+        console.log('prod.prodImg :',prodImg)
+        prod.prodImg = prodImg ? prodImg.prod_filename : '';
+    }
     res.send(list);
 })
 
@@ -96,6 +110,18 @@ router.get('/adminUser', async (req,res)=>{
 
 // 관리자 상품 리스트
 router.get('/', async(req,res)=>{
+    let list = await mysql.query('productList');
+    res.send(list);
+});
+
+// 관리자 상품 리스트 차트
+router.get('/chart/:prodNo/:period/:minPrice/:maxPrice', async (req, res) => {
+        let period = req.params.period;
+        let minPrice = req.params.minPrice;
+        let maxPrice = req.params.maxPrice;
+        console.log(minPrice);
+        console.log(typeof minPrice);
+
     let list = await mysql.query('productList');
     res.send(list);
 });
@@ -138,6 +164,19 @@ router.delete('/deleteImg/:prod_code', async (req,res) => {
     res.send(result);
 })
 
+//상품 대표 이미지  조회
+router.get('/selectImg/:prod_code', async(req,res)=>{
+    let data = req.params.prod_code;
+    let prodImg = await mysql.query('prodImgSelect',data);
+    res.send(prodImg[0]);
+})
+
+//상품  이미지  조회
+router.get('/selectAllImg/:prod_code', async(req,res)=>{
+    let data = req.params.prod_code;
+    let prodImg = await mysql.query('prodImgSelect',data);
+    res.send(prodImg);
+})
 
 
 // 검색

@@ -37,12 +37,11 @@
         <br>
         <div>
             <tr>
-                <th>{{ fesInfo.f_content }}</th>
+                <h4 id="content"><th>{{ fesInfo.f_content }}</th></h4>
             </tr>
         </div>
         <hr>
-        <h2>길찾기</h2>
-        <a :href="kakaoMapLink" target="_blank">길찾기</a>
+        <h5><a :href="kakaoMapLink" target="_blank">🚘 </a></h5>
         <a :href="kakaoloadMapLink" target="_blank">길찾기</a>
         <div>
       <!-- 이 곳에 지도가 표시될 영역 -->
@@ -171,5 +170,9 @@
   
   button {
   margin: 0 3px;
+  }
+
+  #content{
+    color: olivedrab;
   }
   </style>
