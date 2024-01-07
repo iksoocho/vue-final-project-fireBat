@@ -1,5 +1,5 @@
 <template>
-  <div><h3>세션3 테스트</h3></div>
+  <div><h3>상품 문의</h3></div>
 </template>
 
 <script>

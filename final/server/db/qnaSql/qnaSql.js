@@ -24,7 +24,13 @@ module.exports = {
 
     qnaAnswerInsert : `insert into qna_answer set ? `,
 
-    qnaAnswerDelete : `delete from qna_answer where qna_no = ?`
+    qnaAnswerDelete : `delete from qna_answer where qna_no = ?`,
+
+    reviewList : `SELECT review.*
+                    FROM review
+                    JOIN prod_order ON review.order_no = prod_order.order_no
+                    JOIN order_detail ON prod_order.order_no = order_detail.order_no
+                    WHERE order_detail.prod_code = ?`
 
 
  
