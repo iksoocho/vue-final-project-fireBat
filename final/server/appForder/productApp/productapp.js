@@ -114,6 +114,12 @@ router.get('/', async(req,res)=>{
     res.send(list);
 });
 
+// 관리자 차트 리스트
+router.get('/adminList', async(req,res)=>{
+    let list = await mysql.query('adminChartList');
+    res.send(list)
+})
+
 // 관리자 상품 리스트 차트
 router.get('/chart/:prodNo/:period/:minPrice/:maxPrice', async (req, res) => {
         let period = req.params.period;
@@ -187,7 +193,7 @@ router.get('/prodInven/Inventory', async(req,res) =>{
 // 검색
 router.get('/search/:prod_name', async (req,res) =>{
     let data = req.params.prod_name;
-    let result = await mysql.query('productSearch' , data);
+    let result = await mysql.query('productSearch' , [data,data,data,data]);
     res.send(result)
     
     // try{

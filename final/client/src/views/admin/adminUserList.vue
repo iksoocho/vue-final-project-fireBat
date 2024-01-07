@@ -11,7 +11,7 @@
           <th>휴대폰 번호</th>
           <th>거주지</th>
           <th>주민번호</th>
-          <th>누적판매량</th>
+          <!-- <th>누적판매량</th> -->
         </tr>
       </thead>
       <tbody>
@@ -23,7 +23,7 @@
           <th class="tel">{{ users.user_tel }}</th>
           <th class="addr">{{ users.user_addr }}</th>
           <th class="date">{{ $dateFormat(users.user_birth, "yy-MM-dd") }}</th>
-          <th class="count">{{ users.sellcount }}</th>
+          <!-- <th class="count">{{ users.sellcount }}</th> -->
         </tr>
       </tbody>
     </table>
