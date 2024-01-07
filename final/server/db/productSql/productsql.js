@@ -35,6 +35,7 @@ module.exports = {
                     OR prod_code LIKE CONCAT(CONCAT('%',?),'%')
                     OR prod_cate LIKE CONCAT(CONCAT('%',?),'%') `,
 
+
     // 관리자(사용자회원 리스트) 판매량 까지
     adminUserList: `SELECT user_id, user_pw, user_email, user_name, user_tel, user_addr, user_birth,
                     (SELECT COUNT(*) FROM order_detail WHERE order_detail.order_count = user.user_id) as sellcount from user order by sellcount `,

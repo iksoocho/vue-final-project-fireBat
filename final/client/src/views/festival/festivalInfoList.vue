@@ -21,7 +21,10 @@
         <tbody>
           <tr
             :key="i"
-            v-for="(fes, i) in festivalList"
+            v-for="(fes, i) in festivalList.slice(
+              pageStartIdx,
+              pageStartIdx + ITEM_PER_PAGE
+            )"
             @click="goToUpdate(fes.f_code)"
           >
             <td>{{ fes.f_code }}</td>
@@ -59,21 +62,40 @@
       <br />
       <button><a href="festivalList">리스트로</a></button>
     </div>
+    <Paginate
+      class="justify-content-center"
+      :list="festivalList"
+      v-bind="{ ITEM_PER_PAGE, PAGE_PER_SECTION, curPage }"
+      @change-page="onChangePage"
+    />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import Swal from "sweetalert2";
+import Paginate from "../../components/Pagination.vue";
+
 export default {
+  components: {
+    Paginate,
+  },
   data() {
     return {
       festivalList: [],
       word: "",
+      ITEM_PER_PAGE: 10,
+      PAGE_PER_SECTION: 5,
+      curPage: 1,
     };
   },
   created() {
     this.getFestivalList();
+  },
+  computed: {
+    pageStartIdx() {
+      return (this.curPage - 1) * this.ITEM_PER_PAGE;
+    },
   },
   methods: {
     async getFestivalList() {
@@ -149,6 +171,9 @@ export default {
         });
         this.$router.push({ name: "festivalInfoList" });
       }
+    },
+    onChangePage(data) {
+      this.curPage = data;
     },
   },
 };
