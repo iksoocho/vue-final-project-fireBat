@@ -55,7 +55,36 @@
                   <div class="text-end">
                     <div v-if="isLoggedIn">
                       <!-- 추후 userName 클릭시 마이페이지 이동 구현(2024-01-02) -->
-                      <div class="d-flex align-items-center">
+                      <div
+                        class="d-flex align-items-center"
+                        v-if="userId == 'admin'"
+                      >
+                        <p
+                          class="me-2"
+                          style="
+                            margin-bottom: 10px;
+                            margin-top: 10px;
+                            padding-right: 20px;
+                            padding-top: 8px;
+                          "
+                        >
+                          <b
+                            ><a
+                              href="/adminMain"
+                              style="color: inherit; text-decoration: none"
+                              >관리자</a
+                            ></b
+                          >님!
+                        </p>
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger me-2"
+                          @click="logout"
+                        >
+                          Logout
+                        </button>
+                      </div>
+                      <div v-else class="d-flex align-items-center">
                         <p
                           class="me-2"
                           style="

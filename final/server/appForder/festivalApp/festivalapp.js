@@ -72,7 +72,7 @@ router.delete('/delete/:f_code', async (req,res) =>{
 // 축제 검색
 router.get('/search/:f_name', async (req,res) =>{
     let data = req.params.f_name;
-    let result = await mysql.query('fesSearch' , data);
+    let result = await mysql.query('fesSearch' , [data,data,data,data,data,data,data,data,data]);
     res.send(result)
 });
 
