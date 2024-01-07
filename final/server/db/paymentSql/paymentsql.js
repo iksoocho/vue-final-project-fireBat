@@ -12,4 +12,5 @@ module.exports = {
    cartUpdate : `update cart set prod_order_count = ? where cart_no = ?`,
    cartInsert : `insert into cart set ?`,
    cartSearch : `select * from cart where user_no=? and prod_code=?`,
+   cartSelectUpdate : `update cart set prod_select = ? where cart_no = ?`,
 }
