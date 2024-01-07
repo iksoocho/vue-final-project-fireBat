@@ -11,7 +11,7 @@
       <br />
       <label for="cate">카테고리</label>
       <select name="cate" v-model="fesInfo.f_category">
-        <label for="code">축제코드</label>
+        <!-- <label for="code">축제코드</label> -->
         <option value="culture">문화</option>
         <option value="couple">커플</option>
         <option value="art">예술</option>
@@ -20,8 +20,27 @@
       </select>
       <br />
       <br />
-      <label for="reg">축제지역</label>
-      <input type="text" v-model="fesInfo.f_reg" />
+      <label for="cate">축제지역</label>
+      <select name="cate" v-model="fesInfo.f_reg">
+        <!-- <label for="code">축제코드</label> -->
+        <option value="Seoul">서울</option>
+        <option value="Incheon">인천</option>
+        <option value="Daegu">대구</option>
+        <option value="Daejeon">대전</option>
+        <option value="Gwangju">광주</option>
+        <option value="Busan">부산</option>
+        <option value="Ulsan">울산</option>
+        <option value="Sejong">세종</option>
+        <option value="Gyeong-gi">경기</option>
+        <option value="Gangwon-do">강원</option>
+        <option value="Chungbuk">충북</option>
+        <option value="Chungnam">충남</option>
+        <option value="Gyeongbuk">경북</option>
+        <option value="Gyeongnam">경남</option>
+        <option value="Jeonbuk">전북</option>
+        <option value="Jeonnam">전남</option>
+        <option value="jeju">제주</option>
+      </select>
       <br />
       <label for="number">공식번호</label>
       <input type="text" v-model="fesInfo.f_number" />
@@ -86,12 +105,6 @@ export default {
       this.images = Array.from(event.target.files);
     },
     async saveInfo() {
-      let resolve = await axios
-        .get(`/api/festival/fesCheckCode/${this.fesInfo.f_code}`)
-        .catch((err) => console.log(err));
-      this.checkNum = resolve.data.count;
-      console.log("checkNum : ", this.checkNum);
-
       if (!this.validation()) return;
       console.log("돌아가지나");
 
@@ -129,11 +142,6 @@ export default {
     },
 
     validation() {
-      // console.log("f_code = ", this.fesInfo.f_code);
-      // this.getCheck(this.fesInfo.f_code);
-
-      // console.log("num : ", this.getCheck(this.fesInfo.f_code));
-
       if (
         !this.fesInfo.f_code ||
         !this.fesInfo.f_category ||
@@ -156,18 +164,24 @@ export default {
         return false;
       }
 
-      if (this.checkNum == 1) {
-        Swal.fire({
-          icon: "warning",
-          title: "등록실패!",
-          text: "중복된 축제 코드 입니다..",
-          confirmButtonText: "확인",
-        });
-        return false;
-      }
-
       return true;
     },
+    // val2() {
+    //   console.log(this.fesInfo.f_code);
+    //   console.log(this.getCheck(this.fesInfo.f_code));
+    //   console.log("checkNum : ", this.checkNum);
+
+    //   if (this.checkNum == 1) {
+    //     Swal.fire({
+    //       icon: "warning",
+    //       title: "등록실패!",
+    //       text: "중복된 축제 코드 입니다..",
+    //       confirmButtonText: "확인",
+    //     });
+    //     return false;
+    //   }
+    //   return true;
+    // },
     getInfo() {
       let method = "";
       let url = "";
@@ -187,6 +201,13 @@ export default {
         url,
       };
     },
+
+    // async getCheck(f_code) {
+    //   let resolve = await axios
+    //     .get(`/api/festival/fesCheckCode/${f_code}`)
+    //     .catch((err) => console.log(err));
+    //   this.checkNum = resolve.data.count;
+    // },
   },
 };
 </script>

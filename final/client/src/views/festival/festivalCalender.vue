@@ -92,6 +92,7 @@ export default {
   },
   mounted() {
     this.init();
+    this.getFesCalListForToday();
   },
   methods: {
     async getFesCalList(date) {
@@ -231,9 +232,21 @@ export default {
         )}`;
         this.getFesCalList(date);
 
-        // Emit a custom event, you can use this in the parent component
         this.$emit("date-clicked", date);
       }
+    },
+
+    // default 값을 오늘날짜로 줘서 오늘날짜에 해당하는 축제를 먼저 뽑아옴
+    async getFesCalListForToday() {
+      const today = new Date();
+      const date = `${today.getFullYear()}-${
+        today.getMonth() + 1
+      }-${today.getDate()}`;
+      this.fesCalList = (
+        await axios
+          .get(`/api/festival/calender/${date}`)
+          .catch((err) => console.log(err))
+      ).data;
     },
   },
 };
