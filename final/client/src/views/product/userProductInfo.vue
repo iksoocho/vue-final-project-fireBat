@@ -88,22 +88,19 @@
     <div class="container">
       <table class="table table-hover">
         <tr class="">
-          <th data-link="#section1">상세상품</th>
-          <th data-link="#section2">상품평</th>
-          <th data-link="#section3">상품문의</th>
-          <th data-link="#section4">배송안내</th>
+          <th @click="scrollToSection('section1')">상품상세</th>
+          <th @click="scrollToSection('section2')">상품평</th>
+          <th @click="scrollToSection('section3')">상품문의</th>
+          <!-- <th @click="scrollToSection('section4')">QnA</th> -->
         </tr>
       </table>
+      <Section1 ref="section1" />
+      <Section2 ref="section2" />
+      <Section3 ref="section3" />
+      <!-- <Section4 ref="section4" /> -->
     </div>
 
-    <div class="container">
-      <div id="section1" class="content"></div>
-      <div id="section2" class="content"></div>
-      <div id="section3" class="content"></div>
-      <div id="section4" class="content"></div>
-    </div>
-
-    <div calss="row">
+    <!-- <div calss="row">
       <template v-for="(img, idx) in prodImgs">
         <div
           v-if="idx < 5 && img.prod_filename"
@@ -120,7 +117,7 @@
           <a class="" style="text-align: center">{{ idx }}번 사진 입니다</a>
         </div>
       </template>
-    </div>
+    </div> -->
     <br />
   </div>
 </template>
@@ -128,10 +125,18 @@
 <script>
 import axios from "axios";
 import Admin from "../Admin.vue";
+import Section1 from "../../components/Section1.vue";
+import Section2 from "../../components/Section2.vue";
+import Section3 from "../../components/Section3.vue";
+// import Section4 from "../../components/Section4.vue";
 
 export default {
   components: {
     Admin,
+    Section1,
+    Section2,
+    Section3,
+    // Section4,
   },
   data() {
     return {
@@ -186,6 +191,9 @@ export default {
       await axios.post(`/api/pay/cart`, obj).catch((err) => console.log(err));
       console.log(obj);
       alert("장바구니에 등록되었습니다.");
+    },
+    scrollToSection(refName) {
+      this.$refs[refName].$el.scrollIntoView({ behavior: "smooth" });
     },
   },
   computed: {

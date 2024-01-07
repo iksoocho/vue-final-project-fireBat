@@ -179,6 +179,13 @@ export default {
       }
       return true;
     },
+    prodCate(data) {
+      if (data == 1) {
+        return "주문가능";
+      } else if (data == 2) {
+        return "품절";
+      }
+    },
   },
 };
 </script>
