@@ -1,14 +1,14 @@
 <template>
   <div>
-<section class="notice">
-  <div class="page-title">
+    <section class="notice">
+      <div class="page-title">
         <div class="container">
-            <h3>공지사항</h3>
+          <h3>공지사항</h3>
         </div>
-    </div>
+      </div>
 
-    <!-- board seach area -->
-    <!-- <div id="board-search">
+      <!-- board seach area -->
+      <!-- <div id="board-search">
         <div class="container">
             <div class="search-window">
                 <form action="">
@@ -21,90 +21,115 @@
             </div>
         </div>
     </div> -->
-   
-  <!-- board list area -->
-    <div id="board-list">
+
+      <!-- board list area -->
+      <div id="board-list">
         <div class="container">
-            <table class="board-table">
-                <thead>
-                <tr>
-                    <th scope="col" class="th-num">번호</th>
-                    
-                    <th scope="col" class="th-title">제목</th>
-                    
-                    <th scope="col" class="th-date">등록일</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(notice, idx) in noticeList.sort((a, b) => b.notice_no - a.notice_no).slice(pageStartIdx, pageStartIdx + ITEM_PER_PAGE)" :key="idx">
-                    <td>{{ notice.notice_no }}</td>
-                    <th>
-                      <a href="#!" @click="goNoticeInfo(notice.notice_no)">{{ notice.notice_title}}</a>
-                    </th>
-                    <td>{{getDateFormat(notice.notice_date)}}</td>
-                </tr>
+          <table class="board-table">
+            <thead>
+              <tr>
+                <th scope="col" class="th-num">번호</th>
 
-                </tbody>
-            </table>
-        <button type="button" class="btn btn-outline-danger float-right mt-3" @click="goNoticeInsert">글쓰기</button>
+                <th scope="col" class="th-title">제목</th>
 
+                <th scope="col" class="th-date">등록일</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(notice, idx) in noticeList
+                  .sort((a, b) => b.notice_no - a.notice_no)
+                  .slice(pageStartIdx, pageStartIdx + ITEM_PER_PAGE)"
+                :key="idx"
+              >
+                <td>{{ notice.notice_no }}</td>
+                <th>
+                  <a href="#!" @click="goNoticeInfo(notice.notice_no)">{{
+                    notice.notice_title
+                  }}</a>
+                </th>
+                <td>{{ getDateFormat(notice.notice_date) }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div v-if="userId == 'admin'">
+            <button
+              type="button"
+              class="btn btn-outline-danger float-right mt-3"
+              @click="goNoticeInsert"
+            >
+              글쓰기
+            </button>
+          </div>
         </div>
-        
-        
-  </div>
-  
-</section>
+      </div>
+    </section>
 
-<Paginate class="justify-content-center" :list="noticeList" v-bind="{ITEM_PER_PAGE,PAGE_PER_SECTION,curPage}" @change-page="onChangePage" />
-</div>    
+    <Paginate
+      class="justify-content-center"
+      :list="noticeList"
+      v-bind="{ ITEM_PER_PAGE, PAGE_PER_SECTION, curPage }"
+      @change-page="onChangePage"
+    />
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
-import Paginate from '../../components/Pagination.vue';
+import axios from "axios";
+import Paginate from "../../components/Pagination.vue";
 
 export default {
-    components:{
-        Paginate
+  components: {
+    Paginate,
+  },
+  data() {
+    return {
+      noticeList: [],
+      ITEM_PER_PAGE: 10,
+      PAGE_PER_SECTION: 5,
+      curPage: 1,
+    };
+  },
+  created() {
+    this.getNoticeList();
+  },
+  computed: {
+    pageStartIdx() {
+      return (this.curPage - 1) * this.ITEM_PER_PAGE;
     },
-    data(){
-        return{
-            noticeList:[],
-            ITEM_PER_PAGE: 10,
-            PAGE_PER_SECTION: 5,
-            curPage : 1
-        }
+    userId() {
+      const userData = JSON.parse(sessionStorage.getItem("user"));
+      console.log("userData:", userData); // 확인용 로그 추가
+      return userData ? userData : null;
     },
-    created(){
-        this.getNoticeList();
+  },
+  methods: {
+    async getNoticeList() {
+      this.noticeList = (
+        await axios.get("/api/notice").catch((err) => console.log(err))
+      ).data;
     },
-    computed : {
-        pageStartIdx() {
-            return (this.curPage - 1) * this.ITEM_PER_PAGE;
-        }
+    getDateFormat(date) {
+      return this.$dateFormat(date); // 날짜 변환
     },
-    methods:{
-        async getNoticeList(){
-            this.noticeList = (await axios.get('/api/notice').catch(err=>console.log(err))).data
-        },
-        getDateFormat(date){
-            return this.$dateFormat(date);   // 날짜 변환
-        },
-        onChangePage(data) {
-            this.curPage = data;
-        },
-        goNoticeInsert(){
-          this.$router.push('/noticeInsert')
-        },
-        goNoticeInfo(notice_no){
-            this.$router.push({path : '/noticeInfo', query:{notice_no : notice_no}})
-        }
-    }
-}
+    onChangePage(data) {
+      this.curPage = data;
+    },
+    goNoticeInsert() {
+      this.$router.push("/noticeInsert");
+    },
+    goNoticeInfo(notice_no) {
+      this.$router.push({
+        path: "/noticeInfo",
+        query: { notice_no: notice_no },
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>
-    table {
+table {
   border-collapse: collapse;
   border-spacing: 0;
 }
@@ -128,7 +153,7 @@ section.notice {
 }
 #board-search .search-window .search-wrap {
   position: relative;
-/*   padding-right: 124px; */
+  /*   padding-right: 124px; */
   margin: 0 auto;
   width: 80%;
   max-width: 564px;
@@ -185,7 +210,8 @@ section.notice {
   width: 200px;
 }
 
-.board-table th, .board-table td {
+.board-table th,
+.board-table td {
   padding: 14px 0;
 }
 
@@ -201,7 +227,7 @@ section.notice {
   text-align: left;
 }
 
-.board-table tbody th p{
+.board-table tbody th p {
   display: none;
 }
 
@@ -238,7 +264,8 @@ section.notice {
   color: #fff;
 }
 
-.btn-dark:hover, .btn-dark:focus {
+.btn-dark:hover,
+.btn-dark:focus {
   background: #373737;
   border-color: #373737;
   color: #fff;
@@ -249,7 +276,8 @@ section.notice {
   color: #fff;
 }
 
-.btn-dark:hover, .btn-dark:focus {
+.btn-dark:hover,
+.btn-dark:focus {
   background: #373737;
   border-color: #373737;
   color: #fff;
@@ -265,7 +293,7 @@ section.notice {
   box-sizing: border-box;
 }
 .clearfix:after {
-  content: '';
+  content: "";
   display: block;
   clear: both;
 }
@@ -281,5 +309,4 @@ section.notice {
   width: 1px;
   height: 1px;
 }
-
 </style>

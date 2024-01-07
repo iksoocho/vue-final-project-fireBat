@@ -87,23 +87,20 @@
 
     <div class="container">
       <table class="table table-hover">
-        <tr class="">
-          <th data-link="#section1">상세상품</th>
-          <th data-link="#section2">상품평</th>
-          <th data-link="#section3">상품문의</th>
-          <th data-link="#section4">배송안내</th>
+        <tr class="top">
+          <th @click="scrollToSection('section1')">상품상세</th>
+          <th @click="scrollToSection('section2')">상품평</th>
+          <th @click="scrollToSection('section3')">상품문의</th>
+          <!-- <th @click="scrollToSection('section4')">QnA</th> -->
         </tr>
       </table>
+      <Section1 ref="section1" />
+      <Section2 ref="section2" />
+      <Section3 ref="section3" />
+      <!-- <Section4 ref="section4" /> -->
     </div>
 
-    <div class="container">
-      <div id="section1" class="content"></div>
-      <div id="section2" class="content"></div>
-      <div id="section3" class="content"></div>
-      <div id="section4" class="content"></div>
-    </div>
-
-    <div calss="row">
+    <!-- <div calss="row">
       <template v-for="(img, idx) in prodImgs">
         <div
           v-if="idx < 5 && img.prod_filename"
@@ -120,6 +117,10 @@
           <a class="" style="text-align: center">{{ idx }}번 사진 입니다</a>
         </div>
       </template>
+    </div> -->
+
+    <div class="up_down_area" style="">
+      <button class="link_top"><a href="#top">맨위로</a></button>
     </div>
     <br />
   </div>
@@ -128,10 +129,18 @@
 <script>
 import axios from "axios";
 import Admin from "../Admin.vue";
+import Section1 from "../../components/Section1.vue";
+import Section2 from "../../components/Section2.vue";
+import Section3 from "../../components/Section3.vue";
+// import Section4 from "../../components/Section4.vue";
 
 export default {
   components: {
     Admin,
+    Section1,
+    Section2,
+    Section3,
+    // Section4,
   },
   data() {
     return {
@@ -183,9 +192,22 @@ export default {
           prod_order_count: 1,
         },
       };
+      let response = await axios
+        .get(`/api/pay/cart/${this.userNo}/${this.searchProd}`)
+        .catch((err) => console.log(err));
+      let cartItems = response.data;
+
+      if (cartItems.length > 0) {
+        alert("장바구니에 이미 같은 상품이 담겨 있습니다.");
+        return; // 작업이 안되도록 종료
+      }
+
       await axios.post(`/api/pay/cart`, obj).catch((err) => console.log(err));
       console.log(obj);
-      alert("장바구니에 등록되었습니다.");
+      alert("장바구니에 추가되었습니다.");
+    },
+    scrollToSection(refName) {
+      this.$refs[refName].$el.scrollIntoView({ behavior: "smooth" });
     },
   },
   computed: {
@@ -244,5 +266,18 @@ export default {
   padding: 20px 0;
   background-color: aqua;
   padding-left: 0;
+}
+.up_down_area {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  bottom: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: fixed;
+  right: 30px;
+  z-index: 3000;
 }
 </style>

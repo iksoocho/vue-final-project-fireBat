@@ -37,7 +37,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      productList: [],
+      productChart: [],
+      prductList: [],
     };
   },
   created() {
@@ -46,10 +47,15 @@ export default {
       minPrice: 0,
       maxPrice: 0,
     };
-    this.getProductList(snedObject);
+    this.getProductChart(snedObject);
   },
   methods: {
-    async getProductList(obj) {
+    async getProductList() {
+      this.productList = (
+        await axios.get(`/api/product`).catch((err) => console.log(err))
+      ).data;
+    },
+    async getProductChart(obj) {
       console.log(obj);
       let result = "";
       const prodNo = 1;
@@ -62,7 +68,7 @@ export default {
       } catch (e) {
         console.log(e);
       }
-      this.productList = result.data;
+      this.productChart = result.data;
 
       google.charts.load("current", {
         packages: ["corechart"],
@@ -75,11 +81,11 @@ export default {
         let table = [];
         table.push(["상품", "판매량"]);
 
-        for (let i = 0; i < myThis.productList.length; ++i) {
+        for (let i = 0; i < myThis.productChart.length; ++i) {
           let row = [];
 
-          row.push(myThis.productList[i].prod_name);
-          row.push(myThis.productList[i].prod_sell_count);
+          row.push(myThis.productChart[i].prod_name);
+          row.push(myThis.productChart[i].prod_sell_count);
 
           table.push(row);
         }
@@ -102,12 +108,12 @@ export default {
       function drawChart1() {
         let table = [];
         table.push(["상품", "판매액"]);
-        console.log("test" + myThis.productList);
+        console.log("test" + myThis.productChart);
 
-        for (let i = 0; i < myThis.productList.length; ++i) {
+        for (let i = 0; i < myThis.productChart.length; ++i) {
           let row = [];
-          row.push(myThis.productList[i].prod_name);
-          row.push(myThis.productList[i].prod_price);
+          row.push(myThis.productChart[i].prod_name);
+          row.push(myThis.productChart[i].prod_price);
 
           table.push(row);
         }
