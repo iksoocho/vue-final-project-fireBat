@@ -49,10 +49,11 @@
           <th class="state">{{ prodState(prod.prod_state) }}</th>
           <th></th>
 
-          <th><input type="checkbox" @click="toggleStatus" />{{ status }}</th>
+          <th><input type="checkbox" @click="selectAllItems" />{{ status }}</th>
           <!-- <th>
             <input type="checkbox" id="chk" class="chkGrp" value="상태 체크" />
           </th> -->
+
           <th>
             <button @click="saveData">저장</button>
           </th>
@@ -84,7 +85,7 @@ export default {
       ITEM_PER_PAGE: 10,
       PAGE_PER_SECTION: 5,
       curPage: 1,
-      status: "",
+      selectAll: true,
     };
   },
   created() {
@@ -121,15 +122,6 @@ export default {
     },
     onChangePage(data) {
       this.curPage = data;
-    },
-    toggleStatus() {
-      if (this.status === "주문 가능") {
-        this.status = "";
-        // 품절 상태로 업데이트하는 로직 추가
-      } else {
-        this.status = "";
-        // 판매 가능 상태로 업데이트하는 로직 추가
-      }
     },
   },
 };

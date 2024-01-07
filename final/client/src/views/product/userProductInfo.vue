@@ -87,7 +87,7 @@
 
     <div class="container">
       <table class="table table-hover">
-        <tr class="">
+        <tr class="top">
           <th @click="scrollToSection('section1')">상품상세</th>
           <th @click="scrollToSection('section2')">상품평</th>
           <th @click="scrollToSection('section3')">상품문의</th>
@@ -118,6 +118,10 @@
         </div>
       </template>
     </div> -->
+
+    <div class="up_down_area" style="">
+      <button class="link_top"><a href="#top">맨위로</a></button>
+    </div>
     <br />
   </div>
 </template>
@@ -252,5 +256,18 @@ export default {
   padding: 20px 0;
   background-color: aqua;
   padding-left: 0;
+}
+.up_down_area {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  bottom: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: fixed;
+  right: 30px;
+  z-index: 3000;
 }
 </style>
