@@ -78,6 +78,7 @@ export default {
       },
       bno: "",
       images: [],
+      checkNum: 0,
     };
   },
   methods: {
@@ -85,6 +86,12 @@ export default {
       this.images = Array.from(event.target.files);
     },
     async saveInfo() {
+      let resolve = await axios
+        .get(`/api/festival/fesCheckCode/${this.fesInfo.f_code}`)
+        .catch((err) => console.log(err));
+      this.checkNum = resolve.data.count;
+      console.log("checkNum : ", this.checkNum);
+
       if (!this.validation()) return;
       console.log("돌아가지나");
 
@@ -122,6 +129,11 @@ export default {
     },
 
     validation() {
+      // console.log("f_code = ", this.fesInfo.f_code);
+      // this.getCheck(this.fesInfo.f_code);
+
+      // console.log("num : ", this.getCheck(this.fesInfo.f_code));
+
       if (
         !this.fesInfo.f_code ||
         !this.fesInfo.f_category ||
@@ -143,6 +155,17 @@ export default {
         });
         return false;
       }
+
+      if (this.checkNum == 1) {
+        Swal.fire({
+          icon: "warning",
+          title: "등록실패!",
+          text: "중복된 축제 코드 입니다..",
+          confirmButtonText: "확인",
+        });
+        return false;
+      }
+
       return true;
     },
     getInfo() {
