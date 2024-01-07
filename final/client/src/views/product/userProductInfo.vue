@@ -194,9 +194,19 @@ export default {
           prod_order_count: 1,
         },
       };
+      let response = await axios
+        .get(`/api/pay/cart/${this.userNo}/${this.searchProd}`)
+        .catch((err) => console.log(err));
+      let cartItems = response.data;
+
+      if (cartItems.length > 0) {
+        alert("장바구니에 이미 같은 상품이 담겨 있습니다.");
+        return; // 작업이 안되도록 종료
+      }
+
       await axios.post(`/api/pay/cart`, obj).catch((err) => console.log(err));
       console.log(obj);
-      alert("장바구니에 등록되었습니다.");
+      alert("장바구니에 추가되었습니다.");
     },
     scrollToSection(refName) {
       this.$refs[refName].$el.scrollIntoView({ behavior: "smooth" });

@@ -45,6 +45,26 @@ router.delete('/:qna_no', async(req,res)=>{
     res.send(result);
 });
 
+//답변 list
+router.get('/answer/:qna_no', async (req, res) => {
+    let data = req.params.qna_no;
+    let list = await mysql.query('qnaAnswerList', data);
+    res.send(list);
+});
+
+//답변 등록 
+router.post('/answer', async (req, res) => {
+    let data = req.body.param;
+    let result = await mysql.query('qnaAnswerInsert', data);
+    res.send(result);
+});
+
+//답변 삭제 
+router.delete('/answer/:qna_no', async(req,res)=>{
+    let data = req.params.qna_no;
+    let result = await mysql.query('qnaAnswerDelete', data);
+    res.send(result);
+});
 
 
 

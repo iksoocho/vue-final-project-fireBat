@@ -41,7 +41,7 @@
         </td>
       </tr>
     </table>
-    <div style="text-align: center">
+    <div style="text-align: center" v-if="userId == 'admin'">
       <button
         type="button"
         class="btn btn-outline-danger me-2 mt-2"
@@ -75,6 +75,16 @@ export default {
     this.searchNo = this.$route.query.notice_no;
     this.getNoticeInfo();
     this.getNoticeImg();
+  },
+  computed: {
+    isLoggedIn() {
+      return sessionStorage.getItem("user") !== null;
+    },
+    userId() {
+      const userData = JSON.parse(sessionStorage.getItem("user"));
+      console.log("userData:", userData); // 확인용 로그 추가
+      return userData ? userData : null;
+    },
   },
   methods: {
     async getNoticeInfo() {

@@ -18,11 +18,18 @@ router.get('/notice', async (req, res) => {
 //    res.send(result);
 // });
 
-router.get('/cart/:userId', async (req, res) => {
+router.get('/cart/:userId', async (req, res) => { //유저의 장바구니 리스트
    let data = req.params.userId;
    let list = await mysql.query('cartList', data);
    res.send(list);
 });
+
+router.get('/cart/:uid/:pco', async (req, res) => { //장바구니에 상품존재유무체크
+   let data = [req.params.uid, req.params.pco];
+   let list = await mysql.query('cartSearch', data);
+   res.send(list);
+});
+
 
 router.put("/cart/:poc/:cno", async (req, res) => { // 장바구니 수량 변경
    let data = [req.params.poc, req.params.cno];
