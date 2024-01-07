@@ -96,7 +96,7 @@ export default {
         this.getUserProductList();
       } else {
         this.userProductList = (
-          await axios.get(`/api/product/search/${this.word.trim()}`)
+          await axios.get(`/api/product/search1/${this.word.trim()}`)
         ).data;
       }
     },
