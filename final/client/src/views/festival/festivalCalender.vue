@@ -42,7 +42,11 @@
           @click="goFesInfo(fes.f_code)"
         >
           <div class="card">
-            <img src="../../image/logo/로고.png" class="card-img-top" alt="" />
+            <img
+              :src="`/api/festival/public/uploads/${fes.fesImg}`"
+              class="card-img-top"
+              alt="..."
+            />
             <div class="card-body">
               <h5 class="card-title">{{ fes.f_name }}</h5>
               <p class="card-date">
@@ -92,6 +96,7 @@ export default {
   },
   mounted() {
     this.init();
+    this.getFesCalListForToday();
   },
   methods: {
     async getFesCalList(date) {
@@ -231,9 +236,21 @@ export default {
         )}`;
         this.getFesCalList(date);
 
-        // Emit a custom event, you can use this in the parent component
         this.$emit("date-clicked", date);
       }
+    },
+
+    // default 값을 오늘날짜로 줘서 오늘날짜에 해당하는 축제를 먼저 뽑아옴
+    async getFesCalListForToday() {
+      const today = new Date();
+      const date = `${today.getFullYear()}-${
+        today.getMonth() + 1
+      }-${today.getDate()}`;
+      this.fesCalList = (
+        await axios
+          .get(`/api/festival/calender/${date}`)
+          .catch((err) => console.log(err))
+      ).data;
     },
   },
 };

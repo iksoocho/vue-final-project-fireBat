@@ -5,9 +5,9 @@
       <div id="piechart" class="chart w-50"></div>
       <div id="chart_div" class="chart w-50"></div>
     </div>
+
     <div class="table-header">판매상품 순위 내역</div>
     <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
-
     <table>
       <thead>
         <tr>
@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       productChart: [],
-      prductList: [],
+      productList: [],
     };
   },
   created() {
@@ -48,11 +48,14 @@ export default {
       maxPrice: 0,
     };
     this.getProductChart(snedObject);
+    this.getProductList();
   },
   methods: {
     async getProductList() {
       this.productList = (
-        await axios.get(`/api/product`).catch((err) => console.log(err))
+        await axios
+          .get(`/api/product/adminList`)
+          .catch((err) => console.log(err))
       ).data;
     },
     async getProductChart(obj) {
