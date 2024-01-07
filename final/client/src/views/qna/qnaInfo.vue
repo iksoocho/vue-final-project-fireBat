@@ -8,7 +8,7 @@
       <tr>
         <td class="title"><p>작성자</p></td>
         <td>
-          <span>{{ this.$store.getters.userName }}</span>
+          <span>{{ qnaInfo.user_id }}</span>
         </td>
       </tr>
       <tr>
@@ -57,7 +57,10 @@
         </td>
       </tr>
     </table>
-    <div style="text-align: center">
+    <div
+      style="text-align: center"
+      v-if="isLoggedIn && qnaInfo.user_id == userId"
+    >
       <button
         type="button"
         class="btn btn-outline-danger me-2 mt-2"
@@ -73,6 +76,54 @@
         삭제
       </button>
     </div>
+    <div v-else></div>
+    <div>
+      <h4>답변</h4>
+
+      <div v-for="(answer, index) in qnaAnswer" :key="index">
+        <table id="writetable">
+          <tr>
+            <td class="title"><p>답변 일자</p></td>
+            <td>
+              <span>{{ getDateFormat(answer.qna_answer_date) }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" id="textarea">
+              <textarea
+                id="textarea2"
+                cols="130"
+                rows="5"
+                name="content"
+                v-model="answer.qna_answer_content"
+                readonly
+              ></textarea>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div v-if="qnaAnswer.length == 0">
+      <input
+        type="text"
+        v-model="qnaAnswerInfo.qna_answer_content"
+        placeholder="댓글 작성"
+      />
+      <button @click="answerInsert">답변 추가</button>
+    </div>
+    <div v-else></div>
+
+    <div style="text-align: center" v-if="isLoggedIn && userId == 'admin'">
+      <button
+        type="reset"
+        class="btn btn-danger mt-2"
+        @click="deleteAnswer(qnaInfo.qna_no)"
+      >
+        삭제
+      </button>
+    </div>
+    <div v-else></div>
   </div>
 </template>
 
@@ -85,12 +136,28 @@ export default {
       searchNo: "",
       qnaInfo: {},
       qnaImgs: [],
+      qnaAnswer: [],
+      qnaAnswerInfo: {
+        qna_answer_content: "",
+        qna_no: 0,
+      },
     };
   },
   created() {
     this.searchNo = this.$route.query.qna_no;
     this.getQnaInfo();
     this.getQnaImg();
+    this.getAnswer();
+  },
+  computed: {
+    isLoggedIn() {
+      return sessionStorage.getItem("user") !== null;
+    },
+    userId() {
+      const userData = JSON.parse(sessionStorage.getItem("user"));
+      console.log("userData:", userData); // 확인용 로그 추가
+      return userData ? userData : null;
+    },
   },
   methods: {
     async getQnaInfo() {
@@ -116,6 +183,11 @@ export default {
       this.$router.push({ path: "/qnaUpdate", query: { qna_no: qna_no } });
     },
     async deleteInfo(qna_no) {
+      let result2 = await axios
+        .delete(`/api/qna/answer/${qna_no}`)
+        .catch((err) => console.log(err));
+      let count3 = result2.data.affectedRows;
+
       let response = await axios
         .delete(`/api/qna/deleteImg/${qna_no}`)
         .catch((err) => console.log(err));
@@ -126,7 +198,7 @@ export default {
         .catch((err) => console.log(err));
 
       let count = result.data.affectedRows;
-      if (count + count2 == 0) {
+      if (count + count2 + count3 == 0) {
         Swal.fire({
           icon: "warning",
           title: "삭제실패!",
@@ -150,6 +222,61 @@ export default {
 
       this.qnaImgs = result.data;
     },
+    async getAnswer() {
+      let result = await axios
+        .get(`/api/qna/answer/${this.searchNo}`)
+        .catch((err) => console.log(err));
+
+      this.qnaAnswer = result.data;
+    },
+    getDateFormat(date) {
+      return this.$dateFormat(date); // 날짜 변환
+    },
+    async answerInsert() {
+      let data = {
+        param: {
+          qna_answer_content: this.qnaAnswerInfo.qna_answer_content,
+          qna_no: this.searchNo,
+        },
+      };
+
+      console.log("data : ", data);
+      let result = await axios
+        .post("/api/qna/answer", data)
+        .catch((err) => console.log(err));
+
+      if (result.data.message == "") {
+        alert(`정상적으로 등록 되었습니다.`);
+        this.$router.go();
+      } else {
+        alert(`등록 실패.`);
+      }
+    },
+    async deleteAnswer(qna_no) {
+      let result = await axios
+        .delete(`/api/qna/answer/${qna_no}`)
+        .catch((err) => console.log(err));
+
+      console.log("data : ", result.data);
+      let count = result.data.affectedRows;
+
+      if (count == 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "삭제실패!",
+          confirmButtonText: "확인",
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "삭제성공!!",
+          confirmButtonText: "확인",
+        });
+        setTimeout(() => {
+          this.$router.go();
+        }, 2000);
+      }
+    },
   },
 };
 </script>
@@ -159,8 +286,7 @@ export default {
   font-family: "Gowun Dodum";
 }
 #show {
-  height: 850px;
-  margin-bottom: 80px;
+  margin-bottom: 200px;
   width: 900px;
   margin: 0 auto;
 }

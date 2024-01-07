@@ -42,7 +42,11 @@
           @click="goFesInfo(fes.f_code)"
         >
           <div class="card">
-            <img src="../../image/logo/로고.png" class="card-img-top" alt="" />
+            <img
+              :src="`/api/festival/public/uploads/${fes.fesImg}`"
+              class="card-img-top"
+              alt="..."
+            />
             <div class="card-body">
               <h5 class="card-title">{{ fes.f_name }}</h5>
               <p class="card-date">

@@ -14,17 +14,12 @@ const path = require('path');
 // 축제 리스트 - 테스트
 router.get('/', async (req,res)=>{
     let list = await mysql.query('fesList');
-    console.log('--------------------------------------------------')
       // 각 제품에 대한 이미지 데이터 가져오기
      for (const fes of list) {
-        
-         console.log('fes.f_code :',fes.f_code)
          let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
-         console.log('fes.prodImg :',fesImg)
         //  fes.fesImg = fesImg.f_filename;
          fes.fesImg = fesImg ? fesImg.f_filename : '';
      }
-     console.log('--------------------------------------------------')
     res.send(list);
 })
 
@@ -39,6 +34,11 @@ router.get('/random', async (req, res) => {
 router.get('/calender/:date', async (req, res) => {
     let date = req.params.date;
     let list = await mysql.query('fesCalList',date);
+    for (const fes of list) {
+         let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
+        //  fes.fesImg = fesImg.f_filename;
+         fes.fesImg = fesImg ? fesImg.f_filename : '';
+     }
     res.send(list);
 })
 
