@@ -45,8 +45,8 @@
         <td>{{ item.prod_price * item.prod_order_count }}</td>
       </tr>
       <tr>
+        <th><button @click="cartSelectDel">선택삭제</button></th>
         <th><button @click="submitOrder">주문하기</button></th>
-        <th></th>
         <th>총 상품금액</th>
         <th>{{ calTotalPrice() }}</th>
       </tr>
@@ -61,6 +61,7 @@ export default {
     return {
       selectAll: 1,
       cartList: [],
+      totalPrice : 0,
     };
   },
 
@@ -74,7 +75,6 @@ export default {
           .get(`/api/pay/cart/${this.userId}`)
           .catch((err) => console.log(err));
         this.cartList = result.data;
-        console.log(this.cartList);
       } catch (err) {
         console.log(err);
       }
@@ -82,6 +82,7 @@ export default {
     selectAllItems() {
       // 전체 선택 여부 업데이트
       const selectAllValue = !this.selectAll;
+      console.log("selectAllvalue : ", selectAllValue);
       let status = "";
       if (selectAllValue) {
         status = 1;
@@ -90,7 +91,7 @@ export default {
       }
       this.cartList.forEach((item) => {
         item.prod_select = status;
-        this.updateCheckboxStatus(item); // 체크박스 상태를 업데이트하는 메서드 호출
+        // this.updateCheckboxStatus(item); // 체크박스 상태를 업데이트하는 메서드 호출
       });
       // 총 상품금액 업데이트
       this.updateTotalPrice();
@@ -104,7 +105,7 @@ export default {
           totalPrice += item.prod_price * item.prod_order_count;
         }
       }
-      return totalPrice;
+      return this.totalPrice=totalPrice;
     },
     async updateTotalPrice(item) {
       // 구매수량이 변경될 때마다 총 상품금액과 DB에 저장된 수량을 업데이트.
@@ -118,7 +119,7 @@ export default {
     },
     async updateCheckboxStatus(item) {
       // 체크상태 변경 DB저장
-      if (item.prod_select === 1) {
+      if (item.prod_select === '1') {
         try {
           console.log("선택상태 : ", item.prod_select);
           await axios.put(`/api/pay/cartSelect/1/${item.cart_no}`);
@@ -133,7 +134,28 @@ export default {
           console.log(err);
         }
       }
+      this.calTotalPrice();
     },
+    async cartSelectDel() {
+      try {
+        await axios.delete(`/api/pay/cart/${this.userId}`);
+        console.log("삭제되었습니다.");
+        alert("삭제되었습니다.");
+        // 삭제 후 장바구니 리스트 갱신
+        this.getCartList();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    submitOrder() {
+      this.$router.replace({
+        path: '/payment',
+        query: { 
+          totalPrice: this.totalPrice,
+        },
+      });
+    },
+
   },
   computed: {
     userId() {
