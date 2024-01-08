@@ -12,11 +12,17 @@ router.get('/notice', async (req, res) => {
    res.send(list);
 });
 
-// router.post('/api/pay', async (req, res) => {
-//    let data = req.body.param;
-//    let result = await mysql.query('orderInsert', data);
-//    res.send(result);
-// });
+router.post('/orderInsert', async (req, res) => {  //prod_order테이블 입력
+   let data = req.body.param;
+   let result = await mysql.query('orderInsert', data);
+   res.send(result);
+});
+
+router.post('/orderDetailInsert', async (req, res) => {  //order_detail테이블 입력
+   let data = req.body.param;
+   let result = await mysql.query('orderDetailInsert', data);
+   res.send(result);
+});
 
 router.get('/cart/:userId', async (req, res) => { //유저의 장바구니 리스트
    let data = req.params.userId;
