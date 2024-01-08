@@ -2,6 +2,101 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('../../db.js');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
+
+// 랜덤한 인증 코드 생성 함수
+const generateVerificationCode = () => {
+  const length = 6; // 인증 코드 길이
+  const characters = '0123456789'; // 인증 코드에 포함될 문자들
+  let code = '';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    code += characters.charAt(randomIndex);
+  }
+
+  return code;
+};
+
+const sendEmail = async (to, subject, text) => {
+
+  const verificationCode = generateVerificationCode();
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'nsa30003@gmail.com',
+      pass: 'vfmf yzmo kvyv iprn',
+    },
+  });
+
+  const mailOptions = {
+    from: 'nsa30003@gmail.com',
+    to,
+    subject,
+    text: `Your verification code is: ${verificationCode}`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+    return verificationCode; // 생성한 인증 코드 반환
+  } catch (error) {
+    console.error('Error sending email:', error);
+    throw error; // 에러 발생 시 예외 처리
+  }
+};
+
+// 예제 사용
+// const userEmail = 'nsa30003@gmail.com'; // 실제 이메일 주소로 변경해야 합니다.
+// const emailSubject = 'Email Verification';
+
+router.post('/send-email', async (req, res) => {
+  const { to, subject, text } = req.body;
+  console.log(req.body);
+  if (!to) {
+    return res.status(400).send({ success: false, error: 'No recipients defined' });
+  }
+
+  try {
+    const verificationCode = await sendEmail(to, subject, text);
+    const userEmail = to; // 사용자 이메일 주소
+    let result = await mysql.query('emailCodeSave', [userEmail, verificationCode])
+  
+
+    console.log(`Verification code sent: ${verificationCode}`);
+    res.send({ success: true, verificationCode });
+  } catch (error) {
+    console.error('Failed to send email:', error);
+    res.status(500).send({ success: false, error: error.message });
+  }
+});
+
+// 이메일 인증 확인
+router.post('/verify-code', async (req, res) => {
+  const { user_email, user_email_code } = req.body;
+
+  if (!user_email || !user_email_code) {
+    return res.status(400).send({ success: false, error: 'Invalid data provided' });
+  }
+
+  try {
+    // user_email과 user_email_code를 사용하여 코드 검증 로직을 구현
+    // ...
+
+    // 예시: MySQL 쿼리
+    const result = await mysql.query('emailCodeCheck', [user_email, user_email_code]);
+
+    if (result) {
+      res.send({ success: true });
+    } else {
+      res.status(400).send({ success: false, error: 'Invalid verification code' });
+    }
+  } catch (error) {
+    console.error('Failed to verify code:', error);
+    res.status(500).send({ success: false, error: error.message });
+  }
+});
+
 
 // 로그인
 router.post('/login', async (req, res, next) => {
@@ -18,10 +113,13 @@ router.post('/login', async (req, res, next) => {
       const passwordMatch = await bcrypt.compare(user_pw, hashedPassword);
       console.log('Password Match:', passwordMatch);
 
-      if (passwordMatch) {
+      if (passwordMatch === true) {
         // 비밀번호가 일치할 경우 세션에 사용자 정보 저장
         req.session.user_id = user_id;
         req.session.is_logined = true;
+      } else if(passwordMatch === false) {
+        res.status(401).json({ error: 'InvalidCredentials' });
+        return;
       }
     }
 
