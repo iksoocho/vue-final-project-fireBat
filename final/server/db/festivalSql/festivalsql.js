@@ -41,5 +41,11 @@ module.exports = {
 
     fesCheckCode : `select count(*) as count from festival where f_code = ?`,
 
+    fesInProduct : `select * from product where prod_loc = ? order by rand() limit 3`,
+
+    fesCate : `  SELECT * FROM festival WHERE (f_firstday >= ? OR ? IS NULL)
+                                            AND (f_lastday <= ? OR ? IS NULL)
+                                            AND (f_reg = ? OR ? IS NULL)
+                                            AND (f_category = ? OR ? IS NULL);`
 
 }

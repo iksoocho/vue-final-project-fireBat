@@ -17,6 +17,14 @@ router.get('/:qna_no', async (req, res) => {
     res.send(list[0]);
 });
 
+
+//해당 상품의 qna만 가져오기
+router.get('/qnaProduct/:prod_code', async (req, res) => {
+    let data = req.params.prod_code;
+    let list = await mysql.query('qnaProductLsit', data);
+    res.send(list);
+});
+
 //insert할때 회원 번호를 회원 아이디로 불러오기
 router.get('/userNo/:user_id', async (req, res) => {
     let data = req.params.user_id;
@@ -65,6 +73,17 @@ router.delete('/answer/:qna_no', async(req,res)=>{
     let result = await mysql.query('qnaAnswerDelete', data);
     res.send(result);
 });
+
+//리뷰 리스트
+router.get('/review/:prod_code', async (req, res) => {
+    let data = req.params.prod_code;
+    let list = await mysql.query('reviewList', data);
+    res.send(list);
+});
+
+
+
+
 
 
 

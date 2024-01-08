@@ -76,6 +76,27 @@ router.get('/search/:f_name', async (req,res) =>{
   res.send(result)
 });
 
+// 카테고리 검색
+router.get('/fesCate/:f_firstday/:f_lastday/:f_reg/:f_category', async (req, res) => {
+  let data = [req.params.f_firstday, req.params.f_lastday, req.params.f_reg, req.params.f_category];
+  let result = await mysql.query('fesCate', [data]);
+  res.send(result);
+});
+
+// 지역 같은 상품 리스트
+router.get('/fesInProduct/:f_reg', async (req, res) => {
+  let data = req.params.f_reg;
+  let list = await mysql.query('fesInProduct', data);
+
+  for (const prod of list) {
+    console.log('prod.f_code :',prod.prod_code)
+    let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
+    console.log('prod.prodImg :',prodImg)
+    prod.prodImg = prodImg ? prodImg.prod_filename : '';
+    }
+    res.send(list);
+})
+
 
 
 

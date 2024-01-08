@@ -19,7 +19,14 @@
       </tr>
       <tr>
         <td class="title"><p>첨부</p></td>
-        <td><input type="file" id="avatar" name="file" /></td>
+        <td>
+          <input
+            type="file"
+            ref="fileInput"
+            @change="handleFileChange"
+            multiple
+          />
+        </td>
       </tr>
       <tr>
         <td colspan="2" id="textarea">
@@ -37,7 +44,7 @@
       <button
         type="button"
         class="btn btn-outline-danger me-2 mt-2"
-        @click="updateInfo"
+        @click="saveInfo(noticeInfo.notice_no)"
       >
         수정
       </button>
@@ -55,6 +62,8 @@ export default {
     return {
       noticeInfo: {},
       searchNo: "",
+      bno: "",
+      images: [],
     };
   },
   created() {
@@ -92,6 +101,65 @@ export default {
       } else {
         Swal.fire(`정상적으로 수정 되었습니다.`);
         this.$router.push({ name: "noticeList" });
+      }
+    },
+
+
+    handleFileChange(event) {
+      this.images = Array.from(event.target.files);
+    },
+    getInfo(notice_no) {
+      let method = "";
+      let url = "";
+      let data = null;
+
+      method = "put";
+      url = `/api/notice/${notice_no}`;
+      data = {
+        param: {
+          notice_title: this.noticeInfo.notice_title,
+          notice_content: this.noticeInfo.notice_content,
+        },
+      };
+      this.$router.push({ path: "/noticeList" });
+
+      return {
+        method,
+        data,
+        url,
+      };
+    },
+    async saveInfo(notice_no) {
+      let formData = new FormData();
+      this.images.forEach((file) => {
+        formData.append(`files`, file);
+      });
+      try {
+        let info = this.getInfo(notice_no);
+        let result = await axios(info);
+        if (result.data.affectedRows > 0) {
+          Swal.fire({
+            icon: "success",
+            title: "정상 처리",
+            text: "정상적으로 처리되었습니다.",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "처리 실패",
+            text: "정상적으로 처리되지 않았습니다.",
+          });
+        }
+        this.bno = result.data.insertId;
+        formData.append("bno", notice_no);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        let res = await axios.post(`/api/notice/noticePhoto`, formData);
+        let uploadedImages = res.data.filenames;
+        console.log(uploadedImages);
+
+        this.images = uploadedImages;
       }
     },
   },

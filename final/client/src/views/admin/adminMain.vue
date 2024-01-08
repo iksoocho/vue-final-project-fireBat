@@ -3,31 +3,33 @@
     <div class="table-header mt-2">통계 차트</div>
     <div class="chart-container">
       <div id="piechart" class="chart w-50"></div>
-      <div id="chart_div" class="chart w-50"></div>
+      <div id="BarChart" class="chart w-50"></div>
     </div>
 
-    <div class="table-header">판매상품 순위 내역</div>
-    <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
-    <table>
-      <thead>
-        <tr>
-          <th>상품번호</th>
-          <th>상품이름</th>
-          <th>상품가격</th>
-          <th>상품지역</th>
-          <th>상품분류</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr :key="i" v-for="(prod, i) in productList">
-          <td>{{ prod.prod_code }}</td>
-          <td>{{ prod.prod_name }}</td>
-          <td>{{ prod.prod_price }}</td>
-          <td>{{ prod.prod_loc }}</td>
-          <td>{{ prod.prod_cate }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="app">
+      <div class="table-header">판매상품 순위 내역</div>
+      <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
+      <table>
+        <thead>
+          <tr>
+            <th>상품번호</th>
+            <th>상품이름</th>
+            <th>상품가격</th>
+            <th>상품지역</th>
+            <th>상품분류</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr :key="i" v-for="(prod, i) in productList">
+            <td>{{ prod.prod_code }}</td>
+            <td>{{ prod.prod_name }}</td>
+            <td>{{ prod.prod_price }}</td>
+            <td>{{ prod.prod_loc }}</td>
+            <td>{{ prod.prod_cate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -128,8 +130,8 @@ export default {
           colors: ["#5b83b5", ""],
         };
 
-        var chart = new google.visualization.AreaChart(
-          document.getElementById("chart_div")
+        var chart = new google.visualization.BarChart(
+          document.getElementById("BarChart")
         );
         chart.draw(data, options);
       }
@@ -193,5 +195,30 @@ th {
   width: 30px;
   display: block;
   margin-left: 20px;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  padding: 0;
+  margin: 0;
+}
+.app {
+  width: 100vw;
+  height: 500vh;
+  background: hsl(200, 50%, 90%);
+}
+.navbar {
+  height: 60px;
+  width: 100vw;
+  background: hsl(200, 50%, 50%);
+  position: fixed;
+  box-shadow: 0 2px 15px rgba(71, 120, 120, 0.5);
+  transform: translate3d(0, 0, 0);
+  transition: 0.1s all ease-out;
+}
+.navbar.navbar--hidden {
+  box-shadow: none;
+  transform: translate3d(0, -100%, 0);
 }
 </style>

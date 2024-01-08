@@ -17,8 +17,6 @@
           <th>주문번호</th>
           <th>이름</th>
           <th>송장번호</th>
-          <th>배송시작일</th>
-          <th>배송종료일</th>
           <th>배송메세지</th>
           <th>수령인주소</th>
           <th>배송상태</th>
@@ -34,8 +32,6 @@
         >
           <th>{{ del.order_no }}</th>
           <th>{{ del.user_name }}</th>
-          <th>{{}}</th>
-          <th>{{}}</th>
           <th>{{}}</th>
           <th>{{}}</th>
           <th>{{}}</th>

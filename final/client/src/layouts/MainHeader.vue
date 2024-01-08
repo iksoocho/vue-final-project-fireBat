@@ -113,8 +113,9 @@ export default {
     async logout() {
       // 로그아웃 시 세션 지우기
       sessionStorage.removeItem('user');
-      this.$router.push('/login'); // 로그아웃 후에 메인 페이지 또는 다른 적절한 페이지로 이동하도록 설정
-      await this.$nextTick(); // 상태 업데이트를 기다립니다.
+      await this.$router.push('/login'); // 로그아웃 후에 메인 페이지 또는 다른 적절한 페이지로 이동하도록 설정
+      window.location.reload();
+      //await this.$nextTick(); // 상태 업데이트를 기다립니다.
     },
   },
 };

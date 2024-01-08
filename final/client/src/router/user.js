@@ -12,6 +12,7 @@ import festivalCalender from '../views/festival/festivalCalender.vue';
 import userProductList from '../views/product/userProductList.vue';
 import userProductInfo from '../views/product/userProductInfo.vue';
 import qnaList from '../views/qna/qnaList.vue'
+import qnaProductInsert from '../views/qna/qnaProductInsert.vue'
 import qnaInsert from '../views/qna/qnaInsert.vue'
 import qnaInfo from '../views/qna/qnaInfo.vue';
 import qnaUpdate from '../views/qna/qnaUpdate.vue';
@@ -121,6 +122,11 @@ export default {
         path: '/qnaList',
         name: 'qnaList',
         component: qnaList
+      },
+      {
+        path: '/qnaProductInsert',
+        name: 'qnaProductInsert',
+        component: qnaProductInsert
       },
       {
         path: '/qnaInsert',
