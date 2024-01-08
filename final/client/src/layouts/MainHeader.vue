@@ -19,12 +19,7 @@
               <div class="col-xl-2 col-lg-2">
                 <div class="logo">
                   <a href="/main">
-                    <img
-                      width="160"
-                      height="60"
-                      src="../image/logo/서브로고.png"
-                      alt=""
-                    />
+                    <img width="160" height="60" src="../image/logo/서브로고.png" alt="" />
                   </a>
                 </div>
               </div>
@@ -49,85 +44,37 @@
                 </div>
               </div>
               <div class="col-xl-4 col-lg-4 d-none d-lg-block">
-                <div
-                  class="social_wrap d-flex align-items-center justify-content-end"
-                >
+                <div class="social_wrap d-flex align-items-center justify-content-end">
                   <div class="text-end">
                     <div v-if="isLoggedIn">
                       <!-- 추후 userName 클릭시 마이페이지 이동 구현(2024-01-02) -->
-                      <div
-                        class="d-flex align-items-center"
-                        v-if="userId == 'admin'"
-                      >
+                      <div class="d-flex align-items-center" v-if="userId == 'admin'">
                         <p
                           class="me-2"
-                          style="
-                            margin-bottom: 10px;
-                            margin-top: 10px;
-                            padding-right: 20px;
-                            padding-top: 8px;
-                          "
+                          style="margin-bottom: 10px; margin-top: 10px; padding-right: 20px; padding-top: 8px"
                         >
-                          <b
-                            ><a
-                              href="/adminMain"
-                              style="color: inherit; text-decoration: none"
-                              >관리자</a
-                            ></b
+                          <b><a href="/adminMain" style="color: inherit; text-decoration: none">관리자</a></b
                           >님!
                         </p>
-                        <button
-                          type="button"
-                          class="btn btn-outline-danger me-2"
-                          @click="logout"
-                        >
-                          Logout
-                        </button>
+                        <button type="button" class="btn btn-outline-danger me-2" @click="logout">Logout</button>
                       </div>
                       <div v-else class="d-flex align-items-center">
                         <p
                           class="me-2"
-                          style="
-                            margin-bottom: 10px;
-                            margin-top: 10px;
-                            padding-right: 20px;
-                            padding-top: 8px;
-                          "
+                          style="margin-bottom: 10px; margin-top: 10px; padding-right: 20px; padding-top: 8px"
                         >
                           <b
-                            ><a
-                              href="/myPage"
-                              style="color: inherit; text-decoration: none"
-                              >{{ userId }}</a
-                            ></b
+                            ><a href="/myPage" style="color: inherit; text-decoration: none">{{ userId }}</a></b
                           >님!
                         </p>
                         <a href="/cart">장바구니</a>
 
-                        <button
-                          type="button"
-                          class="btn btn-outline-danger me-2"
-                          @click="logout"
-                        >
-                          Logout
-                        </button>
+                        <button type="button" class="btn btn-outline-danger me-2" @click="logout">Logout</button>
                       </div>
                     </div>
                     <div v-else>
-                      <button
-                        type="button"
-                        class="btn btn-outline-danger me-2"
-                        @click="goLogin"
-                      >
-                        Login
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                        @click="goSign"
-                      >
-                        Sign-up
-                      </button>
+                      <button type="button" class="btn btn-outline-danger me-2" @click="goLogin">Login</button>
+                      <button type="button" class="btn btn-danger" @click="goSign">Sign-up</button>
                     </div>
                   </div>
                 </div>
@@ -148,26 +95,26 @@
 export default {
   computed: {
     isLoggedIn() {
-      return sessionStorage.getItem("user") !== null;
+      return sessionStorage.getItem('user') !== null;
     },
     userId() {
-      const userData = JSON.parse(sessionStorage.getItem("user"));
-      console.log("userData:", userData); // 확인용 로그 추가
+      const userData = JSON.parse(sessionStorage.getItem('user'));
+      console.log('userData:', userData); // 확인용 로그 추가
       return userData ? userData : null;
     },
   },
   methods: {
     goSign() {
-      this.$router.push("/userInsert").catch(() => {});
+      this.$router.push('/emailVerification').catch(() => {});
     },
     goLogin() {
-      this.$router.push("/login").catch(() => {});
+      this.$router.push('/login').catch(() => {});
     },
     async logout() {
       // 로그아웃 시 세션 지우기
-      sessionStorage.removeItem("user");
-      await this.$router.push("/login"); // 로그아웃 후에 메인 페이지 또는 다른 적절한 페이지로 이동하도록 설정
-      window.location.reload()
+      sessionStorage.removeItem('user');
+      await this.$router.push('/login'); // 로그아웃 후에 메인 페이지 또는 다른 적절한 페이지로 이동하도록 설정
+      window.location.reload();
       //await this.$nextTick(); // 상태 업데이트를 기다립니다.
     },
   },

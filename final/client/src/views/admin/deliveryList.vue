@@ -14,17 +14,31 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th>{{}}</th>
-          <th>{{}}</th>
-          <th>{{}}</th>
-          <th>{{}}</th>
-          <th>{{}}</th>
-          <th>{{}}</th>
-          <th>{{}}</th>
+        <tr
+          :key="i"
+          v-for="(order, i) in deliveryList.slice(
+            pageStartIdx,
+            pageStartIdx + ITEM_PER_PAGE
+          )"
+        >
+          <th>{{ order.order_no }}</th>
+          <th>{{ order.user_id }}</th>
+          <th>{{ order.user_name }}</th>
+          <th>{{ order.user_tel }}</th>
+          <th>{{ order.prod_name }}</th>
+          <th>{{ $dateFormat(order.order_date, "yy-MM-dd") }}</th>
+          <th>{{ order.order_total_amount }}</th>
         </tr>
       </tbody>
     </table>
+    <Paginate
+      class="justify-content-center"
+      :list="deliveryList"
+      :ITEM_PER_PAGE="ITEM_PER_PAGE"
+      :PAGE_PER_SECTION="PAGE_PER_SECTION"
+      :curPage="curPage"
+      @change-page="onChangePage"
+    />
   </div>
 </template>
 
@@ -38,6 +52,7 @@ export default {
   },
   data() {
     return {
+      deliveryList: [],
       word: "",
       ITEM_PER_PAGE: 10,
       PAGE_PER_SECTION: 5,
@@ -54,15 +69,17 @@ export default {
   },
   methods: {
     async getDeliveryList() {
-      this.productList = (
-        await axios.get("/api/product").catch((err) => console.log(err))
+      this.deliveryList = (
+        await axios
+          .get("/api/product/deliveryList/delInfoList")
+          .catch((err) => console.log(err))
       ).data;
     },
     async prodSearch() {
       if (this.word.trim() === "") {
-        this.getProductList();
+        this.getDeliveryList();
       } else {
-        this.productList = (
+        this.deliveryList = (
           await axios.get(`/api/product/search/${this.word.trim()}`)
         ).data;
       }

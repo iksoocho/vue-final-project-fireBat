@@ -62,7 +62,10 @@ export default {
           // 서버에서 코드 검증 성공 시, 다음 단계로 전환
           this.showNextStep = true;
           this.user.user_email = this.user_email;
-          this.$router.push({ name: 'userInsert' });
+          this.$router.push({
+            name: 'userInsert',
+            query: { user_email: this.user_email }, // params 대신 query 사용
+          });
 
           alert('인증완료!');
         } else {

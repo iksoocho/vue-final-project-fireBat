@@ -3,6 +3,9 @@ const router = express.Router();
 const mysql = require('../../db.js');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+const { promisify } = require('util');
+
+const compare = promisify(bcrypt.compare);
 
 // 랜덤한 인증 코드 생성 함수
 const generateVerificationCode = () => {
@@ -227,8 +230,9 @@ router.get('/email/:email', async (req, res) => {
   }
 });
 
-router.get('/userCheck', async (req, res) => {
+router.get('/userCheck', async (req, res,) => {
   const userId = req.session.user_id;
+  console.log(userId);
   const user_pw = req.query.user_pw;
 
   try {
@@ -239,23 +243,30 @@ router.get('/userCheck', async (req, res) => {
     console.log("데이터베이스에서 얻은 user_id와 hashed_password:", result);
 
     if (result.length > 0) {
-      const hashedPasswordFromDB = result[0].hashed_password;
+      const hashedPasswordFromDB = result[0].user_pw;
+      console.log(hashedPasswordFromDB); // 에러.
 
-      // 사용자의 입력 비밀번호와 데이터베이스에서 얻은 hashed_password가 정상적으로 있을 경우에만 비교합니다
-      if (user_pw && hashedPasswordFromDB) {
-        const isPasswordMatch = await bcrypt.compare(user_pw, hashedPasswordFromDB);
+      // 두 번째 await를 이 위치로 이동
+      try {
+        if (user_pw !== undefined && user_pw !== null) {
+          const isPasswordMatch = await bcrypt.compare(user_pw, hashedPasswordFromDB);
+          console.log(isPasswordMatch);
 
-        if (isPasswordMatch) {
-          const user_id = result[0].user_id;
-          res.send({ user_id, result });
+          if (isPasswordMatch) {
+            const user_id = result[0].user_id;
+            res.send({ user_id, result });
+          } else {
+            const user_id = null;
+            res.send({ user_id, result });
+          }
         } else {
           const user_id = null;
           res.send({ user_id, result });
         }
-      } else {
-        // user_pw 또는 hashedPasswordFromDB가 없는 경우
-        const user_id = null;
-        res.send({ user_id, result });
+      } catch (error) {
+        console.error("bcrypt.compare에서 오류 발생:", error);
+        // 적절한 오류 처리
+        res.status(500).send({ error: 'Internal Server Error', errorMessage: error.message });
       }
     } else {
       // 데이터가 없을 경우 user_id 및 hashed_password를 기본값으로 설정하여 전송
@@ -270,7 +281,6 @@ router.get('/userCheck', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error', errorMessage: error.message });
   }
 });
-
 router.post('/checkPassword', async (req, res) => {
   const { user_id, user_pw } = req.body; // POST 요청의 body에서 user_id와 user_pw를 추출
 
