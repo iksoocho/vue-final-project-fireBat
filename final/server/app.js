@@ -1,7 +1,6 @@
 require('dotenv').config({ path: './db/mysql.env' });
 const express = require('express');
 const session = require('express-session');
-const bcrypt = require('bcrypt');
 const cors = require('cors');
 const app = express();
 const qnaRouter = require('./appForder/qnaApp/qnaapp.js');

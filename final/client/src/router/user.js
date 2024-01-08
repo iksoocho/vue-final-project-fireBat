@@ -12,6 +12,7 @@ import festivalCalender from '../views/festival/festivalCalender.vue';
 import userProductList from '../views/product/userProductList.vue';
 import userProductInfo from '../views/product/userProductInfo.vue';
 import qnaList from '../views/qna/qnaList.vue'
+import qnaProductInsert from '../views/qna/qnaProductInsert.vue'
 import qnaInsert from '../views/qna/qnaInsert.vue'
 import qnaInfo from '../views/qna/qnaInfo.vue';
 import qnaUpdate from '../views/qna/qnaUpdate.vue';
@@ -22,6 +23,7 @@ import noticeUpdate from '../views/notice/noticeUpdate.vue';
 import UserUpdate from '../views/member/UserUpdate.vue'; // 회원정보수정
 import MyPage from '../views/member/MyPage.vue'; // 마이페이지
 import UserCheck from '../views/member/UserCheck.vue'; // 회원정보 수정 전 비밀번호 확인
+import EmailVerification from '../views/member/EmailVerification.vue'
 
 
 
@@ -35,6 +37,11 @@ export default {
         path: '/main',
         name: 'usermMain',
         component: userMain,
+      },
+      {
+        path: '/emailVerification',
+        name: 'emailVerification',
+        component: EmailVerification
       },
       // 회원가입
       {
@@ -115,6 +122,11 @@ export default {
         path: '/qnaList',
         name: 'qnaList',
         component: qnaList
+      },
+      {
+        path: '/qnaProductInsert',
+        name: 'qnaProductInsert',
+        component: qnaProductInsert
       },
       {
         path: '/qnaInsert',

@@ -156,6 +156,15 @@ router.put('/update/:prod_code', async (req,res) =>{
     res.send(result);
 })
 
+// 품절 or 판매가능
+router.put("/state/:prod_state/:prod_code", async (req, res) => {
+    let data = [req.params.prod_state, req.params.prod_code]
+    console.log(req.params.prod_state);
+    console.log('여기봐주세요', data)
+    let list = await mysql.query('test', data);
+    res.send(list);
+});
+
 // 상품삭제 
 router.delete('/delete/:prod_code', async (req,res) => {
     let data = req.params.prod_code;
@@ -199,8 +208,14 @@ router.get('/search/:prod_name', async (req,res) =>{
 // 사용자 상품 리스트 검색 이건 이름으로만
 router.get('/search1/:prod_name', async(req,res)=>{
     let data = req.params.prod_name;
-    let result = await mysql.query('userProductSearch', data)
-    res.send(result)
+    let list = await mysql.query('userProductSearch', data)
+    for (const prod of list) {
+        console.log('prod.f_code :',prod.prod_code)
+        let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
+        console.log('prod.prodImg :',prodImg)
+        prod.prodImg = prodImg ? prodImg.prod_filename : '';
+    }
+    res.send(list)
 })
 
 
