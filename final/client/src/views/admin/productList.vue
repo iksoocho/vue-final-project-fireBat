@@ -19,7 +19,7 @@
           <th>상품명</th>
           <th>가격</th>
           <th>상품재고</th>
-          <th>지역분류</th>
+          <th>상품지역</th>
           <th>상품분류</th>
           <th>등록날짜</th>
           <th></th>
@@ -41,6 +41,7 @@
           <td>{{ prod.prod_count }}</td>
           <td>{{ prod.prod_loc }}</td>
           <td>{{ prod.prod_cate }}</td>
+
           <td>{{ $dateFormat(prod.prod_date, "yyyy-MM-dd") }}</td>
           <td type="radio"></td>
           <td>
@@ -162,9 +163,6 @@ export default {
 .search-bar input {
   margin-right: 10px;
   border-radius: 8px;
-}
-
-.sellerReview {
 }
 
 .display-options {

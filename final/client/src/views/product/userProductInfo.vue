@@ -39,6 +39,10 @@
           <th>상품남은 수량: {{ userProdInfo.prod_count }}</th>
         </tr>
         <br />
+        <tr>
+          <th>상품 상태: {{ prodState(userProdInfo.prod_state) }}</th>
+        </tr>
+        <br />
 
         <div class="prod-onetime-order">
           <button class="prod-cart-btn" @click="cartInsert">
@@ -95,8 +99,10 @@
         </tr>
       </table>
       <Section1 ref="section1" />
+
       <Section2 ref="section2" v-bind="{searchProd}"/>
       <Section3 ref="section3" v-bind="{searchProd}"/>
+
       <!-- <Section4 ref="section4" /> -->
     </div>
 
@@ -211,7 +217,15 @@ export default {
     scrollToSection(refName) {
       this.$refs[refName].$el.scrollIntoView({ behavior: "smooth" });
     },
+    prodState(data) {
+      if (data == 1) {
+        return "주문가능";
+      } else if (data == 0) {
+        return "품절";
+      }
+    },
   },
+
   computed: {
     userId() {
       const userData = JSON.parse(sessionStorage.getItem("user"));

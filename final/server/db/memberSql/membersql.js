@@ -8,10 +8,12 @@ module.exports = {
                                 WHERE user_id = ?`, // 회원정보수정
   userCheck: `SELECT COUNT(*) AS count FROM user WHERE user_id = ?`, // 아이디 중복 체크
   userEmailCheck: `SELECT COUNT(*) AS count FROM user WHERE user_email = ?`, // 이메일 중복 체크
-  userLogin: `SELECT * FROM user WHERE user_id = ? AND user_pw = ?`, // 로그인
+  userLogin: `SELECT user_id, user_pw FROM user WHERE user_id = ?`, // 로그인
   userInfo: `SELECT * FROM user WHERE user_id = ?`,
   changePassword: `UPDATE user SET user_pw = ?, user_recpw = ? WHERE user_id = ? AND user_pw = ?`,
-  passwordCheck: `SELECT user_pw FROM user WHERE user_id = ? AND user_pw = ?`,
+  passwordCheck: `SELECT user_id, user_pw as hashed_password FROM user WHERE user_id = ? AND user_pw IS NOT NULL LIMIT 1`, // 비밀번호확인
+  passwordCheckOk: `SELECT user_id FROM user WHERE user_id = ? AND user_pw = ?`,
   passwordUpdate: `UPDATE user SET user_pw = ? WHERE user_id = ?`,
-
+  emailCodeSave: `INSERT INTO user_temp SET user_email = ?, user_email_code = ?`, // 이메일 인증 코드 발송
+  emailCodeCheck: `SELECT * FROM user_temp WHERE user_email = ? AND user_email_code = ?;` // 인증번호 입력
 };
