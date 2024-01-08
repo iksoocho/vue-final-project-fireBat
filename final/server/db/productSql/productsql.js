@@ -26,7 +26,7 @@ module.exports = {
     // 메인페이지 랜덤 6가지
     productRandomList: `SELECT * FROM product ORDER BY rand() limit 6`,
 
-    // 상품검색 기능
+    // 관리자 상품검색 기능
     productSearch: `SELECT *
                     FROM product
                     WHERE
@@ -34,7 +34,11 @@ module.exports = {
                     OR prod_loc LIKE CONCAT(CONCAT('%',?),'%')
                     OR prod_code LIKE CONCAT(CONCAT('%',?),'%')
                     OR prod_cate LIKE CONCAT(CONCAT('%',?),'%') `,
-
+    // 사용자 상품검색 기능
+    userProductSearch: `SELECT *
+                        FROM product
+                        WHERE
+                        prod_name LIKE CONCAT(CONCAT('%',?),'%') `,
 
     // 관리자(사용자회원 리스트) 판매량 까지
     adminUserList: `SELECT user_id, user_pw, user_email, user_name, user_tel, user_addr, user_birth,

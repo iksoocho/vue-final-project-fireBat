@@ -1,8 +1,21 @@
 <template>
   <div class="container">
+    <div id="app">
+      <input
+        type="text"
+        v-model="word"
+        @keyup.enter="prodSearch"
+        @input="onSearchInput"
+        placeholder="상품 이름을 검색하세요"
+      />
+      <button @click="search">검색</button>
+    </div>
     <div class="row">
       <div
-        v-for="(prod, i) in userProductList"
+        v-for="(prod, i) in userProductList.slice(
+          pageStartIdx,
+          pageStartIdx + ITEM_PER_PAGE
+        )"
         :key="i"
         class="col-md-3 mb-4"
         @click="goProdInfo(prod.prod_code)"
@@ -23,25 +36,42 @@
         </div>
       </div>
     </div>
+    <Paginate
+      class="justify-content-center"
+      :list="userProductList"
+      :ITEM_PER_PAGE="ITEM_PER_PAGE"
+      :PAGE_PER_SECTION="PAGE_PER_SECTION"
+      :curPage="curPage"
+      @change-page="onChangePage"
+    />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Paginate from "../../components/Pagination.vue";
 
 export default {
+  components: {
+    Paginate,
+  },
   data() {
     return {
       userProductList: [],
       prodImgs: {}, // 변경 없음
       word: "",
-      ITEM_PER_PAGE: 10,
+      ITEM_PER_PAGE: 8,
       PAGE_PER_SECTION: 5,
       curPage: 1,
     };
   },
   created() {
     this.getUserProductList();
+  },
+  computed: {
+    pageStartIdx() {
+      return (this.curPage - 1) * this.ITEM_PER_PAGE;
+    },
   },
   methods: {
     async getUserProductList() {
@@ -61,6 +91,15 @@ export default {
         console.error(error);
       }
     },
+    async prodSearch() {
+      if (this.word.trim() === "") {
+        this.getUserProductList();
+      } else {
+        this.userProductList = (
+          await axios.get(`/api/product/search1/${this.word.trim()}`)
+        ).data;
+      }
+    },
     getProdImgUrl(prod_code) {
       const prodImages = this.prodImgs[prod_code];
 
@@ -71,6 +110,9 @@ export default {
     },
     goProdInfo(prod_code) {
       this.$router.push({ path: "/userProductInfo", query: { prod_code } });
+    },
+    onChangePage(data) {
+      this.curPage = data;
     },
   },
 };

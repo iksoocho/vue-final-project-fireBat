@@ -195,17 +195,13 @@ router.get('/search/:prod_name', async (req,res) =>{
     let data = req.params.prod_name;
     let result = await mysql.query('productSearch' , [data,data,data,data]);
     res.send(result)
-    
-    // try{
-    //     const productService = new ProductService();
-    //     result = await productService.sellerDeliverySearchUserName(search);
-    //     res.send(result)
-    // }
-    // catch(e){
-    //     console.log(e);
-    // }
 })
-
+// 사용자 상품 리스트 검색 이건 이름으로만
+router.get('/search1/:prod_name', async(req,res)=>{
+    let data = req.params.prod_name;
+    let result = await mysql.query('userProductSearch', data)
+    res.send(result)
+})
 
 
 module.exports = router;

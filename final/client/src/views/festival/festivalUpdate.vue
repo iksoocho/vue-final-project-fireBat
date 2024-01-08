@@ -20,8 +20,27 @@
       </select>
       <br />
       <br />
-      <label for="reg">축제지역</label>
-      <input type="text" v-model="fesInfo.f_reg" />
+      <label for="cate">축제지역</label>
+      <select name="cate" v-model="fesInfo.f_reg">
+        <!-- <label for="code">축제코드</label> -->
+        <option value="Seoul">서울</option>
+        <option value="Incheon">인천</option>
+        <option value="Daegu">대구</option>
+        <option value="Daejeon">대전</option>
+        <option value="Gwangju">광주</option>
+        <option value="Busan">부산</option>
+        <option value="Ulsan">울산</option>
+        <option value="Sejong">세종</option>
+        <option value="Gyeong-gi">경기</option>
+        <option value="Gangwon-do">강원</option>
+        <option value="Chungbuk">충북</option>
+        <option value="Chungnam">충남</option>
+        <option value="Gyeongbuk">경북</option>
+        <option value="Gyeongnam">경남</option>
+        <option value="Jeonbuk">전북</option>
+        <option value="Jeonnam">전남</option>
+        <option value="jeju">제주</option>
+      </select>
       <br />
       <label for="number">전화번호</label>
       <input type="text" v-model="fesInfo.f_number" />

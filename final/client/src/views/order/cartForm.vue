@@ -11,17 +11,24 @@
         <th>
           <input
             type="checkbox"
-            v-model="selectAll"
             @change="selectAllItems"
+            true-value="1"
+            false-value="0"
           />전체선택
         </th>
         <th>상품정보</th>
         <th>구매갯수</th>
         <th>상품금액</th>
       </tr>
-      <tr v-for="item in cartList" :key="item.productId">
+      <tr v-for="item in cartList" :key="item.prod_code">
         <td>
-          <input type="checkbox" v-model="item.selected" />
+          <input
+            type="checkbox"
+            v-model="item.prod_select"
+            true-value="1"
+            false-value="0"
+            @change="updateCheckboxStatus(item)"
+          />{{ item.prod_select }}
         </td>
         <td>
           <p>{{ item.prod_name }}</p>
@@ -52,7 +59,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      selectAll: true,
+      selectAll: 1,
       cartList: [],
     };
   },
@@ -75,21 +82,25 @@ export default {
     selectAllItems() {
       // 전체 선택 여부 업데이트
       const selectAllValue = !this.selectAll;
-
+      let status = "";
+      if (selectAllValue) {
+        status = 1;
+      } else {
+        status = 0;
+      }
       this.cartList.forEach((item) => {
-        item.selected = selectAllValue;
+        item.prod_select = status;
+        this.updateCheckboxStatus(item); // 체크박스 상태를 업데이트하는 메서드 호출
       });
-
       // 총 상품금액 업데이트
       this.updateTotalPrice();
-
       // 전체 선택 여부를 true 또는 false로 설정
       this.selectAll = selectAllValue;
     },
     calTotalPrice() {
       let totalPrice = 0;
       for (let item of this.cartList) {
-        if (item.selected) {
+        if (item.prod_select) {
           totalPrice += item.prod_price * item.prod_order_count;
         }
       }
@@ -103,6 +114,24 @@ export default {
         );
       } catch (err) {
         console.log(err);
+      }
+    },
+    async updateCheckboxStatus(item) {
+      // 체크상태 변경 DB저장
+      if (item.prod_select === 1) {
+        try {
+          console.log("선택상태 : ", item.prod_select);
+          await axios.put(`/api/pay/cartSelect/1/${item.cart_no}`);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        try {
+          console.log("선택상태 : ", item.prod_select);
+          await axios.put(`/api/pay/cartSelect/0/${item.cart_no}`);
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
   },

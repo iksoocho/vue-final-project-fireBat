@@ -1,11 +1,11 @@
 <template>
   <div class="calendar">
-    <h2>
+    <h2 class="yearmon">
       <a href="#" v-on:click="onClickPrev(currentMonth)">◀</a>
       {{ currentYear }}년 {{ currentMonth }}월
       <a href="#" v-on:click="onClickNext(currentMonth)">▶</a>
     </h2>
-
+    <br />
     <table class="table">
       <thead>
         <tr>
@@ -267,5 +267,9 @@ export default {
 }
 .day:active {
   background-color: palevioletred;
+}
+
+.yearmon {
+  text-align: center;
 }
 </style>

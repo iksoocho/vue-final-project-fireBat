@@ -37,6 +37,12 @@ router.put("/cart/:poc/:cno", async (req, res) => { // 장바구니 수량 변�
    res.send(list);
  });
 
+ router.put("/cartSelect/:sel/:cno", async (req, res) => { // 상품선택변경
+   let data = [req.params.sel, req.params.cno];
+   let list = await mysql.query("cartSelectUpdate", data);
+   res.send(list);
+ });
+
 router.post("/cart", async (req, res) => { // 장바구니 추가
    let data = req.body.param;
    let result = await mysql.query("cartInsert", data);

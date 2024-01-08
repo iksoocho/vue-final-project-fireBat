@@ -68,8 +68,8 @@
       <div id="map" style="width: 100%; height: 400px"></div>
     </div>
     <hr />
+    <h2>지역과 관련된 특산물</h2>
   </div>
-  <!-- 얘들은 나중에 관리자페이지 상품전체리스트 게시판으로 갈 예정 -->
 </template>
 <script>
 import axios from "axios";
