@@ -35,19 +35,32 @@ module.exports = {
                     OR prod_code LIKE CONCAT(CONCAT('%',?),'%')
                     OR prod_cate LIKE CONCAT(CONCAT('%',?),'%') `,
     // 사용자 상품검색 기능
-    userProductSearch: `SELECT *
-                        FROM product
-                        WHERE
-                        prod_name LIKE CONCAT(CONCAT('%',?),'%') `,
+    userProductSearch: `SELECT p.*, i.prod_filename
+                        FROM product p
+                        LEFT JOIN prod_imgs i ON p.prod_code = i.prod_img_no
+                        WHERE p.prod_name LIKE CONCAT(CONCAT('%', ?), '%') `,
 
     // 관리자(사용자회원 리스트) 판매량 까지
     adminUserList: `SELECT user_id, user_pw, user_email, user_name, user_tel, user_addr, user_birth,
                     (SELECT COUNT(*) FROM order_detail WHERE order_detail.order_count = user.user_id) as sellcount from user order by sellcount `,
 
     // 관리자 재고 관리
-    adminProdInven : `SELECT prod_code, prod_name, prod_price, prod_state,prod_count, prod_count - prod_sell_count AS count
-                        FROM product
-                        ORDER BY prod_code `,
+    adminProdInven : `SELECT
+                      p.prod_code,
+                      p.prod_name,
+                      p.prod_price,
+                      p.prod_state,
+                      p.prod_count AS current_stock,
+                      p.prod_count - COALESCE(SUM(od.order_count), 0) AS sold_stock,
+                      p.prod_count - COALESCE(SUM(od.order_count), 0) - (p.prod_count - COALESCE(SUM(od.order_count), 0)) AS available_stock
+                      FROM
+                      product p
+                      LEFT JOIN
+                      order_detail od ON p.prod_code = od.prod_code
+                      GROUP BY
+                      p.prod_code,
+                      p.prod_name,
+                      p.prod_count `,
     // 관리자 메인 리스트
     adminChartList : `SELECT * FROM product`,
     // 관리자 페이지 차트
@@ -64,6 +77,8 @@ module.exports = {
 
     prodImgDelete : `delete from prod_imgs where prod_code = ?`,
 
-    prodImgSelect : `select * from prod_imgs where prod_code = ?`,
+    prodImgSelect: `select * from prod_imgs where prod_code = ?`,
+    
+    test : `update product set prod_state = ? where prod_code = ?`,
     
 }

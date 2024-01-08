@@ -19,18 +19,11 @@
           <th>상품명</th>
           <th>상품가격</th>
           <th>현재재고</th>
+          <th>가재고</th>
           <th>남은재고</th>
           <th>상품상태</th>
-          <th></th>
-          <th></th>
 
-          <th id="state">
-            <label for="state"></label>
-            <select name="state">
-              <option value="1">주문가능</option>
-              <option value="2">품절</option>
-            </select>
-          </th>
+          <th>상품상태 변경</th>
         </tr>
       </thead>
       <tbody>
@@ -44,18 +37,19 @@
           <th class="code">{{ prod.prod_code }}</th>
           <th class="name">{{ prod.prod_name }}</th>
           <th calss="price">{{ prod.prod_price }}</th>
-          <th class="count">{{ prod.prod_count }}</th>
-          <th class="inven">{{ prod.count }}</th>
+          <th class="current">{{ prod.current_stock }}</th>
+          <th class="stock">{{ prod.available_stock }}</th>
+          <th class="inven">{{ prod.sold_stock }}</th>
           <th class="state">{{ prodState(prod.prod_state) }}</th>
-          <th></th>
-
-          <th><input type="checkbox" @click="selectAllItems" />{{ status }}</th>
-          <!-- <th>
-            <input type="checkbox" id="chk" class="chkGrp" value="상태 체크" />
-          </th> -->
 
           <th>
-            <button @click="saveData">저장</button>
+            <input
+              type="checkbox"
+              v-model="prod.prod_state"
+              true-value="1"
+              false-value="0"
+              @change="ChangeState(prod)"
+            />상태
           </th>
         </tr>
       </tbody>
@@ -82,10 +76,10 @@ export default {
   data() {
     return {
       prodInvenList: [],
+      word: "",
       ITEM_PER_PAGE: 10,
       PAGE_PER_SECTION: 5,
       curPage: 1,
-      selectAll: true,
     };
   },
   created() {
@@ -116,8 +110,39 @@ export default {
     prodState(data) {
       if (data == 1) {
         return "주문가능";
-      } else if (data == 2) {
+      } else if (data == 0) {
         return "품절";
+      }
+    },
+    // async ChangeState(prod) {
+    //   try {
+    //     this.prodInvenList = await axios.put(
+    //       `/api/product/state/${prod.prod_state}/${prod.prod_code}`
+    //     ).data;
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // },
+    async ChangeState(item) {
+      // 체크상태 변경 DB저장
+      if (item.prod_state === "1") {
+        try {
+          console.log("선택상태 : ", item.prod_state);
+          await axios.put(
+            `/api/product/state/${item.prod_state}/${item.prod_code}`
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      } else if (item.prod_state === "0") {
+        try {
+          console.log("선택상태 : ", item.prod_state);
+          await axios.put(
+            `/api/product/state/${item.prod_state}/${item.prod_code}`
+          );
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     onChangePage(data) {

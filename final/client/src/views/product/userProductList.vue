@@ -10,6 +10,8 @@
       />
       <button @click="search">검색</button>
     </div>
+
+    <hr />
     <div class="row">
       <div
         v-for="(prod, i) in userProductList.slice(
