@@ -2,7 +2,7 @@
   <div class="container">
     <h2>축제수정</h2>
     <br />
-    <form>
+    <div>
       <label for="code">축제코드</label>
       <input type="text" v-model="fesInfo.f_code" readonly />
       <br />
@@ -12,34 +12,34 @@
       <label for="cate">카테고리</label>
       <br />
       <select name="cate" v-model="fesInfo.f_category">
-        <option value="culture">문화</option>
-        <option value="couple">커플</option>
-        <option value="art">예술</option>
-        <option value="tourism">관광</option>
-        <option value="firework">불빛</option>
+        <option value="문화">문화</option>
+        <option value="커플">커플</option>
+        <option value="예술">예술</option>
+        <option value="관광">관광</option>
+        <option value="불빛">불빛</option>
       </select>
       <br />
       <br />
       <label for="cate">축제지역</label>
       <select name="cate" v-model="fesInfo.f_reg">
         <!-- <label for="code">축제코드</label> -->
-        <option value="Seoul">서울</option>
-        <option value="Incheon">인천</option>
-        <option value="Daegu">대구</option>
-        <option value="Daejeon">대전</option>
-        <option value="Gwangju">광주</option>
-        <option value="Busan">부산</option>
-        <option value="Ulsan">울산</option>
-        <option value="Sejong">세종</option>
-        <option value="Gyeong-gi">경기</option>
-        <option value="Gangwon-do">강원</option>
-        <option value="Chungbuk">충북</option>
-        <option value="Chungnam">충남</option>
-        <option value="Gyeongbuk">경북</option>
-        <option value="Gyeongnam">경남</option>
-        <option value="Jeonbuk">전북</option>
-        <option value="Jeonnam">전남</option>
-        <option value="jeju">제주</option>
+        <option value="서울">서울</option>
+        <option value="인천">인천</option>
+        <option value="대전">대전</option>
+        <option value="대구">대구</option>
+        <option value="광주">광주</option>
+        <option value="부산">부산</option>
+        <option value="울산">울산</option>
+        <option value="세종">세종</option>
+        <option value="경기">경기</option>
+        <option value="강원">강원</option>
+        <option value="충북">충북</option>
+        <option value="충남">충남</option>
+        <option value="경북">경북</option>
+        <option value="경남">경남</option>
+        <option value="전북">전북</option>
+        <option value="전남">전남</option>
+        <option value="제주">제주</option>
       </select>
       <br />
       <label for="number">전화번호</label>
@@ -83,7 +83,7 @@
       <button type="button" class="btn btn-outline-primary">
         <a href="festivalInfoList" style="text-decoration: none">목록으로</a>
       </button>
-    </form>
+    </div>
   </div>
 </template>
 

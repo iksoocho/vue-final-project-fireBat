@@ -20,7 +20,7 @@ import noticeInfo from '../views/notice/noticeInfo.vue';
 import noticeInsert from '../views/notice/noticeInsert.vue';
 import noticeUpdate from '../views/notice/noticeUpdate.vue';
 import UserUpdate from '../views/member/UserUpdate.vue'; // 회원정보수정
-import MyPage from '../views/member/Mypage.vue'; // 마이페이지
+import MyPage from '../views/member/MyPage.vue'; // 마이페이지
 import UserCheck from '../views/member/UserCheck.vue'; // 회원정보 수정 전 비밀번호 확인
 
 

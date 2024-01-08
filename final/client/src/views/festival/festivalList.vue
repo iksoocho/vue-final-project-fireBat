@@ -2,8 +2,8 @@
   <div class="container text-center">
     <div class="row row-cols-auto">
       <div class="col">
-        <div class="searchDate">
-          <!-- 월별 카테고리 -->
+        <!-- <div class="searchDate">
+
           <select name="searchDate" id="searchDate" title="시기">
             <option value>시기</option>
             <option value="01">1월</option>
@@ -19,7 +19,7 @@
             <option value="11">11월</option>
             <option value="12">12월</option>
           </select>
-        </div>
+        </div> -->
       </div>
 
       <div class="col">
@@ -51,13 +51,16 @@
       <div class="col">
         <div class="searchCate">
           <!-- 테마 카테고리 -->
-          <select name="searchCate" id="searchCate">
+          <select name="searchCate" id="searchCate" title="테마별">
             <option value="불빛">불빛</option>
             <option value="문화예술">문화예술</option>
             <option value="연인">연인</option>
             <option value="관광">관광</option>
           </select>
         </div>
+      </div>
+      <div class="col">
+        <button @click="cateSearch">검색</button>
       </div>
     </div>
 
@@ -103,12 +106,14 @@ export default {
     return {
       festivalList: [],
       fesImgs: {},
+      cateSearch: [],
     };
   },
   created() {
     this.getFestivalList();
   },
   methods: {
+
     // async getFestivalList(){
     //     this.festivalList = (await axios.get('/api/festival/list')
     //                         .catch(err => console.log(err))).data;
