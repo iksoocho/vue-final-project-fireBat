@@ -25,7 +25,12 @@
       <div class="col">
         <div class="searchLoc">
           <!-- 지역 카테고리 -->
-          <select name="searchLoc" id="searchLoc" title="지역">
+          <select
+            name="searchLoc"
+            id="searchLoc"
+            title="지역"
+            v-model="selectedLoc"
+          >
             <option value>지역</option>
             <option value="서울">서울</option>
             <option value="인천">인천</option>
@@ -51,7 +56,12 @@
       <div class="col">
         <div class="searchCate">
           <!-- 테마 카테고리 -->
-          <select name="searchCate" id="searchCate" title="테마별">
+          <select
+            name="searchCate"
+            id="searchCate"
+            title="테마별"
+            v-model="selectedCate"
+          >
             <option value="불빛">불빛</option>
             <option value="문화예술">문화예술</option>
             <option value="연인">연인</option>
@@ -60,8 +70,11 @@
         </div>
       </div>
       <div class="col">
-        <button @click="cateSearch">검색</button>
+        <button type="botton" @click="cateSearch()">검색</button>
       </div>
+    </div>
+    <div>
+      <p>{{ this.selectedCate }}</p>
     </div>
 
     <!-- 축제 리스트 -->
@@ -106,13 +119,23 @@ export default {
     return {
       festivalList: [],
       fesImgs: {},
-      cateSearch: [],
+      selectedLoc: "", // 선택한 지역 값
+      selectedCate: "", // 선택한 카테고리 값
     };
   },
   created() {
     this.getFestivalList();
+    // this.cateSearch();
   },
   methods: {
+    async cateSearch() {
+      console.log("this.selectedLoc : ", this.selectedLoc);
+      let list = await axios(
+        `/api/festival/fesCate/${this.selectedLoc}/${this.selectedCate}`
+      ).catch((err) => console.log(err));
+      let result = list.data;
+      this.festivalList = result;
+    },
 
     // async getFestivalList(){
     //     this.festivalList = (await axios.get('/api/festival/list')
