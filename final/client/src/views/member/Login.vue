@@ -2,11 +2,42 @@
   <div class="container">
     <form @submit.prevent>
       <div class="container-one">
-        <h3 style="padding-top: 20px; text-align: left; padding-left: 50px; color: #dc3545;">Login</h3>
-        <input type="text" placeholder="ID" v-model="user_id" required style="margin-top: 10px;"><br>
-        <input type="password" placeholder="PASSWORD" v-model="user_pw" required style="margin-top: 15px;"><br>
-        <div class="d-grid gap-2" style="margin-top: 20px; width: 300px; margin-left: 50px;">
-          <button type="submit" class="btn btn-danger" @click="login" style="height: 40px;">로그인</button>
+        <h3
+          style="
+            padding-top: 20px;
+            text-align: left;
+            padding-left: 50px;
+            color: #dc3545;
+          "
+        >
+          Login
+        </h3>
+        <input
+          type="text"
+          placeholder="ID"
+          v-model="user_id"
+          required
+          style="margin-top: 10px"
+        /><br />
+        <input
+          type="password"
+          placeholder="PASSWORD"
+          v-model="user_pw"
+          required
+          style="margin-top: 15px"
+        /><br />
+        <div
+          class="d-grid gap-2"
+          style="margin-top: 20px; width: 300px; margin-left: 50px"
+        >
+          <button
+            type="submit"
+            class="btn btn-danger"
+            @click="login"
+            style="height: 40px"
+          >
+            로그인
+          </button>
         </div>
       </div>
     </form>
@@ -15,25 +46,27 @@
       <small class="side">|</small>
       <small><b>아이디 찾기</b></small>
       <small class="side">|</small>
-      <small><b><a href="/userInsert">회원 가입</a></b></small>
+      <small
+        ><b><a href="/userInsert">회원 가입</a></b></small
+      >
     </div>
     <div class="hr-sect">간편로그인</div>
-    <KakaoLogin/>
+    <KakaoLogin />
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import KakaoLogin from '@/components/KakaoLogin.vue';
+import axios from "axios";
+import KakaoLogin from "@/components/KakaoLogin.vue";
 
 export default {
   components: {
-    KakaoLogin
+    KakaoLogin,
   },
   data() {
     return {
-      user_id: '',
-      user_pw: '',
+      user_id: "",
+      user_pw: "",
     };
   },
   methods: {
@@ -42,19 +75,22 @@ export default {
         let data = { param: { user_id: this.user_id, user_pw: this.user_pw } };
         let result = await axios.post(`/api/user/login`, data, {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
 
         if (result.data.length > 0 && result.data[0].user_id) {
           // 세션에 사용자 정보 저장
-          sessionStorage.setItem('user', JSON.stringify(result.data[0].user_id));
-          
-          console.log('로그인 성공:', result.data[0]);
-          this.$router.push({ path: '/main' });
+          sessionStorage.setItem(
+            "user",
+            JSON.stringify(result.data[0].user_id)
+          );
+
+          console.log("로그인 성공:", result.data[0]);
+          this.$router.push({ path: "/main" });
           window.location.reload();
         } else {
-          window.alert('로그인 실패다 ');
+          window.alert("로그인 실패다 ");
         }
       } catch (error) {
         console.error(error);
@@ -63,16 +99,16 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     // 라우트에 진입하기 전에 로그인 상태 확인
-    if (sessionStorage.getItem('user') !== null) {
-      next('/main');
+    if (sessionStorage.getItem("user") !== null) {
+      next("/main");
     } else {
       next();
     }
   },
   beforeRouteUpdate(to, from, next) {
     // 라우트 업데이트 전에 로그인 상태 확인
-    if (sessionStorage.getItem('user') !== null) {
-      next('/main');
+    if (sessionStorage.getItem("user") !== null) {
+      next("/main");
     } else {
       next();
     }

@@ -19,8 +19,9 @@ import noticeList from '../views/notice/noticeList.vue';
 import noticeInfo from '../views/notice/noticeInfo.vue';
 import noticeInsert from '../views/notice/noticeInsert.vue';
 import noticeUpdate from '../views/notice/noticeUpdate.vue';
-import MyPage from '../views/member/MyPage.vue'; // 마이페이지 홈
-
+import UserUpdate from '../views/member/UserUpdate.vue'; // 회원정보수정
+import MyPage from '../views/member/Mypage.vue'; // 마이페이지
+import UserCheck from '../views/member/UserCheck.vue'; // 회원정보 수정 전 비밀번호 확인
 
 
 
@@ -52,6 +53,18 @@ export default {
         path: '/login',
         name: 'login',
         component: Login,
+      },
+      // 회원정보수정
+      {
+        path: '/userUpdate',
+        name: 'userUpdate',
+        component: UserUpdate,
+      },
+      // 회원정보 수정 버튼 클릭시 비밀번호 확인
+      {
+        path: '/userCheck',
+        name: 'userCheck',
+        component: UserCheck,
       },
       {
         path: '/myPage',
