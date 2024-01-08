@@ -72,7 +72,7 @@
                   <div>
                   <h6 class="my-0">총 상품금액</h6>
                   </div>
-                  <span class="text-body-secondary">1,050원</span>
+                  <span class="text-body-secondary" >{{  }}원</span>
                </li>
                <li class="list-group-item d-flex justify-content-between lh-sm">
                   <div>
@@ -96,7 +96,7 @@
                </li>
                <li class="list-group-item d-flex justify-content-between">
                   <span>결제예정금액</span>
-                  <strong>결제예정금액</strong>
+                  <strong>{{ $route.query.totalPrice + 2500 }}</strong>
                </li>
                <li class="list-group-item d-flex justify-content-between">
                   <span>결제방식</span>
@@ -147,6 +147,7 @@ data() {
       f_tel : '',
       m_tel : '',
       l_tel : '',
+      totalPrice : '',
    };
 },
 methods: {
@@ -157,7 +158,7 @@ methods: {
       try {
          // 서버에서 사용자 정보를 불러오는 API 호출
          console.log('사용자 정보를 불러오는 중...');
-         const response = await axios.get(`/api/user/myPage`);
+         const response = await axios.get(`/api/user/userUpdate`);
          // 불러온 사용자 정보를 컴포넌트 데이터에 저장
          console.log('서버 응답완료:', response.data);
          this.user = response.data;
@@ -261,6 +262,7 @@ methods: {
 created() {
    // 사용자 정보를 서버에서 가져오는 로직을 created 훅에서 실행
    this.loadUserData();
+   
 }
 };
 </script>

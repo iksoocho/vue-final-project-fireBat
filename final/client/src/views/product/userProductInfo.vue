@@ -95,7 +95,7 @@
         </tr>
       </table>
       <Section1 ref="section1" />
-      <Section2 ref="section2" />
+      <!-- <Section2 ref="section2" /> -->
       <Section3 ref="section3" />
       <!-- <Section4 ref="section4" /> -->
     </div>
