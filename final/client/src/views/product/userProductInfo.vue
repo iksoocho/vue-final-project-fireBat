@@ -95,8 +95,8 @@
         </tr>
       </table>
       <Section1 ref="section1" />
-      <Section2 ref="section2" />
-      <Section3 ref="section3" />
+      <Section2 ref="section2" v-bind="{searchProd}"/>
+      <Section3 ref="section3" v-bind="{searchProd}"/>
       <!-- <Section4 ref="section4" /> -->
     </div>
 
@@ -130,8 +130,8 @@
 import axios from "axios";
 import Admin from "../Admin.vue";
 import Section1 from "../../components/Section1.vue";
-import Section2 from "../../components/Section2.vue";
-import Section3 from "../../components/Section3.vue";
+import Section2 from "../../components/productReview.vue";
+import Section3 from "../../components/productQna.vue";
 // import Section4 from "../../components/Section4.vue";
 import Paginate from "../../components/Pagination.vue";
 

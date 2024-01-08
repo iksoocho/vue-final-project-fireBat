@@ -77,6 +77,8 @@
       </button>
     </div>
     <div v-else></div>
+
+    
     <div>
       <h4>답변</h4>
 
@@ -104,7 +106,7 @@
       </div>
     </div>
 
-    <div v-if="qnaAnswer.length == 0">
+    <div v-if="qnaAnswer.length == 0 && isLoggedIn && userId == 'admin'">
       <input
         type="text"
         v-model="qnaAnswerInfo.qna_answer_content"

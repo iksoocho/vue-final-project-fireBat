@@ -3,8 +3,7 @@
     <h2>축제등록</h2>
     <br />
     <form @submit.prevent="saveInfo">
-      <label for="name">축제코드</label>
-      <input type="text" v-model="fesInfo.f_code" />
+      
       <br />
       <label for="name">축제이름</label>
       <input type="text" v-model="fesInfo.f_name" />
@@ -83,7 +82,7 @@ export default {
   data() {
     return {
       fesInfo: {
-        f_code: "",
+       
         f_category: "",
         f_reg: "",
         f_name: "",
@@ -128,7 +127,7 @@ export default {
             text: "정상적으로 처리되지 않았습니다.",
           });
         }
-        this.bno = this.fesInfo.f_code;
+        this.bno = result.data.insertId;
         console.log("bno :", this.bno);
         formData.append("bno", this.bno);
       } catch (err) {
@@ -143,7 +142,7 @@ export default {
 
     validation() {
       if (
-        !this.fesInfo.f_code ||
+        
         !this.fesInfo.f_category ||
         !this.fesInfo.f_reg ||
         !this.fesInfo.f_name ||
