@@ -72,7 +72,7 @@
                   <div>
                   <h6 class="my-0">총 상품금액</h6>
                   </div>
-                  <span class="text-body-secondary" >{{  }}원</span>
+                  <span class="text-body-secondary" >{{ prodPrice }}원</span>
                </li>
                <li class="list-group-item d-flex justify-content-between lh-sm">
                   <div>
@@ -96,7 +96,7 @@
                </li>
                <li class="list-group-item d-flex justify-content-between">
                   <span>결제예정금액</span>
-                  <strong>{{ $route.query.totalPrice + 2500 }}</strong>
+                  <strong>{{ totalPrice }}원</strong>
                </li>
                <li class="list-group-item d-flex justify-content-between">
                   <span>결제방식</span>
@@ -135,9 +135,9 @@ data() {
       payInfo: {
          user_no : '',
          MER_UID : '',
-         
       },
       user: {
+         user_no : '',
          user_name: '',
          user_zip: '',
          user_addr: '',
@@ -148,6 +148,8 @@ data() {
       m_tel : '',
       l_tel : '',
       totalPrice : '',
+      prodPrice : '',
+      mer_uid : '',
    };
 },
 methods: {
@@ -177,13 +179,13 @@ methods: {
          pg: '',
          pay_method: '',
          name: '테스트 상품', // 상품 이름 입력
-         merchant_uid: '111120', // 가맹점에서 생성한 고유 주문번호 입력
-         amount: 1000, // 결제 금액 입력
-         buyer_name: 'test', // 구매자 이름 입력
-         buyer_tel: '010-1111-1111', // 구매자 전화번호 입력
-         buyer_email: 'test@email.com', // 구매자 이메일 입력
+         merchant_uid: this.mer_uid, // 가맹점에서 생성한 고유 주문번호 입력
+         amount: this.totalPrice, // 결제 금액 입력
+         buyer_name: this.user.user_name, // 구매자 이름 입력
+         buyer_tel: this.user.user_tel, // 구매자 전화번호 입력
+         buyer_email: this.user.user_email, // 구매자 이메일 입력
          buyer_postcode: '',
-         buyer_addr: '',
+         buyer_addr: this.user.user_zip + this.user.user_addr + this.user.user_detail_addr,
          // 기타 필요한 결제 정보 입력
       };
 
@@ -262,7 +264,10 @@ methods: {
 created() {
    // 사용자 정보를 서버에서 가져오는 로직을 created 훅에서 실행
    this.loadUserData();
-   
+   this.prodPrice = parseInt(this.$route.query.totalPrice);
+   this.totalPrice = this.prodPrice + 2500;
+   this.mer_uid = new Date().valueOf();
+   console.log('mer_uid : ', this.mer_uid);
 }
 };
 </script>

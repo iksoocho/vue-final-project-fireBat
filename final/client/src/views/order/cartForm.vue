@@ -75,7 +75,6 @@ export default {
           .get(`/api/pay/cart/${this.userId}`)
           .catch((err) => console.log(err));
         this.cartList = result.data;
-        console.log(this.cartList);
       } catch (err) {
         console.log(err);
       }
@@ -106,7 +105,7 @@ export default {
           totalPrice += item.prod_price * item.prod_order_count;
         }
       }
-      return totalPrice;
+      return this.totalPrice=totalPrice;
     },
     async updateTotalPrice(item) {
       // 구매수량이 변경될 때마다 총 상품금액과 DB에 저장된 수량을 업데이트.
@@ -135,6 +134,7 @@ export default {
           console.log(err);
         }
       }
+      this.calTotalPrice();
     },
     async cartSelectDel() {
       try {
@@ -150,7 +150,9 @@ export default {
     submitOrder() {
       this.$router.replace({
         path: '/payment',
-        query: { totalPrice: this.totalPrice },
+        query: { 
+          totalPrice: this.totalPrice,
+        },
       });
     },
 
