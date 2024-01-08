@@ -129,7 +129,7 @@
       </div>
       <!-- 전화번호 -->
       <div style="margin-bottom: 8px">
-        <label style="color: black">전화번호[필수]</label><br />
+        <label style="color: black">전화번호</label><br />
 
         <input
           type="text"
@@ -160,11 +160,12 @@
           placeholder="이메일 주소 입력"
           pattern="^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$"
           @focus="showErrorMessageEmail"
-          style="width: 511.94px; height: 40px"
+          style="width: 511.94px; height: 40px; background-color: #d4d4d4d8"
+          readonly
           required
         />
 
-        <p class="error-message" v-if="isErrorMessageVisibleEmail">이메일을 입력해 주세요.</p>
+        <!-- <p class="error-message" v-if="isErrorMessageVisibleEmail">이메일을 입력해 주세요.</p>
         <p
           class="error-message"
           v-if="user.user_email.length > 0 && !/^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/.test(user.user_email)"
@@ -173,7 +174,7 @@
         </p>
         <p class="error-message" v-if="isEmailDuplicated" style="margin-top: 0px">
           {{ emailDuplicatedMessage }}
-        </p>
+        </p> -->
       </div>
 
       <tr>
@@ -238,7 +239,7 @@ export default {
       isErrorMessageVisiblePw: false,
       isErrorMessageVisibleBirth: false,
       isErrorMessageVisibleTel: false,
-      isErrorMessageVisibleEmail: false,
+      // isErrorMessageVisibleEmail: false,
       isErrorMessageVisibleName: false,
       isErrorMessageVisibleRecpw: false,
       isIdDuplicated: false,
@@ -269,10 +270,10 @@ export default {
     'user.user_tel'() {
       this.isErrorMessageVisibleTel = false;
     },
-    'user.user_email'() {
-      this.checkDuplicateEmailRealtime();
-      this.isErrorMessageVisibleEmail = false;
-    },
+    // 'user.user_email'() {
+    //   this.checkDuplicateEmailRealtime();
+    //   this.isErrorMessageVisibleEmail = false;
+    // },
     'user.user_name'() {
       this.isErrorMessageVisibleName = false;
     },
@@ -281,34 +282,34 @@ export default {
     },
   },
   methods: {
-    async checkDuplicateEmailRealtime() {
-      if (this.user.user_email.length > 0) {
-        try {
-          // 서버에 보낼 데이터 설정 (여기서는 user_email을 사용)
-          let data = { email: this.user.user_email };
+    // async checkDuplicateEmailRealtime() {
+    //   if (this.user.user_email.length > 0) {
+    //     try {
+    //       // 서버에 보낼 데이터 설정 (여기서는 user_email을 사용)
+    //       let data = { email: this.user.user_email };
 
-          // 서버에 GET 요청 보내기
-          let result = await axios.get(`/api/user/email/${data.email}`);
+    //       // 서버에 GET 요청 보내기
+    //       let result = await axios.get(`/api/user/email/${data.email}`);
 
-          // 서버에서 받은 결과 확인
-          // console.log(result.data);
+    //       // 서버에서 받은 결과 확인
+    //       // console.log(result.data);
 
-          // 받은 결과에 따라 중복 여부를 처리
-          const isEmailDuplicated = result.data.isDuplicated; // 수정된 부분
-          if (isEmailDuplicated) {
-            // 중복 여부와 메시지 설정
-            this.isEmailDuplicated = true;
-            this.emailDuplicatedMessage = '이미 사용 중인 이메일입니다.';
-          } else {
-            // 중복 여부와 메시지 초기화
-            this.isEmailDuplicated = false;
-            this.emailDuplicatedMessage = '';
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    },
+    //       // 받은 결과에 따라 중복 여부를 처리
+    //       const isEmailDuplicated = result.data.isDuplicated; // 수정된 부분
+    //       if (isEmailDuplicated) {
+    //         // 중복 여부와 메시지 설정
+    //         this.isEmailDuplicated = true;
+    //         this.emailDuplicatedMessage = '이미 사용 중인 이메일입니다.';
+    //       } else {
+    //         // 중복 여부와 메시지 초기화
+    //         this.isEmailDuplicated = false;
+    //         this.emailDuplicatedMessage = '';
+    //       }
+    //     } catch (error) {
+    //       console.error(error);
+    //     }
+    //   }
+    // },
     async checkDuplicateIdRealtime() {
       if (this.user.user_id.length > 0) {
         try {
@@ -357,11 +358,11 @@ export default {
         this.isErrorMessageVisibleTel = true;
       }
     },
-    showErrorMessageEmail() {
-      if (this.user.user_email.length === 0) {
-        this.isErrorMessageVisibleEmail = true;
-      }
-    },
+    // showErrorMessageEmail() {
+    //   if (this.user.user_email.length === 0) {
+    //     this.isErrorMessageVisibleEmail = true;
+    //   }
+    // },
     showErrorMessageName() {
       if (this.user.user_name.length === 0) {
         this.isErrorMessageVisibleName = true;
@@ -397,10 +398,10 @@ export default {
         window.alert('이미 사용 중인 아이디입니다.');
         return;
       }
-      if (this.isEmailDuplicated === true) {
-        window.alert('이미 사용 중인 이메일입니다.');
-        return;
-      }
+      // if (this.isEmailDuplicated === true) {
+      //   window.alert('이미 사용 중인 이메일입니다.');
+      //   return;
+      // }
 
       // 회원가입 성공 여부 확인 후, 성공 시 '/signUpComplete' 경로로 이동
       const isSignUpSuccess = await this.signUp();
@@ -420,6 +421,10 @@ export default {
         window.alert('회원가입에 실패했습니다. 다시 시도해주세요.');
       }
     },
+  },
+  mounted() {
+    this.user.user_email = this.$route.query.user_email;
+    // URL 파라미터에서 user_email 값을 가져와 userEmail에 할당합니다.
   },
 };
 </script>
