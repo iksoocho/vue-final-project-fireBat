@@ -79,6 +79,18 @@ module.exports = {
 
     prodImgSelect: `select * from prod_imgs where prod_code = ?`,
     
-    test : `update product set prod_state = ? where prod_code = ?`,
+    // 품절 판매가능 상태 쿼리
+    prodState : `update product set prod_state = ? where prod_code = ?`,
+    // 배송정보
+    deliveryList : `SELECT o.order_no, u.user_name, d.delivery_req, CONCAT(u.user_addr, ' ', u.user_detail_addr) AS sumAddr, d.delivery_state
+                    FROM order_detail o
+                    JOIN user u ON o.order_no = u.user_no
+                    JOIN delivery d ON o.order_no = d.order_no `,
+    // 주문 정보
+    orderInfoList : `SELECT o.order_no, u.user_id, u.user_name, u.user_tel, p.prod_name, d.order_date, d.order_total_amount
+                     FROM order_detail o
+                     JOIN prod_order d ON o.order_no = d.order_no
+                     JOIN user u ON d.user_no = u.user_no
+                     JOIN product p ON o.prod_code = p.prod_code;`,
     
 }

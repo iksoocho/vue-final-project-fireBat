@@ -16,7 +16,7 @@
         <tr>
           <th>주문번호</th>
           <th>이름</th>
-          <th>송장번호</th>
+          <!-- <th>송장번호</th> -->
           <th>배송메세지</th>
           <th>수령인주소</th>
           <th>배송상태</th>
@@ -32,13 +32,21 @@
         >
           <th>{{ del.order_no }}</th>
           <th>{{ del.user_name }}</th>
-          <th>{{}}</th>
-          <th>{{}}</th>
-          <th>{{}}</th>
-          <th>{{}}</th>
+          <!-- <th>{{}}</th> -->
+          <th>{{ del.delivery_req }}</th>
+          <th>{{ del.sumAddr }}</th>
+          <th>{{ del.delivery_state }}</th>
         </tr>
       </tbody>
     </table>
+    <Paginate
+      class="justify-content-center"
+      :list="deliveryInformationList"
+      :ITEM_PER_PAGE="ITEM_PER_PAGE"
+      :PAGE_PER_SECTION="PAGE_PER_SECTION"
+      :curPage="curPage"
+      @change-page="onChangePage"
+    />
   </div>
 </template>
 
@@ -46,6 +54,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import Paginate from "../../components/Pagination.vue";
+
 export default {
   components: {
     Paginate,
@@ -70,14 +79,16 @@ export default {
   methods: {
     async getDeliveryInformationList() {
       this.deliveryInformationList = (
-        await axios.get(`/api/product`).catch((err) => console.log(err))
+        await axios
+          .get(`/api/product/delivery/delList`)
+          .catch((err) => console.log(err))
       ).data;
     },
     async prodSearch() {
       if (this.word.trim() === "") {
-        this.getProductList();
+        this.deliveryInformationList();
       } else {
-        this.productList = (
+        this.deliveryInformationList = (
           await axios.get(`/api/product/search/${this.word.trim()}`)
         ).data;
       }
