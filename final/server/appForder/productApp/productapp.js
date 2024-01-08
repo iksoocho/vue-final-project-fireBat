@@ -161,7 +161,7 @@ router.put("/state/:prod_state/:prod_code", async (req, res) => {
     let data = [req.params.prod_state, req.params.prod_code]
     console.log(req.params.prod_state);
     console.log('여기봐주세요', data)
-    let list = await mysql.query('test', data);
+    let list = await mysql.query('prodState', data);
     res.send(list);
 });
 
@@ -216,6 +216,19 @@ router.get('/search1/:prod_name', async(req,res)=>{
         prod.prodImg = prodImg ? prodImg.prod_filename : '';
     }
     res.send(list)
+})
+
+// 배송정보 불러오기
+router.get('/delivery/delList', async(req,res)=>{
+    let list = await mysql.query('deliveryList')
+    res.send(list);
+    console.log('여기봐라',list);
+})
+
+// 주문정보 불러오기
+router.get('/deliveryList/delInfoList', async(req,res)=>{
+    let list = await mysql.query('orderInfoList')
+    res.send(list);
 })
 
 
