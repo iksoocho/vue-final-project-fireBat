@@ -28,7 +28,7 @@ import EmailVerification from '../views/member/EmailVerification.vue'; // 이메
 import UserQuit from '../views/member/UserQuit.vue';
 import PwFind from '../views/member/PwFind';
 import ReviewInsert from '../views/member/reviewInsert.vue'
-
+import EmailCheck from '../views/member/EmailCheck.vue'
 
 
 
@@ -96,6 +96,12 @@ export default {
         path: '/pwFind',
         name: '/pwFind',
         component: PwFind
+      },
+      // 이메일 인증
+      {
+        path: '/emailCheck',
+        name: 'emailCheck',
+        component: EmailCheck,
       },
       {
         path: '/cart',
