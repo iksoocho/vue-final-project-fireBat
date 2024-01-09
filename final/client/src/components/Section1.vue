@@ -14,7 +14,7 @@
             alt=""
             style="display: block; margin: 0 auto; width: 50%;r"
           />
-          <a class="" style="text-align: center">{{ idx }}번 사진 입니다</a>
+          <a class="" style="text-align: center"></a>
         </div>
       </template>
     </div>

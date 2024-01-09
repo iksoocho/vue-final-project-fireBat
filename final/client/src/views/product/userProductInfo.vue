@@ -68,6 +68,42 @@
 
       <h3>함께하면 좋은 축제들</h3>
     </div>
+
+    <!-- <div class="container">
+      <div class="row" id="prod" @click="goProdInfo(prod_loc)">
+        <div v-for="(pro, i) in fesProduct" :key="i" class="col-lg-4 col-md-6">
+          <div class="single_place">
+            <div class="card">
+            <div class="thumb">
+              <img :src="`/api/product/public/uploads/${pro.prodImg}`" alt="" style="height: 250px; ">
+                <a href="#" class="prise">₩{{pro.prod_price}}</a>
+            </div>
+
+      <div class="place_info">
+        <a href="destination_details.html"><h3>{{pro.prod_name}}</h3></a>
+        <p>United State of America</p>
+
+      <div class="rating_days d-flex justify-content-between">
+      <span class="d-flex justify-content-center align-items-center">
+        <i class="fa fa-star"></i> 
+        <i class="fa fa-star"></i> 
+        <i class="fa fa-star"></i> 
+        <i class="fa fa-star"></i> 
+        <i class="fa fa-star"></i>
+        <a href="#">(20 Review)</a>
+      </span>
+
+      <div class="days">
+        <a href="#">5 Days</a>
+        <i class="fa fa-clock-o"></i>
+      </div>
+    </div>
+      </div>
+      </div>
+        </div>
+        </div>
+    </div> -->
+
     <div calss="row align-items-end" style="display: flex">
       <template v-for="(img, idx) in prodImgs">
         <div
@@ -340,5 +376,8 @@ button {
   margin-right: 10px;
   max-width: 500px; /* Limit image width to its container */
   max-height: 250px; /* Limit image height to 250 pixels */
+}
+#content {
+  margin: 20px;
 }
 </style>

@@ -121,12 +121,12 @@ module.exports = {
     deliveryList : `SELECT d.delivery_no,o.order_detail_no, u.user_name, d.delivery_req, CONCAT(u.user_addr, ' ', u.user_detail_addr) AS sumAddr, d.delivery_state
                     FROM order_detail o
                     JOIN user u ON o.order_detail_no = u.user_no
-                    JOIN delivery d ON o.order_detail_no = d.order_no `,
+                    JOIN delivery d ON o.order_detail_no = d.order_no ORDER BY o.order_detail_no DESC `,
     // 주문 정보
     orderInfoList : `SELECT o.order_detail_no, u.user_id, u.user_name, u.user_tel, p.prod_name, d.order_date, d.order_total_amount
                      FROM order_detail o
                      JOIN prod_order d ON o.order_detail_no = d.order_no
                      JOIN user u ON d.user_no = u.user_no
-                     JOIN product p ON o.prod_code = p.prod_code `,
+                     JOIN product p ON o.prod_code = p.prod_code ORDER BY o.order_detail_no `,
     
 }
