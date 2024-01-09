@@ -1,6 +1,6 @@
 <template>
    <div class="container">
-      <table class="table">
+      <table class="table w-50 text-center">
          <tr><th colspan="2">주문완료</th></tr>
          <tr><td colspan="2">주문/결제가 정상적으로 완료되었습니다.</td></tr>
          <tr><td colspan="2">주문번호 : {{ orderList.MER_UID }}</td></tr>
@@ -34,20 +34,19 @@ export default {
             .get(`/api/pay/orderList/${this.mer_uid}`)
             .catch((err) => console.log(err));
          this.orderList = result.data;
-         console.log('주문정보 : ', this.orderList);
+         console.log('주문정보orederList : ', this.orderList);
          
          } catch (err) {
          console.log(err);
          }
       },
       async getOrderDetailList() {
-         console.log('주문번호 : ', this.mer_uid);
          try {
          let result = await axios
             .get(`/api/pay/orderDetailList/${this.mer_uid}`)
             .catch((err) => console.log(err));
          this.orderDetailList = result.data;
-         console.log('주문정보 : ', this.orderDetailList);
+         console.log('주문상세정보detailList : ', this.orderDetailList);
          
          } catch (err) {
          console.log(err);
