@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <router-link to="/adminForm">편하게 관리자페이지</router-link>
     <div class="row">
       <div class="col-8 col-sm-6" v-if="prodImgs.length > 0">
         <img

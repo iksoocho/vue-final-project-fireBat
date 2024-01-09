@@ -57,6 +57,7 @@
               </tr>
             </tbody>
           </table>
+          <div v-if="isLoggedIn">
           <button
             type="button"
             class="btn btn-outline-danger float-right mt-3"
@@ -64,6 +65,8 @@
           >
             글쓰기
           </button>
+        </div>
+        <div v-else></div>
         </div>
       </div>
     </section>
@@ -101,6 +104,14 @@ export default {
   computed: {
     pageStartIdx() {
       return (this.curPage - 1) * this.ITEM_PER_PAGE;
+    },
+    isLoggedIn() {
+      return sessionStorage.getItem('user') !== null;
+    },
+    userId() {
+      const userData = JSON.parse(sessionStorage.getItem('user'));
+      console.log('userData:', userData); // 확인용 로그 추가
+      return userData ? userData : null;
     },
   },
   methods: {

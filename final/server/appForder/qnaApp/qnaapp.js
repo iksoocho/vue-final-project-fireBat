@@ -81,6 +81,14 @@ router.get('/review/:prod_code', async (req, res) => {
     res.send(list);
 });
 
+//리뷰 등록
+router.post('/review', async (req, res) => {
+    let data = req.body.param;
+    let result = await mysql.query('reviewInsert', data);
+    res.send(result);
+});
+
+
 //qna 검색
 router.get("/search/:value", async (req, res) => {
     let list = req.params.value;

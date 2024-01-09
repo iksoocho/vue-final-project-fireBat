@@ -11,7 +11,7 @@
          
 
       </table>
-      <button>쇼핑계속하기</button>
+      <button class="button" onclick="window.location.href='/userProductList'">쇼핑계속하기</button>
    </div>
 
 </template>
