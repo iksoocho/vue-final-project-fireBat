@@ -2265,10 +2265,10 @@ h3 {
 }
 
 /* line 149, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_bradcam.scss */
-.popup_box .nice-select {
+/* .popup_box .nice-select {
   -webkit-tap-highlight-color: transparent;
   background-color: #fff;
-  /* border-radius: 5px; */
+  /border-radius: 5px; 
   border: solid 1px #E2E2E2;
   box-sizing: border-box;
   clear: both;
@@ -2278,7 +2278,7 @@ h3 {
   font-family: "Rubik", sans-serif;
   font-weight: normal;
   width: 100% !important;
-  /* height: 42px; */
+  /* height: 42px; 
   line-height: 50px;
   outline: none;
   padding-left: 18px;
@@ -2299,10 +2299,10 @@ h3 {
   font-size: 16px;
   font-weight: 400;
   color: #919191;
-}
+} */
 
 /* line 183, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_bradcam.scss */
-.popup_box .nice-select::after {
+/* .popup_box .nice-select::after {
   content: "\f0d7";
   display: block;
   height: 5px;
@@ -2316,10 +2316,10 @@ h3 {
   font-family: fontawesome;
   color: #919191;
   font-size: 15px;
-}
+} */
 
 /* line 198, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_bradcam.scss */
-.popup_box .nice-select.open .list {
+/* .popup_box .nice-select.open .list {
   opacity: 1;
   pointer-events: auto;
   -webkit-transform: scale(1) translateY(0);
@@ -2330,10 +2330,10 @@ h3 {
 }
 
 /* line 207, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_bradcam.scss */
-.popup_box .nice-select.list {
+/* .popup_box .nice-select.list {
   height: 200px;
   overflow-y: scroll;
-}
+}  */
 
 /* line 213, ../../Arafath/CL/December/231. Travel-02/HTML/scss/_bradcam.scss */
 #test-form {
