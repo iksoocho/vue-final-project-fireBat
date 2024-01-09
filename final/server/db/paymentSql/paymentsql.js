@@ -20,4 +20,6 @@ module.exports = {
                      from cart c join product p on c.prod_code = p.prod_code
                      where c.prod_select = 1
                      and c.user_no = ?`,
+   orderList : `select * from prod_order where MER_UID = ?`,
+   orderDetailList : `select * from order_detail where mer_uid = ?`,
 }

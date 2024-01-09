@@ -91,7 +91,7 @@ router.get('/user', async (req,res)=>{
 // 메인페이지 랜덤 6가지
 router.get('/random', async (req, res) => {
     let list = await mysql.query('productRandomList');
-    console.log("여기",list);
+    
     res.send(list);
 });
 
@@ -103,8 +103,9 @@ router.get('/user/:prod_code', async (req,res) =>{
 })
 
 // 관리자 (사용자회원 리스트)
-router.get('/adminUser', async (req,res)=>{
+router.get('/adminUser/user', async (req,res)=>{
     let list = await mysql.query('adminUserList')
+    console.log(list)
     res.send(list);
 })
 
@@ -125,8 +126,7 @@ router.get('/chart/:prodNo/:period/:minPrice/:maxPrice', async (req, res) => {
         let period = req.params.period;
         let minPrice = req.params.minPrice;
         let maxPrice = req.params.maxPrice;
-        console.log(minPrice);
-        console.log(typeof minPrice);
+        
 
     let list = await mysql.query('adminChart');
     res.send(list);
@@ -159,9 +159,15 @@ router.put('/update/:prod_code', async (req,res) =>{
 // 품절 or 판매가능
 router.put("/state/:prod_state/:prod_code", async (req, res) => {
     let data = [req.params.prod_state, req.params.prod_code]
-    console.log(req.params.prod_state);
-    console.log('여기봐주세요', data)
     let list = await mysql.query('prodState', data);
+    res.send(list);
+});
+
+// 배송중 or 배송완료
+router.put("/state1/:delivery_state/:delivery_no", async (req, res) => {
+    let data = [req.params.delivery_state, req.params.delivery_no]
+    console.log(data);
+    let list = await mysql.query('delState', data);
     res.send(list);
 });
 
@@ -199,12 +205,36 @@ router.get('/prodInven/Inventory', async(req,res) =>{
     res.send(prodInvent);
 })
 
-// 검색
+// 검색 관리자 상품리스트
 router.get('/search/:prod_name', async (req,res) =>{
     let data = req.params.prod_name;
     let result = await mysql.query('productSearch' , [data,data,data,data]);
     res.send(result)
 })
+// 검색 관리자 회원 검색
+router.get('/search2/:user_name', async (req,res) =>{
+    let data = req.params.user_name;
+    let result = await mysql.query('userSearch', [data,data]);
+    
+    res.send(result);
+})
+
+// 관리자 배송정보 검색
+router.get('/search3/:user_name', async (req,res) =>{
+    let data = req.params.user_name;
+    let result = await mysql.query('delSearch', [data,data,data,data,data]);
+    console.log(result)
+    res.send(result);
+})
+
+// 관리자 주문정보 검색
+router.get('/search4/:user_name', async (req,res) =>{
+    let data = req.params.user_name;
+    let result = await mysql.query('delSearch2', [data,data,data,data,data,data,data]);
+    console.log(result)
+    res.send(result);
+})
+
 // 사용자 상품 리스트 검색 이건 이름으로만
 router.get('/search1/:prod_name', async(req,res)=>{
     let data = req.params.prod_name;
@@ -222,7 +252,6 @@ router.get('/search1/:prod_name', async(req,res)=>{
 router.get('/delivery/delList', async(req,res)=>{
     let list = await mysql.query('deliveryList')
     res.send(list);
-    console.log('여기봐라',list);
 })
 
 // 주문정보 불러오기

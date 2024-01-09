@@ -300,7 +300,12 @@ methods: {
       if (res.success) {
          let msg = "결제가 완료되었습니다.";
          alert(msg);
-         location.href = "/paySuccess"
+         this.$router.replace({
+            path: '/paySuccess',
+            query: { 
+               mer_uid: this.mer_uid,
+            },
+         });
       } else {
          let msg = "결제에 실패하였습니다.";
          msg += "에러내용 : " + res.error_msg;

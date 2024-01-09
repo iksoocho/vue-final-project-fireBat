@@ -126,7 +126,7 @@ export default {
         var data = google.visualization.arrayToDataTable(table);
 
         var options = {
-          title: "상품 판매량액",
+          title: "상품 판매액",
           colors: ["#5b83b5", ""],
         };
 
