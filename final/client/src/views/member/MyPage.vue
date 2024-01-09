@@ -2,7 +2,8 @@
   <div>
     <h1>마이페이지</h1>
     <a href="/userCheck">회원정보수정</a><br />
-    <a href="#">회원탈퇴</a>
+    <a href="#">회원탈퇴</a><br />
+    <a href="/orderList">주문내역</a>
   </div>
 </template>
 <script>
