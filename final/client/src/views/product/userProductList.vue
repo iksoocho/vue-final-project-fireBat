@@ -25,7 +25,7 @@
       >
         <div class="card">
           <div class="out-of-stock-overlay" v-if="prod.prod_state === 0">
-            <img src="./품절.png" alt="품절" />
+            <img src="./품절-removebg-preview.png" alt="품절" />
           </div>
           <img
             :src="`/api/product/public/uploads/${prod.prodImg}`"
