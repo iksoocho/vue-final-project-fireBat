@@ -40,7 +40,10 @@
             <td>{{ fes.f_url }}</td>
             <div class="row">
               <!-- <button class="btn btn-info" v-on:click="goToUpdate(fes.f_code)">수정</button> -->
-              <button class="btn btn-warning" @click="fesDelete(fes.f_code)">
+              <button
+                class="btn btn-outline-danger"
+                @click="fesDelete(fes.f_code)"
+              >
                 X
               </button>
             </div>
@@ -57,7 +60,7 @@
         @keyup.enter="fesSearch"
         placeholder="축제 이름을 검색하세요"
       />
-      <button @click="search">검색</button>
+      <!-- <button @click="onSearchInput">검색</button> -->
       <br />
       <br />
       <button><a href="festivalList">리스트로</a></button>
@@ -179,17 +182,18 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #flist {
   text-align: center;
   margin-bottom: 20px;
+  font-size: 24px;
 }
 
 .scroll-container {
-  max-height: 400px;
+  /* max-height: 400px;
   overflow-y: auto;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 5px; */
 }
 
 .table {
@@ -200,13 +204,14 @@ export default {
 
 .table th,
 .table td {
-  padding: 10px;
+  padding: 15px;
   text-align: center;
-  /* border: 1px solid #ddd; */
+  border: 1px solid #ddd;
 }
 
 .table th {
   background-color: #f5f5f5;
+  font-weight: bold;
 }
 
 .table tbody tr:hover {
@@ -215,5 +220,39 @@ export default {
 
 #fapp {
   text-align: center;
+  margin-top: 20px;
+}
+
+#fapp input {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#fapp button {
+  padding: 10px 20px;
+  background-color: wheat;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#fapp button:hover {
+  background-color: powderblue;
+}
+
+#fapp a {
+  color: honeydew;
+  text-decoration: none;
+}
+
+#fapp a:hover {
+  text-decoration: underline;
+}
+
+.btn btn-outline-danger {
+  padding: 8px 16px;
 }
 </style>

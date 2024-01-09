@@ -11,6 +11,7 @@ import festivalInfoList from '../views/festival/festivalInfoList.vue';
 import festivalInsert from '../views/festival/festivalInsert.vue';
 import festivalUpdate from '../views/festival/festivalUpdate.vue';
 import productInventory from '../views/admin/productInventory.vue';
+import deliveryListInfo from '../views/admin/deliveryListInfo.vue';
 
 
 export default {
@@ -77,6 +78,11 @@ export default {
         path: "/productInventory",
         name: "productInventory",
         component: productInventory
+      },
+      {
+        path: "/deliveryListInfo",
+        name: "deliveryListInfo",
+        component: deliveryListInfo
       },
     ],
   }
