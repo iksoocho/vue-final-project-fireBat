@@ -15,11 +15,11 @@ const path = require('path');
 router.get('/', async (req,res)=>{
     let list = await mysql.query('fesList');
       // 각 제품에 대한 이미지 데이터 가져오기
-     for (const fes of list) {
-         let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
+    for (const fes of list) {
+        let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
         //  fes.fesImg = fesImg.f_filename;
-         fes.fesImg = fesImg ? fesImg.f_filename : '';
-     }
+        fes.fesImg = fesImg ? fesImg.f_filename : '';
+    }
     res.send(list);
 })
 
@@ -35,10 +35,10 @@ router.get('/calender/:date', async (req, res) => {
     let date = req.params.date;
     let list = await mysql.query('fesCalList',date);
     for (const fes of list) {
-         let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
+        let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
         //  fes.fesImg = fesImg.f_filename;
-         fes.fesImg = fesImg ? fesImg.f_filename : '';
-     }
+        fes.fesImg = fesImg ? fesImg.f_filename : '';
+    }
     res.send(list);
 })
 
@@ -76,11 +76,25 @@ router.get('/search/:f_name', async (req,res) =>{
   res.send(result)
 });
 
-// 카테고리 검색
-router.get('/fesCate/:f_reg/:f_category', async (req, res) => {
+// 카테고리 둘다 검색
+router.get('/fesRegCate/:f_reg/:f_category', async (req, res) => {
   let data = [req.params.f_reg, req.params.f_category];
-  let result = await mysql.query('fesCate', data);
+  let result = await mysql.query('fesRegCate', data);
   res.send(result);
+});
+
+// 지역으로만 검색
+router.get('/fesReg/:f_reg', async (req, res) => {
+  let data = req.params.f_reg;
+  let result = await mysql.query('fesReg', data);
+  res.send(result); 
+});
+
+// 카테고리로만 검색
+router.get('/fesCate/:f_category', async (req, res) => {
+  let data = req.params.f_category;
+  let result = await mysql.query('fesCate', data);
+  res.send(result); 
 });
 
 

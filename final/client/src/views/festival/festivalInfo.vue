@@ -17,7 +17,7 @@
       </tr>
     </div>
       <div calss="row align-items-end" id="subImg">
-            <template v-for="(img, idx) in fesImgs" :key="idx">
+            <template v-for="(img, idx) in fesImgs" :key= "idx">
               <img
                 :src="`http://localhost:3000/festival/public/uploads/${img.f_filename}`"
                 class="card-img-top"
@@ -100,42 +100,46 @@
     </div>
     <hr />
     <br>
-    <h2>지역과 관련된 특산물</h2>
+    <h2>함께하기 좋은 특산물</h2>
     <br>
     <br>
+    <div class="container">
       <div class="row" id="prod" @click="goProdInfo(prod_loc)">
-                 <div v-for="(pro, i) in fesProduct" :key="i" class="col-lg-4 col-md-6">
-                  
-                    <div class="single_place">
-                            <div class="thumb">
-                            <img :src="`/api/product/public/uploads/${pro.prodImg}`" alt="" style="height: 250px; ">
-                            <a href="#" class="prise">₩{{pro.prod_price}}</a>
-                    </div>
-                         <div class="place_info">
-                            <a href="destination_details.html"><h3>{{pro.prod_name}}</h3></a>
-                            <p>United State of America</p>
-                            <div class="rating_days d-flex justify-content-between">
-                                <span class="d-flex justify-content-center align-items-center">
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i>
-                                     <a href="#">(20 Review)</a>
-                                </span>
-                                <div class="days">
-                                    <i class="fa fa-clock-o"></i>
-                                    <a href="#">5 Days</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div v-for="(pro, i) in fesProduct" :key="i" class="col-lg-4 col-md-6">
+          <div class="single_place">
+            <div class="card">
+            <div class="thumb">
+              <img :src="`/api/product/public/uploads/${pro.prodImg}`" alt="" style="height: 250px; ">
+                <a href="#" class="prise">₩{{pro.prod_price}}</a>
             </div>
 
-        </div>
+      <div class="place_info">
+        <a href="destination_details.html"><h3>{{pro.prod_name}}</h3></a>
+        <p>United State of America</p>
 
-  
+      <div class="rating_days d-flex justify-content-between">
+      <span class="d-flex justify-content-center align-items-center">
+        <i class="fa fa-star"></i> 
+        <i class="fa fa-star"></i> 
+        <i class="fa fa-star"></i> 
+        <i class="fa fa-star"></i> 
+        <i class="fa fa-star"></i>
+        <a href="#">(20 Review)</a>
+      </span>
+
+      <div class="days">
+        <a href="#">5 Days</a>
+        <i class="fa fa-clock-o"></i>
+      </div>
+    </div>
+      </div>
+      </div>
+        </div>
+        </div>
+    </div>
+  </div>
+
+  </div>
 </template>
 <script>
 import axios from "axios";

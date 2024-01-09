@@ -33,7 +33,7 @@
                       <li>
                         <a href="#">축제<i class="ti-angle-down"></i></a>
                         <ul class="submenu">
-                          <li><a href="/festivalList">축제</a></li>
+                          <li><a href="/festivalList" >축제</a></li>
                           <li><a href="festivalCalender">축제 달력</a></li>
                         </ul>
                       </li>
@@ -117,6 +117,7 @@ export default {
       window.location.reload();
       //await this.$nextTick(); // 상태 업데이트를 기다립니다.
     },
+   
   },
 };
 </script>
