@@ -26,6 +26,7 @@ import UserCheck from '../views/member/UserCheck.vue'; // 회원정보 수정 �
 import orderList from '../views/member/orderPage.vue';
 import EmailVerification from '../views/member/EmailVerification.vue'; // 이메일 인증 
 import UserQuit from '../views/member/UserQuit.vue';
+import ReviewInsert from '../views/member/reviewInsert.vue'
 
 
 
@@ -178,6 +179,11 @@ export default {
         name: 'orderList',
         component: orderList
       },
+      {
+        path: '/ReviewInsert',
+        name: 'ReviewInsert',
+        component: ReviewInsert
+      }
     ],
   }
     

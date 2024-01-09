@@ -47,11 +47,22 @@ module.exports = {
 
 //----------------------------------------------------------------------------------------------------------------
 
-    reviewList : `SELECT review.*, prod_order.user_no
-                    FROM review
-                    JOIN prod_order ON review.order_no = prod_order.order_no
-                    JOIN order_detail ON prod_order.MER_UID = order_detail.mer_uid
-                    WHERE order_detail.prod_code = ?`,
+    reviewList : `SELECT
+                    r.review_no,
+                    r.review_content,
+                    r.review_date,
+                    r.review_star,
+                    r.order_no,
+                    r.review_title,
+                    r.prod_code
+                FROM
+                    review r
+                INNER JOIN
+                    product p ON r.prod_code = p.prod_code -- prod_code를 기준으로 조인
+                WHERE
+                    p.prod_code = ?`,
+
+    reviewInsert:`insert into review set ?`,
 
 //----------------------------------------------------------------------------------------------------------------
 
@@ -76,4 +87,5 @@ module.exports = {
                     WHERE
                         u.user_id = ?;`
                     
+    
 }

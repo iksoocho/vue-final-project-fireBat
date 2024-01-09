@@ -85,6 +85,11 @@ router.get('/search/:f_name', async (req,res) =>{
 router.get('/fesRegCate/:f_reg/:f_category', async (req, res) => {
   let data = [req.params.f_reg, req.params.f_category];
   let result = await mysql.query('fesRegCate', data);
+  for (const fes of result) {
+    let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
+    //  fes.fesImg = fesImg.f_filename;
+    fes.fesImg = fesImg ? fesImg.f_filename : '';
+}
   res.send(result);
 });
 
@@ -92,6 +97,11 @@ router.get('/fesRegCate/:f_reg/:f_category', async (req, res) => {
 router.get('/fesReg/:f_reg', async (req, res) => {
   let data = req.params.f_reg;
   let result = await mysql.query('fesReg', data);
+  for (const fes of result) {
+    let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
+    //  fes.fesImg = fesImg.f_filename;
+    fes.fesImg = fesImg ? fesImg.f_filename : '';
+}
   res.send(result); 
 });
 
@@ -99,6 +109,11 @@ router.get('/fesReg/:f_reg', async (req, res) => {
 router.get('/fesCate/:f_category', async (req, res) => {
   let data = req.params.f_category;
   let result = await mysql.query('fesCate', data);
+  for (const fes of result) {
+    let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
+    //  fes.fesImg = fesImg.f_filename;
+    fes.fesImg = fesImg ? fesImg.f_filename : '';
+}
   res.send(result); 
 });
 
