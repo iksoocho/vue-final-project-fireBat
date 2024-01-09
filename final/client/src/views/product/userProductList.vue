@@ -8,7 +8,7 @@
         @input="onSearchInput"
         placeholder="상품 이름을 검색하세요"
       />
-      <button @click="search">검색</button>
+      <button @click="prodSearch">검색</button>
     </div>
 
     <hr />
@@ -20,9 +20,13 @@
         )"
         :key="i"
         class="col-md-3 mb-4"
-        @click="goProdInfo(prod.prod_code)"
+        :class="{ 'out-of-stock': prod.prod_state === 0 }"
+        @click="prod.prod_state === 0 ? null : goProdInfo(prod.prod_code)"
       >
         <div class="card">
+          <div class="out-of-stock-overlay" v-if="prod.prod_state === 0">
+            <img src="./품절.png" alt="품절" />
+          </div>
           <img
             :src="`/api/product/public/uploads/${prod.prodImg}`"
             class="card-img-top"
@@ -32,8 +36,6 @@
           <div class="card-body">
             <h5 class="card-title">{{ prod.prod_name }}</h5>
             <p class="card-text">{{ prod.prod_price }}원</p>
-            <p class="card-text">{{ prod.prod_state }}</p>
-            <a href="#" class="btn btn-primary">상품 상세페이지</a>
           </div>
         </div>
       </div>
@@ -122,4 +124,19 @@ export default {
 
 <style scoped>
 /* 스타일링 */
+.out-of-stock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 투명도 조정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.out-of-stock-overlay img {
+  width: 50%; /* 이미지 크기 조정 */
+}
 </style>

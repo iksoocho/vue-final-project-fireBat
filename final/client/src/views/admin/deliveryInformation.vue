@@ -6,9 +6,9 @@
         v-model="word"
         @keyup.enter="prodSearch"
         @input="onSearchInput"
-        placeholder="상품 이름을 검색하세요"
+        placeholder="검색하세요"
       />
-      <button @click="search">검색</button>
+      <button @click="prodSearch">검색</button>
     </div>
     <h3>배송정보</h3>
     <table class="table table-hover">
@@ -20,6 +20,7 @@
           <th>배송메세지</th>
           <th>수령인주소</th>
           <th>배송상태</th>
+          <th>배송상태 변경</th>
         </tr>
       </thead>
       <tbody>
@@ -35,7 +36,16 @@
           <!-- <th>{{}}</th> -->
           <th>{{ del.delivery_req }}</th>
           <th>{{ del.sumAddr }}</th>
-          <th>{{ del.delivery_state }}</th>
+          <th>{{ deliveryState(del.delivery_state) }}</th>
+          <th>
+            <input
+              type="checkbox"
+              v-model="del.delivery_state"
+              true-value="1"
+              false-value="0"
+              @change="ChangeState(del)"
+            />
+          </th>
         </tr>
       </tbody>
     </table>
@@ -86,15 +96,44 @@ export default {
     },
     async prodSearch() {
       if (this.word.trim() === "") {
-        this.deliveryInformationList();
+        this.getDeliveryInformationList();
       } else {
         this.deliveryInformationList = (
-          await axios.get(`/api/product/search/${this.word.trim()}`)
+          await axios.get(`/api/product/search3/${this.word.trim()}`)
         ).data;
       }
     },
     onChangePage(data) {
       this.curPage = data;
+    },
+    deliveryState(data) {
+      if (data == 1) {
+        return "배송완료";
+      } else if (data == 0) {
+        return "배송중";
+      }
+    },
+    async ChangeState(item) {
+      // 체크상태 변경 DB저장
+      if (item.delivery_state === "1") {
+        try {
+          console.log("선택상태 : ", item.delivery_state);
+          await axios.put(
+            `/api/product/state1/${item.delivery_state}/${item.delivery_no}`
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      } else if (item.delivery_state === "0") {
+        try {
+          console.log("선택상태 : ", item.delivery_state);
+          await axios.put(
+            `/api/product/state1/${item.delivery_state}/${item.delivery_no}`
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      }
     },
   },
 };

@@ -103,6 +103,9 @@ export default {
     handleFileChange(event) {
       this.images = Array.from(event.target.files);
     },
+    mounted() {
+      saveInfo();
+    },
     getInfo(comCode) {
       let method = "";
       let url = "";

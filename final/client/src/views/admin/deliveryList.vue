@@ -1,5 +1,15 @@
 <template>
   <div id="deliveryInfo" class="container">
+    <div id="app">
+      <input
+        type="text"
+        v-model="word"
+        @keyup.enter="prodSearch"
+        @input="onSearchInput"
+        placeholder="상품 이름을 검색하세요"
+      />
+      <button @click="prodSearch">검색</button>
+    </div>
     <h3>주문정보</h3>
     <table class="table table-hover">
       <thead>
@@ -80,7 +90,7 @@ export default {
         this.getDeliveryList();
       } else {
         this.deliveryList = (
-          await axios.get(`/api/product/search/${this.word.trim()}`)
+          await axios.get(`/api/product/search4/${this.word.trim()}`)
         ).data;
       }
     },
