@@ -81,7 +81,22 @@ router.get('/review/:prod_code', async (req, res) => {
     res.send(list);
 });
 
+//qna 검색
+router.get("/search/:value", async (req, res) => {
+    let list = req.params.value;
+    let data = await mysql.query("qnaSearch", [list,list]);
+    res.send(data);
+  });
 
+//category로만 검색
+router.get("/search/:column", async (req, res) => {
+    
+    let list = req.params.column
+    
+
+    let data = await mysql.query("qnaCateSearch", list);
+    res.send(data);
+});
 
 
 

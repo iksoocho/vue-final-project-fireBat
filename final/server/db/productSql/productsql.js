@@ -17,7 +17,7 @@ module.exports = {
     productDelete: `DELETE FROM product WHERE prod_code = ? `,
 
     // 사용자 상품 리스트 
-    userProductList: `SELECT prod_code, prod_name, prod_price, prod_count, prod_loc, prod_cate,prod_date FROM product`,
+    userProductList: `SELECT * FROM product`,
 
     // 사용자 상품 상세
     userProductInfo: `SELECT prod_name, prod_price, prod_code , prod_loc, prod_cate, prod_state, prod_content, prod_count
@@ -34,6 +34,38 @@ module.exports = {
                     OR prod_loc LIKE CONCAT(CONCAT('%',?),'%')
                     OR prod_code LIKE CONCAT(CONCAT('%',?),'%')
                     OR prod_cate LIKE CONCAT(CONCAT('%',?),'%') `,
+    
+    // 회원 검색
+    userSearch : `SELECT *
+                FROM user
+                WHERE
+                user_name LIKE CONCAT(CONCAT('%',?),'%') `,
+    
+    
+    // 배송정보 검색
+    delSearch : `SELECT o.order_no, u.user_name, d.delivery_req, CONCAT(u.user_addr, ' ', u.user_detail_addr) AS sumAddr, d.delivery_state
+                 FROM order_detail o
+                 JOIN user u ON o.order_no = u.user_no
+                 JOIN delivery d ON o.order_no = d.order_no
+                 WHERE o.order_no LIKE CONCAT(CONCAT('%', ?), '%')
+                 OR u.user_name LIKE CONCAT(CONCAT('%', ?), '%')
+                 OR d.delivery_req LIKE CONCAT(CONCAT('%', ?), '%')
+                 OR CONCAT(u.user_addr, ' ', u.user_detail_addr) LIKE CONCAT(CONCAT('%', ?), '%')
+                    `,
+    // 주문정보 검색
+    delSearch2 : `SELECT o.order_no, u.user_id, u.user_name, u.user_tel, p.prod_name, d.order_date, d.order_total_amount
+                  FROM order_detail o
+                  JOIN prod_order d ON o.order_no = d.order_no
+                  JOIN user u ON d.user_no = u.user_no
+                  JOIN product p ON o.prod_code = p.prod_code
+                  WHERE o.order_no LIKE CONCAT(CONCAT('%', ?), '%')
+                  OR u.user_id LIKE CONCAT(CONCAT('%', ?), '%')
+                  OR u.user_name LIKE CONCAT(CONCAT('%', ?), '%')
+                  OR u.user_tel LIKE CONCAT(CONCAT('%', ?), '%')
+                  OR p.prod_name LIKE CONCAT(CONCAT('%', ?), '%')
+                  OR d.order_date LIKE CONCAT(CONCAT('%', ?), '%')
+                  OR d.order_total_amount LIKE CONCAT(CONCAT('%', ?), '%');`,
+
     // 사용자 상품검색 기능
     userProductSearch: `SELECT p.*, i.prod_filename
                         FROM product p
@@ -80,17 +112,21 @@ module.exports = {
     prodImgSelect: `select * from prod_imgs where prod_code = ?`,
     
     // 품절 판매가능 상태 쿼리
-    prodState : `update product set prod_state = ? where prod_code = ?`,
+    prodState: `update product set prod_state = ? where prod_code = ?`,
+    
+    // 배송중 배송완료 상태
+    delState: `update delivery set delivery_state = ? where delivery_no = ?`,
+    
     // 배송정보
-    deliveryList : `SELECT o.order_no, u.user_name, d.delivery_req, CONCAT(u.user_addr, ' ', u.user_detail_addr) AS sumAddr, d.delivery_state
+    deliveryList : `SELECT d.delivery_no,o.order_detail_no, u.user_name, d.delivery_req, CONCAT(u.user_addr, ' ', u.user_detail_addr) AS sumAddr, d.delivery_state
                     FROM order_detail o
-                    JOIN user u ON o.order_no = u.user_no
-                    JOIN delivery d ON o.order_no = d.order_no `,
+                    JOIN user u ON o.order_detail_no = u.user_no
+                    JOIN delivery d ON o.order_detail_no = d.order_no `,
     // 주문 정보
-    orderInfoList : `SELECT o.order_no, u.user_id, u.user_name, u.user_tel, p.prod_name, d.order_date, d.order_total_amount
+    orderInfoList : `SELECT o.order_detail_no, u.user_id, u.user_name, u.user_tel, p.prod_name, d.order_date, d.order_total_amount
                      FROM order_detail o
-                     JOIN prod_order d ON o.order_no = d.order_no
+                     JOIN prod_order d ON o.order_detail_no = d.order_no
                      JOIN user u ON d.user_no = u.user_no
-                     JOIN product p ON o.prod_code = p.prod_code;`,
+                     JOIN product p ON o.prod_code = p.prod_code `,
     
 }
