@@ -220,9 +220,9 @@
 <script>
 import axios from "axios";
 export default {
-  name: "OrderPayment",
-  data() {
-    return {
+name: "OrderPayment",
+data() {
+   return {
       selectedPaymentMethod: null,
       paymentUrl: "",
       errorMessage: "",
@@ -237,107 +237,123 @@ export default {
       totalPrice: "",
       prodPrice: "",
       mer_uid: "",
-    };
-  },
-  methods: {
-    selectPaymentMethod(paymentMethod) {
+      cartList: [],
+   };
+},
+methods: {
+   selectPaymentMethod(paymentMethod) {
       this.selectedPaymentMethod = paymentMethod;
-    },
-    async loadUserData() {
+   },
+   async loadUserData() {
       try {
-        // 서버에서 사용자 정보를 불러오는 API 호출
-        console.log("사용자 정보를 불러오는 중...");
-        const response = await axios.get(`/api/user/userUpdate`);
-        // 불러온 사용자 정보를 컴포넌트 데이터에 저장
-        console.log("서버 응답완료:", response.data);
-        this.user = response.data;
-        this.f_tel = response.data.user_tel.substr(0, 3);
-        this.m_tel = response.data.user_tel.substr(3, 4);
-        this.l_tel = response.data.user_tel.substr(7, 4);
+      // 서버에서 사용자 정보를 불러오는 API 호출
+      console.log("사용자 정보를 불러오는 중...");
+      const response = await axios.get(`/api/user/userUpdate`);
+      // 불러온 사용자 정보를 컴포넌트 데이터에 저장
+      console.log("서버 응답완료:", response.data);
+      this.user = response.data;
+      this.f_tel = response.data.user_tel.substr(0, 3);
+      this.m_tel = response.data.user_tel.substr(3, 4);
+      this.l_tel = response.data.user_tel.substr(7, 4);
+      console.log('유저데이터 로드 : ',this.user);
       } catch (error) {
-        console.error("사용자 정보를 불러오는 데 실패했습니다.", error);
+      console.error("사용자 정보를 불러오는 데 실패했습니다.", error);
       }
-    },
-    openPaymentWindow() {
+   },
+   openPaymentWindow() {
       const iamport = window.IMP;
       iamport.init("imp12332078"); // 아임포트에서 발급받은 가맹점 식별코드 입력
 
       const paymentInfo = {
-        pg: "",
-        pay_method: "",
-        name: "테스트 상품", // 상품 이름 입력
-        merchant_uid: this.mer_uid, // 가맹점에서 생성한 고유 주문번호 입력
-        amount: this.totalPrice, // 결제 금액 입력
-        buyer_name: this.user.user_name, // 구매자 이름 입력
-        buyer_tel: this.user.user_tel, // 구매자 전화번호 입력
-        buyer_email: this.user.user_email, // 구매자 이메일 입력
-        buyer_postcode: this.user.user_zip,
-        buyer_addr: this.user.user_addr + this.user.user_detail_addr,
-        // 기타 필요한 결제 정보 입력
+      pg: "",
+      pay_method: "",
+      name: "테스트 상품", // 상품 이름 입력
+      merchant_uid: this.mer_uid, // 가맹점에서 생성한 고유 주문번호 입력
+      amount: this.totalPrice, // 결제 금액 입력
+      buyer_name: this.user.user_name, // 구매자 이름 입력
+      buyer_tel: this.user.user_tel, // 구매자 전화번호 입력
+      buyer_email: this.user.user_email, // 구매자 이메일 입력
+      buyer_postcode: this.user.user_zip,
+      buyer_addr: this.user.user_addr + this.user.user_detail_addr,
+      // 기타 필요한 결제 정보 입력
       };
 
       if (this.selectedPaymentMethod === "kakaopay") {
-        // 카카오페이 결제창 열기
-        paymentInfo.pg = "kakaopay";
-        paymentInfo.pay_method = "card";
+      // 카카오페이 결제창 열기
+      paymentInfo.pg = "kakaopay";
+      paymentInfo.pay_method = "card";
       } else if (this.selectedPaymentMethod === "toss") {
-        // 토스페이 결제창 열기
-        paymentInfo.pg = "tosspay";
-        paymentInfo.pay_method = "card";
+      // 토스페이 결제창 열기
+      paymentInfo.pg = "tosspay";
+      paymentInfo.pay_method = "card";
       } else if (this.selectedPaymentMethod === "kg") {
-        // 이니시스 결제창 열기
-        paymentInfo.pg = "html5_inicis";
-        paymentInfo.pay_method = "card";
+      // 이니시스 결제창 열기
+      paymentInfo.pg = "html5_inicis";
+      paymentInfo.pay_method = "card";
       }
 
       iamport.request_pay(paymentInfo, (res) => {
-        // 결제 완료 후 처리할 로직 작성
-        console.log(res);
-        if (res.success) {
-          this.payData = resp;
-          let msg = "결제가 완료되었습니다.";
-          alert(msg);
-
-          // console.log('paydata');
-          console.log(payData);
-
-          // location.href = "/paySuccess"
-        } else {
-          let msg = "결제에 실패하였습니다.";
-          msg += "에러내용 : " + res.error_msg;
-          alert(msg);
-        }
+      // 결제 완료 후 처리할 로직 작성
+      this.orderInsert(res);
+      this.detailOrderInsert(res);
+      console.log(res);
+      if (res.success) {
+         let msg = "결제가 완료되었습니다.";
+         alert(msg);
+         location.href = "/paySuccess"
+      } else {
+         let msg = "결제에 실패하였습니다.";
+         msg += "에러내용 : " + res.error_msg;
+         alert(msg);
+      }
       });
-    },
-    //  async paymentInfoInsert(data) {
-    //    let order = {
-    //      user_no: this.user.user_no,
-    //      point_use: 0,
-    //      MER_UID: data.merchant_uid,
-    //      delivery_pay: 2500,
-    //      point_acc: 0,
-    //      order_prod_amount: this.prodPrice,
-    //      order_total_amoun: data.paid_amount,
-    //    };
-    //    let detail = {
-    //      prod_code: "",
-    //      order_count: "",
-    //      prod_price: "",
-    //      order_no: data.merchant_uid,
-    //      order_d_amount: "",
-    //    };
-
-    //    let orderPromise = axios.post(`/api/orderInsert`, order);
-    //    let detailPromise = axios.post(`/api/orderInsert`, detail);
-
-    //    let [orderResult, detailResult] = await Promise.all([
-    //      orderPromise,
-    //      detailPromise,
-    //    ]);
-    // },
-    showApi() {
+   },
+   async orderInsert(data) {
+      let order = {
+         param : {
+            user_no: this.user.user_no,
+            point_use: 0,
+            MER_UID: data.merchant_uid,
+            delivery_pay: 2500,
+            point_acc: 0,
+            order_prod_amount: this.prodPrice,
+            order_total_amount: data.paid_amount,
+         }
+      };
+      console.log('주문테이블입력');
+      let result = await axios.post(`/api/pay/orderInsert`, order).catch(err => console.log(err));
+   },
+   async detailOrderInsert(data) {
+      for(let i=0; i< this.cartList.length; i++) {
+         let detail = {
+            param : {
+               prod_code: this.cartList[i].prod_code,
+               order_count: this.cartList[i].prod_order_count,
+               prod_price: this.cartList[i].prod_price,
+               mer_uid: data.merchant_uid,
+               order_d_amount: this.cartList[i].prod_price * this.cartList[i].prod_order_count,
+            }
+         };
+         console.log('주문상세테이블입력');
+         let result = await axios.post(`/api/pay/orderDetailInsert`, detail).catch(err => console.log(err));
+      }
+   },
+   async getCartOrderList() {
+      console.log('유저번호 : ', this.user.user_no);
+      try {
+      let result = await axios
+         .get(`/api/pay/cartOrder/${this.user.user_no}`)
+         .catch((err) => console.log(err));
+      this.cartList = result.data;
+      console.log('카트리스트 : ', this.cartList);
+      
+      } catch (err) {
+      console.log(err);
+      }
+   },
+   showApi() {
       new window.daum.Postcode({
-        oncomplete: (data) => {
+      oncomplete: (data) => {
           // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
           // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
@@ -374,13 +390,14 @@ export default {
       }).open();
     },
   },
-  created() {
+  async created() {
     // 사용자 정보를 서버에서 가져오는 로직을 created 훅에서 실행
-    this.loadUserData();
+    await this.loadUserData();
     this.prodPrice = parseInt(this.$route.query.totalPrice);
     this.totalPrice = this.prodPrice + 2500;
     this.mer_uid = new Date().valueOf();
     console.log("mer_uid : ", this.mer_uid);
+    await this.getCartOrderList();
   },
 };
 </script>
