@@ -16,12 +16,11 @@
       <thead>
         <tr>
           <th>회원 ID</th>
-          <th>회원 PW</th>
           <th>이메일</th>
           <th>이름</th>
           <th>휴대폰 번호</th>
           <th>거주지</th>
-          <th>주민번호</th>
+          <th>생년월일</th>
           <!--<th>카운트</th> -->
         </tr>
       </thead>
@@ -34,7 +33,6 @@
           )"
         >
           <th class="id">{{ users.user_id }}</th>
-          <th class="pw">{{ users.user_pw }}</th>
           <th class="email">{{ users.user_email }}</th>
           <th class="name">{{ users.user_name }}</th>
           <th class="tel">{{ users.user_tel }}</th>
