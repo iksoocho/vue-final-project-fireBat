@@ -35,6 +35,9 @@
         <button type="submit" @click="cateSearch">검색</button>
       </form>
     </div>
+    <br>
+    <br>
+    <br>
     
 
     <!-- 축제 리스트 -->
@@ -45,20 +48,17 @@
         v-for="(fes, i) in festivalList"
           :key="i"
           class="col-md-3 mb-4"
-          @click="goFesInfo(fes.f_code)"
-      >
+          @click="goFesInfo(fes.f_code)">
         <div class="card">
           <img
             :src="`/api/festival/public/uploads/${fes.fesImg}`"
             class="card-img-top"
             alt="이미지가 존재하지 않습니다."
-            style="height: 250px"
-          />
+            style="height: 250px"/>
           <div class="card-body">
             <h5 class="card-title">{{ fes.f_name }}</h5>
             <p class="card-text">{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</p>
             <p class="card-text">{{ fes.f_reg }}</p>
-            <a href="#" class="btn btn-primary">상품 상세페이지</a>
           </div>
         </div>
       </div>
@@ -103,38 +103,42 @@ export default {
       }
     },
 
+
+    // 축제 전체 리스트
     async getFestivalList() {
       try {
         const festivalList = (await axios.get(`/api/festival`)).data;
         this.festivalList = festivalList;
 
-        // 각 제품에 대한 이미지 데이터 가져오기
-        // for (const prod of productList) {
-        //   const response = await axios.get(`/api/product/selectImg/${prod.prod_code}`);
-        //   const prodImages = response.data;
-
-        //   // Vue.set 대신, JavaScript의 동적 속성 추가 방식으로 데이터 업데이트
-        //   this.prodImgs[prod.prod_code] = prodImages;
-        // }
       } catch (error) {
         console.error(error);
       }
     },
+
+    // 날짜 변환
     getDateFormat(date) {
-      return this.$dateFormat(date); // 날짜 변환
+      return this.$dateFormat(date); 
     },
+
+    // 축제 수정
     goToUpdate(f_code) {
       this.$router.push({ path: "/festivalUpdate", query: { f_code: f_code } });
     },
+
+    // 축제 상세페이지
     goFesInfo(f_code) {
       this.$router.push({ path: "/festivalInfo", query: { f_code: f_code } });
     },
+
+    // 관리자페이지 축제목록
     goFesInfoList(f_code) {
       this.$router.push({
         path: "/festivalInfoList",
         query: { f_code: f_code },
       });
     },
+
+    // 축제삭제
     async fesDelete(f_code) {
       let result = await axios
         .delete(`/api/festival/delete/${f_code}`)
@@ -148,6 +152,8 @@ export default {
         this.$router.push({ name: "festivalList" });
       }
     },
+
+    // 이미지
     getFesImgUrl(f_code) {
       const fesImages = this.fesImgs[f_code];
 
@@ -160,4 +166,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

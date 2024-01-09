@@ -2,13 +2,12 @@
   <div class="container">
     <h2>축제등록</h2>
     <br />
-    <form @submit.prevent="saveInfo">
+    <form @submit.prevent="saveInfo" class="festival-form">
       <label for="name">축제이름</label>
       <input type="text" v-model="fesInfo.f_name" />
       <br />
       <label for="cate">카테고리</label>
       <select name="cate" v-model="fesInfo.f_category">
-        <!-- <label for="code">축제코드</label> -->
         <option value="문화">문화</option>
         <option value="커플">커플</option>
         <option value="예술">예술</option>
@@ -19,7 +18,6 @@
       <br />
       <label for="cate">축제지역</label>
       <select name="cate" v-model="fesInfo.f_reg">
-        <!-- <label for="code">축제코드</label> -->
         <option value="서울">서울</option>
         <option value="인천">인천</option>
         <option value="대전">대전</option>
@@ -69,7 +67,7 @@
           multiple
         />
       </div>
-      <button v-on:click="saveInfo">등록</button>
+      <button class="custom-button" v-on:click="saveInfo">등록</button>
     </form>
   </div>
 </template>
@@ -161,22 +159,7 @@ export default {
 
       return true;
     },
-    // val2() {
-    //   console.log(this.fesInfo.f_code);
-    //   console.log(this.getCheck(this.fesInfo.f_code));
-    //   console.log("checkNum : ", this.checkNum);
 
-    //   if (this.checkNum == 1) {
-    //     Swal.fire({
-    //       icon: "warning",
-    //       title: "등록실패!",
-    //       text: "중복된 축제 코드 입니다..",
-    //       confirmButtonText: "확인",
-    //     });
-    //     return false;
-    //   }
-    //   return true;
-    // },
     getInfo() {
       let method = "";
       let url = "";
@@ -185,7 +168,6 @@ export default {
       url = `/api/festival/insert`;
       let info = this.fesInfo;
       console.log(info);
-      // info.from_date = this.comInfo.write_date;
       data = {
         param: this.fesInfo,
       };
@@ -197,13 +179,47 @@ export default {
       };
     },
 
-    // async getCheck(f_code) {
-    //   let resolve = await axios
-    //     .get(`/api/festival/fesCheckCode/${f_code}`)
-    //     .catch((err) => console.log(err));
-    //   this.checkNum = resolve.data.count;
-    // },
   },
 };
 </script>
-<style></style>
+
+<style scoped>
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+
+.festival-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.custom-button:hover {
+  background-color: #45a049;
+}
+</style>

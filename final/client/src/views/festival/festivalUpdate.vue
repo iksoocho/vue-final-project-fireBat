@@ -2,15 +2,11 @@
   <div class="container">
     <h2>축제수정</h2>
     <br />
-    <div>
-      <label for="code">축제코드</label>
-      <input type="text" v-model="fesInfo.f_code" readonly />
-      <br />
+    <form class="festival-form">
       <label for="name">축제이름</label>
       <input type="text" v-model="fesInfo.f_name" />
       <br />
       <label for="cate">카테고리</label>
-      <br />
       <select name="cate" v-model="fesInfo.f_category">
         <option value="문화">문화</option>
         <option value="커플">커플</option>
@@ -22,7 +18,6 @@
       <br />
       <label for="cate">축제지역</label>
       <select name="cate" v-model="fesInfo.f_reg">
-        <!-- <label for="code">축제코드</label> -->
         <option value="서울">서울</option>
         <option value="인천">인천</option>
         <option value="대전">대전</option>
@@ -42,7 +37,7 @@
         <option value="제주">제주</option>
       </select>
       <br />
-      <label for="number">전화번호</label>
+      <label for="number">공식번호</label>
       <input type="text" v-model="fesInfo.f_number" />
       <br />
       <label for="loc">축제장소</label>
@@ -55,13 +50,14 @@
       <input type="date" v-model="fesInfo.f_lastday" />
       <br />
       <label for="con">축제내용</label>
-      <textarea cols="40" v-model="fesInfo.f_content" />
+      <textarea cols="40" v-model="fesInfo.f_content"></textarea>
       <br />
       <label for="price">축제금액</label>
       <input type="text" id="count" v-model="fesInfo.f_price" />
       <br />
       <label for="page">홈페이지</label>
       <input type="url" v-model="fesInfo.f_url" />
+      <br />
       <br />
       <div>
         <input
@@ -83,8 +79,8 @@
       <button type="button" class="btn btn-outline-primary">
         <a href="festivalInfoList" style="text-decoration: none">목록으로</a>
       </button>
+    </form>
     </div>
-  </div>
 </template>
 
 <script>
@@ -144,9 +140,18 @@ export default {
         url,
       };
     },
+
     getDateFormat(date) {
-      return this.$dateFormat(date); // 날짜 변환
+      if (!(date instanceof Date)) {
+      date = new Date(date);
+    }
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
     },
+    
     async saveInfo(f_code) {
       let formData = new FormData();
       this.images.forEach((file) => {
@@ -184,3 +189,45 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  
+}
+
+#festival-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#custom-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+#custom-button:hover {
+  background-color: #45a049;
+}
+</style>
