@@ -252,7 +252,6 @@ router.get('/search1/:prod_name', async(req,res)=>{
 router.get('/delivery/delList', async(req,res)=>{
     let list = await mysql.query('deliveryList')
     res.send(list);
-    console.log('여기봐라',list);
 })
 
 // 주문정보 불러오기

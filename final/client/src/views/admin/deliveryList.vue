@@ -31,7 +31,7 @@
             pageStartIdx + ITEM_PER_PAGE
           )"
         >
-          <th>{{ order.order_no }}</th>
+          <th>{{ order.order_detail_no }}</th>
           <th>{{ order.user_id }}</th>
           <th>{{ order.user_name }}</th>
           <th>{{ order.user_tel }}</th>

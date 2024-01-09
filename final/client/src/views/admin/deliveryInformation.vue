@@ -31,7 +31,7 @@
             pageStartIdx + ITEM_PER_PAGE
           )"
         >
-          <th>{{ del.order_no }}</th>
+          <th>{{ del.order_detail_no }}</th>
           <th>{{ del.user_name }}</th>
           <!-- <th>{{}}</th> -->
           <th>{{ del.delivery_req }}</th>
