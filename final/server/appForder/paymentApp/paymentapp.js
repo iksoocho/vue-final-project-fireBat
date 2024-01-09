@@ -73,4 +73,16 @@ router.get('/cartOrder/:uid', async (req, res) => { //유저의 선택된 장바
    res.send(list);
 });
 
+router.get('/orderList/:mid', async (req, res) => { //유저의 선택된 장바구니 리스트
+   let data = req.params.mid;
+   let list = await mysql.query('orderList', data);
+   res.send(list);
+});
+
+router.get('/orderDetailList/:mid', async (req, res) => { //유저의 선택된 장바구니 리스트
+   let data = req.params.mid;
+   let list = await mysql.query('orderDetailList', data);
+   res.send(list);
+});
+
 module.exports = router;
