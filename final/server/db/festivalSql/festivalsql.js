@@ -50,7 +50,13 @@ module.exports = {
     //                                         AND (f_category = ? OR ? IS NULL);`
 
     // 카테고리별 검색 지역 및 테마별
-    fesCate : `select * from festival where f_reg = ? or f_category  = ? `,
+    fesRegCate : `select * from festival where f_reg = ? and f_category  = ? `,
+
+    fesReg : `select * from festival where f_reg = ?`,
+
+    fesCate : `select * from festival where f_category  = ?`,
+
+    
 
 
 }

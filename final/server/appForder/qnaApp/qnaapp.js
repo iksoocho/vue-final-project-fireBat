@@ -98,7 +98,12 @@ router.get("/search/:column", async (req, res) => {
     res.send(data);
 });
 
-
+//주문내역 list
+router.get('/order/:user_id', async (req, res) => {
+    let data = req.params.user_id;
+    let list = await mysql.query('orderList', data);
+    res.send(list);
+});
 
 
 
