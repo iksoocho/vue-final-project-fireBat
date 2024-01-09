@@ -18,7 +18,6 @@
           <th>상품코드</th>
           <th>상품명</th>
           <th>가격</th>
-          <th>상품재고</th>
           <th>상품지역</th>
           <th>상품분류</th>
           <th>등록날짜</th>
@@ -38,7 +37,6 @@
           <td>{{ prod.prod_code }}</td>
           <td>{{ prod.prod_name }}</td>
           <td>{{ prod.prod_price }}</td>
-          <td>{{ prod.prod_count }}</td>
           <td>{{ prod.prod_loc }}</td>
           <td>{{ prod.prod_cate }}</td>
 
