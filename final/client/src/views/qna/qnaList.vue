@@ -8,19 +8,19 @@
       </div>
 
       <!-- board seach area -->
-      <!-- <div id="board-search">
+      <div id="board-search">
         <div class="container">
             <div class="search-window">
-                <form action="">
+                
                     <div class="search-wrap">
-                        <label for="search" class="blind">공지사항 내용 검색</label>
-                        <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">
-                        <button type="submit" class="btn btn-dark">검색</button>
+                        <label for="search" class="blind">내용 검색</label>
+                        <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." v-model="searchTerm" @keyup.enter="goToSearch">
+                        <button class="btn btn-dark" @click="goToSearch">검색</button>
                     </div>
-                </form>
+                
             </div>
         </div>
-    </div> -->
+    </div>
 
       <!-- board list area -->
       <div id="board-list">
@@ -91,6 +91,8 @@ export default {
       ITEM_PER_PAGE: 10,
       PAGE_PER_SECTION: 5,
       curPage: 1,
+      selectedOption: '',
+      searchTerm:""
     };
   },
   created() {
@@ -135,6 +137,15 @@ export default {
     goQnaInfo(qna_no) {
       this.$router.push({ path: "/qnaInfo", query: { qna_no: qna_no } });
     },
+    async goToSearch() {
+      if (this.searchTerm.trim() === "") {
+        this.getQnaList();
+      } else {
+        this.qnaList = (
+          await axios.get(`/api/qna/search/${this.searchTerm.trim()}`)
+        ).data;
+      }
+    },
   },
 };
 </script>
@@ -176,6 +187,7 @@ section.notice {
   padding: 7px 14px;
   border: 1px solid #ccc;
 }
+
 #board-search .search-window .search-wrap input:focus {
   border-color: #333;
   outline: 0;

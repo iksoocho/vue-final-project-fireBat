@@ -24,6 +24,13 @@ module.exports = {
 
     userNoForInsert : `select user_no from user where user_id =?`,
 
+    qnaSearch : `SELECT * FROM qna 
+    WHERE qna_category <> 0 
+    AND (qna_category LIKE concat(concat('%', ?), '%') OR qna_title LIKE concat(concat('%', ?), '%')) 
+    ORDER BY qna_no DESC`,
+
+    qnaCateSearch : `SELECT * FROM qna WHERE qna_category = ? order by qna_no desc`,
+
 //----------------------------------------------------------------------------------------------------------------
     qnaImgInsert: `insert into qna_imgs set qna_no = ?, qna_filename = ?`,
 
@@ -43,7 +50,7 @@ module.exports = {
     reviewList : `SELECT review.*, prod_order.user_no
                     FROM review
                     JOIN prod_order ON review.order_no = prod_order.order_no
-                    JOIN order_detail ON prod_order.order_no = order_detail.order_no
+                    JOIN order_detail ON prod_order.MER_UID = order_detail.mer_uid
                     WHERE order_detail.prod_code = ?`
 
 

@@ -35,17 +35,25 @@ export default {
   methods: {
     async sendVerificationCode() {
       try {
-        const response = await axios.post('/api/user/send-email', {
-          to: this.user_email,
-          subject: 'Your Subject',
-          text: 'Your Email Body',
+        const checkResponse = await axios.get('/api/user/email/:email', {
+          email: this.user_email,
         });
 
-        if (response.data.success) {
-          // 서버에서 이메일 발송 성공 시, 인증 화면으로 전환
-          this.showVerification = true;
+        if (checkResponse.data.count > 0) {
+          alert('이미 존재하는 이메일입니다.');
         } else {
-          console.error(response.data.error);
+          const sendResponse = await axios.post('/api/user/send-email', {
+            to: this.user_email,
+            subject: 'Your Subject',
+            text: 'Your Email Body',
+          });
+
+          if (sendResponse.data.success) {
+            alert('인증번호 발송 성공. 인증번호를 입력해주세요.');
+            this.showVerification = true;
+          } else {
+            console.error(sendResponse.data.error);
+          }
         }
       } catch (error) {
         console.error('인증번호 발송 실패:', error);

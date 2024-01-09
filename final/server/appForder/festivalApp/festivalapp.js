@@ -26,6 +26,11 @@ router.get('/', async (req,res)=>{
 // 메인페이지 랜덤 6가지
 router.get('/random', async (req, res) => {
     let list = await mysql.query('fesRandomList');
+    for (const fes of list) {
+      let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
+     //  fes.fesImg = fesImg.f_filename;
+      fes.fesImg = fesImg ? fesImg.f_filename : '';
+  }
     res.send(list);
 });
 

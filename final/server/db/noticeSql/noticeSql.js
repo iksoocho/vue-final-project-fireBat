@@ -11,4 +11,10 @@ module.exports = {
 
   noticeImgSelect : `select * from notice_files where notice_no = ?`,
 
-}
+  noticeSearch : `SELECT *
+                  FROM notice
+                  WHERE
+                  notice_title LIKE CONCAT(CONCAT('%',?),'%')
+                  `
+
+                }

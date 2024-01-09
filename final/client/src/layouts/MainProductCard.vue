@@ -12,10 +12,10 @@
                 </div>
             </div>
             <div class="row">
-                 <div v-for="(pro, i) in prodRandomList" :key="i" class="col-lg-4 col-md-6">
+                 <div v-for="(pro, i) in prodRandomList" :key="i" class="col-lg-4 col-md-6" @click="goProdInfo(pro.prod_code)">
                     <div class="single_place">
                             <div class="thumb">
-                            <img :src="getProdImgUrl(pro.prod_code)" alt="" style="height: 250px; ">
+                            <img :src="getProdImgUrl(pro.prod_code)" alt="" width="356px" height="350px" >
                             <a href="#" class="prise">₩{{pro.prod_price}}</a>
                     </div>
                          <div class="place_info">
@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="more_place_btn text-center">
-                    <a class="boxed-btn4" href="#">More Product</a>
+                    <a class="boxed-btn4" href="/userProductList">More Product</a>
                     </div>
                 </div>
             </div>
@@ -97,6 +97,9 @@ export default {
         }
         return ''; // 이미지가 없을 때 빈 문자열 반환
       },
+      goProdInfo(prod_code){
+        this.$router.push({ path: "/userProductInfo", query: { prod_code } });
+      }
     }
 }
 </script>

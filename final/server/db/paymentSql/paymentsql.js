@@ -16,5 +16,10 @@ module.exports = {
    cartSelectUpdate : `update cart set prod_select = ? where cart_no = ?`,
    cartAllSelectUpdate : `update cart set prod_select = ? where user_no=(select user_no from user where user_id=?)`,
    cartDelete : `delete from cart where prod_select=1 and user_no=(select user_no from user where user_id=?)`,
-   
+   cartOrderList : `select c.*, p.prod_price
+                     from cart c join product p on c.prod_code = p.prod_code
+                     where c.prod_select = 1
+                     and c.user_no = ?`,
+   orderList : `select * from prod_order where MER_UID = ?`,
+   orderDetailList : `select * from order_detail where mer_uid = ?`,
 }

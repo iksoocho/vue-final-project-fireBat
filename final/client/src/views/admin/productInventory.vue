@@ -6,9 +6,9 @@
         v-model="word"
         @keyup.enter="prodSearch"
         @input="onSearchInput"
-        placeholder="상품 이름을 검색하세요"
+        placeholder="검색하세요"
       />
-      <button @click="search">검색</button>
+      <button @click="prodSearch">검색</button>
     </div>
 
     <h3>재고관리 페이지</h3>

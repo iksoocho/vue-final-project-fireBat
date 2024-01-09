@@ -100,8 +100,8 @@
       </table>
       <Section1 ref="section1" />
 
-      <Section2 ref="section2" v-bind="{searchProd}"/>
-      <Section3 ref="section3" v-bind="{searchProd}"/>
+      <Section2 ref="section2" v-bind="{ searchProd }" />
+      <Section3 ref="section3" v-bind="{ searchProd }" />
 
       <!-- <Section4 ref="section4" /> -->
     </div>
@@ -295,5 +295,51 @@ export default {
   position: fixed;
   right: 30px;
   z-index: 3000;
+}
+#map {
+  width: 1300px;
+  height: 400px;
+}
+
+.button-group {
+  margin: 10px 0px;
+}
+
+button {
+  margin: 0 3px;
+}
+
+#content {
+  margin-bottom: 100px;
+}
+
+#prod {
+  display: flex;
+  margin: 10px;
+}
+
+#subImg {
+  display: flex;
+  margin: 10px;
+  margin-bottom: 100px;
+}
+
+#text {
+  margin-top: 30px;
+  margin-left: 50px;
+  font-size: 18px;
+}
+
+#subImg {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent line breaks between images */
+}
+
+#subImg img {
+  flex: 0 0 auto;
+  margin-right: 10px;
+  max-width: 500px; /* Limit image width to its container */
+  max-height: 250px; /* Limit image height to 250 pixels */
 }
 </style>

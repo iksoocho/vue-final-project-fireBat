@@ -159,7 +159,6 @@
           v-model="user.user_email"
           placeholder="이메일 주소 입력"
           pattern="^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$"
-          @focus="showErrorMessageEmail"
           style="width: 511.94px; height: 40px; background-color: #d4d4d4d8"
           readonly
           required
