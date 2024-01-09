@@ -7,6 +7,8 @@ const { promisify } = require('util');
 
 const compare = promisify(bcrypt.compare);
 
+
+
 // 랜덤한 인증 코드 생성 함수
 const generateVerificationCode = () => {
   const length = 6; // 인증 코드 길이
@@ -56,20 +58,20 @@ const sendEmail = async (to, subject, text) => {
 router.post('/send-email', async (req, res) => {
   const { to, subject, text } = req.body;
   console.log(req.body);
+
   if (!to) {
-    return res.status(400).send({ success: false, error: 'No recipients defined' });
+    return res.status(400).send({ success: false, error: '수신자가 정의되지 않았습니다.' });
   }
 
   try {
     const verificationCode = await sendEmail(to, subject, text);
     const userEmail = to; // 사용자 이메일 주소
     let result = await mysql.query('emailCodeSave', [userEmail, verificationCode])
-  
 
-    console.log(`Verification code sent: ${verificationCode}`);
-    res.send({ success: true, verificationCode });
+    console.log(`인증 코드 전송됨: ${verificationCode}`);
+    res.send({ success: true, verificationCode, result });
   } catch (error) {
-    console.error('Failed to send email:', error);
+    console.error('이메일 전송 실패:', error);
     res.status(500).send({ success: false, error: error.message });
   }
 });
@@ -144,7 +146,7 @@ router.post('/login', async (req, res, next) => {
 
 
 // 로그아웃
-router.post('/logout', (req, res, next) => {
+router.post('/logout', async(req, res, next) => {
   req.session.destroy();
   res.send({ success: true });
 });
@@ -196,6 +198,12 @@ router.delete('/:no', async (req, res) => {
   let result = await mysql.query('userDelete', data);
   res.send(result);
 });
+
+router.get('/pwFind', async (req, res) => {
+  let data = req.body.id; // 요청 본문에서 id 값을 가져옴
+  let result = await mysql.query('pwFind', data);
+  res.send(result);
+})
 
 // 회원 아이디 찾기(2023-12-26) 등록된 휴대폰번호
 router.get('/tel/:tel', async (req, res) => {
@@ -308,4 +316,6 @@ router.get('/userUpdate', async (req, res) => {
   res.send(result);
   
 });
+
+
 module.exports = router;
