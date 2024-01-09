@@ -35,11 +35,9 @@ export default {
   methods: {
     async sendVerificationCode() {
       try {
-        const checkResponse = await axios.get('/api/user/email/:email', {
-          email: this.user_email,
-        });
-
-        if (checkResponse.data.count > 0) {
+        const checkResponse = await axios.get(`/api/user/email/${encodeURIComponent(this.user_email)}`);
+        console.log(checkResponse.data.isDuplicated);
+        if (checkResponse.data.isDuplicated) {
           alert('이미 존재하는 이메일입니다.');
         } else {
           const sendResponse = await axios.post('/api/user/send-email', {
