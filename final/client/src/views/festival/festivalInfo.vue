@@ -2,38 +2,39 @@
   <div class="container">
     <div class="row">
       <div>
-      <tr>
-        <h1 id="content" itemid="name">
-          <th>{{ fesInfo.f_name }}</th>
-        </h1>
-      </tr>
-      <tr>
-        <h3>
-        <th>
+        <tr>
+          <h1 id="content" itemid="name">
+            <th>{{ fesInfo.f_name }}</th>
+          </h1>
+        </tr>
+        <tr>
+          <h3>
+            <th>
               {{ getDateFormat(fesInfo.f_firstday) }} ~
               {{ getDateFormat(fesInfo.f_lastday) }}
-        </th>
-      </h3>
-      </tr>
-    </div>
+            </th>
+          </h3>
+        </tr>
+      </div>
       <div calss="row align-items-end" id="subImg">
-            <template v-for="(img, idx) in fesImgs" :key= "idx">
-              <img
-                :src="`http://localhost:3000/festival/public/uploads/${img.f_filename}`"
-                class="card-img-top"
-                alt=""
-                width = "300px" height = "250px"
-              />
-            </template>
-          </div>
+        <template v-for="(img, idx) in fesImgs" :key="idx">
+          <img
+            :src="`http://localhost:3000/festival/public/uploads/${img.f_filename}`"
+            class="card-img-top"
+            alt=""
+            width="300px"
+            height="250px"
+          />
+        </template>
+      </div>
 
       <div>
-      <tr>
-        <h4 id="content">
-          <th>{{ fesInfo.f_content }}</th>
-        </h4>
-      </tr>
-    </div>
+        <tr>
+          <h4 id="content">
+            <th>{{ fesInfo.f_content }}</th>
+          </h4>
+        </tr>
+      </div>
       <div class="container text-center">
         <div class="row">
           <div class="col-8 col-sm-6" v-if="fesImgs.length > 0">
@@ -41,7 +42,8 @@
               :src="`http://localhost:3000/festival/public/uploads/${fesImgs[0].f_filename}`"
               class="card-img-top"
               alt="이미지가 없습니다."
-            style="width: 500px; height: 600px;"/>
+              style="width: 500px; height: 600px"
+            />
           </div>
           <div class="col-sm-4" id="text">
             <tr>
@@ -54,15 +56,12 @@
             <br />
             <br />
 
-
             <tr>
               <th>📢 {{ fesInfo.f_loc }}</th>
             </tr>
             <br />
             <br />
             <br />
-
-
 
             <tr>
               <th>🎫 {{ fesInfo.f_price }}</th>
@@ -71,20 +70,17 @@
             <br />
             <br />
 
-
-
             <tr>
               <th>📞 {{ fesInfo.f_number }}</th>
             </tr>
             <br />
             <br />
             <br />
-            
+
             <tr>
               <a :href="fesInfo.f_url">공식홈페이지</a>
             </tr>
           </div>
-
         </div>
       </div>
     </div>
@@ -92,53 +88,59 @@
     <br />
 
     <hr />
-    <h5>길찾기</h5>
-    <h5><a :href="kakaoMapLink" target="_blank">🚘 </a></h5>
+    <h5>길찾기 <a :href="kakaoMapLink" target="_blank" class="car">🚘</a></h5>
     <div>
       <!-- 이 곳에 지도가 표시될 영역 -->
       <div id="map" style="width: 100%; height: 400px"></div>
     </div>
     <hr />
-    <br>
+    <br />
     <h2>함께하기 좋은 특산물</h2>
-    <br>
-    <br>
+    <br />
+    <br />
     <div class="container">
       <div class="row" id="prod" @click="goProdInfo(prod_loc)">
         <div v-for="(pro, i) in fesProduct" :key="i" class="col-lg-4 col-md-6">
           <div class="single_place">
             <div class="card">
-            <div class="thumb">
-              <img :src="`/api/product/public/uploads/${pro.prodImg}`" alt="" style="height: 250px; ">
-                <a href="#" class="prise">₩{{pro.prod_price}}</a>
+              <div class="thumb">
+                <img
+                  :src="`/api/product/public/uploads/${pro.prodImg}`"
+                  alt=""
+                  style="height: 250px"
+                />
+                <a href="#" class="prise">₩{{ pro.prod_price }}</a>
+              </div>
+
+              <div class="place_info">
+                <a href="destination_details.html"
+                  ><h3>{{ pro.prod_name }}</h3></a
+                >
+                <p>United State of America</p>
+
+                <div class="rating_days d-flex justify-content-between">
+                  <span
+                    class="d-flex justify-content-center align-items-center"
+                  >
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <a href="#">(20 Review)</a>
+                  </span>
+
+                  <div class="days">
+                    <a href="#">5 Days</a>
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                </div>
+              </div>
             </div>
-
-      <div class="place_info">
-        <a href="destination_details.html"><h3>{{pro.prod_name}}</h3></a>
-        <p>United State of America</p>
-
-      <div class="rating_days d-flex justify-content-between">
-      <span class="d-flex justify-content-center align-items-center">
-        <i class="fa fa-star"></i> 
-        <i class="fa fa-star"></i> 
-        <i class="fa fa-star"></i> 
-        <i class="fa fa-star"></i> 
-        <i class="fa fa-star"></i>
-        <a href="#">(20 Review)</a>
-      </span>
-
-      <div class="days">
-        <a href="#">5 Days</a>
-        <i class="fa fa-clock-o"></i>
+          </div>
+        </div>
       </div>
     </div>
-      </div>
-      </div>
-        </div>
-        </div>
-    </div>
-  </div>
-
   </div>
 </template>
 <script>
@@ -151,8 +153,7 @@ export default {
       roadview: null,
       roadviewClient: null,
       fesImgs: [],
-      fesProduct:[]
-      
+      fesProduct: [],
     };
   },
   computed: {
@@ -171,11 +172,13 @@ export default {
     this.searchNo = this.$route.query.f_code; // 페이지요청은 router  페이지가 열릴때는 route
     this.getFesInfo();
     this.getFesImg();
-    
   },
   methods: {
     goProdInfo(prod_loc) {
-      this.$router.push({ path: "/productInfo", query: { prod_loc: prod_loc } });
+      this.$router.push({
+        path: "/productInfo",
+        query: { prod_loc: prod_loc },
+      });
     },
     async getFesInfo() {
       //   let result = await axios.get(`/api/festival/${this.searchNo}`)
@@ -184,10 +187,9 @@ export default {
       try {
         let response = await axios.get(`/api/festival/${this.searchNo}`);
         this.fesInfo = response.data;
-        console.log('this.fesInfo.f_regggggg : ',this.fesInfo.f_reg)
+        console.log("this.fesInfo.f_regggggg : ", this.fesInfo.f_reg);
         this.initializeMap();
         this.getFesProdlList(this.fesInfo.f_reg);
-        
       } catch (err) {
         console.log(err);
       }
@@ -241,8 +243,6 @@ export default {
       });
     },
     async getFesImg() {
-      
-
       let result = await axios
         .get(`/api/festival/selectAllImg/${this.searchNo}`)
         .catch((err) => console.log(err));
@@ -251,13 +251,14 @@ export default {
     },
 
     async getFesProdlList(f_reg) {
-      console.log('this.fesInfo.f_reg2',this.fesInfo.f_reg)
-      
-        const result = await axios.get(`/api/festival/fesInProduct/${f_reg}`) .catch((err) => console.log(err));
-        console.log('this.fesInfo.f_reg',this.fesInfo.f_reg)
-        console.log('result : ',result.data)
-        this.fesProduct = result.data;
+      console.log("this.fesInfo.f_reg2", this.fesInfo.f_reg);
 
+      const result = await axios
+        .get(`/api/festival/fesInProduct/${f_reg}`)
+        .catch((err) => console.log(err));
+      console.log("this.fesInfo.f_reg", this.fesInfo.f_reg);
+      console.log("result : ", result.data);
+      this.fesProduct = result.data;
     },
   },
 };
@@ -281,34 +282,33 @@ button {
   margin-bottom: 100px;
 }
 
-#prod{
+#prod {
   display: flex;
   margin: 10px;
 }
 
-#subImg{
+#subImg {
   display: flex;
   margin: 10px;
   margin-bottom: 100px;
 }
 
-#text{
+#text {
   margin-top: 30px;
   margin-left: 50px;
   font-size: 18px;
 }
 
 #subImg {
-    display: flex;
-    overflow-x: auto; /* Enable horizontal scrolling */
-    white-space: nowrap; /* Prevent line breaks between images */
-  }
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent line breaks between images */
+}
 
-  #subImg img {
-    flex: 0 0 auto;
-    margin-right: 10px;
-    max-width: 500px; /* Limit image width to its container */
-    max-height: 250px; /* Limit image height to 250 pixels */
-  }
-
+#subImg img {
+  flex: 0 0 auto;
+  margin-right: 10px;
+  max-width: 500px; /* Limit image width to its container */
+  max-height: 250px; /* Limit image height to 250 pixels */
+}
 </style>

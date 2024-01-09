@@ -44,13 +44,13 @@
       <input type="text" v-model="fesInfo.f_loc" />
       <br />
       <label for="fday">축제시작일</label>
-      <input type="date" v-model="fesInfo.f_firstday" />
+      <input type="text" v-model="fesInfo.f_firstday" />
       <br />
       <label for="lday">축제종료일</label>
-      <input type="date" v-model="fesInfo.f_lastday" />
+      <input type="text" v-model="fesInfo.f_lastday" />
       <br />
       <label for="con">축제내용</label>
-      <textarea cols="40" v-model="fesInfo.f_content"></textarea>
+      <textarea cols="40" v-model="fesInfo.f_content"> </textarea>
       <br />
       <label for="price">축제금액</label>
       <input type="text" id="count" v-model="fesInfo.f_price" />
@@ -80,7 +80,7 @@
         <a href="festivalInfoList" style="text-decoration: none">목록으로</a>
       </button>
     </form>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -143,15 +143,15 @@ export default {
 
     getDateFormat(date) {
       if (!(date instanceof Date)) {
-      date = new Date(date);
-    }
+        date = new Date(date);
+      }
 
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
     },
-    
+
     async saveInfo(f_code) {
       let formData = new FormData();
       this.images.forEach((file) => {
@@ -195,7 +195,6 @@ export default {
   max-width: 600px;
   margin: 0 auto;
   margin-bottom: 40px;
-  
 }
 
 #festival-form {
