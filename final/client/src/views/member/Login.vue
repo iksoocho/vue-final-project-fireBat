@@ -11,7 +11,9 @@
       </div>
     </form>
     <div class="container-two">
-      <small><b>비밀번호 찾기</b></small>
+      <small
+        ><b><a href="/pwFind">비밀번호 찾기</a></b></small
+      >
       <small class="side">|</small>
       <small><b>아이디 찾기</b></small>
       <small class="side">|</small>

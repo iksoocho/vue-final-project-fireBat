@@ -26,6 +26,7 @@ import UserCheck from '../views/member/UserCheck.vue'; // 회원정보 수정 �
 import orderList from '../views/member/orderPage.vue';
 import EmailVerification from '../views/member/EmailVerification.vue'; // 이메일 인증 
 import UserQuit from '../views/member/UserQuit.vue';
+import PwFind from '../views/member/PwFind';
 
 
 
@@ -87,6 +88,12 @@ export default {
         path: '/userQuit',
         name: 'userQuit',
         component: UserQuit
+      },
+      // 비밀번호 찾기
+      {
+        path: '/pwFind',
+        name: '/pwFind',
+        component: PwFind
       },
       {
         path: '/cart',

@@ -1,8 +1,12 @@
 <template>
   <div>
     <label for="email">이메일:</label>
-    <input type="email" v-model="user_email" id="email" />
+    <input type="email" v-model="user_email" id="email" pattern="^[a-z09_+.-]+([a-z0-9-]+\.)+[a-z0-9]{2,4}$" />
+
     <button @click="sendVerificationCode">인증번호 발송</button>
+    <div v-if="isEmailInvalid">
+      <p style="font-size: 12px; color: red; margin: 4px 0 0 0">올바른 이메일 형식이 아닙니다.</p>
+    </div>
 
     <div v-if="showVerification">
       <label for="verificationCode">인증번호:</label>
@@ -80,6 +84,12 @@ export default {
       } catch (error) {
         console.error('코드 확인 실패:', error);
       }
+    },
+  },
+  computed: {
+    isEmailInvalid() {
+      const emailPattern = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
+      return this.user_email.length > 0 && !emailPattern.test(this.user_email);
     },
   },
 };
