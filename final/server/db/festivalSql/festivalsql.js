@@ -43,6 +43,7 @@ module.exports = {
 
     fesInProduct : `select * from product where prod_loc = ? order by rand() limit 3`,
 
+
     // fesCate : `  SELECT * FROM festival WHERE (f_firstday >= ? OR ? IS NULL)
     //                                         AND (f_lastday <= ? OR ? IS NULL)
     //                                         AND (f_reg = ? OR ? IS NULL)
@@ -50,5 +51,6 @@ module.exports = {
 
     // 카테고리별 검색 지역 및 테마별
     fesCate : `select * from festival where f_reg = ? or f_category  = ? `,
+
 
 }

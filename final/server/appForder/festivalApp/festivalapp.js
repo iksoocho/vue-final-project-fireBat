@@ -172,3 +172,17 @@ router.get('/fesCheckCode/:f_code', async (req, res) => {
   res.send(list[0]); //mysql에서 select는 무조건 배열로 넘오 오기 때문에 단건 조회일 경우 list[0]로 해줘야됨
 });
 module.exports = router;
+
+// 지역 같은 상품 리스트
+router.get('/fesInProduct/:f_reg', async (req, res) => {
+  let data = req.params.f_reg;
+  let list = await mysql.query('fesInProduct', data);
+
+  for (const prod of list) {
+    console.log('prod.f_code :',prod.prod_code)
+    let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
+    console.log('prod.prodImg :',prodImg)
+    prod.prodImg = prodImg ? prodImg.prod_filename : '';
+    }
+    res.send(list);
+})
