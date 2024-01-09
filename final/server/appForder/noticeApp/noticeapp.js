@@ -41,6 +41,13 @@ router.post('/', async (req, res) => {
     res.send(result);
 });
 
+//qna 검색
+router.get("/search/:value", async (req, res) => {
+  let list = req.params.value;
+  let data = await mysql.query("noticeSearch", list);
+  res.send(data);
+});
+
 
 
 
