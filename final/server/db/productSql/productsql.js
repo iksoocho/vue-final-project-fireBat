@@ -43,22 +43,22 @@ module.exports = {
     
     
     // 배송정보 검색
-    delSearch : `SELECT o.order_no, u.user_name, d.delivery_req, CONCAT(u.user_addr, ' ', u.user_detail_addr) AS sumAddr, d.delivery_state
+    delSearch : `SELECT o.order_detail_no, u.user_name, d.delivery_req, CONCAT(u.user_addr, ' ', u.user_detail_addr) AS sumAddr, d.delivery_state
                  FROM order_detail o
-                 JOIN user u ON o.order_no = u.user_no
-                 JOIN delivery d ON o.order_no = d.order_no
-                 WHERE o.order_no LIKE CONCAT(CONCAT('%', ?), '%')
+                 JOIN user u ON o.order_detail_no = u.user_no
+                 JOIN delivery d ON o.order_detail_no = d.order_no
+                 WHERE o.order_detail_no LIKE CONCAT(CONCAT('%', ?), '%')
                  OR u.user_name LIKE CONCAT(CONCAT('%', ?), '%')
                  OR d.delivery_req LIKE CONCAT(CONCAT('%', ?), '%')
                  OR CONCAT(u.user_addr, ' ', u.user_detail_addr) LIKE CONCAT(CONCAT('%', ?), '%')
                     `,
     // 주문정보 검색
-    delSearch2 : `SELECT o.order_no, u.user_id, u.user_name, u.user_tel, p.prod_name, d.order_date, d.order_total_amount
+    delSearch2 : `SELECT o.order_detail_no, u.user_id, u.user_name, u.user_tel, p.prod_name, d.order_date, d.order_total_amount
                   FROM order_detail o
-                  JOIN prod_order d ON o.order_no = d.order_no
+                  JOIN prod_order d ON o.order_detail_no = d.order_no
                   JOIN user u ON d.user_no = u.user_no
                   JOIN product p ON o.prod_code = p.prod_code
-                  WHERE o.order_no LIKE CONCAT(CONCAT('%', ?), '%')
+                  WHERE o.order_detail_no LIKE CONCAT(CONCAT('%', ?), '%')
                   OR u.user_id LIKE CONCAT(CONCAT('%', ?), '%')
                   OR u.user_name LIKE CONCAT(CONCAT('%', ?), '%')
                   OR u.user_tel LIKE CONCAT(CONCAT('%', ?), '%')
@@ -94,7 +94,7 @@ module.exports = {
                       p.prod_name,
                       p.prod_count `,
     // 관리자 메인 리스트
-    adminChartList : `SELECT * FROM product`,
+    adminChartList : `SELECT * FROM product ORDER BY prod_price DESC LIMIT 6`,
     // 관리자 페이지 차트
     adminChart : `SELECT * FROM product ORDER BY prod_sell_count DESC LIMIT 6 `,
     //이미지 테스트

@@ -7,7 +7,7 @@
     </div>
 
     <div class="app">
-      <div class="table-header">판매상품 순위 내역</div>
+      <div class="table-header">가장 많이 팔린 상품 6개</div>
       <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
       <table>
         <thead>
