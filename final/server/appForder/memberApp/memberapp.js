@@ -232,63 +232,33 @@ router.get('/email/:email', async (req, res) => {
 
 router.get('/userCheck', async (req, res,) => {
   const userId = req.session.user_id;
-  console.log(userId);
-  const user_pw = req.query.user_pw;
 
-  try {
     // 데이터베이스에서 user_id와 hashed_password를 얻습니다
-    let result = await mysql.query('passwordCheck', [userId]);
-
-    // 서버에서 로그 추가
-    console.log("데이터베이스에서 얻은 user_id와 hashed_password:", result);
-
-    if (result.length > 0) {
-      const hashedPasswordFromDB = result[0].user_pw;
-      console.log(hashedPasswordFromDB); // 에러.
-
-      // 두 번째 await를 이 위치로 이동
-      try {
-        if (user_pw !== undefined && user_pw !== null) {
-          const isPasswordMatch = await bcrypt.compare(user_pw, hashedPasswordFromDB);
-          console.log(isPasswordMatch);
-
-          if (isPasswordMatch) {
-            const user_id = result[0].user_id;
-            res.send({ user_id, result });
-          } else {
-            const user_id = null;
-            res.send({ user_id, result });
-          }
-        } else {
-          const user_id = null;
-          res.send({ user_id, result });
-        }
-      } catch (error) {
-        console.error("bcrypt.compare에서 오류 발생:", error);
-        // 적절한 오류 처리
-        res.status(500).send({ error: 'Internal Server Error', errorMessage: error.message });
-      }
-    } else {
-      // 데이터가 없을 경우 user_id 및 hashed_password를 기본값으로 설정하여 전송
-      const user_id = null;
-      const hashed_password = null; // 또는 빈 문자열로 설정할 수도 있습니다.
-      res.send({ user_id, hashed_password });
-    }
-  } catch (error) {
-    console.error("서버 응답 중 오류:", error);
-
-    // 추가: 서버에서 발생한 오류 메시지를 응답으로 전송
-    res.status(500).send({ error: 'Internal Server Error', errorMessage: error.message });
-  }
-});
+    let result = await mysql.query('passwordCheck', userId);
+ // 서버에서 로그 추가
+    console.log("데이터베이스에서 얻은 user_id", result);
+    res.send(result)
+}),
 router.post('/checkPassword', async (req, res) => {
   const { user_id, user_pw } = req.body; // POST 요청의 body에서 user_id와 user_pw를 추출
+  console.log({ user_id, user_pw })
 
   try {
-    let result = await mysql.query('userLogin', [user_id, user_pw]); // userLogin 쿼리 실행
-
+    // DB에서 사용자의 해싱된 비밀번호를 가져옴
+    let result = await mysql.query('passwordCheckOk', [user_id, user_pw]);
+    console.log(result)
     if (result.length > 0) {
-      res.send({ success: true });
+      const hashedPasswordFromDB = result[0].user_pw;
+      console.log(hashedPasswordFromDB)
+
+      // bcrypt.compare를 사용하여 입력된 비밀번호와 DB에 저장된 해싱된 비밀번호를 비교
+      const isPasswordMatch = await bcrypt.compare(user_pw, hashedPasswordFromDB);
+
+      if (isPasswordMatch) {
+        res.send({ success: true });
+      } else {
+        res.send({ success: false });
+      }
     } else {
       res.send({ success: false });
     }

@@ -12,7 +12,7 @@
         <input v-if="isEditingName" type="text" v-model="user.user_name" />
         <span v-else>{{ user.user_name }}</span>
         <button type="button" @click="toggleEditMode('name')">
-          {{ isEditingName ? "수정완료" : "수정" }}
+          {{ isEditingName ? '수정완료' : '수정' }}
         </button>
       </div>
 
@@ -31,9 +31,7 @@
 
       <div>
         <label>비밀번호</label>
-        <button type="button" @click="openPasswordChangePopup">
-          비밀번호 변경
-        </button>
+        <button type="button" @click="openPasswordChangePopup">비밀번호 변경</button>
       </div>
 
       <!-- AddressSearch 컴포넌트를 포함합니다 -->
@@ -83,12 +81,8 @@
         </div>
         <span v-else>{{ formatPhoneNumber(user.user_tel) }}</span>
         <div>
-          <button
-            class="telButton"
-            type="button"
-            @click="toggleEditMode('tel')"
-          >
-            {{ isEditingTel ? "수정완료" : "수정" }}
+          <button class="telButton" type="button" @click="toggleEditMode('tel')">
+            {{ isEditingTel ? '수정완료' : '수정' }}
           </button>
         </div>
       </div>
@@ -102,12 +96,8 @@
         </div>
         <span v-else>{{ user.user_email }}</span>
         <div>
-          <button
-            class="emailButton"
-            type="button"
-            @click="toggleEditMode('email')"
-          >
-            {{ isEditingEmail ? "수정완료" : "수정" }}
+          <button class="emailButton" type="button" @click="toggleEditMode('email')">
+            {{ isEditingEmail ? '수정완료' : '수정' }}
           </button>
         </div>
       </div>
@@ -124,10 +114,10 @@
 </template>
 
 <script>
-import axios from "axios";
-import AddressSearch from "../../components/AddressSearch.vue";
-import PasswordChangePopup from "../../components/PasswordPopup.vue";
-import moment from "moment";
+import axios from 'axios';
+import AddressSearch from '../../components/AddressSearch.vue';
+import PasswordChangePopup from '../../components/PasswordPopup.vue';
+import moment from 'moment';
 
 export default {
   components: {
@@ -137,20 +127,20 @@ export default {
   data() {
     return {
       user: {
-        user_id: "",
-        user_name: "",
-        user_gender: "", // default 값 설정
+        user_id: '',
+        user_name: '',
+        user_gender: '', // default 값 설정
         user_birth: null,
-        user_zip: "",
-        user_addr: "",
-        user_detail_addr: "",
-        user_tel: "",
-        user_email: "",
-        user_tel_first: "", // 전화번호 첫 번째 부분을 저장하는 추가 속성
-        user_tel_second: "", // 전화번호 두 번째 부분을 저장하는 추가 속성
-        user_tel_third: "",
-        user_email_first: "",
-        user_email_second: "",
+        user_zip: '',
+        user_addr: '',
+        user_detail_addr: '',
+        user_tel: '',
+        user_email: '',
+        user_tel_first: '', // 전화번호 첫 번째 부분을 저장하는 추가 속성
+        user_tel_second: '', // 전화번호 두 번째 부분을 저장하는 추가 속성
+        user_tel_third: '',
+        user_email_first: '',
+        user_email_second: '',
       },
       isChangingPassword: false,
       isEditingEmail: false,
@@ -163,29 +153,25 @@ export default {
   },
   computed: {
     getGenderLabel() {
-      return this.user.user_gender === 0
-        ? "남"
-        : this.user.user_gender === 1
-        ? "여"
-        : "기타";
+      return this.user.user_gender === 0 ? '남' : this.user.user_gender === 1 ? '여' : '기타';
     },
     formattedUserBirth() {
       // user_birth를 'YYYY-MM-DD' 형식으로 변환
-      return moment(this.user.user_birth).format("YYYY년 MM월 DD일");
+      return moment(this.user.user_birth).format('YYYY년 MM월 DD일');
     },
   },
   methods: {
     handleChangePassword() {
-      this.$emit("change-password", {
+      this.$emit('change-password', {
         newPassword: this.newPassword,
         confirmPassword: this.confirmPassword,
       });
     },
     handleClose() {
-      this.$emit("close");
+      this.$emit('close');
     },
     openPasswordChangePopup() {
-      console.log("비밀번호 변경 팝업을 엽니다...");
+      console.log('비밀번호 변경 팝업을 엽니다...');
       this.$nextTick(() => {
         this.isChangingPassword = true;
       });
@@ -196,7 +182,7 @@ export default {
     },
     formatPhoneNumber(phoneNumber) {
       // 전화번호에 '-' 추가
-      return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+      return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
     },
     validateNumericInput(field) {
       // 입력값이 숫자가 아니면 초기값으로 되돌립니다.
@@ -208,20 +194,20 @@ export default {
       // Reset the styles of the input fields when exiting edit mode
       const inputFields = document.querySelectorAll('input[type="text"]');
       inputFields.forEach((input) => {
-        input.style.backgroundColor = ""; // Reset background color
-        input.style.border = ""; // Reset border
+        input.style.backgroundColor = ''; // Reset background color
+        input.style.border = ''; // Reset border
       });
     },
     async loadUserData() {
       try {
         // 서버에서 사용자 정보를 불러오는 API 호출
-        console.log("사용자 정보를 불러오는 중...");
+        console.log('사용자 정보를 불러오는 중...');
         const response = await axios.get(`/api/user/userUpdate`);
         // 불러온 사용자 정보를 컴포넌트 데이터에 저장
-        console.log("서버 응답완료:", response.data);
+        console.log('서버 응답완료:', response.data);
         this.user = response.data;
       } catch (error) {
-        console.error("사용자 정보를 불러오는 데 실패했습니다.", error);
+        console.error('사용자 정보를 불러오는 데 실패했습니다.', error);
       }
     },
     async submitForm() {
@@ -231,7 +217,7 @@ export default {
           user_zip: this.user.user_zip,
           user_addr: this.user.user_addr,
           user_detail_addr: this.user.user_detail_addr,
-          user_birth: moment(this.user.user_birth).format("YYYY-MM-DD"),
+          user_birth: moment(this.user.user_birth).format('YYYY-MM-DD'),
           user_tel: this.user.user_tel,
           user_email: this.user.user_email,
           // 다른 필요한 정보를 추가합니다
@@ -242,13 +228,13 @@ export default {
         console.log(result.data.affectedRows === 1);
         if (result.data.affectedRows === 1) {
           // 수정 성공 시 처리
-          console.log("회원 정보 수정이 완료되었습니다.");
-          alert("회원 정보 수정이 완료되었습니다.");
+          console.log('회원 정보 수정이 완료되었습니다.');
+          alert('회원 정보 수정이 완료되었습니다.');
           // 수정 후 마이 페이지로 이동
-          this.$router.push("/main");
+          this.$router.push('/main');
         } else {
           // 오류 시 처리
-          console.error("수정에러", result.data);
+          console.error('수정에러', result.data);
           // 사용자에게 오류 메시지 표시
           // 예: this.errorMessage = result.data.error;
         }
@@ -262,18 +248,18 @@ export default {
       // AddressSearch 컴포넌트에서 주소가 업데이트되면 사용자의 주소를 업데이트합니다
       this.user.user_zip = updatedAddress.user_zip;
       this.user.user_addr = updatedAddress.user_addr;
-      this.user.user_detail_addr = ""; // 수정 시 상세주소 초기화
+      this.user.user_detail_addr = ''; // 수정 시 상세주소 초기화
     },
 
     toggleEditMode(section) {
-      console.log("Toggle edit mode for:", section);
-      console.log("Before:", this.initialEmailData);
-      if (section === "name") {
+      console.log('Toggle edit mode for:', section);
+      console.log('Before:', this.initialEmailData);
+      if (section === 'name') {
         this.isEditingName = !this.isEditingName;
-      } else if (section === "tel") {
+      } else if (section === 'tel') {
         this.isEditingTel = !this.isEditingTel;
         if (this.isEditingTel) {
-          const telWithoutDash = this.user.user_tel.replace(/-/g, "");
+          const telWithoutDash = this.user.user_tel.replace(/-/g, '');
           this.user.user_tel_first = telWithoutDash.substring(0, 3);
           this.user.user_tel_second = telWithoutDash.substring(3, 7);
           this.user.user_tel_third = telWithoutDash.substring(7, 11);
@@ -284,19 +270,19 @@ export default {
         } else {
           this.user.user_tel = `${this.user.user_tel_first}${this.user.user_tel_second}${this.user.user_tel_third}`;
         }
-      } else if (section === "email") {
+      } else if (section === 'email') {
         // 이메일 섹션에 대한 편집 모드를 한 번만 토글
         this.isEditingEmail = !this.isEditingEmail;
         if (this.isEditingEmail) {
           // 편집을 위한 초기값 설정
           const emailWithoutDash = this.user.user_email;
-          this.user.user_email_first = emailWithoutDash.split("@")[0];
-          this.user.user_email_second = emailWithoutDash.split("@")[1];
+          this.user.user_email_first = emailWithoutDash.split('@')[0];
+          this.user.user_email_second = emailWithoutDash.split('@')[1];
           this.initialEmailData = {
             user_email_first: this.user.user_email_first,
             user_email_second: this.user.user_email_second,
           };
-          console.log("초기 이메일 데이터:", this.initialEmailData);
+          console.log('초기 이메일 데이터:', this.initialEmailData);
         } else {
           // 편집 모드를 빠져나올 때 값 결합
           this.user.user_email = `${this.user.user_email_first}@${this.user.user_email_second}`;
