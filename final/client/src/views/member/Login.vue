@@ -2,42 +2,11 @@
   <div class="container">
     <form @submit.prevent>
       <div class="container-one">
-        <h3
-          style="
-            padding-top: 20px;
-            text-align: left;
-            padding-left: 50px;
-            color: #dc3545;
-          "
-        >
-          Login
-        </h3>
-        <input
-          type="text"
-          placeholder="ID"
-          v-model="user_id"
-          required
-          style="margin-top: 10px"
-        /><br />
-        <input
-          type="password"
-          placeholder="PASSWORD"
-          v-model="user_pw"
-          required
-          style="margin-top: 15px"
-        /><br />
-        <div
-          class="d-grid gap-2"
-          style="margin-top: 20px; width: 300px; margin-left: 50px"
-        >
-          <button
-            type="submit"
-            class="btn btn-danger"
-            @click="login"
-            style="height: 40px"
-          >
-            로그인
-          </button>
+        <h3 style="padding-top: 20px; text-align: left; padding-left: 50px; color: #dc3545">Login</h3>
+        <input type="text" placeholder="ID" v-model="user_id" required style="margin-top: 10px" /><br />
+        <input type="password" placeholder="PASSWORD" v-model="user_pw" required style="margin-top: 15px" /><br />
+        <div class="d-grid gap-2" style="margin-top: 20px; width: 300px; margin-left: 50px">
+          <button type="submit" class="btn btn-danger" @click="login" style="height: 40px">로그인</button>
         </div>
       </div>
     </form>
@@ -47,7 +16,7 @@
       <small><b>아이디 찾기</b></small>
       <small class="side">|</small>
       <small
-        ><b><a href="/userInsert">회원 가입</a></b></small
+        ><b><a href="/emailVerification">회원 가입</a></b></small
       >
     </div>
     <div class="hr-sect">간편로그인</div>
@@ -56,8 +25,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import KakaoLogin from "@/components/KakaoLogin.vue";
+import axios from 'axios';
+import KakaoLogin from '@/components/KakaoLogin.vue';
 
 export default {
   components: {
@@ -65,25 +34,25 @@ export default {
   },
   data() {
     return {
-      user_id: "",
-      user_pw: "",
+      user_id: '',
+      user_pw: '',
     };
   },
   methods: {
     async login() {
       if (!this.user_id) {
-        window.alert("아이디를 입력해주세요");
+        window.alert('아이디를 입력해주세요');
         return;
       }
       if (!this.user_pw) {
-        window.alert("비밀번호를 입력해주세요");
+        window.alert('비밀번호를 입력해주세요');
         return;
       }
       try {
         let data = { param: { user_id: this.user_id, user_pw: this.user_pw } };
         let result = await axios.post(`/api/user/login`, data, {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         });
 
@@ -91,24 +60,21 @@ export default {
           this.loginError = false;
           this.unauthorizedError = false;
           // 세션에 사용자 정보 저장
-          sessionStorage.setItem(
-            "user",
-            JSON.stringify(result.data[0].user_id)
-          );
+          sessionStorage.setItem('user', JSON.stringify(result.data[0].user_id));
 
-          console.log("로그인 성공:", result.data[0]);
-          this.$router.push({ path: "/main" });
+          console.log('로그인 성공:', result.data[0]);
+          this.$router.push({ path: '/main' });
           window.location.reload();
         } else {
           this.loginError = true;
-          window.alert("등록되지않은 아이디입니다."); // 에러 메시지 출력
+          window.alert('등록되지않은 아이디입니다.'); // 에러 메시지 출력
         }
       } catch (error) {
         if (error.response) {
           if (error.response.status === 401) {
             // 서버에서 401 에러가 왔을 때의 처리
             this.unauthorizedError = true;
-            alert("비밀번호가 틀립니다.");
+            alert('비밀번호가 틀립니다.');
             // console.error('Unauthorized Error:', error.response.data);
           } else {
             // 다른 서버 응답 오류
@@ -126,16 +92,16 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     // 라우트에 진입하기 전에 로그인 상태 확인
-    if (sessionStorage.getItem("user") !== null) {
-      next("/main");
+    if (sessionStorage.getItem('user') !== null) {
+      next('/main');
     } else {
       next();
     }
   },
   beforeRouteUpdate(to, from, next) {
     // 라우트 업데이트 전에 로그인 상태 확인
-    if (sessionStorage.getItem("user") !== null) {
-      next("/main");
+    if (sessionStorage.getItem('user') !== null) {
+      next('/main');
     } else {
       next();
     }
@@ -177,7 +143,7 @@ export default {
 
 .hr-sect::before,
 .hr-sect::after {
-  content: "";
+  content: '';
   flex-grow: 1;
   background: rgba(0, 0, 0, 0.35);
   height: 1px;
