@@ -24,8 +24,11 @@
         @click="prod.prod_state === 0 ? null : goProdInfo(prod.prod_code)"
       >
         <div class="card">
-          <div class="out-of-stock-overlay" v-if="prod.prod_state === 0">
-            <img src="./품절.png" alt="품절" />
+          <div
+            class="out-of-stock-overlay"
+            v-if="prod.prod_state === 0 || prod.prod_count < 0"
+          >
+            <img src="./품절-removebg-preview.png" alt="품절" />
           </div>
           <img
             :src="`/api/product/public/uploads/${prod.prodImg}`"

@@ -23,8 +23,11 @@ import noticeUpdate from '../views/notice/noticeUpdate.vue';
 import UserUpdate from '../views/member/UserUpdate.vue'; // 회원정보수정
 import MyPage from '../views/member/MyPage.vue'; // 마이페이지
 import UserCheck from '../views/member/UserCheck.vue'; // 회원정보 수정 전 비밀번호 확인
+import orderList from '../views/member/orderPage.vue';
 import EmailVerification from '../views/member/EmailVerification.vue'; // 이메일 인증 
 import UserQuit from '../views/member/UserQuit.vue';
+import ReviewInsert from '../views/member/reviewInsert.vue'
+
 
 
 
@@ -171,6 +174,16 @@ export default {
         name: 'noticeUpdate',
         component: noticeUpdate
       },
+      {
+        path: '/orderList',
+        name: 'orderList',
+        component: orderList
+      },
+      {
+        path: '/ReviewInsert',
+        name: 'ReviewInsert',
+        component: ReviewInsert
+      }
     ],
   }
     

@@ -1,9 +1,12 @@
 <template>
   <div>
     <h1>마이페이지</h1>
+
     <a class="container-two" href="/userCheck"><b>회원정보수정</b></a
     ><br />
-    <a class="container-two" href="/userQuit"><b>회원탈퇴</b></a>
+    <a class="container-two" href="/userQuit"><b>회원탈퇴</b></a><br />
+    <a href="/orderList">주문내역</a>
+
   </div>
 </template>
 <script>
