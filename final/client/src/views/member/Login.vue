@@ -22,7 +22,9 @@
       >
     </div>
     <div class="hr-sect">간편로그인</div>
-    <KakaoLogin />
+    <div style="margin-bottom: 50px">
+      <KakaoLogin />
+    </div>
   </div>
 </template>
 
