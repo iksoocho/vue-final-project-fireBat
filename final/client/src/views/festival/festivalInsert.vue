@@ -194,7 +194,7 @@ export default {
 <style scoped>
 .container {
   max-width: 600px;
-  height: 1000px;
+  
   margin: 0 auto;
   margin-bottom: 40px;
   padding: 20px;
