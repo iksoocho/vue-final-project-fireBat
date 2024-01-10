@@ -15,25 +15,28 @@
       </div>
       <div class="containerThree">
         <input type="checkbox" style="margin-left: 25px; width: 17px; height: 17px" v-model="agreements[0].checked" />
-        <label style="margin-bottom: 0px; color: black; font-size: 1.2em; padding-left: 10px"
+        <label style="margin-bottom: 0px; color: black; font-size: 1.2em; padding-left: 10px; padding-right: 276px"
           >페스오더 이용약관 (필수)</label
         >
+        <label style="margin-bottom: 0px"><a href="#" style="text-decoration: none">내용보기</a></label>
         <hr />
         <input
           type="checkbox"
           style="margin-left: 25px; width: 17px; height: 17px"
           v-model="agreements[1].checked"
-        /><label style="margin-bottom: 0px; color: black; font-size: 1.2em; padding-left: 10px"
+        /><label style="margin-bottom: 0px; color: black; font-size: 1.2em; padding-left: 10px; padding-right: 210px"
           >개인정보 수집 및 이용 동의 (필수)</label
         >
+        <label style="margin-bottom: 0px"><a href="#" style="text-decoration: none">내용보기</a></label>
         <hr />
         <input
           type="checkbox"
           style="margin-left: 25px; width: 17px; height: 17px"
           v-model="agreements[2].checked"
-        /><label style="margin-bottom: 0px; color: black; font-size: 1.2em; padding-left: 10px"
+        /><label style="margin-bottom: 0px; color: black; font-size: 1.2em; padding-left: 10px; padding-right: 210px"
           >개인정보 수집 및 이용 동의 (선택)</label
         >
+        <label style="margin-bottom: 0px"><a href="#" style="text-decoration: none">내용보기</a></label>
         <hr style="margin-bottom: 60px" />
         <h5 style="font-weight: bold; margin-bottom: 0">안전한 회원가입을 위한 본인인증을 진행해 주세요.</h5>
       </div>
@@ -148,7 +151,32 @@ export default {
         console.error('인증번호 발송 실패:', error);
       }
     },
+    async verifyCode() {
+      try {
+        const response = await axios.post('/api/user/verify-code', {
+          user_email: this.user_email,
+          user_email_code: this.verificationCode,
+        });
+
+        if (response.data.success) {
+          // 서버에서 코드 검증 성공 시, 다음 단계로 전환
+          this.showNextStep = true;
+          this.user.user_email = this.user_email;
+          this.$router.push({
+            name: 'userInsert',
+            query: { user_email: this.user_email }, // params 대신 query 사용
+          });
+
+          alert('인증완료!');
+        } else {
+          console.error(response.data.error);
+        }
+      } catch (error) {
+        console.error('코드 확인 실패:', error);
+      }
+    },
   },
+
   computed: {
     isEmailInvalid() {
       const emailPattern = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
@@ -182,6 +210,8 @@ export default {
   width: 600px;
   margin: 0 auto;
   margin-top: 16px;
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit; /* 부모 요소의 색상 상속 */
 }
 .containerFour {
   padding-left: 25px;
