@@ -151,7 +151,7 @@
 
     <div class="up_down_area">
       <button class="btn">
-        <span><a href="#top">↑위로</a></span>
+        <span><a href="#top">위로</a></span>
       </button>
     </div>
     <br />
@@ -416,10 +416,10 @@ button {
   color: #fff;
   font-weight: 700;
   font-size: 15px;
-  background-color: #222;
+  background-color: rgb(102, 168, 255);
   padding: 17px 60px;
   margin: 0 auto;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px rgb(102, 168, 255);
 }
 
 .btn span {
@@ -434,7 +434,7 @@ button {
   top: 0;
   height: 490%;
   width: 140%;
-  background: #78c7d2;
+  background: rgb(248, 113, 113);
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
   -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);

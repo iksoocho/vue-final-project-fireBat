@@ -54,21 +54,28 @@
         <input type="number" v-model="product.prod_count" />
       </div>
       <label for="prodstate">상품상태</label>
-
-      <input
-        type="radio"
-        v-model="product.prod_state"
-        name="prodstate"
-        value="1"
-      />주문가능
-
-      <input
-        type="radio"
-        v-model="product.prod_state"
-        name="prodstate"
-        value="2"
-      />품절
-
+      <div class="row">
+        <div class="col">
+          <input
+            style="width: 20px"
+            type="radio"
+            v-model="product.prod_state"
+            name="prodstate"
+            value="1"
+          />
+          <span>주문가능</span>
+        </div>
+        <div class="col">
+          <input
+            style="width: 20px"
+            type="radio"
+            v-model="product.prod_state"
+            name="prodstate"
+            value="2"
+          />
+          <span>품절</span>
+        </div>
+      </div>
       <input type="file" ref="fileInput" @change="handleFileChange" multiple />
 
       <button
