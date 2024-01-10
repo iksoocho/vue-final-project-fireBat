@@ -11,7 +11,23 @@
           <span>{{ this.$store.getters.userName }}</span>
         </td>
       </tr>
+      
       <tr>
+  <td class="title"><p>카테고리</p></td>
+  <td>
+    <select id="select" name="category" v-model="qnaInfo.qna_category" v-if="qnaInfo.prod_code">
+      <option value="0">상품 문의</option>
+    </select>
+
+    <select id="select" name="category" v-model="qnaInfo.qna_category" v-else>
+      <option value="1">배송 문의</option>
+      <option value="2">축제 문의</option>
+      <option value="3">기타 문의</option>
+    </select>
+  </td>
+</tr>
+      
+      <!-- <tr>
         <td class="title"><p>카테고리</p></td>
         <td>
           <select id="select" name="category" v-model="qnaInfo.qna_category" >
@@ -20,7 +36,8 @@
             <option value="3">기타 문의</option>
           </select>
         </td>
-      </tr>
+      </tr> -->
+    
       <tr>
         <td class="title"><p>제목</p></td>
         <td>
@@ -67,6 +84,7 @@
       <button type="reset" class="btn btn-danger mt-2">취소</button>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -146,7 +164,12 @@ export default {
           qna_content: this.qnaInfo.qna_content,
         },
       };
-      this.$router.push({ path: "/qnaList" });
+      if(this.qnaInfo.prod_code>0){
+        this.$router.push({ path: "/userProductInfo", query: { prod_code: this.qnaInfo.prod_code }  });
+      }else{
+
+        this.$router.push({ path: "/qnaList" });
+      }
 
       return {
         method,

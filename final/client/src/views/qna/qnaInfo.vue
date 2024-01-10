@@ -75,9 +75,24 @@
       >
         삭제
       </button>
+      <button
+        type="button"
+        class="btn btn-outline-danger float-right mt-2"
+        @click="goQnaList"
+      >
+        목록으로
+      </button>
     </div>
-    <div v-else></div>
-
+    <div v-else> <button
+        type="button"
+        class="btn btn-outline-danger float-right mt-2"
+        @click="goQnaList"
+      >
+        목록으로
+      </button></div>
+    <div >
+     
+    </div>
     
     <div>
       <h4>답변</h4>
@@ -126,6 +141,7 @@
       </button>
     </div>
     <div v-else></div>
+    
   </div>
 </template>
 
@@ -279,6 +295,9 @@ export default {
         }, 2000);
       }
     },
+    goQnaList(){
+      this.$router.push({ path: "/qnaList" });
+    }
   },
 };
 </script>
@@ -288,9 +307,9 @@ export default {
   font-family: "Gowun Dodum";
 }
 #show {
-  margin-bottom: 200px;
+  
   width: 900px;
-  margin: 0 auto;
+  margin: 0 auto 200px;
 }
 #writetable {
   width: 900px;
