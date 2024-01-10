@@ -5,7 +5,7 @@
         <div
           v-if="idx < 5 && img.prod_filename"
           :key="idx"
-          class="row-4 row-sm-3"
+          class="row-4 row-sm-3 mb-5"
           style="margin: 10px"
         >
           <img

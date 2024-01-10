@@ -69,19 +69,26 @@
               </select>
             </td>
           </tr>
-          <div>
-            <input
-              type="file"
-              ref="fileInput"
-              @change="handleFileChange"
-              multiple
-            />
-            <br />
-            <br />
-          </div>
-          <button class="btn" v-on:click="saveInfo(prodInfo.prod_code)">
-            수정
-          </button>
+          <tr>
+            <div>
+              <input
+                type="file"
+                ref="fileInput"
+                class="mb-3"
+                @change="handleFileChange"
+                multiple
+              />
+            </div>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div class="d-grid gap-2">
+                <button class="btn" v-on:click="saveInfo(prodInfo.prod_code)">
+                  수정
+                </button>
+              </div>
+            </td>
+          </tr>
         </table>
       </div>
     </form>
@@ -251,7 +258,7 @@ img {
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #c2f88e;
+  background-color: #88a3fa;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -261,6 +268,6 @@ img {
 }
 
 .btn:hover {
-  background-color: #c2f88e;
+  background-color: #88a3fa;
 }
 </style>

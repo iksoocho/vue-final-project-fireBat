@@ -47,7 +47,7 @@
       </table>
     </div>
     <div class="row">
-      <button class="btn" v-on:click="moveProdUpdate(prodInfo.prod_code)">
+      <button class="btn mb-3" v-on:click="moveProdUpdate(prodInfo.prod_code)">
         수정
       </button>
       <router-link to="/productList" class="btn">목록</router-link>
@@ -151,7 +151,7 @@ img {
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #c2f88e;
+  background-color: #88a3fa;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -161,6 +161,6 @@ img {
 }
 
 .btn:hover {
-  background-color: #c2f88e;
+  background-color: #88a3fa;
 }
 </style>

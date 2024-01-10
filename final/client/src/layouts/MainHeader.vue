@@ -72,7 +72,7 @@
                             xmlns="http://www.w3.org/2000/svg"
                             width="36"
                             height="36"
-                            fill="currentColor"
+                            fill="#F08080"
                             class="bi bi-cart2"
                             viewBox="0 0 16 16"
                             style="margin-right: 30px"

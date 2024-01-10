@@ -5,30 +5,60 @@
       <div id="piechart" class="chart w-50"></div>
       <div id="BarChart" class="chart w-50"></div>
     </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="app">
+          <div class="table-header">상품 판매량 순위</div>
+          <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>상품번호</th>
+                <th>상품이름</th>
+                <th>상품가격</th>
+                <th>상품지역</th>
+                <th>상품분류</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr :key="i" v-for="(prod, i) in productList">
+                <td>{{ prod.prod_code }}</td>
+                <td>{{ prod.prod_name }}</td>
+                <td>{{ prod.prod_price }}</td>
+                <td>{{ prod.prod_loc }}</td>
+                <td>{{ prod.prod_cate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-    <div class="app">
-      <div class="table-header">가장 많이 팔린 상품 6개</div>
-      <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
-      <table>
-        <thead>
-          <tr>
-            <th>상품번호</th>
-            <th>상품이름</th>
-            <th>상품가격</th>
-            <th>상품지역</th>
-            <th>상품분류</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr :key="i" v-for="(prod, i) in productList">
-            <td>{{ prod.prod_code }}</td>
-            <td>{{ prod.prod_name }}</td>
-            <td>{{ prod.prod_price }}</td>
-            <td>{{ prod.prod_loc }}</td>
-            <td>{{ prod.prod_cate }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="col-6">
+        <div class="app">
+          <div class="table-header">상품 판매액 순위</div>
+          <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>상품번호</th>
+                <th>상품이름</th>
+                <th>상품가격</th>
+                <th>상품지역</th>
+                <th>상품분류</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr :key="i" v-for="(prod, i) in productList">
+                <td>{{ prod.prod_code }}</td>
+                <td>{{ prod.prod_name }}</td>
+                <td>{{ prod.prod_price }}</td>
+                <td>{{ prod.prod_loc }}</td>
+                <td>{{ prod.prod_cate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -141,6 +171,12 @@ export default {
 </script>
 
 <style scoped>
+.table td,
+.table th {
+  vertical-align: middle;
+  text-align: center;
+  font-family: "Nanum Gothic", sans-serif;
+}
 .table-header {
   background-color: #ffa5a5;
   color: rgb(255, 255, 255);
@@ -205,7 +241,7 @@ body {
 }
 .app {
   width: 100vw;
-  height: 500vh;
+  height: auto;
   background: hsl(200, 50%, 90%);
 }
 .navbar {
@@ -220,5 +256,69 @@ body {
 .navbar.navbar--hidden {
   box-shadow: none;
   transform: translate3d(0, -100%, 0);
+}
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-header {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+.prod-code {
+  color: #555;
+  font-weight: bold;
+}
+
+.prod-name {
+  color: #333;
+}
+
+.prod-price {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.prod-loc {
+  color: #555;
+}
+
+.prod-cate {
+  color: #555;
 }
 </style>

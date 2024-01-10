@@ -43,7 +43,7 @@
             <td>{{ item.order_count }}</td>
             <td>{{ getDateFormat(item.order_date) }}</td>
             <td>{{ item.total_price }}원</td>
-            <td><button @click="goReviewInsert(item.prod_code)">리뷰 쓰기</button></td>
+            <td><button @click="goReviewInsert(item.prod_code,item.order_no)">리뷰 쓰기</button></td>
           </tr>
         </tbody>
       </table>
@@ -90,7 +90,7 @@
   const grouped = {};
 
   for (const item of this.orderList) {
-    const key = `${item.MER_UID}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0총 결제 금액 : ${item.order_total_amount}원`;
+    const key = `${item.MER_UID}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0총 결제 금액 : ${item.order_total_amount}원`;
 
     if (!grouped[key]) {
       grouped[key] = [];
@@ -133,8 +133,8 @@
         getDateFormat(date) {
                 return this.$dateFormat(date); // 날짜 변환
         },
-        goReviewInsert(prod_code){
-            this.$router.push({ path: "/reviewInsert", query: { prod_code: prod_code } })
+        goReviewInsert(prod_code,order_no){
+            this.$router.push({ path: "/reviewInsert", query: { prod_code: prod_code,  order_no:order_no} })
         },
         onChangePage(data) {
       this.curPage = data;
