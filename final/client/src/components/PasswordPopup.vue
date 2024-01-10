@@ -1,13 +1,30 @@
 <template>
-  <div class="password-popup">
-    <h2>비밀번호 변경</h2>
-    <div>
-      <label for="newPassword">새 비밀번호</label>
+  <div class="password-popup" style="height: 329px">
+    <h1
+      style="
+        font-size: 16px;
+        padding-right: 400px;
+        font-weight: bold;
+        width: 540px;
+        height: 37px;
+        background-color: #dc3545;
+        padding-top: 10px;
+        color: #fff;
+      "
+    >
+      비밀번호 변경
+    </h1>
+    <p style="font-size: 12px; color: #666; text-align: left; padding-left: 20px; line-height: 1.4; padding-top: 12px">
+      비밀번호 변경 시 휴대폰, 컴퓨터 등 모든 기기 및 브라우저에서 로그아웃되며,<br />
+      변경된 비밀번호로 다시 로그인 후 이용하실 수 있습니다.
+    </p>
+    <div class="pwContainer">
       <input
         type="password"
         v-model="newPassword"
         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$"
-        id="newPassword"
+        placeholder="새 비밀번호"
+        style="width: 460px; height: 40px; margin-top: 2px"
       /><br />
       <p
         class="error-message"
@@ -21,12 +38,11 @@
 
       <label for="confirmPassword">비밀번호 확인</label>
       <input type="password" v-model="confirmPassword" id="confirmPassword" @focus="confirmPasswordActivated = true" />
+      <p v-if="confirmPasswordActivated && error" class="error">{{ error }}</p>
+      <button @click="handleChangePassword">비밀번호 변경</button>
+      <button @click="handleClose">닫기</button>
     </div>
     <!-- Display error message if passwords do not match -->
-    <p v-if="confirmPasswordActivated && error" class="error">{{ error }}</p>
-
-    <button @click="handleChangePassword">비밀번호 변경</button>
-    <button @click="handleClose">닫기</button>
   </div>
 </template>
 
@@ -114,18 +130,24 @@ export default {
 </script>
 
 <style scoped>
+.pwContainer {
+  width: 500px;
+  height: 196px;
+  margin: 0 auto;
+  margin-top: 20px;
+  position: relative;
+  padding: 20px 0;
+  border: solid 1px #ebebeb;
+  background-color: #f8f8f8;
+}
 .password-popup {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 20px;
   background-color: white;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.password-popup {
-  width: 550px;
 }
 
 .error {

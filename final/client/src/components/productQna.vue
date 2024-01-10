@@ -31,26 +31,26 @@
                 <th scope="col" class="th-num">번호</th>
                 
                 <th scope="col" class="th-title">제목</th>
-                
+                <th scope="col" class="th-title">작성자</th>
                 <th scope="col" class="th-date">등록일</th>
                 
               </tr>
             </thead>
             <tbody>
               <tr
-                v-for="(review) in qnaProductList.slice(
+                v-for="(qna) in qnaProductList.slice(
                   pageStartIdx,
                   pageStartIdx + ITEM_PER_PAGE
                 )"
-                :key="review.qna_no"
+                :key="qna.qna_no"
               >
-                <td>{{ review.qna_no }}</td>
+                <td>{{ qna.qna_no }}</td>
                 <th>
-                  <td>
+                  
                     <!-- 클릭하면 toggleDetail 함수를 호출하여 상세 내용 펼치기/접기 -->
-                    <a href="#!" @click="toggleDetail(review, review.qna_no)">{{ review.qna_title }}</a>
+                    <a href="#!" @click="toggleDetail(qna, qna.qna_no)">{{ qna.qna_title }}</a>
                     <!-- 상세 내용 -->
-                    <div v-if="review.showDetailIndex === review.qna_no">
+                    <div v-if="qna.showDetailIndex === qna.qna_no">
                       <!-- 여기에 상세 내용을 표시하거나 컴포넌트를 추가하세요 -->
                       
                       <table id="writetable">
@@ -87,20 +87,93 @@
                               cols="130"
                               rows="15"
                               name="content"
-                              v-model="review.qna_content"
+                              v-model="qna.qna_content"
                               readonly
                             ></textarea>
                           </td>
                         </tr>
                       </table>
+                      
+                      <div
+                        style="text-align: center"
+                        v-if="isLoggedIn && qna.user_id == userId"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger me-2 mt-2"
+                          @click="goUpdate(qna.qna_no)"
+                        >
+                          수정
+                        </button>
+                        <button
+                          type="reset"
+                          class="btn btn-danger-outline mt-2"
+                          @click="deleteInfo(qna.qna_no)"
+                        >
+                          삭제
+                        </button>
+                      </div>
+                      <div v-else></div>
+                      <div>
+                        <br>
+      <h4 class="col text-center">답변</h4>
+
+      <div v-for="(answer, index) in qnaAnswer" :key="index">
+        <table id="writetable">
+          <tr>
+            <td class="title"><p>답변 일자</p></td>
+            <td>
+              <span>{{ getDateFormat(answer.qna_answer_date) }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" id="textarea">
+              <textarea
+                id="textarea2"
+                cols="130"
+                rows="5"
+                name="content"
+                v-model="answer.qna_answer_content"
+                readonly
+              ></textarea>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div v-if="qnaAnswer.length == 0 && isLoggedIn && userId == 'admin'">
+      <input
+        type="text"
+        v-model="qnaAnswerInfo.qna_answer_content"
+        placeholder="댓글 작성"
+      />
+      <button @click="answerInsert(qna.qna_no)">답변 추가</button>
+    </div>
+    <div v-else></div>
+
+    <div style="text-align: center" v-if="isLoggedIn && userId == 'admin'">
+      <button
+        type="reset"
+        class="btn btn-danger-outline mt-2"
+        @click="deleteAnswer(qna.qna_no)"
+      >
+        삭제
+      </button>
+    </div>
+    <div v-else></div>
                     </div>
-                  </td>
+
+                    
+                  
                 </th>
-                <td>{{ getDateFormat(review.qna_date) }}</td>
+                <td>{{ qna.user_id }}</td>
+                <td>{{ getDateFormat(qna.qna_date) }}</td>
                 
               </tr>
             </tbody>
           </table>
+
           <button
             type="button"
             class="btn btn-outline-danger float-right mt-3"
@@ -111,6 +184,11 @@
           
         </div>
       </div>
+
+
+      
+    
+  
     </section>
 
     <Paginate
@@ -120,11 +198,13 @@
       @change-page="onChangePage"
     />
   </div>
+  
 </template>
 
 <script>
 import axios from "axios";
 import Paginate from "./Pagination.vue";
+import Swal from "sweetalert2";
 
 export default {
   props: {
@@ -137,6 +217,11 @@ export default {
     return {
       qnaProductList: [],
       qnaImgs: [],
+      qnaAnswer: [],
+      qnaAnswerInfo: {
+        qna_answer_content: "",
+        qna_no: 0,
+      },
       qnaNo:0,
       ITEM_PER_PAGE: 10,
       PAGE_PER_SECTION: 5,
@@ -147,10 +232,18 @@ export default {
     pageStartIdx() {
       return (this.curPage - 1) * this.ITEM_PER_PAGE;
     },
+    isLoggedIn() {
+      return sessionStorage.getItem("user") !== null;
+    },
+    userId() {
+      const userData = JSON.parse(sessionStorage.getItem("user"));
+      console.log("userData:", userData); // 확인용 로그 추가
+      return userData ? userData : null;
+    },
   },
   created(){
     this.getQnaProductList();
-    
+    this.getAnswer();
   },
   methods: {
   getDateFormat(date) {
@@ -179,6 +272,7 @@ export default {
           this.qnaNo = idx
           console.log(' this.qnaNo2 : ',this.qnaNo)
           await this.getQnaImg(this.qnaNo)
+          await this.getAnswer(this.qnaNo)
           review.showDetailIndex = idx;
           
         }
@@ -194,6 +288,97 @@ export default {
         .catch((err) => console.log(err));
 
       this.qnaImgs = result.data;
+    },
+    async goUpdate(qna_no) {
+      let response = await axios
+        .delete(`/api/qna/deleteImg/${qna_no}`)
+        .catch((err) => console.log(err));
+
+      this.$router.push({ path: "/qnaUpdate", query: { qna_no: qna_no } });
+    },
+    async deleteInfo(qna_no) {
+      let result2 = await axios
+        .delete(`/api/qna/answer/${qna_no}`)
+        .catch((err) => console.log(err));
+      let count3 = result2.data.affectedRows;
+
+      let response = await axios
+        .delete(`/api/qna/deleteImg/${qna_no}`)
+        .catch((err) => console.log(err));
+      let count2 = response.data.affectedRows;
+
+      let result = await axios
+        .delete(`/api/qna/${qna_no}`)
+        .catch((err) => console.log(err));
+
+      let count = result.data.affectedRows;
+      if (count + count2 + count3 == 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "삭제실패!",
+          confirmButtonText: "확인",
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "삭제성공!!",
+          confirmButtonText: "확인",
+        });
+        this.$router.go();
+      }
+    },
+    async getAnswer(qna_no) {
+      
+      let result = await axios
+        .get(`/api/qna/answer/${qna_no}`)
+        .catch((err) => console.log(err));
+
+      this.qnaAnswer = result.data;
+    },
+    async answerInsert(qnaNo) {
+      let data = {
+        param: {
+          qna_answer_content: this.qnaAnswerInfo.qna_answer_content,
+          qna_no: qnaNo,
+        },
+      };
+
+      console.log("data : ", data);
+      let result = await axios
+        .post("/api/qna/answer", data)
+        .catch((err) => console.log(err));
+
+      if (result.data.message == "") {
+        alert(`정상적으로 등록 되었습니다.`);
+        this.$router.go();
+      } else {
+        alert(`등록 실패.`);
+      }
+    },
+    async deleteAnswer(qna_no) {
+      let result = await axios
+        .delete(`/api/qna/answer/${qna_no}`)
+        .catch((err) => console.log(err));
+
+      console.log("data : ", result.data);
+      let count = result.data.affectedRows;
+
+      if (count == 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "삭제실패!",
+          confirmButtonText: "확인",
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "삭제성공!!",
+          confirmButtonText: "확인",
+        });
+        setTimeout(() => {
+          this.$router.go();
+        }, 2000);
+      }
     },
     }
 };

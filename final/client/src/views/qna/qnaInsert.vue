@@ -81,6 +81,7 @@ export default {
         qna_content: "",
         user_no: 0,
         qna_category: 0,
+        
       },
       userNo: "",
       bno: "",
@@ -136,12 +137,16 @@ export default {
       let info = this.qnaInfo;
       info.user_no = this.userNo;
       console.log(info);
-      // info.from_date = this.comInfo.write_date;
-
+      
+      
+     
       data = {
         param: this.qnaInfo,
       };
-      this.$router.push({ path: "/qnaList" });
+    
+
+        this.$router.push({ path: "/qnaList" });
+      
 
       return {
         method,

@@ -54,7 +54,7 @@
               true-value="1"
               false-value="0"
               @change="ChangeState(prod)"
-            />상태
+            />
           </th>
         </tr>
       </tbody>

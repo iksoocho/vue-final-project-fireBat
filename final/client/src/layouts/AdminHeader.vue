@@ -43,11 +43,13 @@
           class="dropdown-menu dropdown-menu-end"
           aria-labelledby="navbarDropdown"
         >
-          <!-- 				<li><a class="dropdown-item" href="#!">Settings</a></li> -->
-          <!-- 				<li><a class="dropdown-item" href="#!">Activity Log</a></li> -->
-          <!-- 				<li><hr class="dropdown-divider" /></li> -->
           <li>
-            <a class="dropdown-item" onclick="location.href='#'">Logout</a>
+            <a
+              style="text-aline: center"
+              class="bi bi-house"
+              onclick="location.href='/main'"
+              >메인으로가기</a
+            >
           </li>
         </ul>
       </li>

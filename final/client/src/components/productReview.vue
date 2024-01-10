@@ -31,11 +31,12 @@
                 <th scope="col" class="th-num">번호</th>
                 
                 <th scope="col" class="th-title">제목</th>
-                
+                <th scope="col" class="th-title">작성자</th>
                 <th scope="col" class="th-date">등록일</th>
                 
               </tr>
             </thead>
+
             <tbody>
               <tr
                 v-for="(review, idx) in reviewList.slice(
@@ -45,12 +46,14 @@
                 :key="idx"
               >
                 <td>{{ review.review_no }}</td>
+                
+                  
+                    
                 <th>
-                  <td>
-                    <!-- 클릭하면 toggleDetail 함수를 호출하여 상세 내용 펼치기/접기 -->
                     <a href="#!" @click="toggleDetail(review, review.review_no)">{{ review.review_title }}</a>
                     <!-- 상세 내용 -->
-                    <div v-if="review.showDetailIndex === review.review_no">
+                    
+                    <div v-if="review.showDetailIndex === review.review_no" id="show">
                       <!-- 여기에 상세 내용을 표시하거나 컴포넌트를 추가하세요 -->
                       
                       <table id="writetable">
@@ -93,15 +96,37 @@
                           </td>
                         </tr>
                       </table>
+                      <div
+                        style="text-align: center"
+                        v-if="isLoggedIn && review.user_id == userId"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger me-2 mt-2"
+                          @click="goUpdate(review.review_no)"
+                        >
+                          수정
+                        </button>
+                        <button
+                          type="reset"
+                          class="btn btn-danger-outline mt-2"
+                          @click="deleteInfo(review.review_no)"
+                        >
+                          삭제
+                        </button>
+                      </div>
+                      <div v-else></div>
                     </div>
-                  </td>
-                </th>
+                  </th>
+                  <td>{{ review.user_id }}</td>
                 <td>{{ getDateFormat(review.review_date) }}</td>
                 
               </tr>
+            
             </tbody>
           </table>
-         
+          
+          
         </div>
       </div>
     </section>
@@ -118,6 +143,7 @@
 <script>
 import axios from "axios";
 import Paginate from "./Pagination.vue";
+import Swal from "sweetalert2";
 
 export default {
   props: {
@@ -139,6 +165,14 @@ export default {
   computed: {
     pageStartIdx() {
       return (this.curPage - 1) * this.ITEM_PER_PAGE;
+    },
+    isLoggedIn() {
+      return sessionStorage.getItem("user") !== null;
+    },
+    userId() {
+      const userData = JSON.parse(sessionStorage.getItem("user"));
+      console.log("userData:", userData); // 확인용 로그 추가
+      return userData ? userData : null;
     },
   },
   created(){
@@ -370,4 +404,10 @@ section.notice {
   width: 1px;
   height: 1px;
 }
+
+
+
+
+
+
 </style>
