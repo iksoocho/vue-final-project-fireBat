@@ -3,7 +3,7 @@
     <h3 style="text-align: center; margin-bottom: 50px; color: #dc3545">Sign-up</h3>
     <div class="containerOne">
       <div style="width: 600px; margin: 0 auto; margin-bottom: 20px">
-        <h5 style="font-weight: bold">약관에 동의해주세요.</h5>
+        <h5 style="font-weight: bold; margin-top: 40px">약관에 동의해주세요.</h5>
       </div>
       <div class="containerTwo">
         <input
@@ -48,7 +48,16 @@
           v-model="user_email"
           id="email"
           pattern="^[a-z09_+.-]+([a-z0-9-]+\.)+[a-z0-9]{2,4}$"
-          style="width: 400px; height: 40px; padding-left: 10px"
+          style="
+            width: 400px;
+            height: 40px;
+            padding-left: 10px;
+            border: solid 1px #ebebeb;
+            border-top-color: #d8d8d8;
+            border-left-color: #d8d8d8;
+            border-radius: 3px;
+            background-color: #fff;
+          "
           placeholder="이메일을 입력해 주세요."
         />
 
@@ -198,9 +207,13 @@ export default {
 }
 .containerOne {
   margin: 0 auto;
+  border: solid 1px #ebebeb;
+  background-color: #f8f8f8;
+  width: 760px;
+  margin-bottom: 50px;
 }
 .containerTwo {
-  border: solid 1px rgb(173, 173, 173);
+  border: solid 1px rgb(212, 212, 212);
   width: 600px;
   height: 60px;
   border-radius: 3px;
@@ -218,8 +231,9 @@ export default {
   padding-top: 20px;
   padding-bottom: 20px;
   margin: 0 auto;
-  border: solid 1px gray;
+  border: solid 1px rgb(212, 212, 212);
   width: 600px;
   margin-bottom: 50px;
+  border-radius: 3px;
 }
 </style>
