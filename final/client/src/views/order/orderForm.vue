@@ -197,7 +197,7 @@
               </button>
             </div>
           </li>
-          <li>
+          <li class="list-group-item d-flex justify-content-between">
             <div class="d-grid gap-2 col-6 mx-auto">
               <button
                 type="button"
@@ -425,6 +425,6 @@ button.active {
 }
 
 button:disabled {
-  background-color: rgb(174, 114, 230);
+  background-color: rgb(110, 110, 110);
 }
 </style>

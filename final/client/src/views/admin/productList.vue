@@ -1,17 +1,23 @@
 <template>
   <div class="container">
-    <div id="app">
-      <input
-        type="text"
-        v-model="word"
-        @keyup.enter="prodSearch"
-        @input="onSearchInput"
-        placeholder="상품 이름을 검색하세요"
-      />
-      <button @click="prodSearch">검색</button>
+    <div class="row">
+      <div class="col mb-2">
+        <h3>상품목록</h3>
+      </div>
+      <div class="col text-end input-group mb-3" id="app">
+        <input
+          type="text"
+          v-model="word"
+          @keyup.enter="prodSearch"
+          @input="onSearchInput"
+          class="form-control"
+          placeholder="상품 이름을 검색하세요"
+        />
+        <button @click="prodSearch" class="btn btn-outline-secondary">
+          검색
+        </button>
+      </div>
     </div>
-
-    <h3>상품목록</h3>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -45,7 +51,7 @@
           <td>
             <button
               type="button"
-              calss="btn btn-info me-1"
+              class="btn btn-danger"
               @click="deleteProduct(prod.prod_code)"
             >
               삭제
@@ -141,6 +147,12 @@ export default {
 };
 </script>
 <style scoped>
+.table td,
+.table th {
+  vertical-align: middle;
+  text-align: center;
+  font-family: "Nanum Gothic", sans-serif;
+}
 .review-toolbar {
   display: flex;
   justify-content: space-between;
@@ -241,5 +253,21 @@ li.selected-page {
 }
 .container {
   padding: 30px;
+}
+.btn-danger {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: rgb(248, 113, 113);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-danger:hover {
+  background-color: white;
+  color: rgb(248, 113, 113);
 }
 </style>
