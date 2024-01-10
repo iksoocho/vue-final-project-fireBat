@@ -259,4 +259,18 @@ router.get('/deliveryList/delInfoList', async(req,res)=>{
 })
 
 
+//지역 같은 축제 리스트
+router.get('/prodInFes/:prod_loc', async (req, res) => {
+  let data = req.params.prod_loc;
+  let list = await mysql.query('prodInFes', data);
+
+  for (const fes of list) {
+        let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
+        //  fes.fesImg = fesImg.f_filename;
+        fes.fesImg = fesImg ? fesImg.f_filename : '';
+    }
+    res.send(list);
+})
+
+
 module.exports = router;
