@@ -27,6 +27,12 @@ router.post('/orderDetailInsert', async (req, res) => {  //order_detail테이블
 router.get('/cart/:userId', async (req, res) => { //유저의 장바구니 리스트
    let data = req.params.userId;
    let list = await mysql.query('cartList', data);
+   
+   for (const prod of list) {
+      console.log(prod.prod_code)
+      let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
+      prod.prodImg = prodImg ? prodImg.prod_filename : '';
+  }
    res.send(list);
 });
 
@@ -73,13 +79,13 @@ router.get('/cartOrder/:uid', async (req, res) => { //유저의 선택된 장바
    res.send(list);
 });
 
-router.get('/orderList/:mid', async (req, res) => { //유저의 선택된 장바구니 리스트
+router.get('/orderList/:mid', async (req, res) => { //해당유저의 주문목록
    let data = req.params.mid;
    let list = await mysql.query('odList', data);
    res.send(list[0]);
 });
 
-router.get('/orderDetailList/:mid', async (req, res) => { //유저의 선택된 장바구니 리스트
+router.get('/orderDetailList/:mid', async (req, res) => { //해당유저의 상세주문목록
    let data = req.params.mid;
    let list = await mysql.query('orderDetailList', data);
    res.send(list);
