@@ -1,20 +1,73 @@
 <template>
   <div>
     <!-- 우편번호 -->
-    <div style="margin-bottom: 8px;">
-      <input class="black-placeholder" ref="user_zip" type="text" placeholder="우편번호" v-model="user.user_zip" readonly style="width: 300px; height: 40px; ">
+    <div style="margin-bottom: 8px">
+      <input
+        class="black-placeholder"
+        ref="user_zip"
+        type="text"
+        placeholder="우편번호"
+        v-model="user.user_zip"
+        readonly
+        style="
+          width: 300px;
+          height: 40px;
+          border: solid 1px #ebebeb;
+          border-top-color: #d8d8d8;
+          border-left-color: #d8d8d8;
+          border-radius: 3px;
+          background-color: #fff;
+        "
+      />
       <!-- 주소 찾기 버튼 -->
-      <button @click="postOpen" class="btn btn-danger" type="button" style="margin-left: 20px; margin-bottom: 5px;">주소검색</button>
+      <button
+        @click="postOpen"
+        class="btn btn-danger"
+        type="button"
+        style="margin-left: 20px; margin-bottom: 5px"
+      >
+        주소검색
+      </button>
     </div>
 
     <!-- 도로명주소 -->
-    <div style="margin-bottom: 8px;">
-      <input class="black-placeholder" ref="user_addr" type="text" placeholder="도로명주소" v-model="user.user_addr" :readonly="!isAddressEditable" style="width: 511.94px; height: 40px; ">
+    <div style="margin-bottom: 8px">
+      <input
+        class="black-placeholder"
+        ref="user_addr"
+        type="text"
+        placeholder="도로명주소"
+        v-model="user.user_addr"
+        :readonly="!isAddressEditable"
+        style="
+          width: 511.94px;
+          height: 40px;
+          border: solid 1px #ebebeb;
+          border-top-color: #d8d8d8;
+          border-left-color: #d8d8d8;
+          border-radius: 3px;
+          background-color: #fff;
+        "
+      />
     </div>
 
     <!-- 상세주소 -->
-    <div style="margin-bottom: 20px;">
-      <input ref="user_detail_addr" type="text" placeholder="상세주소" v-model="user.user_detail_addr" style="width: 511.94px; height: 40px;">
+    <div style="margin-bottom: 20px">
+      <input
+        ref="user_detail_addr"
+        type="text"
+        placeholder="상세주소"
+        v-model="user.user_detail_addr"
+        style="
+          width: 511.94px;
+          height: 40px;
+          border: solid 1px #ebebeb;
+          border-top-color: #d8d8d8;
+          border-left-color: #d8d8d8;
+          border-radius: 3px;
+          background-color: #fff;
+        "
+      />
     </div>
   </div>
 </template>
@@ -46,7 +99,7 @@ export default {
           self.$refs.user_detail_addr.focus();
 
           // 부모 컴포넌트로 이벤트 발생
-          self.$emit('address-updated', {
+          self.$emit("address-updated", {
             user_zip: self.user.user_zip,
             user_addr: self.user.user_addr,
           });
