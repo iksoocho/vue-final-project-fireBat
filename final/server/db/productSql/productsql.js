@@ -1,7 +1,7 @@
 // 강현진 상품 CRUD
 module.exports = {
     // 관리자 상품 리스트
-    productList: `SELECT * FROM product`,
+    productList: `SELECT * FROM product order by prod_code desc`,
     // 관리자 상품 상세
     productInfo: `SELECT prod_code, prod_name, prod_price, prod_content, prod_count, prod_loc, prod_cate
                     FROM product
@@ -78,21 +78,21 @@ module.exports = {
 
     // 관리자 재고 관리
     adminProdInven : `SELECT
-                      p.prod_code,
-                      p.prod_name,
-                      p.prod_price,
-                      p.prod_state,
-                      p.prod_count AS current_stock,
-                      p.prod_count - COALESCE(SUM(od.order_count), 0) AS sold_stock,
-                      p.prod_count - COALESCE(SUM(od.order_count), 0) - (p.prod_count - COALESCE(SUM(od.order_count), 0)) AS available_stock
-                      FROM
-                      product p
-                      LEFT JOIN
-                      order_detail od ON p.prod_code = od.prod_code
-                      GROUP BY
-                      p.prod_code,
-                      p.prod_name,
-                      p.prod_count `,
+                        p.prod_code,
+                        p.prod_name,
+                        p.prod_price,
+                        p.prod_state,
+                        p.prod_count AS current_stock,
+                        COALESCE(SUM(od.order_count), 0) AS sold_stock,
+                        p.prod_count - COALESCE(SUM(od.order_count), 0) AS available_stock
+                        FROM
+                        product p
+                        LEFT JOIN
+                        order_detail od ON p.prod_code = od.prod_code
+                        GROUP BY
+                        p.prod_code,
+                        p.prod_name,
+                        p.prod_count`,
     // 관리자 메인 리스트
     adminChartList : `SELECT * FROM product ORDER BY prod_price DESC LIMIT 4`,
     // 관리자 페이지 차트

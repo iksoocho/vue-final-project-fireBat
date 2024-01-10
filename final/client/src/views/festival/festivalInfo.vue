@@ -16,17 +16,16 @@
           </h3>
         </tr>
       </div>
-      <div calss="row align-items-end" id="subImg">
+      <div class="row align-items-end" id="subImg">
         <template v-for="(img, idx) in fesImgs" :key="idx">
           <img
             :src="`http://localhost:3000/festival/public/uploads/${img.f_filename}`"
-            class="card-img-top"
+            class="card-img-top sub-img"
             alt=""
-            width="300px"
-            height="250px"
           />
         </template>
       </div>
+
 
       <div>
         <tr>
