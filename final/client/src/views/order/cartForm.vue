@@ -202,7 +202,7 @@ export default {
 }
 .textbig {
   font-size: large;
-  color: rgb(115, 115, 248);
+  color: rgb(4, 4, 83);
 }
 .btn {
   margin: 1rem;
