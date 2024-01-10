@@ -36,6 +36,7 @@
                 <th scope="col" class="th-num">답변 상태</th>
               </tr>
             </thead>
+            
             <tbody>
               <tr
                 v-for="(qna, idx) in qnaList.slice(
