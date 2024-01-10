@@ -23,4 +23,5 @@ module.exports = {
    odList : `select * from prod_order where MER_UID = ?`,
    orderDetailList : `select * from order_detail where mer_uid = ?`,
    prodStockUpdate : `update product set prod_count = ? where prod_code = ?`,
+   prodStockZeroUpdate : `update product set prod_count = 0, prod_state = 0 where prod_code = ?`,
 }

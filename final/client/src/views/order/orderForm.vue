@@ -392,12 +392,22 @@ export default {
         this.updateStock =
           parseInt(list[i].prod_count) - parseInt(list[i].prod_order_count);
         console.log(this.updateStock);
-        try {
-          await axios.put(
-            `/api/pay/prodStockUpdate/${this.updateStock}/${list[i].prod_code}`
-          );
-        } catch (err) {
-          console.log(err);
+        if (this.updateStock === 0) {
+          try {
+            await axios.put(
+              `/api/pay/prodStockZeroUpdate/${list[i].prod_code}`
+            );
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          try {
+            await axios.put(
+              `/api/pay/prodStockUpdate/${this.updateStock}/${list[i].prod_code}`
+            );
+          } catch (err) {
+            console.log(err);
+          }
         }
       }
     },

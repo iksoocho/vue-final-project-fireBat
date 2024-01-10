@@ -30,6 +30,12 @@ router.put("/prodStockUpdate/:pStock/:pCode", async (req, res) => { // 주문완
    res.send(result);
 });
 
+router.put("/prodStockZeroUpdate/:pCode", async (req, res) => { // 주문완료시 상품재고수정(재고가 0이될때 상태수정)
+   let data = req.params.pCode;
+   let result = await mysql.query("prodStockZeroUpdate", data);
+   res.send(result);
+});
+
 router.get('/cart/:userId', async (req, res) => { //유저의 장바구니 리스트
    let data = req.params.userId;
    let list = await mysql.query('cartList', data);
