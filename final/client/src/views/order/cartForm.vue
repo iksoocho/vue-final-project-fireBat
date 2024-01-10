@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <table class="table w-75" style="margin: auto; table-layout:fixed;">
+    <table class="table w-75" style="margin: auto; table-layout: fixed">
       <colgroup>
         <col width="10%" />
         <col width="10%" />
@@ -20,7 +20,7 @@
         </th>
         <th colspan="2">상품</th>
         <th>구매갯수</th>
-        <th style="text-align: center;">상품금액</th>
+        <th style="text-align: center">상품금액</th>
       </tr>
       <tr v-for="item in cartList" :key="item.prod_code">
         <td>
@@ -38,10 +38,10 @@
             :src="`/api/product/public/uploads/${item.prodImg}`"
             class="card-img-top"
             alt="이미지가 존재하지 않습니다."
-            style="width: 100px; height: 100px;"
+            style="width: 100px; height: 100px"
           />
         </td>
-        <td style="text-align : left;">
+        <td style="text-align: left">
           <p>{{ item.prod_name }}</p>
         </td>
         <td>
@@ -53,7 +53,7 @@
             @input="updateTotalPrice(item)"
             class="form-control"
           />개 -->
-          <div style="display: flex; align-items: center;">
+          <div style="display: flex; align-items: center">
             <input
               type="number"
               min="1"
@@ -61,19 +61,31 @@
               v-model="item.prod_order_count"
               @input="updateTotalPrice(item)"
               class="form-control"
-              style="margin-right: 5px;"
+              style="margin-right: 5px"
             />
             <span>개</span>
           </div>
         </td>
-        <td style="text-align: center;">{{ item.prod_price * item.prod_order_count }}</td>
+        <td style="text-align: center">
+          {{ item.prod_price * item.prod_order_count }}
+        </td>
       </tr>
       <tr>
-        <th><button @click="cartSelectDel" class="btn btn-danger btn-ghost">선택삭제</button></th>
-        <th><button @click="submitOrder" class="btn btn-success btn-jittery">주문하기</button></th>
-        <th> </th>
+        <th>
+          <button @click="cartSelectDel" class="btn btn-danger btn-ghost">
+            선택삭제
+          </button>
+        </th>
+        <th>
+          <button @click="submitOrder" class="btn btn-success btn-jittery">
+            주문하기
+          </button>
+        </th>
+        <th></th>
         <th class="textbig">총 상품금액</th>
-        <th class="textbig" style="text-align: center;">{{ calTotalPrice() }}</th>
+        <th class="textbig" style="text-align: center">
+          {{ calTotalPrice() }}
+        </th>
       </tr>
     </table>
   </div>
@@ -87,7 +99,7 @@ export default {
     return {
       selectAll: 0,
       cartList: [],
-      totalPrice : 0,
+      totalPrice: 0,
     };
   },
 
@@ -131,7 +143,7 @@ export default {
           totalPrice += item.prod_price * item.prod_order_count;
         }
       }
-      return this.totalPrice=totalPrice;
+      return (this.totalPrice = totalPrice);
     },
     async updateTotalPrice(item) {
       // 구매수량이 변경될 때마다 총 상품금액과 DB에 저장된 수량을 업데이트.
@@ -145,7 +157,7 @@ export default {
     },
     async updateCheckboxStatus(item) {
       // 체크상태 변경 DB저장
-      if (item.prod_select === '1') {
+      if (item.prod_select === "1") {
         try {
           console.log("선택상태 : ", item.prod_select);
           await axios.put(`/api/pay/cartSelect/1/${item.cart_no}`);
@@ -167,8 +179,8 @@ export default {
         await axios.delete(`/api/pay/cart/${this.userId}`);
         console.log("삭제되었습니다.");
         Swal.fire({
-          title : '삭제되었습니다.',
-          icon : 'success'
+          title: "삭제되었습니다.",
+          icon: "success",
         });
         // 삭제 후 장바구니 리스트 갱신
         this.getCartList();
@@ -178,13 +190,12 @@ export default {
     },
     submitOrder() {
       this.$router.replace({
-        path: '/payment',
-        query: { 
+        path: "/payment",
+        query: {
           totalPrice: this.totalPrice,
         },
       });
     },
-
   },
   computed: {
     userId() {
@@ -197,12 +208,13 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&family=Nanum+Gothic:wght@700&family=Orbit&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&family=Nanum+Gothic:wght@700&family=Orbit&display=swap");
 
-.table td, .table th {
+.table td,
+.table th {
   vertical-align: middle;
   text-align: center;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
 }
 .textbig {
   font-size: large;
@@ -210,14 +222,13 @@ export default {
 }
 .btn {
   margin: 1rem;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: "Do Hyeon", sans-serif;
   font-size: large;
   border: none;
 }
-.btn-success{
+.btn-success {
   color: white;
-  background-color: rgb(77, 194, 248); 
-  
+  background-color: rgb(77, 194, 248);
 }
 .btn-danger {
   background-color: rgb(248, 113, 113);
@@ -225,9 +236,9 @@ export default {
   transition: 0.3s;
 }
 .btn-danger:hover {
-    background-color: white;
-    color: rgb(248, 113, 113);
-  }
+  background-color: white;
+  color: rgb(248, 113, 113);
+}
 
 .btn-jittery {
   animation: jittery 4s infinite;
@@ -266,5 +277,4 @@ export default {
     transform: scale(1.15) rotate(0);
   }
 }
-
 </style>

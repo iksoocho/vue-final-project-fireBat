@@ -239,6 +239,7 @@ export default {
       mer_uid: "",
       cartList: [],
       del_pay: "",
+      updateStock: "",
     };
   },
   methods: {
@@ -299,6 +300,7 @@ export default {
           this.orderInsert(res);
           this.detailOrderInsert(res);
           this.cartSelectDel();
+          this.updateProdStock(this.cartList);
           Swal.fire({
             title: "결제가 완료되었습니다.",
             icon: "success",
@@ -385,7 +387,20 @@ export default {
         console.log("배송비 : ", this.del_pay);
       }
     },
-
+    async updateProdStock(list) {
+      for (let i = 0; i <= list.length; i++) {
+        this.updateStock =
+          parseInt(list[i].prod_count) - parseInt(list[i].prod_order_count);
+        console.log(this.updateStock);
+        try {
+          await axios.put(
+            `/api/pay/prodStockUpdate/${this.updateStock}/${list[i].prod_code}`
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    },
     showApi() {
       new window.daum.Postcode({
         oncomplete: (data) => {
