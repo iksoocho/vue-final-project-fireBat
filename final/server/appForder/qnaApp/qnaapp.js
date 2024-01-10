@@ -87,7 +87,12 @@ router.post('/review', async (req, res) => {
     let result = await mysql.query('reviewInsert', data);
     res.send(result);
 });
-
+//리뷰 삭제
+router.delete('/review/:review_no', async(req,res)=>{
+    let data = req.params.review_no;
+    let result = await mysql.query('reviewDelete', data);
+    res.send(result);
+});
 
 //qna 검색
 router.get("/search/:value", async (req, res) => {
@@ -110,6 +115,10 @@ router.get("/search/:column", async (req, res) => {
 router.get('/order/:user_id', async (req, res) => {
     let data = req.params.user_id;
     let list = await mysql.query('orderList', data);
+    for (const prod of list) {
+        let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
+        prod.prodImg = prodImg ? prodImg.prod_filename : '';
+    }
     res.send(list);
 });
 
@@ -171,6 +180,34 @@ router.delete('/deleteImg/:qna_no', async (req,res) => {
 router.get('/selectAllImg/:qna_no', async(req,res)=>{
     let data = req.params.qna_no;
     let prodImg = await mysql.query('qnaImgSelect',data);
+    res.send(prodImg);
+})
+
+//review 이미지 등록
+router.post('/reviewPhoto', upload.array('files'), async (req, res) => {
+	let bno = req.body.bno;
+	let filenames = req.files.map((file) => file.filename);
+	console.log(filenames);
+	for (let filename of filenames) {
+		let result = await mysql.query('reviewImgInsert', [bno, filename]);
+	}
+	res.json({ filenames });
+});
+
+
+//review 이미지 삭제
+router.delete('/reviewDeleteImg/:review_no', async (req,res) => {
+    let data = req.params.review_no;
+    let result = await mysql.query('reviewImgDelete', data);
+    res.send(result);
+})
+
+
+
+//review 이미지  조회
+router.get('/reviewSelectAllImg/:review_no', async(req,res)=>{
+    let data = req.params.review_no;
+    let prodImg = await mysql.query('reviewImgSelect',data);
     res.send(prodImg);
 })
 

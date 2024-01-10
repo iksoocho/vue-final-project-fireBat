@@ -3,62 +3,70 @@
     <h2>축제등록</h2>
     <br />
     <form @submit.prevent="saveInfo" class="festival-form">
-      <label for="name">축제이름</label>
-      <input type="text" v-model="fesInfo.f_name" />
-      <br />
-      <label for="cate">카테고리</label>
-      <select name="cate" v-model="fesInfo.f_category">
-        <option value="문화">문화</option>
-        <option value="커플">커플</option>
-        <option value="예술">예술</option>
-        <option value="관광">관광</option>
-        <option value="불빛">불빛</option>
-      </select>
-      <br />
-      <br />
-      <label for="cate">축제지역</label>
-      <select name="cate" v-model="fesInfo.f_reg">
-        <option value="서울">서울</option>
-        <option value="인천">인천</option>
-        <option value="대전">대전</option>
-        <option value="대구">대구</option>
-        <option value="광주">광주</option>
-        <option value="부산">부산</option>
-        <option value="울산">울산</option>
-        <option value="세종">세종</option>
-        <option value="경기">경기</option>
-        <option value="강원">강원</option>
-        <option value="충북">충북</option>
-        <option value="충남">충남</option>
-        <option value="경북">경북</option>
-        <option value="경남">경남</option>
-        <option value="전북">전북</option>
-        <option value="전남">전남</option>
-        <option value="제주">제주</option>
-      </select>
-      <br />
-      <label for="number">공식번호</label>
-      <input type="text" v-model="fesInfo.f_number" />
-      <br />
-      <label for="loc">축제장소</label>
-      <input type="text" v-model="fesInfo.f_loc" />
-      <br />
-      <label for="fday">축제시작일</label>
-      <input type="date" v-model="fesInfo.f_firstday" />
-      <br />
-      <label for="lday">축제종료일</label>
-      <input type="date" v-model="fesInfo.f_lastday" />
-      <br />
-      <label for="con">축제내용</label>
-      <textarea cols="40" v-model="fesInfo.f_content"></textarea>
-      <br />
-      <label for="price">축제금액</label>
-      <input type="text" id="count" v-model="fesInfo.f_price" />
-      <br />
-      <label for="page">홈페이지</label>
-      <input type="url" v-model="fesInfo.f_url" />
-      <br />
-      <br />
+      <div class="form-group">
+        <label for="name">축제이름</label>
+        <input type="text" v-model="fesInfo.f_name" />
+      </div>
+      <div class="form-group">
+        <label for="cate">카테고리</label>
+        <select name="cate" v-model="fesInfo.f_category">
+          <option value="문화">문화</option>
+          <option value="커플">커플</option>
+          <option value="예술">예술</option>
+          <option value="관광">관광</option>
+          <option value="불빛">불빛</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="cate">축제지역</label>
+        <select name="cate" v-model="fesInfo.f_reg">
+          <option value="서울">서울</option>
+          <option value="인천">인천</option>
+          <option value="대전">대전</option>
+          <option value="대구">대구</option>
+          <option value="광주">광주</option>
+          <option value="부산">부산</option>
+          <option value="울산">울산</option>
+          <option value="세종">세종</option>
+          <option value="경기">경기</option>
+          <option value="강원">강원</option>
+          <option value="충북">충북</option>
+          <option value="충남">충남</option>
+          <option value="경북">경북</option>
+          <option value="경남">경남</option>
+          <option value="전북">전북</option>
+          <option value="전남">전남</option>
+          <option value="제주">제주</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="number">공식번호</label>
+        <input type="text" v-model="fesInfo.f_number" />
+      </div>
+      <div class="form-group">
+        <label for="loc">축제장소</label>
+        <input type="text" v-model="fesInfo.f_loc" />
+      </div>
+      <div class="form-group">
+        <label for="fday">축제시작일</label>
+        <input type="date" v-model="fesInfo.f_firstday" />
+      </div>
+      <div class="form-group">
+        <label for="lday">축제종료일</label>
+        <input type="date" v-model="fesInfo.f_lastday" />
+      </div>
+      <div class="form-group">
+        <label for="con">축제내용</label>
+        <textarea cols="40" v-model="fesInfo.f_content"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="price">축제금액</label>
+        <input type="text" id="count" v-model="fesInfo.f_price" />
+      </div>
+      <div class="form-group">
+        <label for="page">홈페이지</label>
+        <input type="url" v-model="fesInfo.f_url" />
+      </div>
       <div>
         <input
           type="file"
@@ -71,6 +79,7 @@
     </form>
   </div>
 </template>
+
 <script>
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -178,7 +187,6 @@ export default {
         url,
       };
     },
-
   },
 };
 </script>
@@ -186,8 +194,19 @@ export default {
 <style scoped>
 .container {
   max-width: 600px;
+  
   margin: 0 auto;
   margin-bottom: 40px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
 }
 
 .festival-form {
@@ -195,17 +214,31 @@ export default {
   flex-direction: column;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
 label {
   margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
 }
 
 input,
 select,
 textarea {
-  margin-bottom: 10px;
   padding: 8px;
   width: 100%;
   box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type="date"] {
+  /* Customize date input appearance */
 }
 
 .custom-button {
@@ -222,4 +255,6 @@ textarea {
 .custom-button:hover {
   background-color: #45a049;
 }
+
+/* Add more styling as needed */
 </style>

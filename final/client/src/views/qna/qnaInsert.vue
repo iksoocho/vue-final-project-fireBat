@@ -15,7 +15,7 @@
         <td class="title"><p>카테고리</p></td>
         <td>
           <select id="select" name="category" v-model="qnaInfo.qna_category">
-            <option value="1">배송 문의</option>
+            <option value="1" selected>배송 문의</option>
             <option value="2">축제 문의</option>
             <option value="3">기타 문의</option>
           </select>
@@ -81,6 +81,7 @@ export default {
         qna_content: "",
         user_no: 0,
         qna_category: 0,
+        
       },
       userNo: "",
       bno: "",
@@ -136,12 +137,16 @@ export default {
       let info = this.qnaInfo;
       info.user_no = this.userNo;
       console.log(info);
-      // info.from_date = this.comInfo.write_date;
-
+      
+      
+     
       data = {
         param: this.qnaInfo,
       };
-      this.$router.push({ path: "/qnaList" });
+    
+
+        this.$router.push({ path: "/qnaList" });
+      
 
       return {
         method,

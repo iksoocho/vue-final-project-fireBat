@@ -16,5 +16,5 @@ module.exports = {
   passwordUpdate: `UPDATE user SET user_pw = ? WHERE user_id = ?`,
   emailCodeSave: `INSERT INTO user_temp SET user_email = ?, user_email_code = ?`, // 이메일 인증 코드 발송
   emailCodeCheck: `SELECT * FROM user_temp WHERE user_email = ? AND user_email_code = ?`, // 인증번호 입력
-  idInput: `SELECT email FROM users WHERE id = ?`
+  idInput: `SELECT user_email FROM user WHERE user_id = ?`
 };

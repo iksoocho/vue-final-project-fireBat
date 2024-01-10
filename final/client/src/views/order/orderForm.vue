@@ -197,7 +197,7 @@
               </button>
             </div>
           </li>
-          <li>
+          <li class="list-group-item d-flex justify-content-between">
             <div class="d-grid gap-2 col-6 mx-auto">
               <button
                 type="button"
@@ -219,6 +219,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 export default {
 name: "OrderPayment",
 data() {
@@ -229,7 +230,6 @@ data() {
       zip: "",
       addr1: "",
       addr2: "",
-      payData: [],
       user: {},
       f_tel: "",
       m_tel: "",
@@ -238,6 +238,7 @@ data() {
       prodPrice: "",
       mer_uid: "",
       cartList: [],
+      del_pay:'',
    };
 },
 methods: {
@@ -294,36 +295,43 @@ methods: {
 
       iamport.request_pay(paymentInfo, (res) => {
       // 결제 완료 후 처리할 로직 작성
-      this.orderInsert(res);
-      this.detailOrderInsert(res);
-      console.log(res);
       if (res.success) {
-         let msg = "결제가 완료되었습니다.";
-         alert(msg);
-         this.$router.replace({
-            path: '/paySuccess',
-            query: { 
-               mer_uid: this.mer_uid,
-            },
-         });
+        this.orderInsert(res);
+        this.detailOrderInsert(res);
+        this.cartSelectDel();
+        Swal.fire({
+          title : '결제가 완료되었습니다.',
+          icon : 'success'
+        });
+        this.$router.replace({
+          path: '/paySuccess',
+          query: { 
+              mer_uid: this.mer_uid,
+          },
+        });
       } else {
-         let msg = "결제에 실패하였습니다.";
-         msg += "에러내용 : " + res.error_msg;
-         alert(msg);
+        let msg = "결제에 실패하였습니다.";
+        // msg += "에러내용 : " + res.error_msg;
+        // alert(msg);
+        Swal.fire({
+          title : msg,
+          text : res.error_msg,
+          icon : 'error'
+        });
       }
       });
-   },
-   async orderInsert(data) {
+  },
+  async orderInsert(data) {
       let order = {
-         param : {
-            user_no: this.user.user_no,
-            point_use: 0,
-            MER_UID: data.merchant_uid,
-            delivery_pay: 2500,
-            point_acc: 0,
-            order_prod_amount: this.prodPrice,
-            order_total_amount: data.paid_amount,
-         }
+        param : {
+          user_no: this.user.user_no,
+          point_use: 0,
+          MER_UID: data.merchant_uid,
+          delivery_pay: 2500,
+          point_acc: 0,
+          order_prod_amount: this.prodPrice,
+          order_total_amount: data.paid_amount,
+        }
       };
       console.log('주문테이블입력');
       let result = await axios.post(`/api/pay/orderInsert`, order).catch(err => console.log(err));
@@ -343,6 +351,14 @@ methods: {
          let result = await axios.post(`/api/pay/orderDetailInsert`, detail).catch(err => console.log(err));
       }
    },
+   async cartSelectDel() {
+      try {
+        await axios.delete(`/api/pay/cart/${this.user.user_id}`);
+        console.log("체크된장바구니삭제되었습니다.");
+      } catch (err) {
+        console.log(err);
+      }
+    },
    async getCartOrderList() {
       console.log('유저번호 : ', this.user.user_no);
       try {
@@ -355,8 +371,12 @@ methods: {
       } catch (err) {
       console.log(err);
       }
-   },
-   showApi() {
+  },
+  // calDeliveryCharge(){
+  //   if()
+  // },
+  
+  showApi() {
       new window.daum.Postcode({
       oncomplete: (data) => {
           // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -417,6 +437,6 @@ button.active {
 }
 
 button:disabled {
-  background-color: rgb(174, 114, 230);
+  background-color: rgb(110, 110, 110);
 }
 </style>

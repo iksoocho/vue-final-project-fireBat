@@ -1,18 +1,18 @@
 module.exports = {
     //qna 게시판에서 나오는 list (상품문의 제외)
-    qnaList:`SELECT q.qna_no, q.qna_title, q.qna_date, q.qna_category, u.user_id, (SELECT COUNT(*) FROM qna_answer WHERE qna_answer.qna_no  = q.qna_no) as answerCount
+    qnaList:`SELECT q.qna_no, q.qna_title, q.qna_date, q.qna_category, q.prod_code, u.user_id, (SELECT COUNT(*) FROM qna_answer WHERE qna_answer.qna_no  = q.qna_no) as answerCount
              FROM qna q
              JOIN user u ON q.user_no = u.user_no
              WHERE q.qna_category <> 0
              ORDER BY q.qna_no DESC`,
 
-    qnaProductLsit : `SELECT q.qna_no, q.qna_title, q.qna_content,q.qna_date, q.qna_category, u.user_id, (SELECT COUNT(*) FROM qna_answer WHERE qna_answer.qna_no  = q.qna_no) as answerCount
+    qnaProductLsit : `SELECT q.qna_no, q.qna_title, q.qna_content,q.qna_date, q.qna_category, q.prod_code, u.user_id, (SELECT COUNT(*) FROM qna_answer WHERE qna_answer.qna_no  = q.qna_no) as answerCount
                         FROM qna q
                         JOIN user u ON q.user_no = u.user_no
                         WHERE q.prod_code = ?
                         ORDER BY q.qna_no DESC`,
 
-    qnaInfo:`select q.qna_no, q.qna_title, q.qna_content, q.qna_category, u.user_id
+    qnaInfo:`select q.qna_no, q.qna_title, q.qna_content, q.qna_category, q.prod_code, u.user_id
              FROM qna q
              JOIN user u ON q.user_no = u.user_no  where qna_no = ?`,
 
@@ -38,6 +38,12 @@ module.exports = {
 
     qnaImgSelect : `select * from qna_imgs where qna_no = ?`,
 
+    reviewImgInsert: `insert into review_imgs set review_no = ?, review_filename = ?`,
+
+    reviewImgDelete : `delete from review_imgs where review_no = ?`,
+
+    reviewImgSelect : `select * from review_imgs where review_no = ?`,
+
 //----------------------------------------------------------------------------------------------------------------
     qnaAnswerList : `select * from qna_answer where qna_no = ?`,
 
@@ -54,15 +60,24 @@ module.exports = {
                     r.review_star,
                     r.order_no,
                     r.review_title,
-                    r.prod_code
+                    r.prod_code,
+                    u.user_id
+                    
                 FROM
                     review r
                 INNER JOIN
-                    product p ON r.prod_code = p.prod_code -- prod_code를 기준으로 조인
+                    product p ON r.prod_code = p.prod_code
+                INNER JOIN
+                    prod_order po ON r.order_no = po.order_no
+                INNER JOIN
+                    user u ON po.user_no = u.user_no
+
                 WHERE
                     p.prod_code = ?`,
 
     reviewInsert:`insert into review set ?`,
+
+    reviewDelete :`delete from review where review_no = ?`,
 
 //----------------------------------------------------------------------------------------------------------------
 
@@ -85,7 +100,7 @@ module.exports = {
                     INNER JOIN
                         user u ON po.user_no = u.user_no -- user 테이블 조인
                     WHERE
-                        u.user_id = ?;`
+                        u.user_id = ? order by po.MER_UID desc`
                     
     
 }

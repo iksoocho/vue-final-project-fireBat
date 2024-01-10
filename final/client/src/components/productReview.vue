@@ -31,11 +31,12 @@
                 <th scope="col" class="th-num">번호</th>
                 
                 <th scope="col" class="th-title">제목</th>
-                
+                <th scope="col" class="th-title">작성자</th>
                 <th scope="col" class="th-date">등록일</th>
                 
               </tr>
             </thead>
+
             <tbody>
               <tr
                 v-for="(review, idx) in reviewList.slice(
@@ -45,27 +46,29 @@
                 :key="idx"
               >
                 <td>{{ review.review_no }}</td>
+                
+                  
+                    
                 <th>
-                  <td>
-                    <!-- 클릭하면 toggleDetail 함수를 호출하여 상세 내용 펼치기/접기 -->
-                    <a href="#!" @click="toggleDetail(review, idx)">{{ review.review_title }}</a>
+                    <a href="#!" @click="toggleDetail(review, review.review_no)">{{ review.review_title }}</a>
                     <!-- 상세 내용 -->
-                    <div v-if="review.showDetailIndex === idx">
+                    
+                    <div v-if="review.showDetailIndex === review.review_no" id="show">
                       <!-- 여기에 상세 내용을 표시하거나 컴포넌트를 추가하세요 -->
                       
                       <table id="writetable">
       
                         <tr>
                           <td class="title"><p>첨부</p></td>
-                          <!-- <td>
-                            <span v-for="(img, idx) in qnaImgs" :key="idx" colspan="2">
+                          <td>
+                            <span v-for="(img, idx) in reviewImgs" :key="idx" colspan="2">
                               <img
-                                :src="`http://localhost:3000/qna/public/uploads/${img.qna_filename}`"
+                                :src="`http://localhost:3000/qna/public/uploads/${img.review_filename}`"
                                 width="150px"
                                 height="150px"
                               />
                             </span>
-                          </td> -->
+                          </td>
                         </tr>
 
                         <!-- <tr v-for="(img, idx) in qnaImgs" :key="idx">
@@ -93,15 +96,31 @@
                           </td>
                         </tr>
                       </table>
+                      <div
+                        style="text-align: center"
+                        v-if="isLoggedIn && review.user_id == userId"
+                      >
+                        
+                        <button
+                          type="reset"
+                          class="btn btn-danger-outline mt-2"
+                          @click="deleteInfo(review.review_no,review.prod_code)"
+                        >
+                          삭제
+                        </button>
+                      </div>
+                      <div v-else></div>
                     </div>
-                  </td>
-                </th>
+                  </th>
+                  <td>{{ review.user_id }}</td>
                 <td>{{ getDateFormat(review.review_date) }}</td>
                 
               </tr>
+            
             </tbody>
           </table>
-         
+          
+          
         </div>
       </div>
     </section>
@@ -118,6 +137,7 @@
 <script>
 import axios from "axios";
 import Paginate from "./Pagination.vue";
+import Swal from "sweetalert2";
 
 export default {
   props: {
@@ -132,11 +152,21 @@ export default {
       ITEM_PER_PAGE: 10,
       PAGE_PER_SECTION: 5,
       curPage: 1,
+      reviewNo:0,
+      reviewImgs: [],
     };
   },
   computed: {
     pageStartIdx() {
       return (this.curPage - 1) * this.ITEM_PER_PAGE;
+    },
+    isLoggedIn() {
+      return sessionStorage.getItem("user") !== null;
+    },
+    userId() {
+      const userData = JSON.parse(sessionStorage.getItem("user"));
+      console.log("userData:", userData); // 확인용 로그 추가
+      return userData ? userData : null;
     },
   },
   created(){
@@ -154,15 +184,64 @@ export default {
         await axios.get(`/api/qna/review/${this.searchProd}`).catch((err) => console.log(err))
       ).data;
     },
-    toggleDetail(review, idx) {
+    async toggleDetail(review, idx) {
+
+      this.reviewList.forEach((item) => {
+          if (item.showDetailIndex !== null && item.showDetailIndex !== idx) {
+            item.showDetailIndex = null;
+          }
+        });
         // 클릭한 항목의 상세 내용 펼치기/접기
         if (review.showDetailIndex === idx) {
           review.showDetailIndex = null;
+          
         } else {
+          this.reviewNo = idx
+          
+          await this.getReviewImg(this.reviewNo)
           review.showDetailIndex = idx;
+          
         }
-      },
+    },
+    async getReviewImg(reviewNo) {
+      
+
+      let result = await axios
+        .get(`/api/qna/reviewSelectAllImg/${reviewNo}`)
+        .catch((err) => console.log(err));
+
+      this.reviewImgs = result.data;
+    },
+    async deleteInfo(qna_no, prod_code) {
+      
+
+      let response = await axios
+        .delete(`/api/qna/reviewDeleteImg/${qna_no}`)
+        .catch((err) => console.log(err));
+      let count2 = response.data.affectedRows;
+
+      let result = await axios
+        .delete(`/api/qna/review/${qna_no}`)
+        .catch((err) => console.log(err));
+
+      let count = result.data.affectedRows;
+      if (count + count2== 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "삭제실패!",
+          confirmButtonText: "확인",
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "삭제성공!!",
+          confirmButtonText: "확인",
+        });
+        this.$router.push({ path: "/userProductInfo", query: { prod_code: prod_code }  });
+      }
+    },
   },
+
 };
 </script>
 
@@ -347,4 +426,10 @@ section.notice {
   width: 1px;
   height: 1px;
 }
+
+
+
+
+
+
 </style>

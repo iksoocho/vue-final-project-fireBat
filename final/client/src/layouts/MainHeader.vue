@@ -33,7 +33,7 @@
                       <li>
                         <a href="#">축제<i class="ti-angle-down"></i></a>
                         <ul class="submenu">
-                          <li><a href="/festivalList" >축제</a></li>
+                          <li><a href="/festivalList">축제</a></li>
                           <li><a href="festivalCalender">축제 달력</a></li>
                         </ul>
                       </li>
@@ -64,10 +64,24 @@
                           style="margin-bottom: 10px; margin-top: 10px; padding-right: 20px; padding-top: 8px"
                         >
                           <b
-                            ><a href="/myPage" style="color: inherit; text-decoration: none">{{ userId }}</a></b
+                            ><a href="/myPage" style="color: #ee2557; text-decoration: none">{{ userId }}</a></b
                           >님!
                         </p>
-                        <a href="/cart">장바구니</a>
+                        <a href="/cart">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="36"
+                            height="36"
+                            fill="#F08080"
+                            class="bi bi-cart2"
+                            viewBox="0 0 16 16"
+                            style="margin-right: 30px"
+                          >
+                            <path
+                              d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"
+                            />
+                          </svg>
+                        </a>
 
                         <button type="button" class="btn btn-outline-danger me-2" @click="logout">Logout</button>
                       </div>
@@ -117,7 +131,6 @@ export default {
       window.location.reload();
       //await this.$nextTick(); // 상태 업데이트를 기다립니다.
     },
-   
   },
 };
 </script>

@@ -3,8 +3,34 @@
     <form @submit.prevent>
       <div class="container-one">
         <h3 style="padding-top: 20px; text-align: left; padding-left: 50px; color: #dc3545">Login</h3>
-        <input type="text" placeholder="ID" v-model="user_id" required style="margin-top: 10px" /><br />
-        <input type="password" placeholder="PASSWORD" v-model="user_pw" required style="margin-top: 15px" /><br />
+        <input
+          type="text"
+          placeholder="ID"
+          v-model="user_id"
+          required
+          style="
+            margin-top: 10px;
+            border: solid 1px #ebebeb;
+            border-top-color: #d8d8d8;
+            border-left-color: #d8d8d8;
+            border-radius: 3px;
+            background-color: #fff;
+          "
+        /><br />
+        <input
+          type="password"
+          placeholder="PASSWORD"
+          v-model="user_pw"
+          required
+          style="
+            margin-top: 15px;
+            border: solid 1px #ebebeb;
+            border-top-color: #d8d8d8;
+            border-left-color: #d8d8d8;
+            border-radius: 3px;
+            background-color: #fff;
+          "
+        /><br />
         <div class="d-grid gap-2" style="margin-top: 20px; width: 300px; margin-left: 50px">
           <button type="submit" class="btn btn-danger" @click="login" style="height: 40px">로그인</button>
         </div>
@@ -22,7 +48,9 @@
       >
     </div>
     <div class="hr-sect">간편로그인</div>
-    <KakaoLogin />
+    <div style="margin-bottom: 50px; text-align: center; margin-top: 10px">
+      <KakaoLogin />
+    </div>
   </div>
 </template>
 
@@ -113,13 +141,14 @@ export default {
 
 <style scoped>
 .container-one {
-  border: solid 1px black;
+  border: solid 1px #ebebeb;
+  background-color: #f8f8f8;
   width: 400px;
-  height: 250px;
+  height: 260px;
   margin: 0 auto;
   margin-bottom: 10px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 .container-two {

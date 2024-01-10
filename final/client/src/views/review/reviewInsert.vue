@@ -88,6 +88,7 @@ data() {
   },
   created() {
     this.reviewInfo.prod_code = this.$route.query.prod_code;
+    this.reviewInfo.order_no = this.$route.query.order_no
     console.log('this.reviewInfo.prod_code : ', this.reviewInfo.prod_code)
   },
   methods:{
@@ -103,13 +104,14 @@ data() {
       url = `/api/qna/review`;
       let info = this.reviewInfo;
       info.prod_code = this.$route.query.prod_code;
+      info.order_no = this.$route.query.order_no;
       console.log(info);
       // info.from_date = this.comInfo.write_date;
 
       data = {
         param: this.reviewInfo,
       };
-      this.$router.push({ path: "/orderList" });
+      this.$router.push({ path: "/userProductInfo", query: { prod_code: this.reviewInfo.prod_code }  });
 
       return {
         method,
@@ -145,7 +147,7 @@ data() {
       } catch (err) {
         console.error(err);
       } finally {
-        let res = await axios.post(`/api/qna/qnaPhoto`, formData);
+        let res = await axios.post(`/api/qna/reviewPhoto`, formData);
         let uploadedImages = res.data.filenames;
         console.log(uploadedImages);
 
@@ -157,3 +159,59 @@ data() {
 }
 
 </script>
+
+<style scoped>
+* {
+  font-family: "Gowun Dodum";
+}
+#show {
+  height: 850px;
+  margin-bottom: 80px;
+  width: 900px;
+  margin: 0 auto;
+}
+#writetable {
+  width: 900px;
+  border: 1px;
+  border: 1px solid;
+}
+.title {
+  background-color: #dc3545;
+  opacity: 0.89;
+}
+#textarea {
+  margin-top: 10px;
+}
+p {
+  text-align: center;
+  margin: 15px;
+  color: #ffffff;
+  font-weight: bolder;
+}
+#select {
+  margin: 10px;
+}
+#title {
+  margin: 10px;
+  width: 700px;
+}
+#avatar {
+  margin: 10px;
+}
+span {
+  margin-left: 10px;
+}
+.page-title {
+  margin-bottom: 60px;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Adjust margin as needed */
+}
+
+tr {
+  border: 1px solid;
+}
+</style>

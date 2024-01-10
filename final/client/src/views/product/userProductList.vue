@@ -1,14 +1,17 @@
 <template>
   <div class="container">
-    <div id="app">
+    <div class="col-sm-3 text-end input-group mb-3" id="app">
       <input
         type="text"
         v-model="word"
         @keyup.enter="prodSearch"
         @input="onSearchInput"
+        class="form-control"
         placeholder="상품 이름을 검색하세요"
       />
-      <button @click="prodSearch">검색</button>
+      <button @click="prodSearch" class="btn btn-outline-secondary">
+        검색
+      </button>
     </div>
 
     <hr />
@@ -141,5 +144,79 @@ export default {
 
 .out-of-stock-overlay img {
   width: 50%; /* 이미지 크기 조정 */
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.input-group {
+  justify-content: flex-end;
+}
+
+.form-control {
+  width: 70%;
+}
+
+.btn {
+  margin-left: 10px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: box-shadow 0.3s;
+}
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #333;
+}
+
+.out-of-stock {
+  opacity: 0.5;
+}
+
+.out-of-stock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.out-of-stock-overlay img {
+  max-width: 50%;
+}
+
+hr {
+  margin: 20px 0;
+}
+
+.Paginate {
+  margin-top: 20px;
 }
 </style>

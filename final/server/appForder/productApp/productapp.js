@@ -80,9 +80,7 @@ router.get('/user', async (req,res)=>{
 
       // 각 제품에 대한 이미지 데이터 가져오기
     for (const prod of list) {
-        console.log('prod.f_code :',prod.prod_code)
         let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
-        console.log('prod.prodImg :',prodImg)
         prod.prodImg = prodImg ? prodImg.prod_filename : '';
     }
     res.send(list);
@@ -257,6 +255,20 @@ router.get('/delivery/delList', async(req,res)=>{
 // 주문정보 불러오기
 router.get('/deliveryList/delInfoList', async(req,res)=>{
     let list = await mysql.query('orderInfoList')
+    res.send(list);
+})
+
+
+//지역 같은 축제 리스트
+router.get('/prodInFes/:prod_loc', async (req, res) => {
+  let data = req.params.prod_loc;
+  let list = await mysql.query('prodInFes', data);
+
+  for (const fes of list) {
+        let fesImg = (await mysql.query('fesImgSelect',fes.f_code))[0];
+        //  fes.fesImg = fesImg.f_filename;
+        fes.fesImg = fesImg ? fesImg.f_filename : '';
+    }
     res.send(list);
 })
 

@@ -1,7 +1,7 @@
 // 강현진 상품 CRUD
 module.exports = {
     // 관리자 상품 리스트
-    productList: `SELECT * FROM product`,
+    productList: `SELECT * FROM product order by prod_code desc`,
     // 관리자 상품 상세
     productInfo: `SELECT prod_code, prod_name, prod_price, prod_content, prod_count, prod_loc, prod_cate
                     FROM product
@@ -78,23 +78,23 @@ module.exports = {
 
     // 관리자 재고 관리
     adminProdInven : `SELECT
-                      p.prod_code,
-                      p.prod_name,
-                      p.prod_price,
-                      p.prod_state,
-                      p.prod_count AS current_stock,
-                      p.prod_count - COALESCE(SUM(od.order_count), 0) AS sold_stock,
-                      p.prod_count - COALESCE(SUM(od.order_count), 0) - (p.prod_count - COALESCE(SUM(od.order_count), 0)) AS available_stock
-                      FROM
-                      product p
-                      LEFT JOIN
-                      order_detail od ON p.prod_code = od.prod_code
-                      GROUP BY
-                      p.prod_code,
-                      p.prod_name,
-                      p.prod_count `,
+                        p.prod_code,
+                        p.prod_name,
+                        p.prod_price,
+                        p.prod_state,
+                        p.prod_count AS current_stock,
+                        COALESCE(SUM(od.order_count), 0) AS sold_stock,
+                        p.prod_count - COALESCE(SUM(od.order_count), 0) AS available_stock
+                        FROM
+                        product p
+                        LEFT JOIN
+                        order_detail od ON p.prod_code = od.prod_code
+                        GROUP BY
+                        p.prod_code,
+                        p.prod_name,
+                        p.prod_count`,
     // 관리자 메인 리스트
-    adminChartList : `SELECT * FROM product ORDER BY prod_price DESC LIMIT 6`,
+    adminChartList : `SELECT * FROM product ORDER BY prod_price DESC LIMIT 4`,
     // 관리자 페이지 차트
     adminChart : `SELECT * FROM product ORDER BY prod_sell_count DESC LIMIT 6 `,
     //이미지 테스트
@@ -128,5 +128,9 @@ module.exports = {
                      JOIN prod_order d ON o.order_detail_no = d.order_no
                      JOIN user u ON d.user_no = u.user_no
                      JOIN product p ON o.prod_code = p.prod_code ORDER BY o.order_detail_no `,
+    
+    
+    // 함께하면 좋은 축제들
+    prodInFes : `select * from festival where f_reg = ? order by rand() limit 4`,
     
 }

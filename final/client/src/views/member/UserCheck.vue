@@ -1,18 +1,68 @@
 <template>
   <div class="container">
-    <h1>비밀번호 재확인</h1>
+    <h1
+      style="
+        height: 100px;
+        line-height: 100px;
+        font-family: 'Noto Sans KR';
+        font-size: 24px;
+        color: #333;
+        font-weight: 700;
+      "
+    >
+      비밀번호 재확인
+    </h1>
     <div class="containerOne">
-      <small>개인정보보호를 위해 회원님의 비밀번호를 다시 한번 확인합니다.</small>
+      <small style="position: relative; line-height: 18px; font-size: 12px; color: #666"
+        >개인정보보호를 위해 회원님의 비밀번호를 다시 한번 확인합니다.</small
+      >
     </div>
-    <form @submit.prevent>
-      <div>
-        <input type="text" v-model="user.user_id" readonly /><br />
-        <!-- <input type="password" placeholder="비밀번호" v-model="user.user_pw" /> -->
-        <input type="password" placeholder="비밀번호" v-model="user.user_pw" @keyup.enter.prevent="checkPassword" />
-        <!-- <button @click="checkPassword">확인</button> -->
-        <button type="submit">확인</button>
-      </div>
-    </form>
+    <div class="containerTwo">
+      <form @submit.prevent>
+        <div>
+          <input
+            type="text"
+            v-model="user.user_id"
+            readonly
+            style="
+              padding: 4px 11px 6px;
+              width: 458px;
+              height: 40px;
+              line-height: 28px;
+              border: solid 1px #ebebeb;
+              border-top-color: #d8d8d8;
+              border-left-color: #d8d8d8;
+              border-radius: 3px;
+              background-color: #fff;
+            "
+          />
+          <br />
+          <!-- <input type="password" placeholder="비밀번호" v-model="user.user_pw" /> -->
+          <input
+            type="password"
+            placeholder="비밀번호"
+            v-model="user.user_pw"
+            @keyup.enter.prevent="checkPassword"
+            style="
+              padding: 4px 11px 6px;
+              width: 458px;
+              height: 40px;
+              line-height: 28px;
+              margin-top: 11px;
+              border: solid 1px #ebebeb;
+              border-top-color: #d8d8d8;
+              border-left-color: #d8d8d8;
+              border-radius: 3px;
+              background-color: #fff;
+            "
+          />
+          <!-- <button @click="checkPassword">확인</button> -->
+          <button type="submit" class="btn btn-danger" style="width: 458px; height: 40px; margin-top: 11px">
+            확인
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -77,7 +127,23 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 50px;
+}
 .containerOne {
   margin: 0 auto;
+  text-align: center;
+}
+.containerTwo {
+  position: relative;
+  padding: 20px 0;
+  border: solid 1px #ebebeb;
+  background-color: #f8f8f8;
+  width: 500px;
+  height: 182px;
+  margin: 0 auto;
+  margin-top: 16px;
 }
 </style>

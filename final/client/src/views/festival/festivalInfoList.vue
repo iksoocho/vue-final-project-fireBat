@@ -1,11 +1,26 @@
 <template>
-  <div>
-    <h2 id="flist">축제목록</h2>
-    <br />
-    <div class="scroll-container">
-      <table class="table table-hover">
-        <thead>
-          <tr>
+  <div class="container">
+    <div class="row">
+      <div class="col mb-2">
+        <h3>축제목록</h3>
+      </div>
+      <div class="col text-end input-group mb-3" id="app">
+        <input
+          type="text"
+          v-model="word"
+          @keyup.enter="fesSearch"
+          @input="onSearchInput"
+          class="form-control"
+          placeholder="상품 이름을 검색하세요"
+        />
+        <button @click="fesSearch" class="btn btn-outline-secondary">
+          검색
+        </button>
+      </div>
+    </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
             <th>축제코드</th>
             <th>카테고리</th>
             <th>지역</th>
@@ -15,57 +30,44 @@
             <th>금액</th>
             <th>홈페이지</th>
             <th>삭제</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr
-            :key="i"
-            v-for="(fes, i) in festivalList.slice(
-              pageStartIdx,
-              pageStartIdx + ITEM_PER_PAGE
-            )"
-            @click="goToUpdate(fes.f_code)"
-          >
-            <td>{{ fes.f_code }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(fes, idx) in festivalList.slice(
+            pageStartIdx,
+            pageStartIdx + ITEM_PER_PAGE
+          )"
+          :key="idx"
+          @click="goToUpdate(fes.f_code)"
+        >
+            <td>{{ fes.f_code}}</td>
             <td>{{ fes.f_category }}</td>
             <td>{{ fes.f_reg }}</td>
             <td>{{ fes.f_name }}</td>
             <td>{{ fes.f_number }}</td>
-            <td>
-              {{ getDateFormat(fes.f_firstday) }} ~
-              {{ getDateFormat(fes.f_lastday) }}
-            </td>
+            <td>{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</td>
             <td>{{ fes.f_price }}</td>
             <td>{{ fes.f_url }}</td>
-            <div class="row">
-              <!-- <button class="btn btn-info" v-on:click="goToUpdate(fes.f_code)">수정</button> -->
-              <button class="btn btn-warning" @click="fesDelete(fes.f_code)">
-                X
-              </button>
-            </div>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div id="fapp">
-      <!-- Search input and button -->
-      <input
-        type="text"
-        v-model="word"
-        @input="onSearchInput"
-        @keyup.enter="fesSearch"
-        placeholder="축제 이름을 검색하세요"
-      />
-      <button @click="search">검색</button>
-      <br />
-      <br />
-      <button><a href="festivalList">리스트로</a></button>
-    </div>
+
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              @click="fesDelete(fes.f_code)"
+            >
+              삭제
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <Paginate
       class="justify-content-center"
       :list="festivalList"
-      v-bind="{ ITEM_PER_PAGE, PAGE_PER_SECTION, curPage }"
+      :ITEM_PER_PAGE="ITEM_PER_PAGE"
+      :PAGE_PER_SECTION="PAGE_PER_SECTION"
+      :curPage="curPage"
       @change-page="onChangePage"
     />
   </div>
@@ -179,17 +181,18 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #flist {
   text-align: center;
   margin-bottom: 20px;
+  font-size: 24px;
 }
 
 .scroll-container {
-  max-height: 400px;
+  /* max-height: 400px;
   overflow-y: auto;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 5px; */
 }
 
 .table {
@@ -200,13 +203,14 @@ export default {
 
 .table th,
 .table td {
-  padding: 10px;
+  padding: 15px;
   text-align: center;
-  /* border: 1px solid #ddd; */
+  border: 1px solid #ddd;
 }
 
 .table th {
   background-color: #f5f5f5;
+  font-weight: bold;
 }
 
 .table tbody tr:hover {
@@ -215,5 +219,39 @@ export default {
 
 #fapp {
   text-align: center;
+  margin-top: 20px;
+}
+
+#fapp input {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#fapp button {
+  padding: 10px 20px;
+  background-color: wheat;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#fapp button:hover {
+  background-color: powderblue;
+}
+
+#fapp a {
+  color: honeydew;
+  text-decoration: none;
+}
+
+#fapp a:hover {
+  text-decoration: underline;
+}
+
+.btn btn-outline-danger {
+  padding: 8px 16px;
 }
 </style>

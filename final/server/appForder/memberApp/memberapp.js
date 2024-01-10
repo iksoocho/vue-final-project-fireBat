@@ -200,10 +200,11 @@ router.delete('/:no', async (req, res) => {
 });
 
 router.get('/pwFind', async (req, res) => {
-  let data = req.body.id; // 요청 본문에서 id 값을 가져옴
-  let result = await mysql.query('pwFind', data);
+  let data = req.query.user_id; // URL 쿼리 매개변수에서 user_id 값을 가져옴
+  console.log(data);
+  let result = await mysql.query('idInput', data);
   res.send(result);
-})
+});
 
 // 회원 아이디 찾기(2023-12-26) 등록된 휴대폰번호
 router.get('/tel/:tel', async (req, res) => {
