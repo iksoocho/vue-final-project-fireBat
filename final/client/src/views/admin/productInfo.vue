@@ -30,7 +30,18 @@
                 <th>상품분류</th>
                 <td class="text-center">{{prodInfo.prod_cate}}</td>
             </tr>
-          
+            <tr>
+        <td class="title"><p>상품 이미지</p></td>
+        <td>
+          <span v-for="(img, idx) in prodImgs" :key="idx" colspan="2">
+            <img
+              :src="`http://localhost:3000/product/public/uploads/${img.prod_filename}`"
+              width="150px"
+              height="150px"
+            />
+          </span>
+        </td>
+      </tr>
         </table>
     </div>
     <div class="row">
@@ -47,14 +58,15 @@ export default {
     data(){
         return{
             searchProd : '',
-            prodInfo : {}
+            prodInfo : {},
+            prodImgs:[]
             
         }
     },
     created(){
         this.searchProd = this.$route.query.prod_code;
         this.getProdInfo();
-        
+        this.getProdImg()
     },
     methods : {
         async getProdInfo(){
@@ -69,6 +81,15 @@ export default {
 
             this.$router.push({path: '/productUpdate', query :{ prod_code : prod_code}})
         },
+        async getProdImg() {
+            console.log(this.searchProd);
+
+            let result = await axios
+                .get(`/api/product/selectAllImg/${this.searchProd}`)
+                .catch((err) => console.log(err));
+
+            this.prodImgs = result.data;
+            },
         
     }
 }

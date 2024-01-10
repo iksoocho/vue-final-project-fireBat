@@ -48,24 +48,24 @@
                 <th>
                   <td>
                     <!-- 클릭하면 toggleDetail 함수를 호출하여 상세 내용 펼치기/접기 -->
-                    <a href="#!" @click="toggleDetail(review, idx)">{{ review.review_title }}</a>
+                    <a href="#!" @click="toggleDetail(review, review.review_no)">{{ review.review_title }}</a>
                     <!-- 상세 내용 -->
-                    <div v-if="review.showDetailIndex === idx">
+                    <div v-if="review.showDetailIndex === review.review_no">
                       <!-- 여기에 상세 내용을 표시하거나 컴포넌트를 추가하세요 -->
                       
                       <table id="writetable">
       
                         <tr>
                           <td class="title"><p>첨부</p></td>
-                          <!-- <td>
-                            <span v-for="(img, idx) in qnaImgs" :key="idx" colspan="2">
+                          <td>
+                            <span v-for="(img, idx) in reviewImgs" :key="idx" colspan="2">
                               <img
-                                :src="`http://localhost:3000/qna/public/uploads/${img.qna_filename}`"
+                                :src="`http://localhost:3000/qna/public/uploads/${img.review_filename}`"
                                 width="150px"
                                 height="150px"
                               />
                             </span>
-                          </td> -->
+                          </td>
                         </tr>
 
                         <!-- <tr v-for="(img, idx) in qnaImgs" :key="idx">
@@ -132,6 +132,8 @@ export default {
       ITEM_PER_PAGE: 10,
       PAGE_PER_SECTION: 5,
       curPage: 1,
+      reviewNo:0,
+      reviewImgs: [],
     };
   },
   computed: {
@@ -154,15 +156,36 @@ export default {
         await axios.get(`/api/qna/review/${this.searchProd}`).catch((err) => console.log(err))
       ).data;
     },
-    toggleDetail(review, idx) {
+    async toggleDetail(review, idx) {
+
+      this.reviewList.forEach((item) => {
+          if (item.showDetailIndex !== null && item.showDetailIndex !== idx) {
+            item.showDetailIndex = null;
+          }
+        });
         // 클릭한 항목의 상세 내용 펼치기/접기
         if (review.showDetailIndex === idx) {
           review.showDetailIndex = null;
+          
         } else {
+          this.reviewNo = idx
+          
+          await this.getReviewImg(this.reviewNo)
           review.showDetailIndex = idx;
+          
         }
-      },
+    },
+    async getReviewImg(reviewNo) {
+      
+
+      let result = await axios
+        .get(`/api/qna/reviewSelectAllImg/${reviewNo}`)
+        .catch((err) => console.log(err));
+
+      this.reviewImgs = result.data;
+    },
   },
+
 };
 </script>
 
