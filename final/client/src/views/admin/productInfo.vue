@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-4">
     <h3>상품상세 페이지</h3>
     <div class="row">
       <table class="table" style="border-collapse: collapse">
@@ -103,6 +103,12 @@ export default {
 </script>
 
 <style scoped>
+.table td,
+.table th {
+  vertical-align: middle;
+  text-align: center;
+  font-family: "Nanum Gothic", sans-serif;
+}
 .container {
   max-width: 1000px;
   margin: 0 auto;

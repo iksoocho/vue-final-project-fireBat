@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-4">
     <h3>상품등록</h3>
     <form @submit.prevent="saveInfo" class="product-form">
       <div class="form-group">
