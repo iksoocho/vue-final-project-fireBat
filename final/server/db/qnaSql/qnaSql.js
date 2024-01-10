@@ -38,6 +38,12 @@ module.exports = {
 
     qnaImgSelect : `select * from qna_imgs where qna_no = ?`,
 
+    reviewImgInsert: `insert into review_imgs set review_no = ?, review_filename = ?`,
+
+    reviewImgDelete : `delete from review_imgs where review_no = ?`,
+
+    reviewImgSelect : `select * from review_imgs where review_no = ?`,
+
 //----------------------------------------------------------------------------------------------------------------
     qnaAnswerList : `select * from qna_answer where qna_no = ?`,
 
@@ -85,7 +91,7 @@ module.exports = {
                     INNER JOIN
                         user u ON po.user_no = u.user_no -- user 테이블 조인
                     WHERE
-                        u.user_id = ?;`
+                        u.user_id = ? order by po.MER_UID desc`
                     
     
 }

@@ -15,7 +15,7 @@
         <td class="title"><p>카테고리</p></td>
         <td>
           <select id="select" name="category" v-model="qnaInfo.qna_category">
-            <option value="1">배송 문의</option>
+            <option value="1" selected>배송 문의</option>
             <option value="2">축제 문의</option>
             <option value="3">기타 문의</option>
           </select>
