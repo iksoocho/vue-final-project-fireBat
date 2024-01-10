@@ -107,4 +107,10 @@ export default {
 .count {
   text-align: center;
 }
+.table td,
+.table th {
+  vertical-align: middle;
+  text-align: center;
+  font-family: "Nanum Gothic", sans-serif;
+}
 </style>
