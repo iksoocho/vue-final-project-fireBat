@@ -1,84 +1,108 @@
 <template>
   <div class="container">
-    <h2>축제수정</h2>
-    <br />
-    <form class="festival-form">
-      <label for="name">축제이름</label>
-      <input type="text" v-model="fesInfo.f_name" />
-      <br />
-      <label for="cate">카테고리</label>
-      <select name="cate" v-model="fesInfo.f_category">
-        <option value="문화">문화</option>
-        <option value="커플">커플</option>
-        <option value="예술">예술</option>
-        <option value="관광">관광</option>
-        <option value="불빛">불빛</option>
-      </select>
-      <br />
-      <br />
-      <label for="cate">축제지역</label>
-      <select name="cate" v-model="fesInfo.f_reg">
-        <option value="서울">서울</option>
-        <option value="인천">인천</option>
-        <option value="대전">대전</option>
-        <option value="대구">대구</option>
-        <option value="광주">광주</option>
-        <option value="부산">부산</option>
-        <option value="울산">울산</option>
-        <option value="세종">세종</option>
-        <option value="경기">경기</option>
-        <option value="강원">강원</option>
-        <option value="충북">충북</option>
-        <option value="충남">충남</option>
-        <option value="경북">경북</option>
-        <option value="경남">경남</option>
-        <option value="전북">전북</option>
-        <option value="전남">전남</option>
-        <option value="제주">제주</option>
-      </select>
-      <br />
-      <label for="number">공식번호</label>
-      <input type="text" v-model="fesInfo.f_number" />
-      <br />
-      <label for="loc">축제장소</label>
-      <input type="text" v-model="fesInfo.f_loc" />
-      <br />
-      <label for="fday">축제시작일</label>
-      <input type="text" v-model="fesInfo.f_firstday" />
-      <br />
-      <label for="lday">축제종료일</label>
-      <input type="text" v-model="fesInfo.f_lastday" />
-      <br />
-      <label for="con">축제내용</label>
-      <textarea cols="40" v-model="fesInfo.f_content"> </textarea>
-      <br />
-      <label for="price">축제금액</label>
-      <input type="text" id="count" v-model="fesInfo.f_price" />
-      <br />
-      <label for="page">홈페이지</label>
-      <input type="url" v-model="fesInfo.f_url" />
-      <br />
-      <br />
-      <div>
-        <input
-          type="file"
-          ref="fileInput"
-          @change="handleFileChange"
-          multiple
-        />
+    <form>
+      <h3>축제수정</h3>
+      <div class="row">
+        <table class="table" style="border-collapse: collapse">
+          <tr>
+            <th>축제이름</th>
+            <td class="text-center">
+              <input type="text" v-model="fesInfo.f_name" />
+            </td>
+          </tr>
+          <tr>
+            <th>카테고리</th>
+            <td class="text-center">
+              <select name="cate" v-model="fesInfo.f_category">
+                <option value="문화">문화</option>
+                <option value="커플">커플</option>
+                <option value="예술">예술</option>
+                <option value="관광">관광</option>
+                <option value="불빛">불빛</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>축제지역</th>
+            <td class="text-center">
+              <select name="cateloc" v-model="fesInfo.f_reg">
+                <option value="서울">서울</option>
+                <option value="인천">인천</option>
+                <option value="대전">대전</option>
+                <option value="대구">대구</option>
+                <option value="광주">광주</option>
+                <option value="부산">부산</option>
+                <option value="울산">울산</option>
+                <option value="세종">세종</option>
+                <option value="경기 ">경기</option>
+                <option value="강원 ">강원</option>
+                <option value="충북">충북</option>
+                <option value="충남">충남</option>
+                <option value="경북">경북</option>
+                <option value="경남">경남</option>
+                <option value="전북">전북</option>
+                <option value="전남">전남</option>
+                <option value="제주">제주</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>공식번호</th>
+            <td class="text-center">
+              <input type="text" v-model="fesInfo.f_number" />
+            </td>
+          </tr>
+          <tr>
+            <th>축제장소</th>
+            <td class="text-center">
+              <input type="text" v-model="fesInfo.f_loc" />
+            </td>
+          </tr>
+          <tr>
+            <th>시작일</th>
+            <td class="text-center">
+              <input type="text" v-model="fesInfo.f_firstday" />
+            </td>
+          </tr>
+          <tr>
+            <th>종료일</th>
+            <td class="text-center">
+              <input type="text" v-model="fesInfo.f_lastday" />
+            </td>
+          </tr>
+          <tr>
+            <th>축제내용</th>
+            <td class="text-center">
+              <input type="text" v-model="fesInfo.f_content" />
+            </td>
+          </tr>
+          <tr>
+            <th>축제금액</th>
+            <td class="text-center">
+              <input type="text" v-model="fesInfo.f_price" />
+            </td>
+          </tr>
+          <tr>
+            <th>홈페이지</th>
+            <td class="text-center">
+              <input type="text" v-model="fesInfo.f_url" />
+            </td>
+          </tr>
+          <div>
+            <input
+              type="file"
+              ref="fileInput"
+              @change="handleFileChange"
+              multiple
+            />
+            <br />
+            <br />
+          </div>
+          <button class="btn" v-on:click="saveInfo(fesInfo.f_code)">
+            수정
+          </button>
+        </table>
       </div>
-      <br />
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        v-on:click="saveInfo(fesInfo.f_code)"
-      >
-        수정완료
-      </button>
-      <!-- <button class="btn btn-primary" v-on:click="updateInfo">수정완료</button> -->
-      <button type="button" class="btn btn-outline-primary">
-        <a href="festivalInfoList" style="text-decoration: none">목록으로</a>
-      </button>
     </form>
   </div>
 </template>
