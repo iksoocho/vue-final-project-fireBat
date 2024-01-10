@@ -1,5 +1,5 @@
 <template>
-  <div class="password-popup" style="height: 329px">
+  <div class="password-popup">
     <h1
       style="
         font-size: 16px;
@@ -8,11 +8,13 @@
         width: 540px;
         height: 37px;
         background-color: #dc3545;
-        padding-top: 10px;
+        padding-top: 6px;
         color: #fff;
+        padding-left: 10px;
       "
     >
-      비밀번호 변경
+      <th>비밀번호 변경</th>
+      <td><button @click="handleClose">X</button></td>
     </h1>
     <p style="font-size: 12px; color: #666; text-align: left; padding-left: 20px; line-height: 1.4; padding-top: 12px">
       비밀번호 변경 시 휴대폰, 컴퓨터 등 모든 기기 및 브라우저에서 로그아웃되며,<br />
@@ -24,7 +26,17 @@
         v-model="newPassword"
         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$"
         placeholder="새 비밀번호"
-        style="width: 460px; height: 40px; margin-top: 2px"
+        style="
+          width: 460px;
+          height: 40px;
+          margin-top: 2px;
+          border: solid 1px #ebebeb;
+          border-top-color: #d8d8d8;
+          border-left-color: #d8d8d8;
+          border-radius: 3px;
+          background-color: #fff;
+          padding-left: 15px;
+        "
       /><br />
       <p
         class="error-message"
@@ -36,11 +48,29 @@
         8~20자리의 영문 대/소문자, 숫자, 특수문자 조합을 사용해 주세요.
       </p>
 
-      <label for="confirmPassword">비밀번호 확인</label>
-      <input type="password" v-model="confirmPassword" id="confirmPassword" @focus="confirmPasswordActivated = true" />
+      <input
+        type="password"
+        v-model="confirmPassword"
+        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$"
+        @focus="confirmPasswordActivated = true"
+        style="
+          width: 460px;
+          height: 40px;
+          margin-top: 2px;
+          border: solid 1px #ebebeb;
+          border-top-color: #d8d8d8;
+          border-left-color: #d8d8d8;
+          border-radius: 3px;
+          background-color: #fff;
+          margin-top: 15px;
+          padding-left: 10px;
+        "
+        placeholder="새 비밀번호 재입력"
+      />
       <p v-if="confirmPasswordActivated && error" class="error">{{ error }}</p>
-      <button @click="handleChangePassword">비밀번호 변경</button>
-      <button @click="handleClose">닫기</button>
+      <button class="btn btn-danger" style="width: 460px; height: 40px; margin-top: 15px" @click="handleChangePassword">
+        비밀번호 변경
+      </button>
     </div>
     <!-- Display error message if passwords do not match -->
   </div>
@@ -132,19 +162,19 @@ export default {
 <style scoped>
 .pwContainer {
   width: 500px;
-  height: 196px;
   margin: 0 auto;
   margin-top: 20px;
   position: relative;
   padding: 20px 0;
   border: solid 1px #ebebeb;
   background-color: #f8f8f8;
+  margin-bottom: 20px;
 }
 .password-popup {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -40%);
   background-color: white;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
