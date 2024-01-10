@@ -129,4 +129,8 @@ module.exports = {
                      JOIN user u ON d.user_no = u.user_no
                      JOIN product p ON o.prod_code = p.prod_code ORDER BY o.order_detail_no `,
     
+    
+    
+    prodInFes : `select * from festival where f_reg = ? order by rand() limit 4`,
+    
 }

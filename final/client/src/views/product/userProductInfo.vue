@@ -6,9 +6,10 @@
           :src="`http://localhost:3000/product/public/uploads/${prodImgs[0].prod_filename}`"
           class="card-img-top"
           alt=""
+          style="width: 660px; height: 660px"
         />
       </div>
-      <div class="col-4">
+      <div class="col-4" style="padding: 50px">
         <br />
         <tr>
           <h3>
@@ -43,16 +44,15 @@
         </tr>
         <br />
 
-        <div class="prod-onetime-order">
+        <div class="prod-onetime-order" style="display: flex">
           <button class="prod-cart-btn" @click="cartInsert">
             장바구니추가
           </button>
-        </div>
+          <br />
 
-        <br />
-
-        <div>
-          <button>바로결제</button>
+          <div>
+            <button>바로결제</button>
+          </div>
         </div>
       </div>
       <br />
@@ -61,53 +61,43 @@
       <div>
         <tr>
           <h4 id="content">
-            <th>{{ userProdInfo.prod_content }}</th>
+            <th style="margin: 20px; font-size: 20px">
+              {{ userProdInfo.prod_content }}
+            </th>
           </h4>
         </tr>
       </div>
-
+      <hr />
       <h3>함께하면 좋은 축제들</h3>
     </div>
-
-    <!-- <div class="container">
-      <div class="row" id="prod" @click="goProdInfo(prod_loc)">
-        <div v-for="(pro, i) in fesProduct" :key="i" class="col-lg-4 col-md-6">
-          <div class="single_place">
-            <div class="card">
-            <div class="thumb">
-              <img :src="`/api/product/public/uploads/${pro.prodImg}`" alt="" style="height: 250px; ">
-                <a href="#" class="prise">₩{{pro.prod_price}}</a>
-            </div>
-
-      <div class="place_info">
-        <a href="destination_details.html"><h3>{{pro.prod_name}}</h3></a>
-        <p>United State of America</p>
-
-      <div class="rating_days d-flex justify-content-between">
-      <span class="d-flex justify-content-center align-items-center">
-        <i class="fa fa-star"></i> 
-        <i class="fa fa-star"></i> 
-        <i class="fa fa-star"></i> 
-        <i class="fa fa-star"></i> 
-        <i class="fa fa-star"></i>
-        <a href="#">(20 Review)</a>
-      </span>
-
-      <div class="days">
-        <a href="#">5 Days</a>
-        <i class="fa fa-clock-o"></i>
+    <div calss="row align-items-end" style="display: flex">
+      <div
+        v-for="(fes, i) in prodFeslList"
+        :key="i"
+        class="col-4 col-sm-3"
+        style="margin: 10px"
+        @click="goFesInfo(fes.f_code)"
+      >
+        <div class="single_destination">
+          <div class="thumb">
+            <img
+              :src="`/api/festival/public/uploads/${fes.fesImg}`"
+              alt=""
+              width="300px"
+              height="250px"
+            />
+          </div>
+          <div class="content">
+            <p class="d-flex align-items-center"></p>
+          </div>
+        </div>
       </div>
     </div>
-      </div>
-      </div>
-        </div>
-        </div>
-    </div> -->
 
-    <div calss="row align-items-end" style="display: flex">
+    <!-- <div calss="row align-items-end" style="display: flex">
       <template v-for="(img, idx) in prodImgs">
         <div
-          v-if="idx < 3 && img.prod_filename"
+          v-if="idx < 4 && img.prod_filename"
           :key="idx"
           class="col-4 col-sm-3"
           style="margin: 10px"
@@ -121,11 +111,10 @@
           <h3 class="" style="text-align: center"></h3>
         </div>
       </template>
-    </div>
-    <hr />
+    </div> -->
 
     <div class="container">
-      <table class="table table-hover">
+      <table class="table table-hover" style="text-align: center">
         <tr class="top">
           <th @click="scrollToSection('section1')">상품상세</th>
           <th @click="scrollToSection('section2')">상품평</th>
@@ -160,8 +149,10 @@
       </template>
     </div> -->
 
-    <div class="up_down_area" style="">
-      <button class="link_top"><a href="#top">맨위로</a></button>
+    <div class="up_down_area">
+      <button class="btn">
+        <span><a href="#top">↑위로</a></span>
+      </button>
     </div>
     <br />
   </div>
@@ -194,6 +185,7 @@ export default {
       isScrollDown: false,
       scrollTop: 0,
       target: null,
+      prodFeslList: [],
     };
   },
   created() {
@@ -209,6 +201,7 @@ export default {
         .catch((err) => console.log(err));
 
       this.userProdInfo = result.data;
+      this.getProdFeslList(this.userProdInfo.prod_loc);
     },
     async getProdImg() {
       console.log(this.searchProd);
@@ -259,6 +252,19 @@ export default {
         return "품절";
       }
     },
+    async getProdFeslList(f_reg) {
+      const result = await axios
+        .get(`/api/product/prodInFes/${f_reg}`)
+        .catch((err) => console.log(err));
+
+      this.prodFeslList = result.data;
+    },
+    goFesInfo(f_code) {
+      this.$router.push({
+        path: "/festivalInfo",
+        query: { f_code },
+      });
+    },
   },
 
   computed: {
@@ -273,7 +279,7 @@ export default {
 
 <style scoped>
 #content {
-  color: olivedrab;
+  color: rgb(0, 0, 0);
 }
 .tab .tab-titles {
   border-top: 2px solid #555;
@@ -362,7 +368,7 @@ button {
 #text {
   margin-top: 30px;
   margin-left: 50px;
-  font-size: 18px;
+  font-size: 12px;
 }
 
 #subImg {
@@ -379,5 +385,72 @@ button {
 }
 #content {
   margin: 20px;
+}
+
+.button_container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 30%;
+}
+
+.description,
+.link {
+  font-family: "Amatic SC", cursive;
+  text-align: center;
+}
+
+.description {
+  font-size: 35px;
+}
+
+.btn {
+  border: none;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: #222;
+  padding: 17px 60px;
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  background: #78c7d2;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+body {
+  margin: 0;
+  height: 100%;
+  background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 </style>

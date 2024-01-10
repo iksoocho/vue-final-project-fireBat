@@ -1,54 +1,58 @@
 <template>
   <div class="container">
     <h3>상품등록</h3>
-    <form>
-      <br />
-      <label for="name">상품이름</label>
-      <input type="text" v-model="product.prod_name" />
-      <br />
-      <label for="cateloc">지역분류</label>
+    <form @submit.prevent="saveInfo" class="product-form">
+      <div class="form-group">
+        <label for="name">상품이름</label>
+        <input type="text" v-model="product.prod_name" />
+      </div>
+      <div class="form-group">
+        <label for="cateloc">지역분류</label>
 
-      <select name="cateloc" v-model="product.prod_loc">
-        <option value="서울">서울</option>
-        <option value="인천">인천</option>
-        <option value="대전">대전</option>
-        <option value="대구">대구</option>
-        <option value="광주">광주</option>
-        <option value="부산">부산</option>
-        <option value="울산">울산</option>
-        <option value="세종">세종</option>
-        <option value="경기">경기</option>
-        <option value="강원">강원</option>
-        <option value="충북">충북</option>
-        <option value="충남">충남</option>
-        <option value="경북">경북</option>
-        <option value="경남">경남</option>
-        <option value="전북">전북</option>
-        <option value="전남">전남</option>
-        <option value="제주">제주</option>
-      </select>
-      <br />
-      <label for="cate">상품분류</label>
+        <select name="cateloc" v-model="product.prod_loc">
+          <option value="서울">서울</option>
+          <option value="인천">인천</option>
+          <option value="대전">대전</option>
+          <option value="대구">대구</option>
+          <option value="광주">광주</option>
+          <option value="부산">부산</option>
+          <option value="울산">울산</option>
+          <option value="세종">세종</option>
+          <option value="경기">경기</option>
+          <option value="강원">강원</option>
+          <option value="충북">충북</option>
+          <option value="충남">충남</option>
+          <option value="경북">경북</option>
+          <option value="경남">경남</option>
+          <option value="전북">전북</option>
+          <option value="전남">전남</option>
+          <option value="제주">제주</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="cate">상품분류</label>
 
-      <select name="cate" v-model="product.prod_cate">
-        <option value="과일">과일</option>
-        <option value="채소">채소</option>
-        <option value="곡물">곡물</option>
-        <option value="주류">주류</option>
-      </select>
-      <br />
+        <select name="cate" v-model="product.prod_cate">
+          <option value="과일">과일</option>
+          <option value="채소">채소</option>
+          <option value="곡물">곡물</option>
+          <option value="주류">주류</option>
+        </select>
+      </div>
 
-      <br />
+      <div class="form-group">
+        <label for="price">상품가격</label>
+        <input type="text" v-model="product.prod_price" />
+      </div>
 
-      <label for="price">상품가격</label>
-      <input type="text" v-model="product.prod_price" />
-      <br />
-      <label for="content">상품내용</label>
-      <textarea type="content" v-model="product.prod_content" />
-      <br />
-      <label for="prodcount">상품재고</label>
-      <input type="number" v-model="product.prod_count" />
-      <br />
+      <div class="form-group">
+        <label for="content">상품내용</label>
+        <textarea type="content" v-model="product.prod_content" />
+      </div>
+      <div class="form-group">
+        <label for="prodcount">상품재고</label>
+        <input type="number" v-model="product.prod_count" />
+      </div>
       <label for="prodstate">상품상태</label>
 
       <input
@@ -57,6 +61,7 @@
         name="prodstate"
         value="1"
       />주문가능
+
       <input
         type="radio"
         v-model="product.prod_state"
@@ -64,17 +69,16 @@
         value="2"
       />품절
 
-      <br />
-      <div>
-        <input
-          type="file"
-          ref="fileInput"
-          @change="handleFileChange"
-          multiple
-        />
-      </div>
-      <button @click="saveInfo" type="button">등록</button>
-      <br />
+      <input type="file" ref="fileInput" @change="handleFileChange" multiple />
+
+      <button
+        style="margin-top: 30px"
+        class="custom-button"
+        @click="saveInfo"
+        type="button"
+      >
+        등록
+      </button>
     </form>
   </div>
 </template>
@@ -195,6 +199,66 @@ export default {
 
 <style scoped>
 .container {
-  padding: 40px;
+  max-width: 600px;
+  height: 800px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+input,
+select,
+textarea {
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type="date"] {
+  /* Customize date input appearance */
+}
+
+.custom-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.custom-button:hover {
+  background-color: #45a049;
 }
 </style>
