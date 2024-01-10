@@ -100,17 +100,11 @@
                         style="text-align: center"
                         v-if="isLoggedIn && review.user_id == userId"
                       >
-                        <button
-                          type="button"
-                          class="btn btn-outline-danger me-2 mt-2"
-                          @click="goUpdate(review.review_no)"
-                        >
-                          수정
-                        </button>
+                        
                         <button
                           type="reset"
                           class="btn btn-danger-outline mt-2"
-                          @click="deleteInfo(review.review_no)"
+                          @click="deleteInfo(review.review_no,review.prod_code)"
                         >
                           삭제
                         </button>
@@ -217,6 +211,34 @@ export default {
         .catch((err) => console.log(err));
 
       this.reviewImgs = result.data;
+    },
+    async deleteInfo(qna_no, prod_code) {
+      
+
+      let response = await axios
+        .delete(`/api/qna/reviewDeleteImg/${qna_no}`)
+        .catch((err) => console.log(err));
+      let count2 = response.data.affectedRows;
+
+      let result = await axios
+        .delete(`/api/qna/review/${qna_no}`)
+        .catch((err) => console.log(err));
+
+      let count = result.data.affectedRows;
+      if (count + count2== 0) {
+        Swal.fire({
+          icon: "warning",
+          title: "삭제실패!",
+          confirmButtonText: "확인",
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "삭제성공!!",
+          confirmButtonText: "확인",
+        });
+        this.$router.push({ path: "/userProductInfo", query: { prod_code: prod_code }  });
+      }
     },
   },
 

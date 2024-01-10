@@ -166,7 +166,7 @@ import Section2 from "../../components/productReview.vue";
 import Section3 from "../../components/productQna.vue";
 // import Section4 from "../../components/Section4.vue";
 import Paginate from "../../components/Pagination.vue";
-
+import Swal from "sweetalert2";
 export default {
   components: {
     Admin,
@@ -234,13 +234,20 @@ export default {
       let cartItems = response.data;
 
       if (cartItems.length > 0) {
-        alert("장바구니에 이미 같은 상품이 담겨 있습니다.");
+        // alert("장바구니에 이미 같은 상품이 담겨 있습니다.");
+        Swal.fire({
+          title : '장바구니에 이미 같은 상품이 담겨 있습니다..',
+          icon : 'success'
+        });
         return; // 작업이 안되도록 종료
       }
 
       await axios.post(`/api/pay/cart`, obj).catch((err) => console.log(err));
       console.log(obj);
-      alert("장바구니에 추가되었습니다.");
+      Swal.fire({
+          title : '장바구니에 추가되었습니다.',
+          icon : 'success'
+        });
     },
     scrollToSection(refName) {
       this.$refs[refName].$el.scrollIntoView({ behavior: "smooth" });

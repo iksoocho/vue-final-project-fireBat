@@ -12,6 +12,7 @@
   import Header from '../layouts/MainHeader.vue';
   import Footer from '../layouts/MainFooter.vue';
   
+  
 
   export default {
     components  : {Header, Footer }
