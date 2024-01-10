@@ -1,110 +1,149 @@
 <template>
-  <div>
-    <h3>회원 정보 수정</h3>
-    <form @submit.prevent="submitForm">
-      <div>
-        <h5>아이디</h5>
-        <span>{{ user.user_id }}</span>
-      </div>
-
-      <div>
-        <label>이름</label><br />
-        <input v-if="isEditingName" type="text" v-model="user.user_name" />
-        <span v-else>{{ user.user_name }}</span>
-        <button type="button" @click="toggleEditMode('name')">
-          {{ isEditingName ? '수정완료' : '수정' }}
-        </button>
-      </div>
-
-      <div>
-        <label>성별</label><br />
-        <span>{{ getGenderLabel }}</span>
-      </div>
-
-      <div>
-        <label>생년월일</label><br />
-        <!-- 사용자에게는 'YYYY년 MM월 DD일' 형식으로 표시 -->
-        <span>{{ formattedUserBirth }}</span>
-        <!-- 실제로 서버에 전송되는 값은 날짜만 포함된 'YYYY-MM-DD' 형식 -->
-        <input type="hidden" v-model="user.user_birth" />
-      </div>
-
-      <div>
-        <label>비밀번호</label>
-        <button type="button" @click="openPasswordChangePopup">비밀번호 변경</button>
-      </div>
-
-      <!-- AddressSearch 컴포넌트를 포함합니다 -->
-
-      <AddressSearch :user="user" @address-updated="handleAddressUpdated" />
-
-      <!-- 추후 컴포넌트화.(2024,01,05) -->
-      <div>
-        <label>전화번호</label><br />
-        <div :class="{ isEditingTel: isEditingTel }" v-if="isEditingTel">
-          <select v-model="user.user_tel_first" class="dropdown" id="telSelect">
-            <option value="02">02</option>
-            <option value="031">031</option>
-            <option value="032">032</option>
-            <option value="033">033</option>
-            <option value="041">041</option>
-            <option value="043">043</option>
-            <option value="044">044</option>
-            <option value="051">051</option>
-            <option value="052">052</option>
-            <option value="053">053</option>
-            <option value="054">054</option>
-            <option value="055">055</option>
-            <option value="061">061</option>
-            <option value="062">062</option>
-            <option value="063">063</option>
-            <option value="064">064</option>
-            <option value="010">010</option>
-            <option value="011">011</option>
-            <option value="016">016</option>
-            <option value="017">017</option>
-            <option value="018">018</option>
-            <option value="019">019</option></select
-          >-
-          <input
-            type="text"
-            v-model="user.user_tel_second"
-            maxlength="4"
-            @input="validateNumericInput('user_tel_second')"
-          />-
-          <input
-            type="text"
-            v-model="user.user_tel_third"
-            maxlength="4"
-            @input="validateNumericInput('user_tel_third')"
-          />
-        </div>
-        <span v-else>{{ formatPhoneNumber(user.user_tel) }}</span>
+  <div class="container">
+    <h3
+      style="
+        height: 100px;
+        line-height: 100px;
+        font-family: 'Noto Sans KR';
+        font-size: 24px;
+        color: #333;
+        font-weight: 700;
+      "
+    >
+      회원 정보
+    </h3>
+    <div class="formContainer">
+      <form @submit.prevent="submitForm">
         <div>
-          <button class="telButton" type="button" @click="toggleEditMode('tel')">
-            {{ isEditingTel ? '수정완료' : '수정' }}
-          </button>
+          <th>아이디</th>
+          <td>{{ user.user_id }}</td>
         </div>
-      </div>
 
-      <div>
-        <label>이메일</label><br />
-        <div v-if="isEditingEmail" class="emailInputs">
-          <input type="text" v-model="user.user_email_first" />
-          <span>@</span>
-          <input type="text" v-model="user.user_email_second" />
-        </div>
-        <span v-else>{{ user.user_email }}</span>
         <div>
-          <button class="emailButton" type="button" @click="toggleEditMode('email')">
-            {{ isEditingEmail ? '수정완료' : '수정' }}
-          </button>
-        </div>
-      </div>
-      <!-- 다른 필요한 정보를 포함합니다 -->
+          <th style="vertical-align: middle">이름</th>
+          <td>
+            <input
+              v-if="isEditingName"
+              type="text"
+              v-model="user.user_name"
+              style="width: 100px; height: 38px; padding-left: 10px; vertical-align: middle"
+            />
+            <span v-else style="vertical-align: middle">{{ user.user_name }}</span>
 
-      <button type="submit">정보 수정</button>
-    </form>
+            <button
+              type="button"
+              class="btn btn-danger"
+              style="margin-left: 16px; vertical-align: middle"
+              @click="toggleEditMode('name')"
+            >
+              {{ isEditingName ? '수정완료' : '수정' }}
+            </button>
+          </td>
+        </div>
+
+        <div>
+          <th>성별</th>
+          <td>
+            {{ getGenderLabel }}
+          </td>
+        </div>
+
+        <div>
+          <th>생년월일</th>
+          <!-- 사용자에게는 'YYYY년 MM월 DD일' 형식으로 표시 -->
+          <td>
+            {{ formattedUserBirth }}
+          </td>
+          <!-- 실제로 서버에 전송되는 값은 날짜만 포함된 'YYYY-MM-DD' 형식 -->
+          <input type="hidden" v-model="user.user_birth" />
+        </div>
+
+        <div>
+          <th style="vertical-align: middle">비밀번호</th>
+          <td>
+            <button type="button" class="btn btn-danger" @click="openPasswordChangePopup" style="margin-top: 4px">
+              비밀번호 변경
+            </button>
+          </td>
+        </div>
+
+        <!-- AddressSearch 컴포넌트를 포함합니다 -->
+        <th style="vertical-align: middle">주소</th>
+        <td>
+          <AddressSearch :user="user" @address-updated="handleAddressUpdated" />
+        </td>
+
+        <!-- 추후 컴포넌트화.(2024,01,05) -->
+        <div>
+          <th style="height: 56px">전화번호</th>
+          <td>
+            <div :class="{ isEditingTel: isEditingTel }" v-if="isEditingTel">
+              <select v-model="user.user_tel_first" class="dropdown" id="telSelect">
+                <option value="02">02</option>
+                <option value="031">031</option>
+                <option value="032">032</option>
+                <option value="033">033</option>
+                <option value="041">041</option>
+                <option value="043">043</option>
+                <option value="044">044</option>
+                <option value="051">051</option>
+                <option value="052">052</option>
+                <option value="053">053</option>
+                <option value="054">054</option>
+                <option value="055">055</option>
+                <option value="061">061</option>
+                <option value="062">062</option>
+                <option value="063">063</option>
+                <option value="064">064</option>
+                <option value="010">010</option>
+                <option value="011">011</option>
+                <option value="016">016</option>
+                <option value="017">017</option>
+                <option value="018">018</option>
+                <option value="019">019</option></select
+              >-
+              <input
+                type="text"
+                v-model="user.user_tel_second"
+                maxlength="4"
+                @input="validateNumericInput('user_tel_second')"
+              />-
+              <input
+                type="text"
+                v-model="user.user_tel_third"
+                maxlength="4"
+                @input="validateNumericInput('user_tel_third')"
+              />
+            </div>
+            <span v-else>{{ formatPhoneNumber(user.user_tel) }}</span>
+
+            <button class="telButton" type="button" @click="toggleEditMode('tel')">
+              {{ isEditingTel ? '수정완료' : '수정' }}
+            </button>
+          </td>
+        </div>
+
+        <div>
+          <th>이메일</th>
+          <td style="solid 1px #ebebeb">
+            <div v-if="isEditingEmail" class="emailInputs">
+              <input type="text" v-model="user.user_email_first" />
+              <span>@</span>
+              <input type="text" v-model="user.user_email_second" />
+            </div>
+            <span v-else>{{ user.user_email }}</span>
+            <div>
+              <button class="emailButton" type="button" @click="toggleEditMode('email')">
+                {{ isEditingEmail ? '수정완료' : '수정' }}
+              </button>
+            </div>
+          </td>
+        </div>
+        <!-- 다른 필요한 정보를 포함합니다 -->
+
+        <button type="submit">정보 수정</button>
+      </form>
+    </div>
     <PasswordChangePopup
       v-if="isChangingPassword"
       @change-password="handleChangePassword"
@@ -301,9 +340,46 @@ export default {
 </script>
 <style scoped>
 .isEditingTel {
-  width: 250px;
+  width: 300px;
 }
 .isEditingTel input {
   width: 50px;
+}
+.container {
+  margin: 0 auto;
+  text-align: center;
+}
+.formContainer {
+  margin: 0 auto;
+  position: relative;
+  width: 760px;
+  text-align: left;
+}
+th {
+  font-size: 16px;
+  width: 140px;
+  height: 50px;
+  padding: 6px 0 6px 0;
+  line-height: 16px;
+  text-align: center;
+  color: #333;
+  text-indent: 0;
+  border-top: solid 1px #ebebeb;
+  border-right: solid 1px #ebebeb;
+  background-color: #f8f8f8;
+  border-bottom: solid 1px #ebebeb;
+}
+td {
+  width: 620px;
+  height: 50px;
+  padding: 13px 19px 16px;
+  min-height: 22px;
+  line-height: 20px;
+  font-size: 16px;
+  color: #666;
+  text-indent: 0;
+  border-top: solid 1px #ebebeb;
+  border-right: solid 1px #ebebeb;
+  border-bottom: solid 1px #ebebeb;
 }
 </style>
