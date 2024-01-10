@@ -143,7 +143,7 @@
         data = {
           param: this.qnaInfo,
         };
-        this.$router.push({ path: "/qnaList" });
+        this.$router.push({ path: "/userProductInfo", query: { prod_code: this.serchNo }  });
   
         return {
           method,

@@ -81,6 +81,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -165,7 +166,10 @@ export default {
       try {
         await axios.delete(`/api/pay/cart/${this.userId}`);
         console.log("삭제되었습니다.");
-        alert("삭제되었습니다.");
+        Swal.fire({
+          title : '삭제되었습니다.',
+          icon : 'success'
+        });
         // 삭제 후 장바구니 리스트 갱신
         this.getCartList();
       } catch (err) {

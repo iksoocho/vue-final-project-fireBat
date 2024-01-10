@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-4">
     <h3>상품상세 페이지</h3>
     <div class="row">
       <table class="table" style="border-collapse: collapse">
@@ -47,7 +47,7 @@
       </table>
     </div>
     <div class="row">
-      <button class="btn" v-on:click="moveProdUpdate(prodInfo.prod_code)">
+      <button class="btn mb-3" v-on:click="moveProdUpdate(prodInfo.prod_code)">
         수정
       </button>
       <router-link to="/productList" class="btn">목록</router-link>
@@ -103,6 +103,12 @@ export default {
 </script>
 
 <style scoped>
+.table td,
+.table th {
+  vertical-align: middle;
+  text-align: center;
+  font-family: "Nanum Gothic", sans-serif;
+}
 .container {
   max-width: 1000px;
   margin: 0 auto;
@@ -151,7 +157,7 @@ img {
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #c2f88e;
+  background-color: #88a3fa;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -161,6 +167,6 @@ img {
 }
 
 .btn:hover {
-  background-color: #c2f88e;
+  background-color: #88a3fa;
 }
 </style>

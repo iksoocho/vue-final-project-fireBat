@@ -87,7 +87,12 @@ router.post('/review', async (req, res) => {
     let result = await mysql.query('reviewInsert', data);
     res.send(result);
 });
-
+//리뷰 삭제
+router.delete('/review/:review_no', async(req,res)=>{
+    let data = req.params.review_no;
+    let result = await mysql.query('reviewDelete', data);
+    res.send(result);
+});
 
 //qna 검색
 router.get("/search/:value", async (req, res) => {
