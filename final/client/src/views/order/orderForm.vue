@@ -219,6 +219,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 export default {
 name: "OrderPayment",
 data() {
@@ -229,7 +230,6 @@ data() {
       zip: "",
       addr1: "",
       addr2: "",
-      payData: [],
       user: {},
       f_tel: "",
       m_tel: "",
@@ -238,6 +238,7 @@ data() {
       prodPrice: "",
       mer_uid: "",
       cartList: [],
+      del_pay:'',
    };
 },
 methods: {
@@ -298,8 +299,10 @@ methods: {
         this.orderInsert(res);
         this.detailOrderInsert(res);
         this.cartSelectDel();
-        let msg = "결제가 완료되었습니다.";
-        alert(msg);
+        Swal.fire({
+          title : '결제가 완료되었습니다.',
+          icon : 'success'
+        });
         this.$router.replace({
           path: '/paySuccess',
           query: { 
@@ -308,8 +311,13 @@ methods: {
         });
       } else {
         let msg = "결제에 실패하였습니다.";
-        msg += "에러내용 : " + res.error_msg;
-        alert(msg);
+        // msg += "에러내용 : " + res.error_msg;
+        // alert(msg);
+        Swal.fire({
+          title : msg,
+          text : res.error_msg,
+          icon : 'error'
+        });
       }
       });
   },
@@ -363,8 +371,12 @@ methods: {
       } catch (err) {
       console.log(err);
       }
-   },
-   showApi() {
+  },
+  calDeliveryCharge(){
+    if()
+  },
+  
+  showApi() {
       new window.daum.Postcode({
       oncomplete: (data) => {
           // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
