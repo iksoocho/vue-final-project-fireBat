@@ -372,9 +372,9 @@ methods: {
       console.log(err);
       }
   },
-  calDeliveryCharge(){
-    if()
-  },
+  // calDeliveryCharge(){
+  //   if()
+  // },
   
   showApi() {
       new window.daum.Postcode({
