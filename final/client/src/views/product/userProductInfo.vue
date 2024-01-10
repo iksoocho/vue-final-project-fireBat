@@ -236,8 +236,8 @@ export default {
       if (cartItems.length > 0) {
         // alert("장바구니에 이미 같은 상품이 담겨 있습니다.");
         Swal.fire({
-          title : '장바구니에 이미 같은 상품이 담겨 있습니다..',
-          icon : 'success'
+          title : '장바구니에 이미 같은 상품이 담겨 있습니다.',
+          icon : 'error'
         });
         return; // 작업이 안되도록 종료
       }
