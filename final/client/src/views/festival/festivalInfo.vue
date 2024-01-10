@@ -7,14 +7,14 @@
             <th>{{ fesInfo.f_name }}</th>
           </h1>
         </tr>
-        <tr>
+        <!-- <tr>
           <h3>
             <th>
               {{ getDateFormat(fesInfo.f_firstday) }} ~
               {{ getDateFormat(fesInfo.f_lastday) }}
             </th>
           </h3>
-        </tr>
+        </tr> -->
       </div>
       <div class="row align-items-end" id="subImg">
         <template v-for="(img, idx) in fesImgs" :key="idx">
@@ -93,7 +93,7 @@
     <br />
 
     <hr />
-    <h5>길찾기 <a :href="kakaoMapLink" target="_blank" class="car">🚘</a></h5>
+    <h5>오시는길 <a :href="kakaoMapLink" target="_blank" class="car">🚙</a></h5>
     <div>
       <!-- 이 곳에 지도가 표시될 영역 -->
       <div id="map" style="width: 100%; height: 400px"></div>
@@ -276,8 +276,6 @@ button {
 
 #subImg {
   display: flex;
-  overflow-x: auto;
-  white-space: nowrap;
   margin: 10px;
   margin-bottom: 100px;
 }
@@ -287,6 +285,11 @@ button {
   margin-right: 10px;
   max-width: 300px;
   max-height: 300px;
+  transition: transform 0.3s ease;
+}
+
+#subImg img:hover {
+  transform: scale(1.9);
 }
 
 body {
@@ -305,6 +308,7 @@ body {
 
 .description {
   font-size: 20px;
+  text-decoration: none;
 }
 
 .btn {
@@ -359,8 +363,52 @@ body {
   font-size: 25px;
 }
 
-a {
+.a {
   text-decoration: none;
-  font-size: 5px;
+  font-size: 100px;
+}
+
+#content {
+  margin-bottom: 100px;
+  background-color: #ffffff; /* Set a background color for the content section */
+  border-radius: 10px; /* Add rounded corners to the content section */
+  padding: 20px; /* Add padding to the content section */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+}
+
+#content th {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+}
+
+#content h3 {
+  font-size: 24px; /* Adjust the font size for the date */
+  color: #555555;
+  margin-bottom: 20px; /* Add space below the date */
+}
+
+#content h4 {
+  font-size: 18px;
+  color: #777777;
+}
+
+#content p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #888888;
+}
+
+#content a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+#content th {
+  font-size: 30px;
+  font-weight: bold;
+  color: #333333;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
 }
 </style>

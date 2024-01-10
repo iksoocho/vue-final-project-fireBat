@@ -11,7 +11,7 @@
           @keyup.enter="fesSearch"
           @input="onSearchInput"
           class="form-control"
-          placeholder="상품 이름을 검색하세요"
+          placeholder="축제 이름을 검색하세요"
         />
         <button @click="fesSearch" class="btn btn-outline-secondary">
           검색

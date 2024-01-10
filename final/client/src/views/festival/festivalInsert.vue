@@ -165,7 +165,16 @@ export default {
         });
         return false;
       }
-
+      // url이 https:// 로 시작 안하면 등록 실패
+      if (!this.fesInfo.f_url.startsWith("https://")) {
+        Swal.fire({
+          icon: "warning",
+          title: "등록실패!",
+          text: "올바른 URL을 입력해주세요. URL은 'https://'로 시작해야 합니다.",
+          confirmButtonText: "확인",
+        });
+        return false;
+      }
       return true;
     },
 

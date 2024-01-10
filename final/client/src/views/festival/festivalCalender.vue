@@ -25,7 +25,13 @@
             >
               {{ day }}
             </span>
-            <span v-else class="day">
+
+            <!-- script 쪽에 메소드 isSunday true인지 확인해서 맞으면 빨강으로  -->
+            <span
+              v-else
+              class="day"
+              :style="{ color: isSunday(index2) ? 'red' : 'black' }"
+            >
               <!-- 일자 -->
               {{ day }}
             </span>
@@ -33,6 +39,7 @@
         </tr>
       </tbody>
     </table>
+
     <div class="container">
       <div class="row">
         <div
@@ -45,15 +52,16 @@
             <img
               :src="`/api/festival/public/uploads/${fes.fesImg}`"
               class="card-img-top"
-              alt="..."
+              alt="이미지가 존재하지 않습니다."
+              style="height: 250px"
             />
             <div class="card-body">
               <h5 class="card-title">{{ fes.f_name }}</h5>
-              <p class="card-date">
+              <p class="card-text">
                 {{ getDateFormat(fes.f_firstday) }} ~
                 {{ getDateFormat(fes.f_lastday) }}
               </p>
-              <p class="card-reg">{{ fes.f_reg }}</p>
+              <p class="card-text">{{ fes.f_reg }}</p>
             </div>
           </div>
         </div>
@@ -69,13 +77,13 @@ export default {
   data() {
     return {
       weekNames: [
+        "일요일", // Sunday
         "월요일",
         "화요일",
         "수요일",
         "목요일",
         "금요일",
         "토요일",
-        "일요일",
       ],
       rootYear: 1904,
       rootDayOfWeekIndex: 4, // 2000년 1월 1일은 토요일
@@ -99,6 +107,11 @@ export default {
     this.getFesCalListForToday();
   },
   methods: {
+    // isSunday 가 일요일인지 확인(index가 0인지)
+    isSunday(index) {
+      return index === 0;
+    },
+
     async getFesCalList(date) {
       this.fesCalList = (
         await axios
@@ -256,20 +269,122 @@ export default {
 };
 </script>
 
-<style type="text/css">
-.rounded {
-  -moz-border-radius: 20px 20px 20px 20px;
-  border-radius: 20px 20px 20px 20px;
-  border: solid 1px #ffffff;
-  background-color: #2b6bd1;
-  padding: 10px;
-  color: #ffffff;
-}
-.day:active {
-  background-color: palevioletred;
-}
-
+<style scoped>
 .yearmon {
   text-align: center;
+}
+
+/* Calendar styling */
+.calendar {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: "Arial", sans-serif;
+}
+
+.calendar h2.yearmon {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px; /* Add some spacing below the month navigation */
+}
+
+.calendar .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px; /* Add some spacing below the calendar */
+}
+
+.calendar .table th,
+.calendar .table td {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.calendar .table th {
+  background-color: #f2f2f2;
+}
+
+.calendar .day {
+  cursor: pointer;
+  display: block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.calendar .day:hover {
+  background-color: darkorchid;
+  border-radius: 30px;
+}
+
+.calendar .rounded {
+  display: block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #fff;
+  background-color: #2b6bd1;
+  border-radius: 50%;
+}
+
+.calendar .rounded:hover {
+  background-color: #265496;
+}
+
+/* Keep the existing styling for the festival list */
+.container {
+  margin: 20px auto;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #555;
+}
+
+.card:active {
+  background-color: #e0e0e0;
 }
 </style>
