@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-4">
     <h2>축제등록</h2>
     <br />
     <form @submit.prevent="saveInfo" class="festival-form">
@@ -194,7 +194,6 @@ export default {
 <style scoped>
 .container {
   max-width: 600px;
-  
   margin: 0 auto;
   margin-bottom: 40px;
   padding: 20px;
