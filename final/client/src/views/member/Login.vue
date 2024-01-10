@@ -22,7 +22,7 @@
       >
     </div>
     <div class="hr-sect">간편로그인</div>
-    <div style="margin-bottom: 50px">
+    <div style="margin-bottom: 50px; text-align: center; margin-top: 10px">
       <KakaoLogin />
     </div>
   </div>
@@ -117,11 +117,11 @@ export default {
 .container-one {
   border: solid 1px black;
   width: 400px;
-  height: 250px;
+  height: 260px;
   margin: 0 auto;
   margin-bottom: 10px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 .container-two {
