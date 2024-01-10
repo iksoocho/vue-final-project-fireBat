@@ -100,13 +100,7 @@
                         style="text-align: center"
                         v-if="isLoggedIn && review.user_id == userId"
                       >
-                        <button
-                          type="button"
-                          class="btn btn-outline-danger me-2 mt-2"
-                          @click="goUpdate(review.review_no)"
-                        >
-                          수정
-                        </button>
+                        
                         <button
                           type="reset"
                           class="btn btn-danger-outline mt-2"
