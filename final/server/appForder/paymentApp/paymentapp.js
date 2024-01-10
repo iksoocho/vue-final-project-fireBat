@@ -24,6 +24,12 @@ router.post('/orderDetailInsert', async (req, res) => {  //order_detail테이블
    res.send(result);
 });
 
+router.put("/prodStockUpdate/:pStock/:pCode", async (req, res) => { // 주문완료시 상품재고수정
+   let data = [req.params.pStock, req.params.pCode];
+   let result = await mysql.query("prodStockUpdate", data);
+   res.send(result);
+});
+
 router.get('/cart/:userId', async (req, res) => { //유저의 장바구니 리스트
    let data = req.params.userId;
    let list = await mysql.query('cartList', data);
@@ -49,11 +55,11 @@ router.put("/cart/:poc/:cno", async (req, res) => { // 장바구니 수량 변�
    res.send(list);
  });
 
- router.put("/cartSelect/:sel/:cno", async (req, res) => { // 개별 상품선택상태(체크박스상태)변경
+router.put("/cartSelect/:sel/:cno", async (req, res) => { // 개별 상품선택상태(체크박스상태)변경
    let data = [req.params.sel, req.params.cno];
    let list = await mysql.query("cartSelectUpdate", data);
    res.send(list);
- });
+});
 
  router.put("/cartAllSelect/:sel/:uid", async (req, res) => { // 전체 상품선택상태(체크박스상태)변경
    let data = [req.params.sel, req.params.uid];

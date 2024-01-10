@@ -26,7 +26,6 @@
         </template>
       </div>
 
-
       <div>
         <tr>
           <h4 id="content">
@@ -97,7 +96,30 @@
     <h2>함께하기 좋은 특산물</h2>
     <br />
     <br />
-    <div class="container">
+    <div calss="row align-items-end" style="display: flex">
+      <div
+        v-for="(fes, i) in prodFeslList"
+        :key="i"
+        class="col-4 col-sm-3"
+        style="margin: 10px"
+        @click="goFesInfo(fes.f_code)"
+      >
+        <div class="single_destination">
+          <div class="thumb">
+            <img
+              :src="`/api/festival/public/uploads/${fes.fesImg}`"
+              alt=""
+              width="300px"
+              height="250px"
+            />
+          </div>
+          <div class="content">
+            <p class="d-flex align-items-center"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="container">
       <div class="row" id="prod" @click="goProdInfo(prod_loc)">
         <div v-for="(pro, i) in fesProduct" :key="i" class="col-lg-4 col-md-6">
           <div class="single_place">
@@ -139,7 +161,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

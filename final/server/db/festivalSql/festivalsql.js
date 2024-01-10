@@ -2,7 +2,7 @@ module.exports = {
     
 
     // 전체 리스트 조회
-    fesList : `select * from festival`,
+    fesList : `select * from festival order by f_firstday`,
 
     // 단건 조회
     fesInfo : `select * from festival where f_code = ? order by f_code desc`,
