@@ -94,7 +94,7 @@ module.exports = {
                         p.prod_name,
                         p.prod_count`,
     // 관리자 메인 리스트
-    adminChartList : `SELECT * FROM product ORDER BY prod_price DESC LIMIT 4`,
+    adminChartList : `SELECT * FROM product ORDER BY prod_price DESC LIMIT 6`,
     // 관리자 페이지 차트
     adminChart : `SELECT * FROM product ORDER BY prod_sell_count DESC LIMIT 6 `,
     //이미지 테스트
@@ -118,16 +118,17 @@ module.exports = {
     delState: `update delivery set delivery_state = ? where delivery_no = ?`,
     
     // 배송정보
-    deliveryList : `SELECT d.delivery_no,o.order_detail_no, u.user_name, d.delivery_req, CONCAT(u.user_addr, ' ', u.user_detail_addr) AS sumAddr, d.delivery_state
-                    FROM order_detail o
-                    JOIN user u ON o.order_detail_no = u.user_no
-                    JOIN delivery d ON o.order_detail_no = d.order_no ORDER BY o.order_detail_no DESC `,
+    deliveryList : `select p.mer_uid, u.user_name, d.delivery_req, CONCAT(u.user_addr, ' ', u.user_detail_addr) AS sumAddr, d.delivery_state
+                    from prod_order p join user u on p.user_no = u.user_no
+                    join delivery d on p.user_no = d.user_no
+                    group by p.mer_uid, p.mer_uid, u.user_name, d.delivery_req, u.user_addr, u.user_detail_addr, d.delivery_state
+                    ORDER BY p.mer_uid DESC `,
     // 주문 정보
-    orderInfoList : `SELECT o.order_detail_no, u.user_id, u.user_name, u.user_tel, p.prod_name, d.order_date, d.order_total_amount
-                     FROM order_detail o
-                     JOIN prod_order d ON o.order_detail_no = d.order_no
+    orderInfoList : `SELECT o.order_detail_no,d.mer_uid, u.user_id, u.user_name,p.prod_name ,u.user_tel, d.order_date, d.order_total_amount
+					 FROM order_detail o
+					 JOIN prod_order d ON o.order_detail_no = d.order_no
                      JOIN user u ON d.user_no = u.user_no
-                     JOIN product p ON o.prod_code = p.prod_code ORDER BY o.order_detail_no `,
+                     JOIN product p ON o.prod_code = p.prod_code ORDER BY d.mer_uid DESC `,
     
     
     // 함께하면 좋은 축제들

@@ -236,8 +236,8 @@ export default {
       if (cartItems.length > 0) {
         // alert("장바구니에 이미 같은 상품이 담겨 있습니다.");
         Swal.fire({
-          title : '장바구니에 이미 같은 상품이 담겨 있습니다.',
-          icon : 'error'
+          title: "장바구니에 이미 같은 상품이 담겨 있습니다.",
+          icon: "error",
         });
         return; // 작업이 안되도록 종료
       }
@@ -245,9 +245,9 @@ export default {
       await axios.post(`/api/pay/cart`, obj).catch((err) => console.log(err));
       console.log(obj);
       Swal.fire({
-          title : '장바구니에 추가되었습니다.',
-          icon : 'success'
-        });
+        title: "장바구니에 추가되었습니다.",
+        icon: "success",
+      });
     },
     scrollToSection(refName) {
       this.$refs[refName].$el.scrollIntoView({ behavior: "smooth" });
