@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-4">
     <form>
       <h3>축제수정</h3>
       <div class="row">
@@ -11,7 +11,7 @@
             </td>
           </tr>
           <tr>
-            <th>카테고리</th>
+            <th>테마</th>
             <td class="text-center">
               <select name="cate" v-model="fesInfo.f_category">
                 <option value="문화">문화</option>
@@ -23,7 +23,7 @@
             </td>
           </tr>
           <tr>
-            <th>축제지역</th>
+            <th>지역</th>
             <td class="text-center">
               <select name="cateloc" v-model="fesInfo.f_reg">
                 <option value="서울">서울</option>
@@ -61,13 +61,21 @@
           <tr>
             <th>시작일</th>
             <td class="text-center">
-              <input type="text" v-model="fesInfo.f_firstday" />
+              <input
+                type="date"
+                v-model="formattedFesFirstDay"
+                @input="updateFesFirstDay"
+              />
             </td>
           </tr>
           <tr>
             <th>종료일</th>
             <td class="text-center">
-              <input type="text" v-model="fesInfo.f_lastday" />
+              <input
+                type="date"
+                v-model="formattedFesLastDay"
+                @input="updateFesFirstDay"
+              />
             </td>
           </tr>
           <tr>
@@ -88,19 +96,26 @@
               <input type="text" v-model="fesInfo.f_url" />
             </td>
           </tr>
-          <div>
-            <input
-              type="file"
-              ref="fileInput"
-              @change="handleFileChange"
-              multiple
-            />
-            <br />
-            <br />
-          </div>
-          <button class="btn" v-on:click="saveInfo(fesInfo.f_code)">
-            수정
-          </button>
+          <tr>
+            <div>
+              <input
+                type="file"
+                ref="fileInput"
+                class="mb-3"
+                @change="handleFileChange"
+                multiple
+              />
+            </div>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div class="d-grid gap-2">
+                <button class="btn" v-on:click="saveInfo(fesInfo.f_code)">
+                  수정
+                </button>
+              </div>
+            </td>
+          </tr>
         </table>
       </div>
     </form>
@@ -118,6 +133,8 @@ export default {
       fesInfo: {},
       bno: "",
       images: [],
+      formattedFesFirstDay: "",
+      formattedFesLastDay: "",
     };
   },
   created() {
@@ -125,6 +142,11 @@ export default {
     this.getFesInfo();
   },
   methods: {
+    updateFesFirstDay() {
+      // 변환된 날짜 문자열을 날짜 객체로 변환하여 저장
+      this.fesInfo.f_firstday = new Date(this.formattedFesFirstDay);
+      this.fesInfo.f_lastday = new Date(this.formattedFesLastDay);
+    },
     async getFesInfo() {
       let result = await axios
         .get(`/api/festival/${this.searchNo}`)
@@ -211,46 +233,85 @@ export default {
       }
     },
   },
+
+  watch: {
+    // fesInfo.f_firstday 값이 변경될 때마다 formattedFesFirstDay 업데이트
+    "fesInfo.f_firstday"(newVal) {
+      this.formattedFesFirstDay = this.getDateFormat(newVal);
+    },
+    // fesInfo.f_lastday값이 변경될 때마다 formattedFesLastDay 업데이트
+    "fesInfo.f_lastday"(newVal) {
+      this.formattedFesLastDay = this.getDateFormat(newVal);
+    },
+  },
 };
 </script>
 
 <style scoped>
-#container {
-  max-width: 600px;
+.table td,
+.table th {
+  vertical-align: middle;
+  text-align: center;
+  font-family: "Nanum Gothic", sans-serif;
+}
+.container {
+  max-width: 1000px;
   margin: 0 auto;
-  margin-bottom: 40px;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
 }
 
-#festival-form {
-  display: flex;
-  flex-direction: column;
+h3 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-label {
-  margin-bottom: 5px;
-}
-
-input,
-select,
-textarea {
+.row {
   margin-bottom: 10px;
-  padding: 8px;
+}
+
+.table {
   width: 100%;
-  box-sizing: border-box;
+  border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
-#custom-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 12px 20px;
+th {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: left;
+  width: 100px;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+.title {
+  font-weight: bold;
+}
+
+img {
+  display: block;
+  margin: 10px auto;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #88a3fa;
+  color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
+  text-decoration: none;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
+  margin-right: 10px;
 }
 
-#custom-button:hover {
-  background-color: #45a049;
+.btn:hover {
+  background-color: #88a3fa;
 }
 </style>

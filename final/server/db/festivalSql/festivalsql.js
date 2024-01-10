@@ -5,7 +5,7 @@ module.exports = {
     fesList : `select * from festival order by f_firstday`,
 
     // 단건 조회
-    fesInfo : `select * from festival where f_code = ? order by f_code desc`,
+    fesInfo : `select * from festival where f_code = ? order by f_code`,
 
     // 등록
     fesInsert : `insert into festival set ?`,
@@ -41,7 +41,7 @@ module.exports = {
 
     fesCheckCode : `select count(*) as count from festival where f_code = ?`,
 
-    fesInProduct : `select * from product where prod_loc = ? order by rand() limit 3`,
+    fesInProduct : `select * from product where prod_loc = ? order by rand() limit 4`,
 
 
     // fesCate : `  SELECT * FROM festival WHERE (f_firstday >= ? OR ? IS NULL)
@@ -55,8 +55,5 @@ module.exports = {
     fesReg : `select * from festival where f_reg = ?`,
 
     fesCate : `select * from festival where f_category  = ?`,
-
-    
-
 
 }

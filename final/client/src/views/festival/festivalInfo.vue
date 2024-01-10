@@ -46,7 +46,7 @@
           <div class="col-sm-4" id="text">
             <tr>
               <th>
-                📅 {{ getDateFormat(fesInfo.f_firstday) }} ~
+                📅 일정 : {{ getDateFormat(fesInfo.f_firstday) }} ~
                 {{ getDateFormat(fesInfo.f_lastday) }}
               </th>
             </tr>
@@ -55,29 +55,36 @@
             <br />
 
             <tr>
-              <th>📢 {{ fesInfo.f_loc }}</th>
+              <th>📢 위치 : {{ fesInfo.f_loc }}</th>
             </tr>
             <br />
             <br />
             <br />
 
             <tr>
-              <th>🎫 {{ fesInfo.f_price }}</th>
+              <th>🎫 금액 : {{ fesInfo.f_price }}</th>
             </tr>
             <br />
             <br />
             <br />
 
             <tr>
-              <th>📞 {{ fesInfo.f_number }}</th>
+              <th>📞 전화번호 : {{ fesInfo.f_number }}</th>
             </tr>
             <br />
             <br />
             <br />
-
             <tr>
+              <div class="button_container">
+                <a :href="fesInfo.f_url">
+                  <p class="description">공식홈페이지</p>
+                  <button class="btn"><span>Click!</span></button>
+                </a>
+              </div>
+            </tr>
+            <!-- <tr class="homepage">
               <a :href="fesInfo.f_url">공식홈페이지</a>
-            </tr>
+            </tr> -->
           </div>
         </div>
       </div>
@@ -98,16 +105,16 @@
     <br />
     <div calss="row align-items-end" style="display: flex">
       <div
-        v-for="(fes, i) in prodFeslList"
+        v-for="(prd, i) in fesProduct"
         :key="i"
         class="col-4 col-sm-3"
         style="margin: 10px"
-        @click="goFesInfo(fes.f_code)"
+        @click="goProdInfo(prd.prod_code)"
       >
         <div class="single_destination">
           <div class="thumb">
             <img
-              :src="`/api/festival/public/uploads/${fes.fesImg}`"
+              :src="`/api/product/public/uploads/${prd.prodImg}`"
               alt=""
               width="300px"
               height="250px"
@@ -119,49 +126,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="container">
-      <div class="row" id="prod" @click="goProdInfo(prod_loc)">
-        <div v-for="(pro, i) in fesProduct" :key="i" class="col-lg-4 col-md-6">
-          <div class="single_place">
-            <div class="card">
-              <div class="thumb">
-                <img
-                  :src="`/api/product/public/uploads/${pro.prodImg}`"
-                  alt=""
-                  style="height: 250px"
-                />
-                <a href="#" class="prise">₩{{ pro.prod_price }}</a>
-              </div>
-
-              <div class="place_info">
-                <a href="destination_details.html"
-                  ><h3>{{ pro.prod_name }}</h3></a
-                >
-                <p>United State of America</p>
-
-                <div class="rating_days d-flex justify-content-between">
-                  <span
-                    class="d-flex justify-content-center align-items-center"
-                  >
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <a href="#">(20 Review)</a>
-                  </span>
-
-                  <div class="days">
-                    <a href="#">5 Days</a>
-                    <i class="fa fa-clock-o"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 <script>
@@ -197,8 +161,8 @@ export default {
   methods: {
     goProdInfo(prod_loc) {
       this.$router.push({
-        path: "/productInfo",
-        query: { prod_loc: prod_loc },
+        path: "/userProductInfo",
+        query: { prod_code: prod_loc },
       });
     },
     async getFesInfo() {
@@ -271,14 +235,10 @@ export default {
       this.fesImgs = result.data;
     },
 
-    async getFesProdlList(f_reg) {
-      console.log("this.fesInfo.f_reg2", this.fesInfo.f_reg);
-
+    async getFesProdlList(prod_code) {
       const result = await axios
-        .get(`/api/festival/fesInProduct/${f_reg}`)
+        .get(`/api/festival/fesInProduct/${prod_code}`)
         .catch((err) => console.log(err));
-      console.log("this.fesInfo.f_reg", this.fesInfo.f_reg);
-      console.log("result : ", result.data);
       this.fesProduct = result.data;
     },
   },
@@ -308,12 +268,6 @@ button {
   margin: 10px;
 }
 
-#subImg {
-  display: flex;
-  margin: 10px;
-  margin-bottom: 100px;
-}
-
 #text {
   margin-top: 30px;
   margin-left: 50px;
@@ -322,14 +276,91 @@ button {
 
 #subImg {
   display: flex;
-  overflow-x: auto; /* Enable horizontal scrolling */
-  white-space: nowrap; /* Prevent line breaks between images */
+  overflow-x: auto;
+  white-space: nowrap;
+  margin: 10px;
+  margin-bottom: 100px;
 }
 
 #subImg img {
   flex: 0 0 auto;
   margin-right: 10px;
-  max-width: 500px; /* Limit image width to its container */
-  max-height: 250px; /* Limit image height to 250 pixels */
+  max-width: 300px;
+  max-height: 300px;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.link {
+  font-family: "Amatic SC", cursive;
+  text-align: center;
+}
+
+.description {
+  font-size: 20px;
+}
+
+.btn {
+  border: none;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 10px;
+  background-color: #222;
+  padding: 17px 60px;
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  background: #78c7d2;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+.link {
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+.link a {
+  color: #000;
+  font-size: 25px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 5px;
 }
 </style>

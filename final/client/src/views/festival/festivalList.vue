@@ -32,7 +32,8 @@
         <select title="테마별" v-model="selectedCate">
           <option value>테마별</option>
           <option value="불빛">불빛</option>
-          <option value="문화예술">문화예술</option>
+          <option value="문화">문화</option>
+          <option value="예술">예술</option>
           <option value="연인">연인</option>
           <option value="관광">관광</option>
         </select>
