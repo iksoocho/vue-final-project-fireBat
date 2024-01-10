@@ -59,7 +59,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      selectAll: 1,
+      selectAll: 0,
       cartList: [],
       totalPrice : 0,
     };
@@ -91,7 +91,7 @@ export default {
       }
       this.cartList.forEach((item) => {
         item.prod_select = status;
-        // this.updateCheckboxStatus(item); // 체크박스 상태를 업데이트하는 메서드 호출
+        this.updateCheckboxStatus(item); // 체크박스 상태를 업데이트하는 메서드 호출
       });
       // 총 상품금액 업데이트
       this.updateTotalPrice();
