@@ -145,7 +145,7 @@ data() {
       } catch (err) {
         console.error(err);
       } finally {
-        let res = await axios.post(`/api/qna/qnaPhoto`, formData);
+        let res = await axios.post(`/api/qna/reviewPhoto`, formData);
         let uploadedImages = res.data.filenames;
         console.log(uploadedImages);
 

@@ -73,7 +73,7 @@
           multiple
         />
       </div>
-      <button @click="saveInfo" type="button">Upload File</button>
+      <button @click="saveInfo" type="button">등록</button>
       <br />
     </form>
   </div>

@@ -8,77 +8,119 @@
           </li>
         </ul> -->
         <section class="notice">
-      <div class="page-title">
-        <div class="container">
-          <h3>주문내역</h3>
-        </div>
-      </div>
+  <div class="page-title">
+    <div class="container">
+      <h3>주문내역</h3>
+    </div>
+  </div>
 
-
-
-        <div id="board-list">
-        <div class="container" v-for="(orderItems, orderNo) in groupedOrders" :key="orderNo">
-            <h2>주문번호: {{ orderNo }}</h2>
-        <table class="board-table">
-            <thead>
-              <tr>
-                <th scope="col" class="th-num">상품 이미지</th>
-                <th scope="col" class="th-title">상품 이름</th>
-                <th scope="col" class="th-title">수량</th>
-
-                <th scope="col" class="th-date">주문 일자</th>
-                <th scope="col" class="th-num">금액</th>
-                <th scope="col" class="th-num">리뷰</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-              v-for="item in orderItems" :key="item.prod_code"
-              >
-                
-                <td></td>
-                
-                <td>{{ item.prod_name }}</td>
-                <td>{{ item.order_count }}</td>
-                <td>{{ getDateFormat(item.order_date) }}</td>
-                <td>{{ item.total_price }}원</td>
-                <td><button @click="goReviewInsert(item.prod_code)">리뷰 쓰기</button></td>
-              </tr>
-            </tbody>
-          </table>
-          <br>
-        </div>
-      </div>
-    </section>
+  <div id="board-list">
+    <div class="container" v-for="(orderItems, orderNo) in displayedOrders" :key="orderNo">
+      <h2>주문번호: {{ orderNo }}   </h2><br>
+      <table class="board-table">
+        <thead>
+          <tr>
+            <th scope="col" class="th-num">상품 이미지</th>
+            <th scope="col" class="th-title">상품 이름</th>
+            <th scope="col" class="th-title">수량</th>
+            <th scope="col" class="th-date">주문 일자</th>
+            <th scope="col" class="th-num">금액</th>
+            <th scope="col" class="th-num">리뷰</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in orderItems" :key="item.prod_code">
+            <td>
+              <img
+                :src="`/api/qna/public/uploads/${item.prodImg}`"
+                class="card-img-top"
+                alt="이미지가 존재하지 않습니다."
+                width="100px"
+                height="100px"
+              />
+            </td>
+            <td>{{ item.prod_name }}</td>
+            <td>{{ item.order_count }}</td>
+            <td>{{ getDateFormat(item.order_date) }}</td>
+            <td>{{ item.total_price }}원</td>
+            <td><button @click="goReviewInsert(item.prod_code)">리뷰 쓰기</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <br /><br /><br />
+    </div>
+  </div>
+</section>
+<Paginate
+      class="justify-content-center"
+      :list="Object.keys(groupedOrders)"
+      v-bind="{ ITEM_PER_PAGE, PAGE_PER_SECTION, curPage }"
+      @change-page="onChangePage"
+    />
     </div>
   </template>
   
   <script>
   import axios from "axios";
+  import Paginate from "../../components/Pagination.vue";
   export default {
+    components: {
+    Paginate,
+  },
     data() {
       return {
-        orderList:[]
+        orderList:[],
+        ITEM_PER_PAGE: 3,
+      PAGE_PER_SECTION: 5,
+      curPage: 1,
       };
     },
     computed: {
+      // groupedOrders() {
+      //   const grouped = {};
+      //   for (const item of this.orderList) {
+      //     if (!grouped[item.MER_UID]) {
+      //       grouped[item.MER_UID] = [];
+      //     }
+      //     grouped[item.MER_UID].push(item);
+      //   }
+      //   return grouped;
+      // },
       groupedOrders() {
-        const grouped = {};
-        for (const item of this.orderList) {
-          if (!grouped[item.MER_UID]) {
-            grouped[item.MER_UID] = [];
-          }
-          grouped[item.MER_UID].push(item);
-        }
-        return grouped;
-      },
+  const grouped = {};
+
+  for (const item of this.orderList) {
+    const key = `${item.MER_UID}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0총 결제 금액 : ${item.order_total_amount}원`;
+
+    if (!grouped[key]) {
+      grouped[key] = [];
+    }
+
+    grouped[key].push(item);
+  }
+
+  return grouped;
+},
       userId() {
         const userData = JSON.parse(sessionStorage.getItem('user'));
         console.log('userData:', userData); // 확인용 로그 추가
         return userData ? userData : null;
         },
+        pageStartIdx() {
+      return (this.curPage - 1) * this.ITEM_PER_PAGE;
     },
+    displayedOrders() {
+    const keys = Object.keys(this.groupedOrders);
+    const startIdx = (this.curPage - 1) * this.ITEM_PER_PAGE;
+    const endIdx = startIdx + this.ITEM_PER_PAGE;
+
+    return keys.slice(startIdx, endIdx).reduce((result, key) => {
+      result[key] = this.groupedOrders[key];
+      return result;
+    }, {});
+  },
+},
+    
     created(){
         this.getOrderList()
     },
@@ -93,7 +135,11 @@
         },
         goReviewInsert(prod_code){
             this.$router.push({ path: "/reviewInsert", query: { prod_code: prod_code } })
-        }    
+        },
+        onChangePage(data) {
+      this.curPage = data;
+    },
+       
     }
   };
   </script>
