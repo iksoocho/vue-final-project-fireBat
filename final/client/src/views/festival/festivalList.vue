@@ -196,7 +196,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .row-cols-auto {
   display: flex;
   justify-content: space-between;
