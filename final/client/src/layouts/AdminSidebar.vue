@@ -172,9 +172,7 @@
       </nav>
     </div>
     <div id="layoutSidenav_content">
-      <main>
-        <router-view />
-      </main>
+      <router-view />
     </div>
   </div>
 </template>

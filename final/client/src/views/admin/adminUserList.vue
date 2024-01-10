@@ -1,17 +1,23 @@
 <template>
   <div id="users" class="container">
-    <div id="app">
-      <input
-        type="text"
-        v-model="word"
-        @keyup.enter="prodSearch"
-        @input="onSearchInput"
-        placeholder="이름을 검색하세요"
-      />
-      <button @click="prodSearch">검색</button>
+    <div class="row">
+      <div class="col mb-2">
+        <h3>회원정보</h3>
+      </div>
+      <div class="col text-end input-group mb-3" id="app">
+        <input
+          type="text"
+          v-model="word"
+          @keyup.enter="prodSearch"
+          @input="onSearchInput"
+          class="form-control"
+          placeholder="상품 이름을 검색하세요"
+        />
+        <button @click="prodSearch" class="btn btn-outline-secondary">
+          검색
+        </button>
+      </div>
     </div>
-
-    <h3>회원정보</h3>
     <table class="table table-hover">
       <thead>
         <tr>

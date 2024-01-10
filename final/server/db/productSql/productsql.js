@@ -94,7 +94,7 @@ module.exports = {
                         p.prod_name,
                         p.prod_count`,
     // 관리자 메인 리스트
-    adminChartList : `SELECT * FROM product ORDER BY prod_price DESC LIMIT 4`,
+    adminChartList : `SELECT * FROM product ORDER BY prod_price DESC LIMIT 6`,
     // 관리자 페이지 차트
     adminChart : `SELECT * FROM product ORDER BY prod_sell_count DESC LIMIT 6 `,
     //이미지 테스트
