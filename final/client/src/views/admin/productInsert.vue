@@ -152,13 +152,13 @@ export default {
           Swal.fire({
             icon: "success",
             title: "정상 처리",
-            text: "정상적으로 처리되었습니다.",
+            text: "정상적으로 등록이 되었습니다.",
           });
         } else {
           Swal.fire({
             icon: "error",
             title: "처리 실패",
-            text: "정상적으로 처리되지 않았습니다.",
+            text: "정상적으로 등록되지 않았습니다.",
           });
         }
         this.bno = result.data.insertId;

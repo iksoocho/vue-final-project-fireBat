@@ -73,7 +73,7 @@ module.exports = {
                     user u ON po.user_no = u.user_no
 
                 WHERE
-                    p.prod_code = ?`,
+                    p.prod_code = ? order by review_no desc`,
 
     reviewInsert:`insert into review set ?`,
 

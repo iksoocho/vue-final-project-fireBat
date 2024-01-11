@@ -130,6 +130,8 @@ export default {
       };
     },
     async saveInfo(notice_no) {
+      if (!this.validation()) return;
+
       let formData = new FormData();
       this.images.forEach((file) => {
         formData.append(`files`, file);
@@ -161,6 +163,26 @@ export default {
 
         this.images = uploadedImages;
       }
+    },
+    validation() {
+      if (this.noticeInfo.notice_title == "") {
+        Swal.fire({
+          icon: "warning",
+          title: "제목이 입력되지 않았습니다.",
+          confirmButtonText: "확인",
+        });
+        return false;
+      }
+      if (this.noticeInfo.notice_content == "") {
+        Swal.fire({
+          icon: "warning",
+          title: "내용이 입력되지 않았습니다.",
+          confirmButtonText: "확인",
+        });
+        return false;
+      }
+
+      return true;
     },
   },
 };
