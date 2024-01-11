@@ -43,7 +43,7 @@
             alt="이미지가 존재하지 않습니다."
             style="height: 200px"
           />
-          <div class="card-body">
+          <div class="card-body" style="height: 92px;">
             <h5 class="card-title">{{ prod.prod_name }}</h5>
             <p class="card-text">{{ prod.prod_price }}원</p>
           </div>
