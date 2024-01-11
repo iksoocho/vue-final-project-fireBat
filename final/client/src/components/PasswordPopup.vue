@@ -16,18 +16,8 @@
       <th>비밀번호 변경</th>
       <td><button @click="handleClose">X</button></td>
     </h1>
-    <p
-      style="
-        font-size: 12px;
-        color: #666;
-        text-align: left;
-        padding-left: 20px;
-        line-height: 1.4;
-        padding-top: 12px;
-      "
-    >
-      비밀번호 변경 시 휴대폰, 컴퓨터 등 모든 기기 및 브라우저에서
-      로그아웃되며,<br />
+    <p style="font-size: 12px; color: #666; text-align: left; padding-left: 20px; line-height: 1.4; padding-top: 12px">
+      비밀번호 변경 시 휴대폰, 컴퓨터 등 모든 기기 및 브라우저에서 로그아웃되며,<br />
       변경된 비밀번호로 다시 로그인 후 이용하실 수 있습니다.
     </p>
     <div class="pwContainer">
@@ -52,16 +42,9 @@
         class="error-message"
         v-if="
           newPassword.length > 0 &&
-          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/.test(
-            newPassword
-          )
+          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/.test(newPassword)
         "
-        style="
-          color: red;
-          margin-bottom: 0px;
-          font-size: 12px;
-          padding-right: 80px;
-        "
+        style="color: red; margin-bottom: 0px; font-size: 12px; padding-right: 80px"
       >
         8~20자리의 영문 대/소문자, 숫자, 특수문자 조합을 사용해 주세요.
       </p>
@@ -88,20 +71,11 @@
       <p
         v-if="confirmPasswordActivated && error"
         class="error"
-        style="
-          color: red;
-          margin-bottom: 0px;
-          font-size: 12px;
-          padding-right: 270px;
-        "
+        style="color: red; margin-bottom: 0px; font-size: 12px; padding-right: 270px"
       >
         {{ error }}
       </p>
-      <button
-        class="btn btn-danger"
-        style="width: 460px; height: 40px; margin-top: 15px"
-        @click="handleChangePassword"
-      >
+      <button class="btn btn-danger" style="width: 460px; height: 40px; margin-top: 15px" @click="handleChangePassword">
         비밀번호 변경
       </button>
     </div>
@@ -110,100 +84,106 @@
 </template>
 
 <script>
-import axios from "axios";
-
+import axios from 'axios';
+import Swal from 'sweetalert2';
 export default {
   data() {
     return {
-      newPassword: "",
-      confirmPassword: "",
+      newPassword: '',
+      confirmPassword: '',
       confirmPasswordActivated: false,
       error: null,
     };
   },
   watch: {
-    newPassword: "validatePasswordMatch",
-    confirmPassword: "validatePasswordMatch",
+    newPassword: 'validatePasswordMatch',
+    confirmPassword: 'validatePasswordMatch',
   },
   methods: {
     validatePasswordMatch() {
       // 두 번째 비밀번호 확인 입력란이 활성화된 경우에만 검증
-      if (
-        this.confirmPasswordActivated &&
-        this.newPassword !== this.confirmPassword
-      ) {
-        this.error = "비밀번호가 일치하지 않습니다.";
+      if (this.confirmPasswordActivated && this.newPassword !== this.confirmPassword) {
+        this.error = '비밀번호가 일치하지 않습니다.';
       } else {
         this.error = null;
       }
     },
     async handleChangePassword() {
-      console.log("비밀번호 변경 버튼 클릭");
+      console.log('비밀번호 변경 버튼 클릭');
 
-      console.log("Request Payload:", {
+      console.log('Request Payload:', {
         newPassword: this.newPassword,
         confirmPassword: this.confirmPassword,
       });
 
       if (this.newPassword === this.confirmPassword) {
         // 비밀번호 유효성 검사
-        if (
-          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/.test(
-            this.newPassword
-          )
-        ) {
-          alert(
-            "8~20자리의 영문 대/소문자, 숫자, 특수문자 조합을 사용해 주세요."
-          );
+        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/.test(this.newPassword)) {
+          Swal.fire({
+            icon: 'warning',
+            title: '비밀번호 변경 실패',
+            text: '8~20자리의 영문 대/소문자, 숫자, 특수문자 조합을 사용해 주세요.',
+            conriemButtonText: '확인',
+          });
           return;
         }
 
         try {
-          const response = await axios.put("/api/user/changePassword", {
+          const response = await axios.put('/api/user/changePassword', {
             newPassword: this.newPassword,
             confirmPassword: this.confirmPassword,
           });
 
-          console.log("API 응답:", response.data);
+          console.log('API 응답:', response.data);
 
-          this.$emit("change-password", {
+          this.$emit('change-password', {
             newPassword: this.newPassword,
             confirmPassword: this.confirmPassword,
           });
 
-          this.$emit("close");
+          this.$emit('close');
 
-          await axios.post("/api/user/logout");
-          sessionStorage.removeItem("user");
-          window.alert("로그아웃 되었습니다.");
-          console.log("로그아웃 되었습니다.");
+          await axios.post('/api/user/logout');
+          sessionStorage.removeItem('user');
+          await Swal.fire({
+            icon: 'success',
+            title: '비밀번호 변경 완료',
+            text: '로그인 화면으로 이동합니다.',
+            conriemButtonText: '확인',
+          });
+          console.log('로그아웃 되었습니다.');
 
-          await this.$router.push("/login");
+          await this.$router.push('/login');
           window.location.reload();
         } catch (error) {
-          console.error("API 호출 에러:", error);
-          this.error = "비밀번호 변경 중 오류가 발생했습니다.";
+          console.error('API 호출 에러:', error);
+          this.error = '비밀번호 변경 중 오류가 발생했습니다.';
           // 서버 응답에서 오류에 대한 자세한 정보 표시
           if (error.response) {
-            console.error("서버 응답 상태:", error.response.status);
-            console.error("서버 오류 상세 정보:", error.response.data);
-            this.error = "서버에서 유효성 검사 오류가 발생했습니다.";
+            console.error('서버 응답 상태:', error.response.status);
+            console.error('서버 오류 상세 정보:', error.response.data);
+            this.error = '서버에서 유효성 검사 오류가 발생했습니다.';
           } else if (error.request) {
-            console.error("서버 응답이 없습니다.");
-            this.error = "서버 응답이 없습니다.";
+            console.error('서버 응답이 없습니다.');
+            this.error = '서버 응답이 없습니다.';
           } else {
-            console.error("요청 설정 중 오류:", error.message);
-            this.error = "요청 설정 중 오류가 발생했습니다.";
+            console.error('요청 설정 중 오류:', error.message);
+            this.error = '요청 설정 중 오류가 발생했습니다.';
           }
         }
       } else {
-        alert("새 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
+        Swal.fire({
+          icon: 'warning',
+          title: '비밀번호 변경 실패',
+          text: '새 비밀번호와 확인 비밀번호가 일치하지 않습니다.',
+          conriemButtonText: '확인',
+        });
       }
     },
 
     handleClose() {
-      console.log("닫기 버튼 클릭");
-      this.$emit("close");
+      console.log('닫기 버튼 클릭');
+      this.$emit('close');
     },
   },
 };

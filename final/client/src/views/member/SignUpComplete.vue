@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <h2>축하합니다. 회원가입이 완료되었습니다.</h2>
+    <h2 style="font-weight: bold">축하합니다. 회원가입이 완료되었습니다.</h2>
     <div class="container-one">
       <div class="container-two">
-        <h5>저희 FESTIVAL NU CYA 를 이용해 주셔서 감사합니다.</h5>
+        <h5 style="font-weight: bold">저희 FESTIVAL NU CYA 를 이용해 주셔서 감사합니다.</h5>
       </div>
       <div class="container-three">
         <b>>아이디 : {{ user.user_id }}</b
@@ -32,8 +32,9 @@ export default {
   },
   methods: {
     // 2024-01-02 메인화면 버튼 클릭시 메인화면 상단 슬라이드 사진 안나옴.
-    goMain() {
-      this.$router.push('/main').catch(() => {});
+    async goMain() {
+      await this.$router.push('/main');
+      window.location.reload();
     },
     goLogin() {
       this.$router.push('/login').catch(() => {});

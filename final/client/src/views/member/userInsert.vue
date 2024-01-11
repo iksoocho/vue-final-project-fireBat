@@ -1,9 +1,7 @@
 <template>
   <div id="container" style="display: flex; justify-content: center">
     <form @submit.prevent="submitForm">
-      <h3 style="text-align: center; margin-bottom: 20px; color: #dc3545">
-        Sign-up
-      </h3>
+      <h3 style="text-align: center; margin-bottom: 20px; color: #dc3545">Sign-up</h3>
       <div :class="{ error: !isValidUserId }" style="margin-bottom: 8px">
         <!-- 보류. 영문 한글자 이상 입력시 오류메세지 뜨는데, 한글은 두글자 이상이여야지 뜸 -->
         <label style="color: black">아이디</label><br />
@@ -27,13 +25,7 @@
           required
         />
         <!-- <button @click="checkDuplicateId" class="btn btn-danger" style="margin-bottom: 5px;margin-left: 10px;">중복 체크</button> -->
-        <p
-          class="error-message"
-          v-if="isErrorMessageVisibleId"
-          style="margin-top: 0px"
-        >
-          아이디를 입력해주세요.
-        </p>
+        <p class="error-message" v-if="isErrorMessageVisibleId" style="margin-top: 0px">아이디를 입력해주세요.</p>
         <p
           class="error-message"
           v-if="user.user_id.length > 0 && !/[a-z0-9]{4,15}/.test(user.user_id)"
@@ -64,27 +56,18 @@
           "
           required
         />
-        <p class="error-message" v-if="isErrorMessageVisiblePw">
-          비밀번호를 입력해주세요.
-        </p>
+        <p class="error-message" v-if="isErrorMessageVisiblePw">비밀번호를 입력해주세요.</p>
         <p
           class="error-message"
           v-if="
             user.user_pw.length > 0 &&
-            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/.test(
-              user.user_pw
-            )
+            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/.test(user.user_pw)
           "
         >
           8~20자리의 영문 대/소문자, 숫자, 특수문자 조합을 사용해 주세요.
         </p>
-        <p class="error-message" v-if="/[\s+]/.test(user.user_pw)">
-          공백 없이 입력해 주세요.
-        </p>
-        <p
-          class="error-message"
-          v-if="user.user_pw.match(/(\d)\1{3,}|([A-Za-z])\2{3,}/)"
-        >
+        <p class="error-message" v-if="/[\s+]/.test(user.user_pw)">공백 없이 입력해 주세요.</p>
+        <p class="error-message" v-if="user.user_pw.match(/(\d)\1{3,}|([A-Za-z])\2{3,}/)">
           동일한 문자(숫자)는 4회 이상 연속 사용할 수 없습니다.
         </p>
         <!-- <p class="error-message" v-if="user.user_pw.length > 0 && !/[a-zA-Z\d!@#$%^&/-/_]/.test(user.user_pw)">특수문자는 !@#$%^&*()-_만 사용 가능합니다.</p> -->
@@ -107,13 +90,8 @@
           "
           required
         />
-        <p class="error-message" v-if="isErrorMessageVisibleRecpw">
-          비밀번호를 입력해주세요.
-        </p>
-        <p
-          class="error-message"
-          v-if="user.user_recpw !== user.user_pw && user.user_recpw.length > 0"
-        >
+        <p class="error-message" v-if="isErrorMessageVisibleRecpw">비밀번호를 입력해주세요.</p>
+        <p class="error-message" v-if="user.user_recpw !== user.user_pw && user.user_recpw.length > 0">
           비밀번호가 일치하지 않습니다.
         </p>
       </div>
@@ -134,9 +112,7 @@
           "
           required
         />
-        <p class="error-message" v-if="isErrorMessageVisibleName">
-          이름을 입력해주세요.
-        </p>
+        <p class="error-message" v-if="isErrorMessageVisibleName">이름을 입력해주세요.</p>
       </div>
       <div style="margin-bottom: 8px">
         <label style="color: black">생년월일</label><br />
@@ -168,12 +144,7 @@
           v-model="user.user_gender"
           style="margin-bottom: 8px"
         />
-        <label
-          class="btn btn-outline-danger"
-          for="btnradio1"
-          style="margin-left: 10px; margin-bottom: 5px"
-          >남</label
-        >
+        <label class="btn btn-outline-danger" for="btnradio1" style="margin-left: 10px; margin-bottom: 5px">남</label>
 
         <input
           type="radio"
@@ -185,22 +156,12 @@
           v-model="user.user_gender"
         />
 
-        <label
-          class="btn btn-outline-danger"
-          for="btnradio2"
-          style="margin-left: 3px; margin-bottom: 5px"
-          >여</label
-        >
-        <p class="error-message" v-if="isErrorMessageVisibleBirth">
-          생년월일을 입력해주세요.
-        </p>
+        <label class="btn btn-outline-danger" for="btnradio2" style="margin-left: 3px; margin-bottom: 5px">여</label>
+        <p class="error-message" v-if="isErrorMessageVisibleBirth">생년월일을 입력해주세요.</p>
         <p
           class="error-message"
           v-if="
-            user.user_birth.length > 0 &&
-            !/^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/.test(
-              user.user_birth
-            )
+            user.user_birth.length > 0 && !/^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/.test(user.user_birth)
           "
         >
           생년월일을 정확하게 입력해 주세요.
@@ -228,15 +189,10 @@
           required
         />
 
-        <p class="error-message" v-if="isErrorMessageVisibleTel">
-          전화번호를 입력해 주세요.
-        </p>
+        <p class="error-message" v-if="isErrorMessageVisibleTel">전화번호를 입력해 주세요.</p>
         <p
           class="error-message"
-          v-else-if="
-            user.user_tel.length > 0 &&
-            !/^\d{2,3}-?\d{3,4}-?\d{4}$/.test(user.user_tel)
-          "
+          v-else-if="user.user_tel.length > 0 && !/^\d{2,3}-?\d{3,4}-?\d{4}$/.test(user.user_tel)"
         >
           전화번호를 정확하게 입력해 주세요.
         </p>
@@ -259,7 +215,7 @@
             border-top-color: #d8d8d8;
             border-left-color: #d8d8d8;
             border-radius: 3px;
-            background-color: #fff;
+            background-color: #b8b6b6;
           "
           readonly
           required
@@ -289,73 +245,51 @@
         <th style="font-size: 13px">마케팅 정보 수신 동의(선택)</th>
       </tr>
       <tr>
-        <p
-          style="
-            font-size: 12px;
-            padding-left: 0px;
-            color: gray;
-            line-height: 18px;
-            margin-bottom: 5px;
-          "
-        >
-          수신 동의 시, 각종 할인 혜택과 이벤트/기획전, 알림 신청 내역 등의
-          정보를 받아보실 수 있습니다.<br />
+        <p style="font-size: 12px; padding-left: 0px; color: gray; line-height: 18px; margin-bottom: 5px">
+          수신 동의 시, 각종 할인 혜택과 이벤트/기획전, 알림 신청 내역 등의 정보를 받아보실 수 있습니다.<br />
           수신 거부 시에도 기본 서비스(회원가입/주문배송 메일)은 발송됩니다.
         </p>
       </tr>
       <tr style="font-size: 12px">
-        <input
-          type="checkbox"
-          name="e-mail receives"
-          v-model="user.user_receive_email"
-        />
+        <input type="checkbox" name="e-mail receives" v-model="user.user_receive_email" />
         이메일 수신 동의
         <br />
-        <input
-          type="checkbox"
-          name="sns receives"
-          v-model="user.user_receive_sms"
-        />
+        <input type="checkbox" name="sns receives" v-model="user.user_receive_sms" />
         SNS 수신 동의
       </tr>
       <tr>
         <div class="d-grid gap-2" style="margin-top: 20px">
-          <button
-            type="submit"
-            class="btn btn-danger"
-            style="margin-bottom: 50px"
-          >
-            가입완료
-          </button>
+          <button type="submit" class="btn btn-danger" style="margin-bottom: 50px">가입완료</button>
         </div>
       </tr>
     </form>
   </div>
 </template>
 <script>
-import axios from "axios";
-import AddressSearch from "../../components/AddressSearch.vue";
+import axios from 'axios';
+import AddressSearch from '../../components/AddressSearch.vue';
+import Swal from 'sweetalert2';
 export default {
   components: {
     AddressSearch, // 주소찾기 컴포넌트 등록
   },
   data() {
     return {
-      errorMessage: "",
+      errorMessage: '',
       user: {
-        user_id: "",
-        user_pw: "",
-        user_recpw: "",
-        user_name: "",
-        user_birth: "",
-        user_tel: "",
-        user_email: "",
+        user_id: '',
+        user_pw: '',
+        user_recpw: '',
+        user_name: '',
+        user_birth: '',
+        user_tel: '',
+        user_email: '',
         user_receive_email: 0,
         user_receive_sms: 0,
         user_gender: null,
-        user_addr: "",
-        user_detail_addr: "",
-        user_zip: "",
+        user_addr: '',
+        user_detail_addr: '',
+        user_zip: '',
       },
 
       isErrorMessageVisibleId: false,
@@ -367,8 +301,8 @@ export default {
       isErrorMessageVisibleRecpw: false,
       isIdDuplicated: false,
       isEmailDuplicated: false,
-      idDuplicatedMessage: "",
-      emailDuplicatedMessage: "",
+      idDuplicatedMessage: '',
+      emailDuplicatedMessage: '',
     };
   },
   computed: {
@@ -380,27 +314,27 @@ export default {
     },
   },
   watch: {
-    "user.user_id"() {
+    'user.user_id'() {
       this.checkDuplicateIdRealtime();
       this.isErrorMessageVisibleId = false;
     },
-    "user.user_pw"() {
+    'user.user_pw'() {
       this.isErrorMessageVisiblePw = false;
     },
-    "user.user_birth"() {
+    'user.user_birth'() {
       this.isErrorMessageVisibleBirth = false;
     },
-    "user.user_tel"() {
+    'user.user_tel'() {
       this.isErrorMessageVisibleTel = false;
     },
     // 'user.user_email'() {
     //   this.checkDuplicateEmailRealtime();
     //   this.isErrorMessageVisibleEmail = false;
     // },
-    "user.user_name"() {
+    'user.user_name'() {
       this.isErrorMessageVisibleName = false;
     },
-    "user.user_recpw"() {
+    'user.user_recpw'() {
       this.isErrorMessageVisibleRecpw = false;
     },
   },
@@ -450,11 +384,11 @@ export default {
           if (isDuplicated) {
             // 중복 여부와 메시지 설정
             this.isIdDuplicated = true;
-            this.idDuplicatedMessage = "이미 사용 중인 아이디입니다.";
+            this.idDuplicatedMessage = '이미 사용 중인 아이디입니다.';
           } else {
             // 중복 여부와 메시지 초기화
             this.isIdDuplicated = false;
-            this.idDuplicatedMessage = "";
+            this.idDuplicatedMessage = '';
           }
         } catch (error) {
           console.error(error);
@@ -514,11 +448,21 @@ export default {
     async submitForm() {
       // 폼 제출 전 유효성 검사 (보류)
       if (this.user.user_gender === null) {
-        window.alert("성별을 선택해주세요");
+        Swal.fire({
+          icon: 'warning',
+          title: '회원가입 실패',
+          text: '성별을 선택해주세요.',
+          conriemButtonText: '확인',
+        });
         return;
       }
       if (this.isIdDuplicated === true) {
-        window.alert("이미 사용 중인 아이디입니다.");
+        Swal.fire({
+          icon: 'warning',
+          title: '회원가입 실패',
+          text: '이미 사용중인 아이디입니다.',
+          conriemButtonText: '확인',
+        });
         return;
       }
       // if (this.isEmailDuplicated === true) {
@@ -532,7 +476,7 @@ export default {
       if (isSignUpSuccess) {
         // 회원가입 성공 시 페이지 이동
         this.$router.push({
-          path: "/signUpComplete",
+          path: '/signUpComplete',
           query: {
             user_id: this.user.user_id,
             user_name: this.user.user_name,
@@ -541,7 +485,12 @@ export default {
         }); // 이동하고자 하는 경로로 변경
       } else {
         // 회원가입 실패 시 처리 (예: 에러 메시지 출력)
-        window.alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+        Swal.fire({
+          icon: 'warning',
+          title: '회원가입 실패',
+          text: '다시 시도해 주세요.',
+          conriemButtonText: '확인',
+        });
       }
     },
   },
