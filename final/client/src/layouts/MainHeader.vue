@@ -5,7 +5,7 @@
       <div class="row justify-content-center align-items-center">
         <div class="col-auto d-flex align-items-center">
           <a href="/main">
-            <img width="238" height="120" src="../image/logo/메인로고2.png" />
+            <img width="238" height="140" src="../image/logo/메인로고2.png" />
           </a>
         </div>
       </div>
@@ -19,7 +19,7 @@
               <div class="col-xl-2 col-lg-2">
                 <div class="logo">
                   <a href="/main">
-                    <img width="160" height="60" src="../image/logo/서브로고.png" alt="" />
+                    <img width="150" height="60" src="../image/logo/서브로고.png" alt="" />
                   </a>
                 </div>
               </div>
