@@ -16,7 +16,7 @@
                     <div class="single_place">
                             <div class="thumb">
                             <img :src="getProdImgUrl(pro.prod_code)" alt="" width="356px" height="350px" >
-                            <a href="#" class="prise">₩{{pro.prod_price}}</a>
+                            <a href="#" class="prise">₩{{pro.prod_price}}원</a>
                     </div>
                          <div class="place_info">
                             <a href="destination_details.html"><h3>{{pro.prod_name}}</h3></a>
