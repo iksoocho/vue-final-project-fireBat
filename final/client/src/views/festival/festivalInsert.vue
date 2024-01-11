@@ -121,7 +121,7 @@ export default {
         if (result.data.affectedRows > 0) {
           Swal.fire({
             icon: "success",
-            title: "정상 처리",
+            title: "등록 완료",
             text: "정상적으로 처리되었습니다.",
           });
         } else {
