@@ -6,36 +6,9 @@
       <div id="BarChart" class="chart w-50"></div>
     </div>
     <div class="row">
-      <div class="col-12">
-        <div class="app">
-          <div class="table-header">상품 판매량 순위</div>
-          <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>상품번호</th>
-                <th>상품이름</th>
-                <th>상품가격</th>
-                <th>상품지역</th>
-                <th>상품분류</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr :key="i" v-for="(prod, i) in productList">
-                <td>{{ prod.prod_code }}</td>
-                <td>{{ prod.prod_name }}</td>
-                <td>{{ prod.prod_price }}</td>
-                <td>{{ prod.prod_loc }}</td>
-                <td>{{ prod.prod_cate }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
       <div class="col-6">
         <div class="app">
-          <div class="table-header">상품 판매액 순위</div>
+          <div class="table-header">상품 판매량 순위</div>
           <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
           <table class="table">
             <thead>

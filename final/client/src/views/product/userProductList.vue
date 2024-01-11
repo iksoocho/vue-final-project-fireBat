@@ -24,12 +24,16 @@
         :key="i"
         class="col-md-3 mb-4"
         :class="{ 'out-of-stock': prod.prod_state === 0 }"
-        @click="prod.prod_state === 0 ? null : goProdInfo(prod.prod_code)"
+        @click="
+          prod.prod_state === 0 || prod.prod_count === 0
+            ? null
+            : goProdInfo(prod.prod_code)
+        "
       >
         <div class="card">
           <div
             class="out-of-stock-overlay"
-            v-if="prod.prod_state === 0 || prod.prod_count < 0"
+            v-if="prod.prod_state === 0 || prod.prod_count === 0"
           >
             <img src="./품절-removebg-preview.png" alt="품절" />
           </div>
@@ -70,7 +74,7 @@ export default {
       userProductList: [],
       prodImgs: {}, // 변경 없음
       word: "",
-      ITEM_PER_PAGE: 8,
+      ITEM_PER_PAGE: 16,
       PAGE_PER_SECTION: 5,
       curPage: 1,
     };

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-4">
     <div class="row">
       <div class="col mb-2">
         <h3>축제목록</h3>
@@ -11,7 +11,7 @@
           @keyup.enter="fesSearch"
           @input="onSearchInput"
           class="form-control"
-          placeholder="상품 이름을 검색하세요"
+          placeholder="축제 이름을 검색하세요"
         />
         <button @click="fesSearch" class="btn btn-outline-secondary">
           검색
@@ -21,15 +21,15 @@
     <table class="table table-hover">
       <thead>
         <tr>
-            <th>축제코드</th>
-            <th>카테고리</th>
-            <th>지역</th>
-            <th>축제이름</th>
-            <th>전화번호</th>
-            <th>축제일정</th>
-            <th>금액</th>
-            <th>홈페이지</th>
-            <th>삭제</th>
+          <th>축제코드</th>
+          <th>카테고리</th>
+          <th>지역</th>
+          <th>축제이름</th>
+          <th>전화번호</th>
+          <th>축제일정</th>
+          <th>금액</th>
+          <th>홈페이지</th>
+          <th>삭제</th>
         </tr>
       </thead>
       <tbody>
@@ -41,14 +41,17 @@
           :key="idx"
           @click="goToUpdate(fes.f_code)"
         >
-            <td>{{ fes.f_code}}</td>
-            <td>{{ fes.f_category }}</td>
-            <td>{{ fes.f_reg }}</td>
-            <td>{{ fes.f_name }}</td>
-            <td>{{ fes.f_number }}</td>
-            <td>{{ getDateFormat(fes.f_firstday) }} ~ {{ getDateFormat(fes.f_lastday) }}</td>
-            <td>{{ fes.f_price }}</td>
-            <td>{{ fes.f_url }}</td>
+          <td>{{ fes.f_code }}</td>
+          <td>{{ fes.f_category }}</td>
+          <td>{{ fes.f_reg }}</td>
+          <td>{{ fes.f_name }}</td>
+          <td>{{ fes.f_number }}</td>
+          <td>
+            {{ getDateFormat(fes.f_firstday) }} ~
+            {{ getDateFormat(fes.f_lastday) }}
+          </td>
+          <td>{{ fes.f_price }}</td>
+          <td>{{ fes.f_url }}</td>
 
           <td>
             <button

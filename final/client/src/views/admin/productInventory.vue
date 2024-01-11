@@ -24,8 +24,8 @@
           <th>상품코드</th>
           <th>상품명</th>
           <th>상품가격</th>
-          <th>총입고량</th>
           <th>현재재고</th>
+          <!-- <th>현재재고</th> -->
           <th>상품상태</th>
 
           <th>상품상태 변경</th>
@@ -44,7 +44,7 @@
           <th calss="price">{{ prod.prod_price }}</th>
           <th class="current">{{ prod.current_stock }}</th>
 
-          <th class="inven">{{ prod.sold_stock }}</th>
+          <!-- <th class="inven">{{ prod.available_stock }}</th> -->
           <th class="state">{{ prodState(prod.prod_state) }}</th>
 
           <th>

@@ -54,6 +54,7 @@ router.get('/:f_code', async(req, res)=>{
     res.send(list[0]); //mysql에서 select는 무조건 배열로 넘오 오기 때문에 단건 조회일 경우 list[0]로 해줘야됨
 });
 
+
 // 축제 등록
 router.post('/insert', async (req, res) => {
     let data = req.body.param;   // 데이터를 넘길때 req body에 들어감
@@ -213,9 +214,7 @@ router.get('/fesInProduct/:f_reg', async (req, res) => {
   let list = await mysql.query('fesInProduct', data);
 
   for (const prod of list) {
-    console.log('prod.f_code :',prod.prod_code)
     let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
-    console.log('prod.prodImg :',prodImg)
     prod.prodImg = prodImg ? prodImg.prod_filename : '';
     }
     res.send(list);
