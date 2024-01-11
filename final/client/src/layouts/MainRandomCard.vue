@@ -39,7 +39,7 @@
                 {{ fes.f_name }}
                 <a
                   >{{ getDateFormat(fes.f_firstday) }} ~
-                  {{ getDateFormat(fes.f_lastday) }}</a
+                  </a
                 >
               </p>
             </div>
