@@ -15,24 +15,19 @@
                  <div v-for="(pro, i) in prodRandomList" :key="i" class="col-lg-4 col-md-6" @click="goProdInfo(pro.prod_code)">
                     <div class="single_place">
                             <div class="thumb">
-                            <img :src="getProdImgUrl(pro.prod_code)" alt="" width="356px" height="350px" >
+
+                            <img :src="`/api/product/public/uploads/${pro.prodImg}`" alt="" width="356px" height="350px" >
                             <a href="#" class="prise">₩{{pro.prod_price}}</a>
+
                     </div>
                          <div class="place_info">
                             <a href="destination_details.html"><h3>{{pro.prod_name}}</h3></a>
-                            <p>United State of America</p>
+                            
                             <div class="rating_days d-flex justify-content-between">
-                                <span class="d-flex justify-content-center align-items-center">
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i>
-                                     <a href="#">(20 Review)</a>
-                                </span>
+                                
                                 <div class="days">
-                                    <i class="fa fa-clock-o"></i>
-                                    <a href="#">5 Days</a>
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
@@ -93,7 +88,7 @@ export default {
         const prodImages = this.prodImgs[prod_code];
         
         if (prodImages) {
-          return `http://localhost:3000/product/public/uploads/${prodImages.prod_filename}`;
+          return `api/product/public/uploads/${prodImages.prod_filename}`;
         }
         return ''; // 이미지가 없을 때 빈 문자열 반환
       },

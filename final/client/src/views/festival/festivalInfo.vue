@@ -19,7 +19,7 @@
       <div class="row align-items-end" id="subImg">
         <template v-for="(img, idx) in fesImgs" :key="idx">
           <img
-            :src="`http://localhost:3000/festival/public/uploads/${img.f_filename}`"
+            :src="`/api/festival/public/uploads/${img.f_filename}`"
             class="card-img-top sub-img"
             alt=""
           />
@@ -37,7 +37,7 @@
         <div class="row">
           <div class="col-8 col-sm-6" v-if="fesImgs.length > 0">
             <img
-              :src="`http://localhost:3000/festival/public/uploads/${fesImgs[0].f_filename}`"
+              :src="`/api/festival/public/uploads/${fesImgs[0].f_filename}`"
               class="card-img-top"
               alt="이미지가 없습니다."
               style="width: 500px; height: 600px"
@@ -158,6 +158,14 @@ export default {
     this.getFesInfo();
     this.getFesImg();
   },
+  watch : {
+    fesInfo(){
+      this.initializeMap();
+      console.log(kakao);
+      console.log(window.Kakao);
+      this.getFesProdlList(this.fesInfo.f_reg);
+    }
+  },
   methods: {
     goProdInfo(prod_loc) {
       this.$router.push({
@@ -173,8 +181,8 @@ export default {
         let response = await axios.get(`/api/festival/${this.searchNo}`);
         this.fesInfo = response.data;
         console.log("this.fesInfo.f_regggggg : ", this.fesInfo.f_reg);
-        this.initializeMap();
-        this.getFesProdlList(this.fesInfo.f_reg);
+        // this.initializeMap();
+        // this.getFesProdlList(this.fesInfo.f_reg);
       } catch (err) {
         console.log(err);
       }
