@@ -388,10 +388,11 @@ export default {
       }
     },
     async updateProdStock(list) {
-      for (let i = 0; i <= list.length; i++) {
+      for (let i = 0; i < list.length; i++) {
         this.updateStock =
           parseInt(list[i].prod_count) - parseInt(list[i].prod_order_count);
         console.log(this.updateStock);
+        console.log(list[i]);
         if (this.updateStock === 0) {
           try {
             await axios.put(
