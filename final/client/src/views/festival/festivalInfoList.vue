@@ -51,7 +51,7 @@
             {{ getDateFormat(fes.f_lastday) }}
           </td>
           <td>{{ fes.f_price }}</td>
-          <td>{{ fes.f_url }}</td>
+          <td><a :href="fes.f_url" @click.stop>링크</a></td>
 
           <td>
             <button
