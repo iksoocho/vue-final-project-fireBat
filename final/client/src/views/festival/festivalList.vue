@@ -72,8 +72,8 @@
               alt="이미지가 존재하지 않습니다."
               style="height: 250px"
             />
-            <div class="card-body">
-              <h5 class="card-title">{{ fes.f_name }}</h5>
+            <div class="card-body" >
+              <h5 class="card-title" style="height: 48px;">{{ fes.f_name }}</h5>
               <p class="card-text">
                 {{ getDateFormat(fes.f_firstday) }} ~
                 {{ getDateFormat(fes.f_lastday) }}

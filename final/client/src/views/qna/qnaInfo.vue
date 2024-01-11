@@ -89,13 +89,14 @@
         @click="goQnaList"
       >
         목록으로
-      </button></div>
+      </button>
+    </div>
     <div >
      
     </div>
-    
+    <br><br><br><br>
     <div>
-      <h4>답변</h4>
+      <h4 class="col text-center">답변</h4>
 
       <div v-for="(answer, index) in qnaAnswer" :key="index">
         <table id="writetable">
@@ -121,17 +122,20 @@
       </div>
     </div>
 
-    <div v-if="qnaAnswer.length == 0 && isLoggedIn && userId == 'admin'">
-      <input
-        type="text"
+    <div style="text-align: center" v-if="qnaAnswer.length == 0 && isLoggedIn && userId == 'admin'">
+      <textarea
+            id="textarea2"
+            cols="130"
+            rows="15"
+            name="content"
         v-model="qnaAnswerInfo.qna_answer_content"
-        placeholder="댓글 작성"
-      />
+        placeholder="답변 작성"
+      ></textarea>
       <button @click="answerInsert">답변 추가</button>
     </div>
     <div v-else></div>
 
-    <div style="text-align: center" v-if="isLoggedIn && userId == 'admin'">
+    <div style="text-align: center" v-if="isLoggedIn && userId == 'admin'&& qnaAnswer.length > 0">
       <button
         type="reset"
         class="btn btn-danger mt-2"
@@ -264,10 +268,18 @@ export default {
         .catch((err) => console.log(err));
 
       if (result.data.message == "") {
-        alert(`정상적으로 등록 되었습니다.`);
+        Swal.fire({
+          icon: "warning",
+          title: "정상적으로 등록 되었습니다.",
+          confirmButtonText: "확인",
+        });
         this.$router.go();
       } else {
-        alert(`등록 실패.`);
+        Swal.fire({
+          icon: "warning",
+          title: "등록 실패.",
+          confirmButtonText: "확인",
+        });
       }
     },
     async deleteAnswer(qna_no) {

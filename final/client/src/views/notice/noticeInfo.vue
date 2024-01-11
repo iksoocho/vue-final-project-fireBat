@@ -56,6 +56,21 @@
       >
         삭제
       </button>
+      <button
+        type="button"
+        class="btn btn-outline-danger float-right mt-2"
+        @click="goNoticeList"
+      >
+        목록으로
+      </button>
+    </div>
+    <div v-else> <button
+        type="button"
+        class="btn btn-outline-danger float-right mt-2"
+        @click="goNoticeList"
+      >
+        목록으로
+      </button>
     </div>
   </div>
 </template>
@@ -158,6 +173,9 @@ export default {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(link);
     },
+    goNoticeList(){
+      this.$router.push({ path: "/noticeList" });
+    }
   },
 };
 </script>

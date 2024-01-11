@@ -44,7 +44,7 @@
             style="height: 200px"
           />
           <div class="card-body">
-            <h5 class="card-title">{{ prod.prod_name }}</h5>
+            <h5 class="card-title" style="height: 38.38px;">{{ prod.prod_name }}</h5>
             <p class="card-text">{{ prod.prod_price }}원</p>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default {
       userProductList: [],
       prodImgs: {}, // 변경 없음
       word: "",
-      ITEM_PER_PAGE: 8,
+      ITEM_PER_PAGE: 16,
       PAGE_PER_SECTION: 5,
       curPage: 1,
     };

@@ -106,11 +106,19 @@
   
       validation() {
         if (this.qnaInfo.qna_title == "") {
-          alert("제목이 입력되지 않았습니다.");
+          Swal.fire({
+          icon: "warning",
+          title: "제목이 입력되지 않았습니다.",
+          confirmButtonText: "확인",
+        });
           return false;
         }
         if (this.qnaInfo.qna_content == "") {
-          alert("내용이 입력되지 않았습니다.");
+          Swal.fire({
+          icon: "warning",
+          title: "내용이 입력되지 않았습니다.",
+          confirmButtonText: "확인",
+        });
           return false;
         }
   

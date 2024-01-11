@@ -120,7 +120,7 @@ data() {
       };
     },
     async saveInfo() {
-      //if (!this.validation()) return;
+      if (!this.validation()) return;
 
       let formData = new FormData();
       this.images.forEach((file) => {
@@ -153,6 +153,26 @@ data() {
 
         this.images = uploadedImages;
       }
+    },
+    validation() {
+      if (this.reviewInfo.review_title == "") {
+        Swal.fire({
+          icon: "warning",
+          title: "제목이 입력되지 않았습니다.",
+          confirmButtonText: "확인",
+        });
+        return false;
+      }
+      if (this.reviewInfo.review_content == "") {
+        Swal.fire({
+          icon: "warning",
+          title: "내용이 입력되지 않았습니다.",
+          confirmButtonText: "확인",
+        });
+        return false;
+      }
+
+      return true;
     },
   }
   

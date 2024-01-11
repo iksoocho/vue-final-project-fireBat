@@ -140,9 +140,19 @@ export default {
       }).catch((err) => console.log(err));
 
       if (result.data.changedRows == 0) {
-        alert(`수정 되지 않았습니다. `);
+        
+        Swal.fire({
+          icon: "warning",
+          title: "수정 되지 않았습니다.",
+          confirmButtonText: "확인",
+        });
       } else {
-        alert(`정상적으로 수정 되었습니다.`);
+        
+        Swal.fire({
+          icon: "warning",
+          title: "정상적으로 수정 되었습니다.",
+          confirmButtonText: "확인",
+        });
         this.$router.push({ name: "qnaList" });
       }
     },
@@ -178,6 +188,8 @@ export default {
       };
     },
     async saveInfo(qna_no) {
+      if (!this.validation()) return;
+
       let formData = new FormData();
       this.images.forEach((file) => {
         formData.append(`files`, file);
@@ -209,6 +221,38 @@ export default {
 
         this.images = uploadedImages;
       }
+    },
+    validation() {
+      if (this.qnaInfo.qna_category == "") {
+        
+        Swal.fire({
+          icon: "warning",
+          title: "문의 유형이 되지 않았습니다.",
+          confirmButtonText: "확인",
+        });
+        return false;
+      }
+      if (this.qnaInfo.qna_title == "") {
+       
+        Swal.fire({
+          icon: "warning",
+          title: "제목이 입력되지 않았습니다.",
+          confirmButtonText: "확인",
+        });
+        return false;
+      }
+      if (this.qnaInfo.qna_content == "") {
+        
+        Swal.fire({
+          icon: "warning",
+          title: "내용이 입력되지 않았습니다.",
+          confirmButtonText: "확인",
+        });
+        return false;
+      }
+      
+
+      return true;
     },
   },
 };
