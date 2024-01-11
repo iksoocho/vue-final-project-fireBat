@@ -106,6 +106,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 export default {
   computed: {
     isLoggedIn() {
@@ -126,6 +127,12 @@ export default {
     },
     async logout() {
       // 로그아웃 시 세션 지우기
+      await Swal.fire({
+        icon: 'success',
+        title: '로그아웃 성공',
+        text: '로그인 페이지로 이동합니다.',
+        conriemButtonText: '확인',
+      });
       sessionStorage.removeItem('user');
       await this.$router.push('/login'); // 로그아웃 후에 메인 페이지 또는 다른 적절한 페이지로 이동하도록 설정
       window.location.reload();

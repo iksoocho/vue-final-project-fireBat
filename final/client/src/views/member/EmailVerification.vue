@@ -165,7 +165,7 @@ export default {
           });
 
           if (sendResponse.data.success) {
-            Swal.fire({
+            await Swal.fire({
               icon: 'success',
               title: '인증번호 발송 성공.',
               text: '인증번호를 입력해주세요.',
@@ -188,7 +188,7 @@ export default {
 
         if (response.data.success) {
           // 서버에서 코드 검증 성공 시, 다음 단계로 전환
-          Swal.fire({
+          await Swal.fire({
             icon: 'success',
             title: '인증완료!',
             text: '회원가입 페이지로 넘어갑니다.',
