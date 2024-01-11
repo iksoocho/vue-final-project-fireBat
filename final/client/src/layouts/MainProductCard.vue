@@ -16,23 +16,16 @@
                     <div class="single_place">
                             <div class="thumb">
                             <img :src="getProdImgUrl(pro.prod_code)" alt="" width="356px" height="350px" >
-                            <a href="#" class="prise">₩{{pro.prod_price}}</a>
+                            <a href="#" class="prise">₩{{pro.prod_price}}원</a>
                     </div>
                          <div class="place_info">
                             <a href="destination_details.html"><h3>{{pro.prod_name}}</h3></a>
-                            <p>United State of America</p>
+                            
                             <div class="rating_days d-flex justify-content-between">
-                                <span class="d-flex justify-content-center align-items-center">
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i> 
-                                     <i class="fa fa-star"></i>
-                                     <a href="#">(20 Review)</a>
-                                </span>
+                                
                                 <div class="days">
-                                    <i class="fa fa-clock-o"></i>
-                                    <a href="#">5 Days</a>
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
