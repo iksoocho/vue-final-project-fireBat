@@ -92,7 +92,8 @@ module.exports = {
                         GROUP BY
                         p.prod_code,
                         p.prod_name,
-                        p.prod_count`,
+                        p.prod_count
+                        ORDER BY p.prod_code DESC `,
     // 관리자 메인 리스트
     adminChartList : `SELECT * FROM product ORDER BY prod_price DESC LIMIT 6`,
     // 관리자 페이지 차트
