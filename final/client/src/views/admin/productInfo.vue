@@ -36,7 +36,7 @@
           <td>
             <span v-for="(img, idx) in prodImgs" :key="idx" colspan="2">
               <img
-                :src="`http://localhost:3000/product/public/uploads/${img.prod_filename}`"
+                :src="`/api/product/public/uploads/${img.prod_filename}`"
                 width="150px"
                 height="150px"
                 style="display: inline-block"

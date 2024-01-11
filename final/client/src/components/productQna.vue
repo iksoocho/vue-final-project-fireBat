@@ -60,7 +60,7 @@
                           <td>
                             <span v-for="(img, idx) in qnaImgs" :key="idx" colspan="2">
                               <img
-                                :src="`http://localhost:3000/qna/public/uploads/${img.qna_filename}`"
+                                :src="`/api/qna/public/uploads/${img.qna_filename}`"
                                 width="150px"
                                 height="150px"
                               />

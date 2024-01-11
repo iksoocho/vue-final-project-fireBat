@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-8 col-sm-6" v-if="prodImgs.length > 0">
         <img
-          :src="`http://localhost:3000/product/public/uploads/${prodImgs[0].prod_filename}`"
+          :src="`/api/product/public/uploads/${prodImgs[0].prod_filename}`"
           class="card-img-top"
           alt=""
           style="width: 660px; height: 660px"

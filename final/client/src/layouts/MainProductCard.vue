@@ -15,7 +15,7 @@
                  <div v-for="(pro, i) in prodRandomList" :key="i" class="col-lg-4 col-md-6" @click="goProdInfo(pro.prod_code)">
                     <div class="single_place">
                             <div class="thumb">
-                            <img :src="getProdImgUrl(pro.prod_code)" alt="" width="356px" height="350px" >
+                            <img :src="`/api/product/public/uploads/${pro.prodImg}`" alt="" width="356px" height="350px" >
                             <a href="#" class="prise">₩{{pro.prod_price}}</a>
                     </div>
                          <div class="place_info">
@@ -93,7 +93,7 @@ export default {
         const prodImages = this.prodImgs[prod_code];
         
         if (prodImages) {
-          return `http://localhost:3000/product/public/uploads/${prodImages.prod_filename}`;
+          return `api/product/public/uploads/${prodImages.prod_filename}`;
         }
         return ''; // 이미지가 없을 때 빈 문자열 반환
       },

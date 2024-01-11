@@ -89,7 +89,10 @@ router.get('/user', async (req,res)=>{
 // 메인페이지 랜덤 6가지
 router.get('/random', async (req, res) => {
     let list = await mysql.query('productRandomList');
-    
+    for (const prod of list) {
+        let prodImg = (await mysql.query('prodImgSelect',prod.prod_code))[0];
+        prod.prodImg = prodImg ? prodImg.prod_filename : '';
+    }
     res.send(list);
 });
 

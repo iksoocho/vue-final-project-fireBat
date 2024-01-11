@@ -9,7 +9,7 @@
           style="margin: 10px"
         >
           <img
-            :src="`http://localhost:3000/product/public/uploads/${img.prod_filename}`"
+            :src="`/api/product/public/uploads/${img.prod_filename}`"
             class="card-img-top"
             alt=""
             style="display: block; margin: 0 auto; width: 50%;r"
