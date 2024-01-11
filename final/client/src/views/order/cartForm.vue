@@ -31,7 +31,7 @@
             false-value="0"
             @change="updateCheckboxStatus(item)"
             class="form-check-input"
-          />{{ item.prod_select }}
+          />
         </td>
         <td>
           <img
