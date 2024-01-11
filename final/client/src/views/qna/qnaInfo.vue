@@ -129,7 +129,7 @@
             rows="15"
             name="content"
         v-model="qnaAnswerInfo.qna_answer_content"
-        placeholder="댓글 작성"
+        placeholder="답변 작성"
       ></textarea>
       <button @click="answerInsert">답변 추가</button>
     </div>
@@ -268,10 +268,18 @@ export default {
         .catch((err) => console.log(err));
 
       if (result.data.message == "") {
-        alert(`정상적으로 등록 되었습니다.`);
+        Swal.fire({
+          icon: "warning",
+          title: "정상적으로 등록 되었습니다.",
+          confirmButtonText: "확인",
+        });
         this.$router.go();
       } else {
-        alert(`등록 실패.`);
+        Swal.fire({
+          icon: "warning",
+          title: "등록 실패.",
+          confirmButtonText: "확인",
+        });
       }
     },
     async deleteAnswer(qna_no) {
