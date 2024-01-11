@@ -6,8 +6,8 @@
       <div id="BarChart" class="chart w-50"></div>
     </div>
     <div class="row">
-      <div class="col-6">
-        <div class="app">
+      <div class="col">
+        <div class="">
           <div class="table-header">상품 판매량 순위</div>
           <div class="my-1 mx-3 d-flex flex-row-reverse"></div>
           <table class="table">
@@ -151,7 +151,7 @@ export default {
   font-family: "Nanum Gothic", sans-serif;
 }
 .table-header {
-  background-color: #ffa5a5;
+  background-color: hsl(197, 93%, 83%);
   color: rgb(255, 255, 255);
   padding: 10px;
   margin-bottom: 10px;
@@ -243,7 +243,7 @@ body {
   text-align: center;
   font-size: 24px;
   margin-bottom: 20px;
-  color: #333;
+  color: hsl(200, 50%, 50%);
 }
 
 .table {
