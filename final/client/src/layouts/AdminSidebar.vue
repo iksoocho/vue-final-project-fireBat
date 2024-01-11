@@ -28,7 +28,7 @@
               >
                 <nav class="sb-sidenav-menu-nested nav">
                   <router-link class="nav-link" to="/adminUserList">
-                    회원관리
+                    회원정보
                   </router-link>
                   <router-link class="nav-link" to="/qnaList">
                     QnA
