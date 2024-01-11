@@ -2,16 +2,7 @@
   <div class="container">
     <form @submit.prevent>
       <div class="container-one">
-        <h3
-          style="
-            padding-top: 20px;
-            text-align: left;
-            padding-left: 50px;
-            color: #dc3545;
-          "
-        >
-          Login
-        </h3>
+        <h3 style="padding-top: 20px; text-align: left; padding-left: 50px; color: #dc3545">Login</h3>
         <input
           type="text"
           placeholder="ID"
@@ -40,18 +31,8 @@
             background-color: #fff;
           "
         /><br />
-        <div
-          class="d-grid gap-2"
-          style="margin-top: 20px; width: 300px; margin-left: 50px"
-        >
-          <button
-            type="submit"
-            class="btn btn-danger"
-            @click="login"
-            style="height: 40px"
-          >
-            로그인
-          </button>
+        <div class="d-grid gap-2" style="margin-top: 20px; width: 300px; margin-left: 50px">
+          <button type="submit" class="btn btn-danger" @click="login" style="height: 40px">로그인</button>
         </div>
       </div>
     </form>
@@ -74,34 +55,44 @@
 </template>
 
 <script>
-import axios from "axios";
-import KakaoLogin from "@/components/KakaoLogin.vue";
-
+import axios from 'axios';
+import KakaoLogin from '@/components/KakaoLogin.vue';
+import Swal from 'sweetalert2';
 export default {
   components: {
     KakaoLogin,
   },
   data() {
     return {
-      user_id: "",
-      user_pw: "",
+      user_id: '',
+      user_pw: '',
     };
   },
   methods: {
     async login() {
       if (!this.user_id) {
-        window.alert("아이디를 입력해주세요");
+        Swal.fire({
+          icon: 'warning',
+          title: '로그인 실패',
+          text: '아이디를 입력해주세요.',
+          conriemButtonText: '확인',
+        });
         return;
       }
       if (!this.user_pw) {
-        window.alert("비밀번호를 입력해주세요");
+        Swal.fire({
+          icon: 'warning',
+          title: '로그인 실패',
+          text: '비밀번호를 입력해주세요.',
+          conriemButtonText: '확인',
+        });
         return;
       }
       try {
         let data = { param: { user_id: this.user_id, user_pw: this.user_pw } };
         let result = await axios.post(`/api/user/login`, data, {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         });
 
@@ -109,24 +100,37 @@ export default {
           this.loginError = false;
           this.unauthorizedError = false;
           // 세션에 사용자 정보 저장
-          sessionStorage.setItem(
-            "user",
-            JSON.stringify(result.data[0].user_id)
-          );
+          sessionStorage.setItem('user', JSON.stringify(result.data[0].user_id));
 
-          console.log("로그인 성공:", result.data[0]);
-          this.$router.push({ path: "/main" });
+          await Swal.fire({
+            icon: 'success',
+            title: '로그인 성공',
+            text: '페스오더를 이용해주셔서 감사합니다.',
+            conriemButtonText: '확인',
+          });
+
+          this.$router.push({ path: '/main' });
           window.location.reload();
         } else {
           this.loginError = true;
-          window.alert("등록되지않은 아이디입니다."); // 에러 메시지 출력
+          Swal.fire({
+            icon: 'warning',
+            title: '로그인 실패',
+            text: '등록되지 않은 아이디입니다.',
+            conriemButtonText: '확인',
+          }); // 에러 메시지 출력
         }
       } catch (error) {
         if (error.response) {
           if (error.response.status === 401) {
             // 서버에서 401 에러가 왔을 때의 처리
             this.unauthorizedError = true;
-            alert("비밀번호가 틀립니다.");
+            Swal.fire({
+              icon: 'warning',
+              title: '로그인 실패',
+              text: '비밀번호가 틀립니다.',
+              conriemButtonText: '확인',
+            });
             // console.error('Unauthorized Error:', error.response.data);
           } else {
             // 다른 서버 응답 오류
@@ -144,16 +148,16 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     // 라우트에 진입하기 전에 로그인 상태 확인
-    if (sessionStorage.getItem("user") !== null) {
-      next("/main");
+    if (sessionStorage.getItem('user') !== null) {
+      next('/main');
     } else {
       next();
     }
   },
   beforeRouteUpdate(to, from, next) {
     // 라우트 업데이트 전에 로그인 상태 확인
-    if (sessionStorage.getItem("user") !== null) {
-      next("/main");
+    if (sessionStorage.getItem('user') !== null) {
+      next('/main');
     } else {
       next();
     }
@@ -196,7 +200,7 @@ export default {
 
 .hr-sect::before,
 .hr-sect::after {
-  content: "";
+  content: '';
   flex-grow: 1;
   background: rgba(0, 0, 0, 0.35);
   height: 1px;

@@ -1,15 +1,10 @@
 <template>
-  <div>
-    <h1>마이페이지</h1>
-
-    <a class="container-two" href="/userCheck"><b>회원정보수정</b></a
-    ><br />
-    <a class="container-two" href="/userQuit"><b>회원탈퇴</b></a><br />
-    <a href="/orderList">주문내역</a>
-
+  <div class="container">
+    <SideBar />
   </div>
 </template>
 <script>
+import SideBar from '../../layouts/SideBar.vue';
 export default {
   computed: {
     userId() {
@@ -18,9 +13,16 @@ export default {
       return userData ? userData : null;
     },
   },
+  name: 'sideBar',
+  components: {
+    SideBar,
+  },
 };
 </script>
 <style>
+.container {
+  margin-bottom: 50px;
+}
 .container-two {
   text-decoration: none; /* 밑줄 제거 */
   color: inherit; /* 부모 요소의 색상 상속 */

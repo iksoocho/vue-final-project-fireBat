@@ -38,7 +38,7 @@ const sendEmail = async (to, subject, text) => {
     from: 'nsa30003@gmail.com',
     to,
     subject,
-    text: `Your verification code is: ${verificationCode}`,
+    text: `[페스오더] 인증이메일입니다. 인증번호를 입력해주세요. ${verificationCode}`,
   };
 
   try {
