@@ -45,14 +45,14 @@
         <br />
 
         <div class="prod-onetime-order" style="display: flex">
-          <button class="prod-cart-btn" @click="cartInsert">
+          <button class="btn prod-cart-btn" @click="cartInsert">
             장바구니추가
           </button>
-          <br />
+          <!-- <br />
 
           <div>
             <button>바로결제</button>
-          </div>
+          </div> -->
         </div>
       </div>
       <br />
