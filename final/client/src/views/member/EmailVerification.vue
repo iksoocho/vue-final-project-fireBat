@@ -200,10 +200,18 @@ export default {
             query: { user_email: this.user_email }, // params 대신 query 사용
           });
         } else {
-          console.error(response.data.error);
+          Swal.fire({
+            icon: 'warning',
+            title: '인증실패!',
+            text: '인증번호가 틀립니다.',
+          });
         }
       } catch (error) {
-        console.error('코드 확인 실패:', error);
+        Swal.fire({
+          icon: 'warning',
+          title: '인증실패!',
+          text: '인증번호가 틀립니다.',
+        });
       }
     },
   },

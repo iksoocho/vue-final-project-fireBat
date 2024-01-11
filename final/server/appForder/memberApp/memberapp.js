@@ -90,8 +90,9 @@ router.post('/verify-code', async (req, res) => {
 
     // 예시: MySQL 쿼리
     const result = await mysql.query('emailCodeCheck', [user_email, user_email_code]);
+    console.log(result.length)
 
-    if (result) {
+    if (result.length > 0) {
       res.send({ success: true });
     } else {
       res.status(400).send({ success: false, error: 'Invalid verification code' });
