@@ -102,7 +102,7 @@
               </nav>
             </div>
 
-            <a
+            <!-- <a
               class="nav-link collapsed"
               href="#"
               data-bs-toggle="collapse"
@@ -156,7 +156,7 @@
                   주문정보
                 </router-link>
               </nav>
-            </div>
+            </div> -->
             <!-- <router-link to="/admin/table">
               <a class="nav-link" href="#">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
