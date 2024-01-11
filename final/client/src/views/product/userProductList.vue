@@ -74,7 +74,7 @@ export default {
       userProductList: [],
       prodImgs: {}, // 변경 없음
       word: "",
-      ITEM_PER_PAGE: 8,
+      ITEM_PER_PAGE: 16,
       PAGE_PER_SECTION: 5,
       curPage: 1,
     };
