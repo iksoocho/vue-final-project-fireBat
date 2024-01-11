@@ -29,13 +29,14 @@ app.use(session({
 
 app.use(cors());
 
-app.listen(3000, () => {
-  console.log('server start');
-});
-
 app.use('/qna', qnaRouter);
 app.use('/user', userRouter);
 app.use('/festival', fesRouter);
 app.use('/product', productRouter);
 app.use('/notice', noticeRouter);
 app.use('/pay', paymentRouter);
+
+app.listen(3000, () => {
+  console.log('server start');
+});
+

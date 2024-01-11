@@ -160,8 +160,8 @@ export default {
   },
   watch : {
     fesInfo(){
-      //this.initializeMap();
-      //console.log(kakao);
+      this.initializeMap();
+      console.log(kakao);
       console.log(window.Kakao);
       this.getFesProdlList(this.fesInfo.f_reg);
     }
